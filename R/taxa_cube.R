@@ -22,6 +22,7 @@
 #' @return A list containing the `sim_cubes` of taxa and the dataframe of
 #' coordinates of sites
 #'
+#' @export
 
 taxa_cube <- function(taxa,
                       region,
