@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Yahaya"
+  given-names: "Mukhtar Muhammed"
+  orcid: "https://orcid.org/0009-0008-9200-0863"
+- family-names: "Kumschick"
+  given-names: "Sabrina"
+  orcid: "https://orcid.org/0000-0001-8034-5831"
+title: "impact-indicator"
+version: 1.0.0
+url: "https://github.com/b-cubed-eu/impact-indicator"
