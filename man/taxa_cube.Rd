@@ -43,11 +43,6 @@ necessary columns. The GBIF occurrences is downloaded if scientific
 names is given.
 }
 \examples{
-# read region shapefile
-#southAfrica_sf<-readRDS("data/southAfrica_sf.rds")
-
-# load the GBIF occurrence data for taxa
-#taxa_Acacia<-readRDS("data/taxa_Acacia.rds")
 
 acacia_cube<-taxa_cube(taxa=taxa_Acacia,
                        region=southAfrica_sf,
