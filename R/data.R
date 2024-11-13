@@ -15,3 +15,19 @@
 #'
 #' @source \url{https://www.gbif.org/occurrence/search?country=ZA&taxon_key=2978223&occurrence_status=present}
 "taxa_Acacia"
+
+
+
+#' South African sf
+#' An example of region sf for impact indicator.
+#'
+#' @format A 'sf' object of South African map
+#' \describe{
+#'   \item{geometry}{geometry of polygon}
+
+#' }
+#' @examples
+#'   plot(southAfrica_sf)
+#'
+
+"southAfrica_sf"
