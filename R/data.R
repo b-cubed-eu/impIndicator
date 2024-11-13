@@ -27,7 +27,7 @@
 
 #' }
 #' @examples
-#'   plot(southAfrica_sf)
+#'   sf::plot_sf(southAfrica_sf)
 #'
 "southAfrica_sf"
 

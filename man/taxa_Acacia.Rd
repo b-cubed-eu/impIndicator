@@ -6,7 +6,7 @@
 \title{GBIF occurrences data of acacia in South Africa
 An example of occurrence data from GBIF containing required column for impact indicator.}
 \format{
-A dataframe object containing 17,279 rows and 6variables
+A dataframe object containing 17,279 rows and 6 variables
 \describe{
 \item{decimalLatitude}{geographic latitude in decimal}
 \item{decimalLongitude}{geographic longitude in decimal}
