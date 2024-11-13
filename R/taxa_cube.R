@@ -23,6 +23,19 @@
 #' coordinates of sites
 #'
 #' @export
+#'
+#' @examples
+#' # read region shapefile
+#' #southAfrica_sf<-readRDS("data/southAfrica_sf.rds")
+#'
+#' # load the GBIF occurrence data for taxa
+#' #taxa_Acacia<-readRDS("data/taxa_Acacia.rds")
+#'
+#' acacia_cube<-taxa_cube(taxa=taxa_Acacia,
+#'                        region=southAfrica_sf,
+#'                        res=0.25,
+#'                        first_year=2010)
+#'
 
 taxa_cube <- function(taxa,
                       region,
@@ -83,7 +96,7 @@ taxa_cube <- function(taxa,
     dplyr::select(decimalLatitude,decimalLongitude,
                   species,speciesKey,
                   coordinateUncertaintyInMeters,year) %>% #select occurrence data
-    dplyr::filter_all(all_vars(!is.na(.))) %>% # remove rows with missing data
+    dplyr::filter_all(dplyr::all_vars(!is.na(.))) %>% # remove rows with missing data
     dplyr::filter(coordinateUncertaintyInMeters<=res*1000) %>%
     sf::st_as_sf(coords = c("decimalLongitude", "decimalLatitude"),
                  crs = 4326) %>%

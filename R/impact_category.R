@@ -23,7 +23,7 @@
 #'
 #' @examples
 #' #read the impact data
-#' eicat_data<-readRDS("Data/eicat_data.rds")
+#' #eicat_data<-readRDS("data/eicat_data.rds")
 #' #define species list
 #' species_list<-c("Acacia adunca",
 #' "Acacia baileyana",
@@ -58,7 +58,7 @@ impact_cat<-function(impact_data,
                   !is.null(col_species),
                   !is.null(col_mechanism)))){
     impact_data <- impact_data %>%
-      rename(all_of(c(category=col_category,
+      dplyr::rename(dplyr::all_of(c(category=col_category,
                       species=col_species,
                       mechanism=col_mechanism)))
 
@@ -89,15 +89,15 @@ impact_cat<-function(impact_data,
                     .keep_all = TRUE) %>%
 
     dplyr::group_by(species,mechanism) %>%
-    dplyr::summarise(across(category_value,max),
+    dplyr::summarise(dplyr::across(category_value,max),
                      .groups = "drop") %>%
     dplyr::group_by(species) %>%
-    dplyr::summarise(across(category_value,sum),
+    dplyr::summarise(dplyr::across(category_value,sum),
                      .groups = "drop") %>%
     dplyr::filter(species %in% species_list)
 
   category_M<-dplyr::left_join(category_max_mean,category_sum_mech,
-                               by=join_by(species)) %>%
+                               by=dplyr::join_by(species)) %>%
     tibble::column_to_rownames(var = "species")
 
   names(category_M)<-c("max","mean","max_mech")
@@ -122,8 +122,6 @@ impact_cat<-function(impact_data,
 }
 
 
-
-
 #' Convert EICAT categories to numerical values
 #'
 #' @param cat The EICAT impct category. (e.g., "MC)
@@ -134,10 +132,7 @@ impact_cat<-function(impact_data,
 #'
 #' @return Numerical values corresponding to the EICAT  base on a tranfomation
 #'
-#' @examples
-#' cat<-"MC"
-#' trans<-1
-#' value<-cat_num(cat,trans)
+
 cat_num<-function(cat,trans){
   name<-c("MC", "MN", "MO", "MR", "MV")
   if(trans==1){

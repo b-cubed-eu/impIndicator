@@ -42,7 +42,7 @@ Aggregate species impact categories from impact data.
 }
 \examples{
 #read the impact data
-eicat_data<-readRDS("Data/eicat_data.rds")
+#eicat_data<-readRDS("data/eicat_data.rds")
 #define species list
 species_list<-c("Acacia adunca",
 "Acacia baileyana",

@@ -20,8 +20,3 @@ Numerical values corresponding to the EICAT  base on a tranfomation
 \description{
 Convert EICAT categories to numerical values
 }
-\examples{
-cat<-"MC"
-trans<-1
-value<-cat_num(cat,trans)
-}
