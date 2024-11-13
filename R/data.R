@@ -1,7 +1,7 @@
 #' GBIF occurrences data of acacia in South Africa
 #' An example of occurrence data from GBIF containing required column for impact indicator.
 #'
-#' @format A dataframe object containing 17,279 rows and 6variables
+#' @format A dataframe object containing 17,279 rows and 6 variables
 #' \describe{
 #'   \item{decimalLatitude}{geographic latitude in decimal}
 #'   \item{decimalLongitude}{geographic longitude in decimal}
@@ -29,5 +29,22 @@
 #' @examples
 #'   plot(southAfrica_sf)
 #'
-
 "southAfrica_sf"
+
+
+
+#' GBIF occurrences data of acacia in South Africa
+#' An example of occurrence data from GBIF containing required column for impact indicator.
+#'
+#' @format A dataframe object containing 138 observations and 4 variables
+#' \describe{
+#'   \item{scientific_name}{species scientific name}
+#'   \item{impact_category}{EICAT impact category}
+#'   \item{impact_mechanism}{mecahnism of impact}
+#'   \item{probability}{weight of impact}
+#' }
+#' @examples
+#'   head(eicat_data,10)
+#'
+#' @source \url{https://github.com/Oceane-Boulesnane-Guengant/Risk_maps_Acacia_SA/tree/main/data}
+"eicat_data"
