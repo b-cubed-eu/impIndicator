@@ -2,5 +2,6 @@
 
 export("%>%")
 export(impact_cat)
+export(impact_indicator)
 export(taxa_cube)
 importFrom(magrittr,"%>%")
