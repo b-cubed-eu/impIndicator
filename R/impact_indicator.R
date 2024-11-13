@@ -59,8 +59,8 @@ impact_indicator<-function(cube,
     sbs.taxon<-cube$data %>%
       dplyr::filter(year==y) %>%
       dplyr::select(scientificName,cellCode,obs) %>%
-      dplyr::group_by(scientificName,cellCode) %>%
-      dplyr::summarise(dplyr::across(obs, first), .groups = "drop") %>%
+      #remove duplicates of a species per site
+      dplyr::distinct(scientificName,cellCode, .keep_all = TRUE) %>%
       tidyr::pivot_wider(names_from = scientificName, values_from = obs) %>%
       dplyr::arrange(cellCode) %>%
       tibble::column_to_rownames(var = "cellCode")

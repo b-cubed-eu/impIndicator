@@ -47,7 +47,7 @@ Compute impact indicators of alien taxa
 }
 \examples{
 acacia_cube<-taxa_cube(taxa=taxa_Acacia,
-                      region=SA.sf,
+                      region=southAfrica_sf,
                       res=0.25,
                       first_year=2010)
 impact_value<-impact_indicator(cube=acacia_cube$cube,
