@@ -11,7 +11,15 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
+    b3gbi (>= 0.2.2),
     cli,
     dplyr,
+    magrittr,
     rgbif,
+    sf,
     tibble
+Remotes: 
+    b-cubed-eu/b3gbi
+Depends: 
+    R (>= 2.10)
+LazyData: true
