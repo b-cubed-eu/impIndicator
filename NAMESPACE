@@ -3,6 +3,7 @@
 export("%>%")
 export(impact_cat)
 export(impact_indicator)
+export(site_impact)
 export(species_impact)
 export(taxa_cube)
 importFrom(magrittr,"%>%")
