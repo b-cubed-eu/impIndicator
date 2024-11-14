@@ -275,3 +275,78 @@ ggplot(data = impactIndicator) +
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+## Impact indicator per species
+
+We compute the impact indicator per species by summing the impact risk
+map per species and correct for sampling effort by dividing by $N$.
+
+``` r
+#  impact indicator per species
+
+species_value<-species_impact(cube=acacia_cube$cube,
+                        impact_data = eicat_data,
+                        col_category="impact_category",
+                        col_species="scientific_name",
+                        col_mechanism="impact_mechanism",
+                        trans=1,
+                        type = "mean")
+
+
+species_value %>%
+  rownames_to_column("year") %>%
+  mutate(year=as.numeric(year)) %>%
+  gather(-year,key = "Alien_species", value = "impact_score") %>%
+  ggplot(aes(x = year, y = impact_score)) +
+  geom_line(aes(color = Alien_species),linewidth=1.5)+
+  theme_minimal() +
+  labs(
+    title = "sum of species impact",
+    y = "impact score"
+  )+
+  theme(text=element_text(size=14))
+#> Warning: Removed 9 rows containing missing values or values outside the scale range
+#> (`geom_line()`).
+```
+
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+
+# Comparing type of indicators
+
+To compare type of impact indicators for a case study, we provide a plot
+which can be adapted by a user to compare a set of method.
+
+``` r
+# plot all type of impact indicators
+types<-c("precautionary",
+         "precautionary cumulative",
+         "mean",
+         "mean cumulative",
+         "cumulative")
+
+all_impact<-data.frame("year"=unique(acacia_cube$cube$data$year))
+for(type in types){
+  impact_value<-impact_indicator(cube=acacia_cube$cube,
+                                 impact_data = eicat_data,
+                                 col_category="impact_category",
+                                 col_species="scientific_name",
+                                 col_mechanism="impact_mechanism",
+                                 trans=1,
+                                 type = type)
+  
+  all_impact[type]<-impact_value$value
+}
+
+all_impact %>%
+  gather(-year,key = "indicator_type", value = "impact_score") %>% 
+  ggplot(aes(x = year, y = impact_score)) +
+  geom_line(aes(color = indicator_type),linewidth=1.5)+
+  theme_minimal() +
+   labs(
+    title = "Type of indicators",
+    y = "impact score"
+  )+
+  theme(text=element_text(size=14))
+```
+
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
