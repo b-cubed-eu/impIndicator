@@ -2,15 +2,18 @@ Package: impIndicator
 Title: Impact Indicators of Alien Taxa
 Version: 0.0.0.9000
 Authors@R: 
-    person("Mukhtar", "Yahaya", "Muhammed" , "yahayamukhtar.m@gmail.com", 
+    c(person("Mukhtar Muhammed", "Yahaya", , "yahayamukhtar.m@gmail.com", 
     role = c("aut", "cre"),
-           comment = c(ORCID = "0009-0008-9200-0863"))
-    person("Sabrina", "Kumschick", , "sabrina.kumschick@gmail.com", 
-    role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0001-8034-5831"))
-    person("Sandra", "MacFadyen", , "sandra@biogis.co.za", 
-    role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-5316-440X"))
+           comment = c(ORCID = "0009-0008-9200-0863")),
+    person("Sabrina", "Kumschick", "sabrina.kumschick@gmail.com", 
+    role = c("ctb"),
+           comment = c(ORCID = "0000-0001-8034-5831")),
+    person("Sandra", "MacFadyen",, "sandra@biogis.co.za", 
+    role = c( "ctb"),
+           comment = c(ORCID = "0000-0002-5316-440X")),
+    person("Cang", "Hui",, "chui@sun.ac.za", 
+    role = c("cte"),
+           comment = c(ORCID = "0000-0002-3660-8160")))
 Description: Compute impact indicators of alien taxa using GBIF occurrence cube
     and EICAT assessment of alien species. Aggregates species impact of various 
     scores due to mecahnism. Aggregates site impact of various 
@@ -34,3 +37,6 @@ Remotes:
 Depends: 
     R (>= 2.10)
 LazyData: true
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3

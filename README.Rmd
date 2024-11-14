@@ -1,0 +1,246 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  dpi = 300,
+  out.width = "100%"
+)
+```
+
+# impIndicator
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of **impIndicator** is to allow users to seamlessly calculate and visualize the impact of alien taxa and individual species in a study area. Calculates and visualize impact per site as a map. Takes in GBIF occurrence data and EICAT assessment list. Enables user to choose from various methods 
+of computing impact indicators from different studies.
+
+## Installation
+
+You can install the development version of impIndicator from [GitHub](https://github.com/b-cubed-eu/impIndicator) with:
+
+``` r
+# install.packages("remotes")
+remotes::install_github("b-cubed-eu/impIndicator")
+```
+
+## Demonstration
+
+This Markdown demonstrates the computation and visualization of impact indicator of biological invasions using the `impact_indicator()` to compute impact indicator of alien taxa, the `species_impact()` to compute impact indicator per species, and the `site_impact()` to compute impact indicator per site. The functions feeds in species GBIF occurrence cube from the `b3gbi::process_cube()` using `taxa_cube()` and  
+Environmental Impact Classification of Alien Taxa (EICAT) impact score of species
+using `impact_cat()`.
+
+```{r load packages }
+# Load packages
+library(impIndicator)
+
+library(b3gbi)       # Biodiversity indicators for data cubes
+library(tidyverse)   # Data wrangling and visualisation
+library(sf)          # Spatial features
+
+
+# Source functions
+source("R/taxa_cube.R")
+source("R/impact_category.R")
+source("R/impact_indicator.R")
+source("R/species_impact.R")
+source("R/site_impact.R")
+
+```
+
+```{r}
+# load the shapefile for study region
+load("data/southAfrica_sf.rda")
+plot(southAfrica_sf, main = "South African map")
+```
+
+# Process occurrence cube
+```{r}
+# load the GBIF occurrence data for taxa
+load("data/taxa_Acacia.rda")
+acacia_cube<-taxa_cube(taxa=taxa_Acacia,
+                    region=southAfrica_sf,
+                    res=0.25,
+                    first_year=2010)
+
+acacia_cube$cube
+head(acacia_cube$coords)
+```
+
+## Aggregate impact scores for each species
+
+There are often several impact records per species in different mechanisms and regions. There is need to aggregate these impact records for each species. The 
+`impact_cat()` aggregates impact using ***max***, ***mean*** and  ***max_mech*** as metrics as used by different studies. 
+
+- ***max***: maximum impact score across all records for the species\
+- ***mean***: mean impact score across all records\
+- ***max_mech***: sum of the maximum impact per mechanisms
+
+```{r Aggregate within species impact}
+load("data/eicat_data.rda")
+full_species_list<-sort(unique(acacia_cube$cube$data$scientificName))
+
+agg_impact<-impact_cat(impact_data=eicat_data,
+                     species_list=full_species_list,
+                     col_category="impact_category",
+                     col_species="scientific_name",
+                     col_mechanism="impact_mechanism",
+                     trans=1)
+agg_impact
+```
+
+## Compute impact risk map
+
+
+The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The 
+`site_impact()` uses ***max***, ***sum*** and ***mean*** metrics to aggregate impact scores as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of aggregation metrics from `impact_cat()` for each species and site leads to five type of
+indicators, namely, ***precautionary***, ***precautionary cumulative***, ***mean***, ***mean cumulative*** and ***cumulative***.\
+
+
+- ***precautionary***: maximum score across species' max in each site\
+- ***precautionary cumulative***: cumulative score across species' max in each site\
+- ***mean***: mean score across species' mean in each site\
+- ***mean cumulative***: cumulative score across species' mean in each site\
+- ***cumulative***: cumulative score across species' sum of maximum score per mechanism\
+```{r site impact}
+siteImpact<-site_impact(cube=acacia_cube$cube,
+                       impact_data = eicat_data,
+                       col_category="impact_category",
+                       col_species="scientific_name",
+                       col_mechanism="impact_mechanism",
+                       trans=1,
+                       type = "mean cumulative",
+                       coords=acacia_cube$coords)
+```
+### impact risk map
+```{r}
+#impact risk map
+#visualize last four years for readability
+siteImpact%>% 
+  gather(-c(siteID,X,Y),key="year",value="impact") %>% 
+  na.omit() %>% 
+  filter(year>=2021) %>% 
+  ggplot() +
+  geom_tile(
+    aes(x=X,y=Y,fill=impact),color="black")+
+  geom_sf(data = southAfrica_sf, fill = NA, color = "black", alpha = 0.5)+
+  scale_fill_gradient(low = "yellow",
+                       high = "red")+
+  theme_minimal() +
+   labs(
+    title = "impact risk map (mean cumulative)",
+    y = "Latitude", x="Longitude"
+  )+
+  theme(text=element_text(size=14))+
+  facet_wrap(~year)
+```
+
+# Compute impact indicators
+
+To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.\
+$$I_i = \frac{\sum{S_i}}{N}$$
+$I_i$ is impact score at year $i$.\
+$S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and $s_n$ is the site score for site $n$\
+$N$ is number of sites occupied through out the study years of the region.\
+**Note**: This is the only method incorporated as at now. Other methods will be considered later.\
+**Note**: A function `impact_uncertainty()` is being developed to use bootstrap 
+method to compute confidence interval of the indicator rather than using `geom_smooth()`
+used below.
+```{r}
+#sum of impact risk map for each year
+
+impactIndicator<-impact_indicator(cube=acacia_cube$cube,
+                                  impact_data = eicat_data,
+                                  col_category="impact_category",
+                                  col_species="scientific_name",
+                                  col_mechanism="impact_mechanism",
+                                  trans=1,
+                                  type = "mean cumulative")
+
+ggplot(data = impactIndicator) +
+  geom_line(aes(y = value, x = year),colour="red",
+            stat="identity",
+            linewidth=2)+
+  geom_smooth(aes(y = value, x = year),linetype=2)+
+  labs(
+    title = "Impact indicator",
+    y = "impact score"
+  )+
+  theme_minimal() +
+  theme(text=element_text(size=14))
+```
+
+## Impact indicator per species
+
+We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by $N$.
+```{r}
+#  impact indicator per species
+
+species_value<-species_impact(cube=acacia_cube$cube,
+                        impact_data = eicat_data,
+                        col_category="impact_category",
+                        col_species="scientific_name",
+                        col_mechanism="impact_mechanism",
+                        trans=1,
+                        type = "mean")
+
+
+species_value %>%
+  rownames_to_column("year") %>%
+  mutate(year=as.numeric(year)) %>%
+  gather(-year,key = "Alien_species", value = "impact_score") %>%
+  ggplot(aes(x = year, y = impact_score)) +
+  geom_line(aes(color = Alien_species),linewidth=1.5)+
+  theme_minimal() +
+  labs(
+    title = "sum of species impact",
+    y = "impact score"
+  )+
+  theme(text=element_text(size=14))
+
+```
+
+# Comparing type of indicators
+
+To compare type of impact indicators for a case study, we provide a plot which can
+be adapted by a user to compare a set of method.
+
+```{r}
+# plot all type of impact indicators
+types<-c("precautionary",
+         "precautionary cumulative",
+         "mean",
+         "mean cumulative",
+         "cumulative")
+
+all_impact<-data.frame("year"=unique(acacia_cube$cube$data$year))
+for(type in types){
+  impact_value<-impact_indicator(cube=acacia_cube$cube,
+                                 impact_data = eicat_data,
+                                 col_category="impact_category",
+                                 col_species="scientific_name",
+                                 col_mechanism="impact_mechanism",
+                                 trans=1,
+                                 type = type)
+  
+  all_impact[type]<-impact_value$value
+}
+
+all_impact %>%
+  gather(-year,key = "indicator_type", value = "impact_score") %>% 
+  ggplot(aes(x = year, y = impact_score)) +
+  geom_line(aes(color = indicator_type),linewidth=1.5)+
+  theme_minimal() +
+   labs(
+    title = "Type of indicators",
+    y = "impact score"
+  )+
+  theme(text=element_text(size=14))
+```
