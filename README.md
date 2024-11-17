@@ -60,6 +60,7 @@ source("R/impact_category.R")
 source("R/impact_indicator.R")
 source("R/species_impact.R")
 source("R/site_impact.R")
+source("R/helper-functions.R")
 ```
 
 ``` r
