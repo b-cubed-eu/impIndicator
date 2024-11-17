@@ -121,31 +121,3 @@ impact_cat<-function(impact_data,
   return(impact_matrix)
 }
 
-
-#' Convert EICAT categories to numerical values
-#'
-#' @param cat The EICAT impct category. (e.g., "MC)
-#' @param trans Numeric. The type of transformation to convert the EICAT categories to
-#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
-#'
-#' @return Numerical values corresponding to the EICAT  base on a tranfomation
-#'
-
-cat_num<-function(cat,trans){
-  name<-c("MC", "MN", "MO", "MR", "MV")
-  if(trans==1){
-    x<-c(0,1,2,3,4)
-    names(x)<-name
-  } else if (trans==2){
-    x<-c(1,2,3,4,5)
-    names(x)<-name
-  }
-  else if (trans==3){
-    x<-c(0,1,10,100,1000,10000)
-    names(x)<-name
-  } else { stop("`trans` must be 1, 2, or 3")}
-
-  return(x[cat])
-}
