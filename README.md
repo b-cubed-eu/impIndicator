@@ -60,6 +60,7 @@ source("R/impact_category.R")
 source("R/impact_indicator.R")
 source("R/species_impact.R")
 source("R/site_impact.R")
+source("R/helper-functions.R")
 ```
 
 ``` r
@@ -238,10 +239,11 @@ impact scores of each site of the study region. To correct for sampling
 effort we divide the yearly impact scores by number of sites in the
 study region with at least a single occurrence throughout the whole
 year.  
-$$I_i = \frac{\sum{S_i}}{N}$$ $I_i$ is impact score at year $i$.  
-$S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and
+$$I_i = \frac{\sum{S_i}}{N}$$  
+- $I_i$ is impact score at year $i$.  
+- $S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and
 $s_n$ is the site score for site $n$  
-$N$ is number of sites occupied through out the study years of the
+- $N$ is number of sites occupied through out the study years of the
 region.  
 **Note**: This is the only method incorporated as at now. Other methods
 will be considered later.  

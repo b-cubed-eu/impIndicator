@@ -51,14 +51,7 @@ species_impact<-function(cube,
   speciesImpact<-c()
 
   for(y in period){
-    sbs.taxon<-cube$data %>%
-      dplyr::filter(year==y) %>%
-      dplyr::select(scientificName,cellCode,obs) %>%
-      #remove duplicates of a species per site
-      dplyr::distinct(scientificName,cellCode, .keep_all = TRUE) %>%
-      tidyr::pivot_wider(names_from = scientificName, values_from = obs) %>%
-      dplyr::arrange(cellCode) %>%
-      tibble::column_to_rownames(var = "cellCode")
+    sbs.taxon<-species_by_site(cube,y)
 
     species_list<-unique(names(sbs.taxon))
 
