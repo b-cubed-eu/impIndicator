@@ -14,7 +14,7 @@
 #' represent the species
 
 #'
-#' @examples
+#' @noRd
 species_by_site <- function(cube,y){
   sbs<-cube$data %>%
     dplyr::filter(year==y) %>%
@@ -40,7 +40,7 @@ species_by_site <- function(cube,y){
 #' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
 #'
 #' @return Numerical values corresponding to the EICAT  base on a tranfomation
-#'
+#' @noRd
 
 cat_num<-function(cat,trans){
   name<-c("MC", "MN", "MO", "MR", "MV")
