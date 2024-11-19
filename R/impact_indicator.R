@@ -8,7 +8,7 @@
 #' @param impact_data The dataframe of species impact which contains columns of category,
 #'  species and mechanism.
 #' @param col_category The name of the column containing the impact categories.
-#' The first two letters each categories must be an EICAT short names
+#' The first two letters of each categories must be an EICAT short names
 #' (e.g "MC - Minimal concern")
 #' @param col_species The name of the column containing species names
 #' @param col_mechanism The name of the column containing mechanisms of impact
