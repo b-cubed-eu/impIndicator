@@ -39,6 +39,14 @@ taxa_cube <- function(taxa,
                       res=0.25,
                       first_year=NULL){
 
+
+  #check if first_year is a number
+  if(!is.null(first_year)){
+    assertthat::assert_that(assertthat::is.number(first_year),
+                            msg ="`first_year` must be a number if provided" )
+  }
+
+
   grid <- region %>%
     sf::st_make_grid(cellsize = c(res,res),
                      offset = c(sf::st_bbox(region)$xmin,
