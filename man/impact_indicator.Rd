@@ -22,7 +22,7 @@ impact_indicator(
 species and mechanism.}
 
 \item{col_category}{The name of the column containing the impact categories.
-The first two letters each categories must be an EICAT short names
+The first two letters of each categories must be an EICAT short names
 (e.g "MC - Minimal concern")}
 
 \item{col_species}{The name of the column containing species names}
