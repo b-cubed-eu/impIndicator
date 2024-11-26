@@ -133,7 +133,8 @@ impact_indicator<-function(cube,
       # Remove columns with all NAs
       if(length(impactScore_clean)!=0){
         impactScore_clean <- impactScore_clean[,
-                                               colSums(is.na(impactScore_clean)) != nrow(impactScore_clean)]
+                                               colSums(is.na(impactScore_clean))
+                                               != nrow(impactScore_clean)]
 
       }
       # if any species has impact

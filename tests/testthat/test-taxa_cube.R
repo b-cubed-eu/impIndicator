@@ -1,0 +1,8 @@
+test_that("taxa cube function works", {
+  result<-taxa_cube(taxa=taxa_Acacia,
+                         region=southAfrica_sf,
+                         res=0.25,
+                         first_year=2010)
+
+  expect_equal(class(result),"list")
+})
