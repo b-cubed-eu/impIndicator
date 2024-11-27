@@ -65,7 +65,7 @@ taxa_cube <- function(taxa,
     tibble::rownames_to_column(var = "siteID") %>%
     suppressWarnings()
 
-  # download taxaif the scientific name is given as character
+  #  try to download taxa if the scientific name is given as character
   if("character" %in% class(taxa)){
     taxa.gbif_download = rgbif::occ_data(scientificName=taxa,
                                          country=country,
