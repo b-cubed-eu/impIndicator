@@ -65,7 +65,8 @@ test_that("impact cat function throws error",{
                           col_category=NULL,
                           col_species="scientific_name",
                           col_mechanism="impact_mechanism",
-                          trans=3), "columns `category`, `species` and `mechanism` are not found in the `impact_data`
+                          trans=3),
+"columns `category`, `species` and `mechanism` are not found in the `impact_data`
 i columns `col_category`, `col_species` and `col_mechanism` must all be given"
               )
 
@@ -75,7 +76,8 @@ i columns `col_category`, `col_species` and `col_mechanism` must all be given"
                           col_category="scientific_name",
                           col_species=NULL,
                           col_mechanism="impact_mechanism",
-                          trans=3), "columns `category`, `species` and `mechanism` are not found in the `impact_data`
+                          trans=3),
+"columns `category`, `species` and `mechanism` are not found in the `impact_data`
 i columns `col_category`, `col_species` and `col_mechanism` must all be given"
   )
 
@@ -85,9 +87,19 @@ i columns `col_category`, `col_species` and `col_mechanism` must all be given"
                           col_category="scientific_name",
                           col_species="scientific_name",
                           col_mechanism=NULL,
-                          trans=3), "columns `category`, `species` and `mechanism` are not found in the `impact_data`
+                          trans=3),
+"columns `category`, `species` and `mechanism` are not found in the `impact_data`
 i columns `col_category`, `col_species` and `col_mechanism` must all be given"
   )
+
+  expect_error(impact_cat(impact_data=eicat_data,
+                          species_list=species_list,
+                          col_category="impact_category",
+                          col_species="scientific_name",
+                          col_mechanism="impact_mechanism",
+                          trans="a"),
+               "`trans` must be a number from 1,2 or 3
+i see the function documentation for details")
 
 })
 
