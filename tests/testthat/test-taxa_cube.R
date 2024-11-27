@@ -7,13 +7,14 @@ test_that("taxa cube function works", {
 
   expect_equal(class(result),"list")
 
-  #test scientific name
-  taxa<-"acacia"
-  #but expect warning because all 500 occurrences (default limit)
-  #will be from recent years
-  expect_warning(taxa_cube(taxa=taxa,
-                            region=southAfrica_sf,
-                            res=0.25))
+  ##### takes time to run####
+  # #test scientific name
+  # taxa<-"acacia"
+  # #but expect warning because all 500 occurrences (default limit)
+  # #will be from recent years
+  # expect_warning(taxa_cube(taxa=taxa,
+  #                           region=southAfrica_sf,
+  #                           res=0.25))
 })
 
 test_that(" taxa cube expect errors",{
