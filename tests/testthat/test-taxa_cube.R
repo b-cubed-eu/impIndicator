@@ -8,10 +8,14 @@ test_that("taxa cube function works", {
 })
 
 test_that(" taxa cube expect errors",{
+
+
+
   expect_error(taxa_cube(taxa="a",
                          region=southAfrica_sf,
                          res=0.25,
                          first_year=2010))
+
 
   expect_error(taxa_cube(taxa=taxa_Acacia,
                          region="a",

@@ -10,7 +10,8 @@ taxa_cube(
   limit = 500,
   country = NULL,
   res = 0.25,
-  first_year = NULL
+  first_year = NULL,
+  last_year = NULL
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ the GBIP occurrences data should be downloaded.}
 \item{res}{The resolution of grid cells to be used. Default is 0.25}
 
 \item{first_year}{The year from which the occurrence should start from}
+
+\item{last_year}{The year at which the occurrence should end}
 }
 \value{
 A list containing the \code{sim_cubes} of taxa and the dataframe of
