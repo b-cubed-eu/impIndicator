@@ -42,6 +42,9 @@ test_that("impact cat function works", {
 
 test_that("impact cat function throws error",{
 
+  species_list<-sort(unique(taxa_Acacia$species))
+
+
   #impact_data is not the expected format
   expect_error(impact_cat(impact_data="a",
                           species_list=species_list,
