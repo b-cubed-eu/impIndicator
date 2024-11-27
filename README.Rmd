@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 # impIndicator
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate and visualize the impact of alien taxa and individual species in a study area. Calculates and visualize impact per site as a map. Takes in GBIF occurrence data and EICAT assessment list. Enables user to choose from various methods 

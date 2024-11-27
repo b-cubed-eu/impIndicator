@@ -4,6 +4,8 @@
 # impIndicator
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate

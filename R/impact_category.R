@@ -50,6 +50,25 @@ impact_cat<-function(impact_data,
                      trans=1){
 
 
+  #check arguments
+
+  #impact_data
+  if(!("data.frame" %in% class(impact_data))){
+    cli::cli_abort("{.var impact_data} must be a {.cls dataframe}")
+  }
+
+  #species_list
+  if(!("character" %in% class(species_list))){
+    cli::cli_abort("{.var species_list} must be a {.cls character}")
+  }
+
+  #trans
+  if(!(trans %in% 1:3)){
+    cli::cli_abort(c("{.var trans} must be a number from 1,2 or 3",
+                   "i"="see the function documentation for details"))
+  }
+
+
   if(all(c("category",
            "species",
            "mechanism")%in%names(impact_data))){
@@ -62,7 +81,10 @@ impact_cat<-function(impact_data,
                       species=col_species,
                       mechanism=col_mechanism)))
 
-  } else{ stop("category, species and mechanism are not found in  impact_data. col_category and col_species must be given")}
+  } else{ cli::cli_abort(c(
+    "columns {.var category}, {.var species} and {.var mechanism} are not found in the {.var impact_data}",
+    "i"="columns {.var col_category}, {.var col_species} and {.var col_mechanism} must all be given"
+  ))}
 
   category_max_mean <- impact_data %>%
     dplyr::mutate(category = substr(category, 1, 2)) %>%
