@@ -42,9 +42,19 @@ taxa_cube <- function(taxa,
                       last_year=NULL){
 
 
+  #check if res is a number
+  if(!assertthat::is.number(res)){
+    cli::cli_abort(c("{.var res} must be a number of length 1"))
+  }
+
   #check if first_year is a number if provided
   if(!is.null(first_year) & !assertthat::is.number(first_year)){
-    cli::cli_abort(c("{.var first_year} must be a number if provided"))
+    cli::cli_abort(c("{.var first_year} must be a number of length 1 if provided"))
+  }
+
+  #check if last_year is a number if provided
+  if(!is.null(last_year) & !assertthat::is.number(first_year)){
+    cli::cli_abort(c("{.var last_year} must be a number of length 1 if provided"))
   }
 
 
