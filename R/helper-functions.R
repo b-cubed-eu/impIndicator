@@ -16,6 +16,9 @@
 #'
 #' @noRd
 species_by_site <- function(cube,y){
+
+  #avoid "no visible binding for global variable" NOTE for the following names
+  year=scientificName=cellCode=obs=NULL
   sbs<-cube$data %>%
     dplyr::filter(year==y) %>%
     dplyr::select(scientificName,cellCode,obs) %>%

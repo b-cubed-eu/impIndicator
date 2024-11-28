@@ -42,6 +42,13 @@ species_impact<-function(cube,
                          trans=1,
                          type=NULL){
 
+  #check arguments
+  #cube
+  if(!("sim_cube" %in% class(cube))){
+    cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube}",
+                     "i"="cube must be processed from {pkg. b3gi}"))
+  }
+
 
   full_species_list<-sort(unique(cube$data$scientificName))
 
@@ -77,7 +84,10 @@ species_impact<-function(cube,
 
     } else if(type=="max_mech"){
       eicat_score<-eicat_score_list[species_list,type]
-    } else (stop("type should be one of max, mean or max_mech"))
+    } else {
+      cli::cli_abort(c(
+        "{.var type} should be one of max, mean or max_mech options"))
+    }
 
     # site by species impact
     impactScore = sweep(sbs.taxon,2,eicat_score,FUN = "*")

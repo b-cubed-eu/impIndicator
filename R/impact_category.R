@@ -50,8 +50,11 @@ impact_cat<-function(impact_data,
                      trans=1){
 
 
-  #check arguments
+  #avoid "no visible binding for global variable" NOTE for the followin names
+  category=species=mechanism=category_value=.=rowname=NULL
 
+
+  #check arguments
   #impact_data
   if(!("data.frame" %in% class(impact_data))){
     cli::cli_abort("{.var impact_data} must be a {.cls dataframe}")

@@ -41,6 +41,10 @@ taxa_cube <- function(taxa,
                       first_year=NULL,
                       last_year=NULL){
 
+  #avoid "no visible binding for global variable" NOTE for the following names
+  cellid=geometry=decimalLatitude=decimalLongitude=species=speciesKey=NULL
+  coordinateUncertaintyInMeters=.=year=NULL
+
 
   #check if res is a number
   if(!assertthat::is.number(res)){
