@@ -48,6 +48,19 @@ site_impact<-function(cube,
                       type=NULL,
                       coords=NULL){
 
+  #check arguments
+  #cube
+  if(!("sim_cube" %in% class(cube))){
+    cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube}",
+                     "i"="cube must be processed from {pkg. b3gi}"))
+  }
+
+  if(!("data.frame" %in% class(coords)) &
+       !all(c("siteID","X","Y") %in% names(coords))){
+    cli::cli_abort(
+"{.var coords} must be a {.cls dataframe} with columns {.var siteID},{.var X} and {.var Y}")
+  }
+
 
   full_species_list<-sort(unique(cube$data$scientificName))
 
@@ -109,7 +122,13 @@ site_impact<-function(cube,
                                                       na.rm = TRUE))
 
     }
-    else(stop("'type' is not valid. Make sure it is from the options provided"))
+    else{
+      cli::cli_abort(c(
+        "{.var type} is not valid",
+        "i"="{.var type} must be from the options provided",
+        "See the function desciption OR check double the check spelling"
+      ))
+    }
 
     # convert siteScore to dataframe
     siteScore<- siteScore%>%
