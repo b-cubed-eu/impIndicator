@@ -9,10 +9,40 @@
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate
-and visualize the impact of alien taxa and individual species in a study
-area. Calculates and visualize impact per site as a map. Takes in GBIF
-occurrence data and EICAT assessment list. Enables user to choose from
-various methods of computing impact indicators from different studies.
+and visualise the impact of alien taxa and individual species in a given
+area. It calculates and visualises impact per site as a map. It takes in
+GBIF occurrence data and EICAT assessment list. It enables users to
+choose from various methods of calculating impact indicators based on
+different studies.  
+
+The impIndicator produces three main products and can be useful as
+stated below:  
+- **impact indicator**  
+The impact indicator offers a nuanced representation of the trends of
+biological invasions of an area (local, regional, or global scales). By
+tracking the increase and decrease of ecological threats over time, this
+product provides insights into the dynamics of invasive alien species
+impacts, helping assess whether current management practices are
+effective or need adjustment. The temporal analysis of impact indicator
+enables targeted resource allocation, fostering proactive interventions
+to mitigate biodiversity loss and ecosystem degradation.  
+- **site impact**  
+The site impact as a map serves as a visual and analytical tool to
+represent the intensity of biological invasions across different parts
+of an area. By enabling spatial comparisons—such as between provinces,
+states, or conservation areas—it highlights hotspots and areas at risk
+of invasion impact. This spatial data is useful for prioritising
+management actions, coordinating restoration projects, and fostering
+cross-regional collaboration to address invasive species impacts
+effectively.  
+- **species impact**  
+The species impact produces the trends of individual invasive alien
+species, enabling a species-specific impact caused by invasions. This
+data supports comparisons of individual species’ impacts, revealing
+their roles and interactions within invaded area. The species impact is
+invaluable for prioritising species-specific management efforts,
+informing eradication strategies, and advancing research on alien
+species’ ecological roles and adaptation patterns.
 
 ## Installation
 
@@ -26,7 +56,7 @@ remotes::install_github("b-cubed-eu/impIndicator")
 
 ## Demonstration
 
-This Markdown demonstrates the computation and visualization of impact
+This Markdown demonstrates the computation and visualisation of impact
 indicator of biological invasions using the `impact_indicator()` to
 compute impact indicator of alien taxa, the `species_impact()` to
 compute impact indicator per species, and the `site_impact()` to compute
@@ -54,21 +84,10 @@ library(tidyverse)   # Data wrangling and visualisation
 #> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
 library(sf)          # Spatial features
 #> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE
-
-
-# Source functions
-source("R/taxa_cube.R")
-source("R/impact_category.R")
-source("R/impact_indicator.R")
-source("R/species_impact.R")
-source("R/site_impact.R")
-source("R/helper-functions.R")
 ```
 
 ``` r
-# load the shapefile for study region
-load("data/southAfrica_sf.rda")
-plot(southAfrica_sf, main = "South African map")
+plot(southAfrica_sf, main = "South African map",col="green")
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
@@ -77,7 +96,7 @@ plot(southAfrica_sf, main = "South African map")
 
 ``` r
 # load the GBIF occurrence data for taxa
-load("data/taxa_Acacia.rda")
+
 acacia_cube<-taxa_cube(taxa=taxa_Acacia,
                     region=southAfrica_sf,
                     res=0.25,
@@ -138,7 +157,6 @@ for each species. The `impact_cat()` aggregates impact using ***max***,
 - ***max_mech***: sum of the maximum impact per mechanisms
 
 ``` r
-load("data/eicat_data.rda")
 full_species_list<-sort(unique(acacia_cube$cube$data$scientificName))
 
 agg_impact<-impact_cat(impact_data=eicat_data,
