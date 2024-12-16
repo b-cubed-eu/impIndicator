@@ -1,6 +1,6 @@
 #' Compute site impact indicator
 #'
-#' @param cube The list containing data cube of class `sim_cube` or `process_cube`from
+#' @param cube The list containing data cube of class `sim_cube` or `processed_cube`from
 #' `b3gbi::process_cube()`.
 #' @param impact_data The dataframe of species impact which contains columns of category,
 #'  species and mechanism.
@@ -163,5 +163,6 @@ site_impact <- function(cube,
       ~ ifelse(. == -Inf | is.nan(.) | . == 0, NA, .)
     ))
 
+  class(coords)<-c("site_impact",class(coords))
   return(coords)
 }

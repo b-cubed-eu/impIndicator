@@ -16,7 +16,7 @@ site_impact(
 )
 }
 \arguments{
-\item{cube}{The list containing data cube of class \code{sim_cube} from
+\item{cube}{The list containing data cube of class \code{sim_cube} or \code{processed_cube}from
 \code{b3gbi::process_cube()}.}
 
 \item{impact_data}{The dataframe of species impact which contains columns of category,
@@ -49,20 +49,22 @@ Compute site impact indicator
 }
 \examples{
 # define cube for taxa
- acacia_cube<-taxa_cube(taxa=taxa_Acacia,
-                      region=southAfrica_sf,
-                      res=0.25,
-                      first_year=2010)
+acacia_cube <- taxa_cube(
+  taxa = taxa_Acacia,
+  region = southAfrica_sf,
+  res = 0.25,
+  first_year = 2010
+)
 
-siteImpact<-site_impact(cube=acacia_cube$cube,
-                       impact_data = eicat_data,
-                       col_category="impact_category",
-                       col_species="scientific_name",
-                       col_mechanism="impact_mechanism",
-                       trans=1,
-                       type = "precautionary cumulative",
-                       coords=acacia_cube$coords)
-
-
+siteImpact <- site_impact(
+  cube = acacia_cube$cube,
+  impact_data = eicat_data,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1,
+  type = "precautionary cumulative",
+  coords = acacia_cube$coords
+)
 
 }

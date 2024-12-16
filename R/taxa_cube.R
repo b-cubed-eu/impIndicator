@@ -27,51 +27,55 @@
 #'
 #' @examples
 #'
-#' acacia_cube<-taxa_cube(taxa=taxa_Acacia,
-#'                        region=southAfrica_sf,
-#'                        res=0.25,
-#'                        first_year=2010)
+#' acacia_cube <- taxa_cube(
+#'   taxa = taxa_Acacia,
+#'   region = southAfrica_sf,
+#'   res = 0.25,
+#'   first_year = 2010
+#' )
 #'
-
 taxa_cube <- function(taxa,
                       region,
-                      limit=500,
-                      country=NULL,
-                      res=0.25,
-                      first_year=NULL,
-                      last_year=NULL){
+                      limit = 500,
+                      country = NULL,
+                      res = 0.25,
+                      first_year = NULL,
+                      last_year = NULL) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellid <- geometry <- decimalLatitude <- decimalLongitude <- species <- speciesKey <- NULL
+  coordinateUncertaintyInMeters <- . <- year <- NULL
 
-  #avoid "no visible binding for global variable" NOTE for the following names
-  cellid=geometry=decimalLatitude=decimalLongitude=species=speciesKey=NULL
-  coordinateUncertaintyInMeters=.=year=NULL
 
-
-  #check if res is a number
-  if(!assertthat::is.number(res)){
+  # check if res is a number
+  if (!assertthat::is.number(res)) {
     cli::cli_abort(c("{.var res} must be a number of length 1"))
   }
 
-  #check if first_year is a number if provided
-  if(!is.null(first_year) & !assertthat::is.number(first_year)){
+  # check if first_year is a number if provided
+  if (!is.null(first_year) & !assertthat::is.number(first_year)) {
     cli::cli_abort(c("{.var first_year} must be a number of length 1 if provided"))
   }
 
-  #check if last_year is a number if provided
-  if(!is.null(last_year) & !assertthat::is.number(first_year)){
+  # check if last_year is a number if provided
+  if (!is.null(last_year) & !assertthat::is.number(first_year)) {
     cli::cli_abort(c("{.var last_year} must be a number of length 1 if provided"))
   }
 
 
   grid <- region %>%
-    sf::st_make_grid(cellsize = c(res,res),
-                     offset = c(sf::st_bbox(region)$xmin,
-                                sf::st_bbox(region)$ymin)) %>%
+    sf::st_make_grid(
+      cellsize = c(res, res),
+      offset = c(
+        sf::st_bbox(region)$xmin,
+        sf::st_bbox(region)$ymin
+      )
+    ) %>%
     sf::st_sf() %>%
     dplyr::mutate(cellid = dplyr::row_number())
 
   grid_filtered <- grid %>%
     suppressWarnings(sf::st_intersection(region)) %>%
-    dplyr::select(cellid,geometry)
+    dplyr::select(cellid, geometry)
 
 
   # get coordinates of the occurrence sites
@@ -81,69 +85,84 @@ taxa_cube <- function(taxa,
     suppressWarnings()
 
   #  try to download taxa if the scientific name is given as character
-  if(assertthat::is.string(taxa)){
-    taxa.gbif_download = rgbif::occ_data(scientificName=taxa,
-                                         country=country,
-                                         hasCoordinate=TRUE,
-                                         hasGeospatialIssue=FALSE,
-                                         limit = limit)
-    #extract data from the downloaded file
-    taxa.df = as.data.frame(taxa.gbif_download$data)
+  if (assertthat::is.string(taxa)) {
+    taxa.gbif_download <- rgbif::occ_data(
+      scientificName = taxa,
+      country = country,
+      hasCoordinate = TRUE,
+      hasGeospatialIssue = FALSE,
+      limit = limit
+    )
+    # extract data from the downloaded file
+    taxa.df <- as.data.frame(taxa.gbif_download$data)
 
-    #stop if no download from GBIF
-    if(length(taxa.df)==0){
+    # stop if no download from GBIF
+    if (length(taxa.df) == 0) {
       cli::cli_abort(c(
-        "No download from GBIF" ,
-        "i"="Check the {.var taxa} spelling"))
+        "No download from GBIF",
+        "i" = "Check the {.var taxa} spelling"
+      ))
     }
 
 
-    #check if data fame contains the required columns
-  } else if("data.frame" %in% class(taxa)){
-    if(any(!c("decimalLatitude","decimalLongitude",
-              "species","speciesKey","coordinateUncertaintyInMeters",
-              "year") %in% colnames(taxa))){
-      requiredcol<-c("decimalLatitude","decimalLongitude","species",
-                     "speciesKey","coordinateUncertaintyInMeters",
-                     "year")
-      missingcol<-requiredcol[!c("decimalLatitude","decimalLongitude","species",
-                                 "speciesKey","coordinateUncertaintyInMeters",
-                                 "year") %in% colnames(taxa)]
+    # check if data fame contains the required columns
+  } else if ("data.frame" %in% class(taxa)) {
+    if (any(!c(
+      "decimalLatitude", "decimalLongitude",
+      "species", "speciesKey", "coordinateUncertaintyInMeters",
+      "year"
+    ) %in% colnames(taxa))) {
+      requiredcol <- c(
+        "decimalLatitude", "decimalLongitude", "species",
+        "speciesKey", "coordinateUncertaintyInMeters",
+        "year"
+      )
+      missingcol <- requiredcol[!c(
+        "decimalLatitude", "decimalLongitude", "species",
+        "speciesKey", "coordinateUncertaintyInMeters",
+        "year"
+      ) %in% colnames(taxa)]
       cli::cli_abort(c("{.var {missingcol}} {?is/are} not in the {.var taxa} column ",
-                       "x" = "{.var taxa} should be a data of GBIF format "))
+        "x" = "{.var taxa} should be a data of GBIF format "
+      ))
     }
     # take taxa data frame if accurate
-    taxa.df<-taxa
+    taxa.df <- taxa
   } else { # stop and report if taxa is not a scientific name or dataframe
     cli::cli_abort(c("{.var taxa} is not a character or dataframe"))
   }
 
 
-  taxa.sf = taxa.df %>%
-    dplyr::select(decimalLatitude,decimalLongitude,
-                  species,speciesKey,
-                  coordinateUncertaintyInMeters,year) %>% #select occurrence data
+  taxa.sf <- taxa.df %>%
+    dplyr::select(
+      decimalLatitude, decimalLongitude,
+      species, speciesKey,
+      coordinateUncertaintyInMeters, year
+    ) %>% # select occurrence data
     dplyr::filter_all(dplyr::all_vars(!is.na(.))) %>% # remove rows with missing data
-    dplyr::filter(coordinateUncertaintyInMeters<=res*1000) %>%
-    sf::st_as_sf(coords = c("decimalLongitude", "decimalLatitude"),
-                 crs = 4326) %>%
+    dplyr::filter(coordinateUncertaintyInMeters <= res * 1000) %>%
+    sf::st_as_sf(
+      coords = c("decimalLongitude", "decimalLatitude"),
+      crs = 4326
+    ) %>%
     sf::st_join(grid_filtered) %>%
     as.data.frame() %>%
     dplyr::select(-geometry) %>%
-    dplyr::mutate(occurrences=1)
+    dplyr::mutate(occurrences = 1)
 
 
-  taxa_cube<-b3gbi::process_cube(taxa.sf,grid_type = "custom",
-                                 cols_cellCode = "cellid",
-                                 cols_year = "year",
-                                 cols_occurrences = "occurrences",
-                                 cols_species = "species",
-                                 cols_speciesKey = "speciesKey",
-                                 cols_minCoordinateUncertaintyInMeters =
-                                   "coordinateUncertaintyInMeters",
-                                 first_year = first_year,
-                                 last_year = last_year)
+  taxa_cube <- b3gbi::process_cube(taxa.sf,
+    grid_type = "custom",
+    cols_cellCode = "cellid",
+    cols_year = "year",
+    cols_occurrences = "occurrences",
+    cols_species = "species",
+    cols_speciesKey = "speciesKey",
+    cols_minCoordinateUncertaintyInMeters =
+      "coordinateUncertaintyInMeters",
+    first_year = first_year,
+    last_year = last_year
+  )
 
-  return(list("cube"=taxa_cube,"coords"=coords))
+  return(list("cube" = taxa_cube, "coords" = coords))
 }
-
