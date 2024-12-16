@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @examples
-#' #create data_cube
+#' # create data_cube
 #' acacia_cube <- taxa_cube(
 #'   taxa = taxa_Acacia,
 #'   region = southAfrica_sf,
@@ -25,7 +25,7 @@
 #'   first_year = 2010
 #' )
 #'
-#' #compute impact indicator
+#' # compute impact indicator
 #' impact_value <- impact_indicator(
 #'   cube = acacia_cube$cube,
 #'   impact_data = eicat_data,
@@ -35,7 +35,7 @@
 #'   trans = 1,
 #'   type = "mean cumulative"
 #' )
-#' #plot impact indicator
+#' # plot impact indicator
 #' plot(impact_value)
 #'
 plot.impact_indicator <- function(x,
@@ -43,9 +43,9 @@ plot.impact_indicator <- function(x,
                                   colour = "red",
                                   title_lab = "Impact indicator",
                                   y_lab = "impact score",
-                                  text_size = 14,...) {
+                                  text_size = 14, ...) {
   # avoid R CMD warnings
-  value=year=NULL
+  value <- year <- NULL
 
   if (!inherits(x, "impact_indicator")) {
     cli::cli_abort("'x' is not a class 'impact_indicator'")
@@ -54,7 +54,7 @@ plot.impact_indicator <- function(x,
     ggplot2::geom_line(ggplot2::aes(y = value, x = year),
       colour = colour,
       stat = "identity",
-      linewidth = 2,...
+      linewidth = 2, ...
     ) +
     ggplot2::labs(
       title = title_lab,
