@@ -30,6 +30,7 @@ Imports:
     b3gbi (>= 0.2.2),
     cli,
     dplyr,
+    ggplot2,
     magrittr,
     rgbif,
     sf,
