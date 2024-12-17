@@ -47,7 +47,7 @@ acacia_cube <- taxa_cube(
   first_year = 2010
 )
 
-#compute species impact
+# compute species impact
 speciesImpact <- species_impact(
   cube = acacia_cube$cube,
   impact_data = eicat_data,
@@ -58,6 +58,6 @@ speciesImpact <- species_impact(
   type = "mean"
 )
 
-#visualise species impact
+# visualise species impact
 plot(speciesImpact)
 }
