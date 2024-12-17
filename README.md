@@ -229,7 +229,7 @@ siteImpact<-site_impact(cube=acacia_cube$cube,
 
 #impact map
 #visualize last four years for readability
-plot(siteImpact, region.sf = southAfrica_sf, first_year=2020)
+plot(siteImpact, region.sf = southAfrica_sf, first_year=2021)
 ```
 
 <img src="man/figures/README-site impact-1.png" width="100%" />

@@ -152,6 +152,7 @@ plot.species_impact <- function(x,
 
 #' Plot site impact
 #'
+#' @description
 #' Produces the yearly impact map of a region
 #'
 #' @param x A dataframe of impact indicator. Must be a class of "site_impact"
