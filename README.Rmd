@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
+[![repo status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises impact per site as a map. It takes in GBIF occurrence data and EICAT assessment list. It enables users to choose from various methods 
@@ -118,9 +119,9 @@ siteImpact<-site_impact(cube=acacia_cube$cube,
                        type = "mean cumulative",
                        coords=acacia_cube$coords)
 
-#impact risk map
+#impact map
 #visualize last four years for readability
-plot(x=siteImpact, region.sf = southAfrica_sf, first_year=2021)
+plot(siteImpact, region.sf = southAfrica_sf, first_year=2020)
 ```
 
 

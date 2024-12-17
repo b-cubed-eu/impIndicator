@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
+[![repo
+status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate
@@ -225,9 +227,9 @@ siteImpact<-site_impact(cube=acacia_cube$cube,
                        type = "mean cumulative",
                        coords=acacia_cube$coords)
 
-#impact risk map
+#impact map
 #visualize last four years for readability
-plot(x=siteImpact, region.sf = southAfrica_sf, first_year=2021)
+plot(siteImpact, region.sf = southAfrica_sf, first_year=2020)
 ```
 
 <img src="man/figures/README-site impact-1.png" width="100%" />
