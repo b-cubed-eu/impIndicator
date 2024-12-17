@@ -37,7 +37,7 @@ representing the impact score and time respectively.
 Produces a ggplot object to show the trend of the impact.
 }
 \examples{
-#create data_cube
+# create data_cube
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,
@@ -45,7 +45,7 @@ acacia_cube <- taxa_cube(
   first_year = 2010
 )
 
-#compute impact indicator
+# compute impact indicator
 impact_value <- impact_indicator(
   cube = acacia_cube$cube,
   impact_data = eicat_data,
@@ -55,7 +55,7 @@ impact_value <- impact_indicator(
   trans = 1,
   type = "mean cumulative"
 )
-#plot impact indicator
+# plot impact indicator
 plot(impact_value)
 
 }
