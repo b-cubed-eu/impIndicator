@@ -117,29 +117,12 @@ siteImpact<-site_impact(cube=acacia_cube$cube,
                        trans=1,
                        type = "mean cumulative",
                        coords=acacia_cube$coords)
-```
-### impact risk map
-```{r}
+
 #impact risk map
 #visualize last four years for readability
-siteImpact%>% 
-  gather(-c(siteID,X,Y),key="year",value="impact") %>% 
-  na.omit() %>% 
-  filter(year>=2021) %>% 
-  ggplot() +
-  geom_tile(
-    aes(x=X,y=Y,fill=impact),color="black")+
-  geom_sf(data = southAfrica_sf, fill = NA, color = "black", alpha = 0.5)+
-  scale_fill_gradient(low = "yellow",
-                       high = "red")+
-  theme_minimal() +
-   labs(
-    title = "impact risk map (mean cumulative)",
-    y = "Latitude", x="Longitude"
-  )+
-  theme(text=element_text(size=14))+
-  facet_wrap(~year)
+plot(x=siteImpact, region.sf = southAfrica_sf, first_year=2021)
 ```
+
 
 # Compute impact indicators
 
@@ -162,18 +145,8 @@ impactIndicator<-impact_indicator(cube=acacia_cube$cube,
                                   col_mechanism="impact_mechanism",
                                   trans=1,
                                   type = "mean cumulative")
-
-ggplot(data = impactIndicator) +
-  geom_line(aes(y = value, x = year),colour="red",
-            stat="identity",
-            linewidth=2)+
-  geom_smooth(aes(y = value, x = year),linetype=2)+
-  labs(
-    title = "Impact indicator",
-    y = "impact score"
-  )+
-  theme_minimal() +
-  theme(text=element_text(size=14))
+# visualise impact indicator
+plot(impactIndicator)
 ```
 
 ## Impact indicator per species
@@ -190,20 +163,8 @@ species_value<-species_impact(cube=acacia_cube$cube,
                         trans=1,
                         type = "mean")
 
-
-species_value %>%
-  rownames_to_column("year") %>%
-  mutate(year=as.numeric(year)) %>%
-  gather(-year,key = "Alien_species", value = "impact_score") %>%
-  ggplot(aes(x = year, y = impact_score)) +
-  geom_line(aes(color = Alien_species),linewidth=1.5)+
-  theme_minimal() +
-  labs(
-    title = "sum of species impact",
-    y = "impact score"
-  )+
-  theme(text=element_text(size=14))
-
+#visualise species impact
+plot(species_value)
 ```
 
 # Comparing type of indicators
