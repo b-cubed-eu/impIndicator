@@ -3,20 +3,20 @@ Title: Impact Indicators of Alien Taxa
 Version: 0.0.0.9000
 Authors@R: 
     c(
-    person("Mukhtar Muhammed", "Yahaya", , "yahayamukhtar.m@gmail.com", 
+    person("Mukhtar Muhammed", "Yahaya", email = "yahayamukhtar.m@gmail.com", 
     role = c("aut", "cre"),
            comment = c(ORCID = "0009-0008-9200-0863")),
-    person("Sabrina", "Kumschick", "sabrina.kumschick@gmail.com", 
+    person("Sabrina", "Kumschick",email =  "sabrina.kumschick@gmail.com", 
     role = c("ctb"),
            comment = c(ORCID = "0000-0001-8034-5831")),
-    person("Sandra", "MacFadyen",, "sandra@biogis.co.za", 
+    person("Sandra", "MacFadyen",email =  "sandra@biogis.co.za", 
     role = c( "ctb"),
            comment = c(ORCID = "0000-0002-5316-440X")),
-    person("Cang", "Hui",, "chui@sun.ac.za", 
+    person("Cang", "Hui", email = "chui@sun.ac.za", 
     role = c("ctb"),
            comment = c(ORCID = "0000-0002-3660-8160")),
-    person("Stellenbosch University (SU)", , , 
-    "info@sun.ac.za", role = "cph"))
+    person("Stellenbosch University (SU)", , 
+    email = "info@sun.ac.za", role = "cph"))
 Description: Compute impact indicators of alien taxa using GBIF occurrence cube
     and EICAT assessment of alien species. Aggregates species impact of various 
     scores due to mecahnism. Aggregates site impact of various 
@@ -30,6 +30,7 @@ Imports:
     b3gbi (>= 0.2.2),
     cli,
     dplyr,
+    ggplot2,
     magrittr,
     rgbif,
     sf,

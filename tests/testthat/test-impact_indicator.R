@@ -15,7 +15,7 @@ test_that("impact indicator function return correct result", {
                               trans=1,
                               type = "mean cumulative")
 
-  expect_equal(class(result), "data.frame")
+  expect_equal(class(result), c("impact_indicator","data.frame"))
 
   expect_equal(unique(acacia_cube$cube$data$year),result[,1])
 

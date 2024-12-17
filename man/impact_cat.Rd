@@ -41,24 +41,28 @@ impact per categories of a species
 Aggregate species impact categories from impact data.
 }
 \examples{
-#read the impact data
-#eicat_data<-readRDS("data/eicat_data.rds")
-#define species list
-species_list<-c("Acacia adunca",
-"Acacia baileyana",
-"Acacia binervata",
-"Acacia crassiuscula",
-"Acacia cultriformis",
-"Acacia cyclops",
-"Acacia dealbata",
-"Acacia decurrens",
-"Acacia elata")
+# read the impact data
+# eicat_data<-readRDS("data/eicat_data.rds")
+# define species list
+species_list <- c(
+  "Acacia adunca",
+  "Acacia baileyana",
+  "Acacia binervata",
+  "Acacia crassiuscula",
+  "Acacia cultriformis",
+  "Acacia cyclops",
+  "Acacia dealbata",
+  "Acacia decurrens",
+  "Acacia elata"
+)
 
-agg_impact<-impact_cat(impact_data=eicat_data,
-                     species_list=species_list,
-                     col_category="impact_category",
-                     col_species="scientific_name",
-                     col_mechanism="impact_mechanism",
-                     trans=1)
+agg_impact <- impact_cat(
+  impact_data = eicat_data,
+  species_list = species_list,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1
+)
 
 }

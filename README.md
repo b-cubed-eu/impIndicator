@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
+[![repo
+status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate
@@ -224,30 +226,10 @@ siteImpact<-site_impact(cube=acacia_cube$cube,
                        trans=1,
                        type = "mean cumulative",
                        coords=acacia_cube$coords)
-```
 
-### impact risk map
-
-``` r
-#impact risk map
+#impact map
 #visualize last four years for readability
-siteImpact%>% 
-  gather(-c(siteID,X,Y),key="year",value="impact") %>% 
-  na.omit() %>% 
-  filter(year>=2021) %>% 
-  ggplot() +
-  geom_tile(
-    aes(x=X,y=Y,fill=impact),color="black")+
-  geom_sf(data = southAfrica_sf, fill = NA, color = "black", alpha = 0.5)+
-  scale_fill_gradient(low = "yellow",
-                       high = "red")+
-  theme_minimal() +
-   labs(
-    title = "impact risk map (mean cumulative)",
-    y = "Latitude", x="Longitude"
-  )+
-  theme(text=element_text(size=14))+
-  facet_wrap(~year)
+plot(siteImpact, region.sf = southAfrica_sf, first_year=2021)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
@@ -281,19 +263,8 @@ impactIndicator<-impact_indicator(cube=acacia_cube$cube,
                                   col_mechanism="impact_mechanism",
                                   trans=1,
                                   type = "mean cumulative")
-
-ggplot(data = impactIndicator) +
-  geom_line(aes(y = value, x = year),colour="red",
-            stat="identity",
-            linewidth=2)+
-  geom_smooth(aes(y = value, x = year),linetype=2)+
-  labs(
-    title = "Impact indicator",
-    y = "impact score"
-  )+
-  theme_minimal() +
-  theme(text=element_text(size=14))
-#> `geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+# visualise impact indicator
+plot(impactIndicator)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
@@ -314,19 +285,8 @@ species_value<-species_impact(cube=acacia_cube$cube,
                         trans=1,
                         type = "mean")
 
-
-species_value %>%
-  rownames_to_column("year") %>%
-  mutate(year=as.numeric(year)) %>%
-  gather(-year,key = "Alien_species", value = "impact_score") %>%
-  ggplot(aes(x = year, y = impact_score)) +
-  geom_line(aes(color = Alien_species),linewidth=1.5)+
-  theme_minimal() +
-  labs(
-    title = "sum of species impact",
-    y = "impact score"
-  )+
-  theme(text=element_text(size=14))
+#visualise species impact
+plot(species_value)
 #> Warning: Removed 9 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 ```
