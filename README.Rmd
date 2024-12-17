@@ -109,7 +109,7 @@ indicators, namely, ***precautionary***, ***precautionary cumulative***, ***mean
 - ***mean***: mean score across species' mean in each site\
 - ***mean cumulative***: cumulative score across species' mean in each site\
 - ***cumulative***: cumulative score across species' sum of maximum score per mechanism\
-```{r site impact}
+```{r}
 siteImpact<-site_impact(cube=acacia_cube$cube,
                        impact_data = eicat_data,
                        col_category="impact_category",

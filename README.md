@@ -232,7 +232,7 @@ siteImpact<-site_impact(cube=acacia_cube$cube,
 plot(siteImpact, region.sf = southAfrica_sf, first_year=2021)
 ```
 
-<img src="man/figures/README-site impact-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 # Compute impact indicators
 
@@ -267,7 +267,7 @@ impactIndicator<-impact_indicator(cube=acacia_cube$cube,
 plot(impactIndicator)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ## Impact indicator per species
 
@@ -291,7 +291,7 @@ plot(species_value)
 #> (`geom_line()`).
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 # Comparing type of indicators
 
@@ -331,4 +331,4 @@ all_impact %>%
   theme(text=element_text(size=14))
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
