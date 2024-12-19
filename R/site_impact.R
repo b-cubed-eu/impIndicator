@@ -97,7 +97,9 @@ site_impact <- function(cube,
             na.rm = TRUE
           )
         }) %>%
+        #suppress warning when -Inf produced  by max() due to site with no impact
           suppressWarnings()
+
       } else { # elsecompute precautionary cumulative
         siteScore <- apply(impactScore, 1, function(x) {
           sum(x,
@@ -138,8 +140,8 @@ site_impact <- function(cube,
     } else {
       cli::cli_abort(c(
         "{.var type} is not valid",
-        "i" = "{.var type} must be from the options provided",
-        "See the function desciption OR check double the check spelling"
+        "x" = "{.var type} must be from the options provided",
+        "See the function desciption or double check the spelling"
       ))
     }
 
