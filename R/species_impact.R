@@ -107,6 +107,6 @@ species_impact <- function(cube,
     as.data.frame()
 
   rownames(speciesImpact) <- as.character(period)
-  class(speciesImpact) <- c("species_impact",class(speciesImpact))
+  class(speciesImpact) <- c("species_impact", class(speciesImpact))
   return(speciesImpact)
 }
