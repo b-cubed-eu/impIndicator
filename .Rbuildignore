@@ -3,3 +3,4 @@
 ^CITATION\.cff$
 ^README\.Rmd$
 ^\.github$
+^codemeta\.json$
