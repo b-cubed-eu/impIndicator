@@ -48,28 +48,26 @@ This Markdown demonstrates the computation and visualisation of impact indicator
 Environmental Impact Classification of Alien Taxa (EICAT) impact score of species
 using `impact_cat()`.
 
-```{r load packages }
+```{r load packages, message=FALSE}
 # Load packages
 library(impIndicator)
 
-library(b3gbi)       # Biodiversity indicators for data cubes
-library(tidyverse)   # Data wrangling and visualisation
-library(sf)          # Spatial features
-
+library(b3gbi) # Biodiversity indicators for data cubes
+library(tidyverse) # Data wrangling and visualisation
+library(sf) # Spatial features
 ```
 
-```{r}
-plot(southAfrica_sf, main = "South African map",col="green")
-```
 
 # Process occurrence cube
 ```{r}
 # load the GBIF occurrence data for taxa
 
-acacia_cube<-taxa_cube(taxa=taxa_Acacia,
-                    region=southAfrica_sf,
-                    res=0.25,
-                    first_year=2010)
+acacia_cube <- taxa_cube(
+  taxa = taxa_Acacia,
+  region = southAfrica_sf,
+  res = 0.25,
+  first_year = 2010
+)
 
 acacia_cube$cube
 head(acacia_cube$coords)
@@ -85,14 +83,16 @@ There are often several impact records per species in different mechanisms and r
 - ***max_mech***: sum of the maximum impact per mechanisms
 
 ```{r Aggregate within species impact}
-full_species_list<-sort(unique(acacia_cube$cube$data$scientificName))
+full_species_list <- sort(unique(acacia_cube$cube$data$scientificName))
 
-agg_impact<-impact_cat(impact_data=eicat_data,
-                     species_list=full_species_list,
-                     col_category="impact_category",
-                     col_species="scientific_name",
-                     col_mechanism="impact_mechanism",
-                     trans=1)
+agg_impact <- impact_cat(
+  impact_data = eicat_data,
+  species_list = full_species_list,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1
+)
 agg_impact
 ```
 
@@ -110,18 +110,20 @@ indicators, namely, ***precautionary***, ***precautionary cumulative***, ***mean
 - ***mean cumulative***: cumulative score across species' mean in each site\
 - ***cumulative***: cumulative score across species' sum of maximum score per mechanism\
 ```{r}
-siteImpact<-site_impact(cube=acacia_cube$cube,
-                       impact_data = eicat_data,
-                       col_category="impact_category",
-                       col_species="scientific_name",
-                       col_mechanism="impact_mechanism",
-                       trans=1,
-                       type = "mean cumulative",
-                       coords=acacia_cube$coords)
+siteImpact <- site_impact(
+  cube = acacia_cube$cube,
+  impact_data = eicat_data,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1,
+  type = "mean cumulative",
+  coords = acacia_cube$coords
+)
 
-#impact map
-#visualize last four years for readability
-plot(siteImpact, region.sf = southAfrica_sf, first_year=2021)
+# impact map
+# visualize last four years for readability
+plot(siteImpact, region.sf = southAfrica_sf, first_year = 2021)
 ```
 
 
@@ -137,15 +139,17 @@ $$I_i = \frac{\sum{S_i}}{N}$$\
 method to compute confidence interval of the indicator rather than using `geom_smooth()`
 used below.
 ```{r}
-#sum of impact risk map for each year
+# sum of impact risk map for each year
 
-impactIndicator<-impact_indicator(cube=acacia_cube$cube,
-                                  impact_data = eicat_data,
-                                  col_category="impact_category",
-                                  col_species="scientific_name",
-                                  col_mechanism="impact_mechanism",
-                                  trans=1,
-                                  type = "mean cumulative")
+impactIndicator <- impact_indicator(
+  cube = acacia_cube$cube,
+  impact_data = eicat_data,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1,
+  type = "mean cumulative"
+)
 # visualise impact indicator
 plot(impactIndicator)
 ```
@@ -156,15 +160,17 @@ We compute the impact indicator per species by summing the impact risk map per s
 ```{r}
 #  impact indicator per species
 
-species_value<-species_impact(cube=acacia_cube$cube,
-                        impact_data = eicat_data,
-                        col_category="impact_category",
-                        col_species="scientific_name",
-                        col_mechanism="impact_mechanism",
-                        trans=1,
-                        type = "mean")
+species_value <- species_impact(
+  cube = acacia_cube$cube,
+  impact_data = eicat_data,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1,
+  type = "mean"
+)
 
-#visualise species impact
+# visualise species impact
 plot(species_value)
 ```
 
@@ -175,33 +181,37 @@ be adapted by a user to compare a set of method.
 
 ```{r}
 # plot all type of impact indicators
-types<-c("precautionary",
-         "precautionary cumulative",
-         "mean",
-         "mean cumulative",
-         "cumulative")
+types <- c(
+  "precautionary",
+  "precautionary cumulative",
+  "mean",
+  "mean cumulative",
+  "cumulative"
+)
 
-all_impact<-data.frame("year"=unique(acacia_cube$cube$data$year))
-for(type in types){
-  impact_value<-impact_indicator(cube=acacia_cube$cube,
-                                 impact_data = eicat_data,
-                                 col_category="impact_category",
-                                 col_species="scientific_name",
-                                 col_mechanism="impact_mechanism",
-                                 trans=1,
-                                 type = type)
-  
-  all_impact[type]<-impact_value$value
+all_impact <- data.frame("year" = unique(acacia_cube$cube$data$year))
+for (type in types) {
+  impact_value <- impact_indicator(
+    cube = acacia_cube$cube,
+    impact_data = eicat_data,
+    col_category = "impact_category",
+    col_species = "scientific_name",
+    col_mechanism = "impact_mechanism",
+    trans = 1,
+    type = type
+  )
+
+  all_impact[type] <- impact_value$value
 }
 
 all_impact %>%
-  gather(-year,key = "indicator_type", value = "impact_score") %>% 
+  gather(-year, key = "indicator_type", value = "impact_score") %>%
   ggplot(aes(x = year, y = impact_score)) +
-  geom_line(aes(color = indicator_type),linewidth=1.5)+
+  geom_line(aes(color = indicator_type), linewidth = 1.5) +
   theme_minimal() +
-   labs(
+  labs(
     title = "Type of indicators",
     y = "impact score"
-  )+
-  theme(text=element_text(size=14))
+  ) +
+  theme(text = element_text(size = 14))
 ```

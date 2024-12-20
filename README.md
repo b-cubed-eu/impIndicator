@@ -72,37 +72,22 @@ of species using `impact_cat()`.
 # Load packages
 library(impIndicator)
 
-library(b3gbi)       # Biodiversity indicators for data cubes
-library(tidyverse)   # Data wrangling and visualisation
-#> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#> ✔ dplyr     1.1.4     ✔ readr     2.1.5
-#> ✔ forcats   1.0.0     ✔ stringr   1.5.1
-#> ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-#> ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-#> ✔ purrr     1.0.2     
-#> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#> ✖ dplyr::filter() masks stats::filter()
-#> ✖ dplyr::lag()    masks stats::lag()
-#> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-library(sf)          # Spatial features
-#> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE
+library(b3gbi) # Biodiversity indicators for data cubes
+library(tidyverse) # Data wrangling and visualisation
+library(sf) # Spatial features
 ```
-
-``` r
-plot(southAfrica_sf, main = "South African map",col="green")
-```
-
-<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 # Process occurrence cube
 
 ``` r
 # load the GBIF occurrence data for taxa
 
-acacia_cube<-taxa_cube(taxa=taxa_Acacia,
-                    region=southAfrica_sf,
-                    res=0.25,
-                    first_year=2010)
+acacia_cube <- taxa_cube(
+  taxa = taxa_Acacia,
+  region = southAfrica_sf,
+  res = 0.25,
+  first_year = 2010
+)
 
 acacia_cube$cube
 #> 
@@ -159,14 +144,16 @@ for each species. The `impact_cat()` aggregates impact using ***max***,
 - ***max_mech***: sum of the maximum impact per mechanisms
 
 ``` r
-full_species_list<-sort(unique(acacia_cube$cube$data$scientificName))
+full_species_list <- sort(unique(acacia_cube$cube$data$scientificName))
 
-agg_impact<-impact_cat(impact_data=eicat_data,
-                     species_list=full_species_list,
-                     col_category="impact_category",
-                     col_species="scientific_name",
-                     col_mechanism="impact_mechanism",
-                     trans=1)
+agg_impact <- impact_cat(
+  impact_data = eicat_data,
+  species_list = full_species_list,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1
+)
 agg_impact
 #>                       max     mean max_mech
 #> Acacia acinacea        NA       NA       NA
@@ -218,21 +205,23 @@ and site leads to five type of indicators, namely, ***precautionary***,
   score per mechanism  
 
 ``` r
-siteImpact<-site_impact(cube=acacia_cube$cube,
-                       impact_data = eicat_data,
-                       col_category="impact_category",
-                       col_species="scientific_name",
-                       col_mechanism="impact_mechanism",
-                       trans=1,
-                       type = "mean cumulative",
-                       coords=acacia_cube$coords)
+siteImpact <- site_impact(
+  cube = acacia_cube$cube,
+  impact_data = eicat_data,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1,
+  type = "mean cumulative",
+  coords = acacia_cube$coords
+)
 
-#impact map
-#visualize last four years for readability
-plot(siteImpact, region.sf = southAfrica_sf, first_year=2021)
+# impact map
+# visualize last four years for readability
+plot(siteImpact, region.sf = southAfrica_sf, first_year = 2021)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
 
 # Compute impact indicators
 
@@ -254,20 +243,22 @@ bootstrap method to compute confidence interval of the indicator rather
 than using `geom_smooth()` used below.
 
 ``` r
-#sum of impact risk map for each year
+# sum of impact risk map for each year
 
-impactIndicator<-impact_indicator(cube=acacia_cube$cube,
-                                  impact_data = eicat_data,
-                                  col_category="impact_category",
-                                  col_species="scientific_name",
-                                  col_mechanism="impact_mechanism",
-                                  trans=1,
-                                  type = "mean cumulative")
+impactIndicator <- impact_indicator(
+  cube = acacia_cube$cube,
+  impact_data = eicat_data,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1,
+  type = "mean cumulative"
+)
 # visualise impact indicator
 plot(impactIndicator)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 ## Impact indicator per species
 
@@ -277,21 +268,23 @@ map per species and correct for sampling effort by dividing by $N$.
 ``` r
 #  impact indicator per species
 
-species_value<-species_impact(cube=acacia_cube$cube,
-                        impact_data = eicat_data,
-                        col_category="impact_category",
-                        col_species="scientific_name",
-                        col_mechanism="impact_mechanism",
-                        trans=1,
-                        type = "mean")
+species_value <- species_impact(
+  cube = acacia_cube$cube,
+  impact_data = eicat_data,
+  col_category = "impact_category",
+  col_species = "scientific_name",
+  col_mechanism = "impact_mechanism",
+  trans = 1,
+  type = "mean"
+)
 
-#visualise species impact
+# visualise species impact
 plot(species_value)
 #> Warning: Removed 9 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 # Comparing type of indicators
 
@@ -300,35 +293,39 @@ which can be adapted by a user to compare a set of method.
 
 ``` r
 # plot all type of impact indicators
-types<-c("precautionary",
-         "precautionary cumulative",
-         "mean",
-         "mean cumulative",
-         "cumulative")
+types <- c(
+  "precautionary",
+  "precautionary cumulative",
+  "mean",
+  "mean cumulative",
+  "cumulative"
+)
 
-all_impact<-data.frame("year"=unique(acacia_cube$cube$data$year))
-for(type in types){
-  impact_value<-impact_indicator(cube=acacia_cube$cube,
-                                 impact_data = eicat_data,
-                                 col_category="impact_category",
-                                 col_species="scientific_name",
-                                 col_mechanism="impact_mechanism",
-                                 trans=1,
-                                 type = type)
-  
-  all_impact[type]<-impact_value$value
+all_impact <- data.frame("year" = unique(acacia_cube$cube$data$year))
+for (type in types) {
+  impact_value <- impact_indicator(
+    cube = acacia_cube$cube,
+    impact_data = eicat_data,
+    col_category = "impact_category",
+    col_species = "scientific_name",
+    col_mechanism = "impact_mechanism",
+    trans = 1,
+    type = type
+  )
+
+  all_impact[type] <- impact_value$value
 }
 
 all_impact %>%
-  gather(-year,key = "indicator_type", value = "impact_score") %>% 
+  gather(-year, key = "indicator_type", value = "impact_score") %>%
   ggplot(aes(x = year, y = impact_score)) +
-  geom_line(aes(color = indicator_type),linewidth=1.5)+
+  geom_line(aes(color = indicator_type), linewidth = 1.5) +
   theme_minimal() +
-   labs(
+  labs(
     title = "Type of indicators",
     y = "impact score"
-  )+
-  theme(text=element_text(size=14))
+  ) +
+  theme(text = element_text(size = 14))
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
