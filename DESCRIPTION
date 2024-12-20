@@ -7,7 +7,7 @@ Authors@R:
     role = c("aut", "cre"),
            comment = c(ORCID = "0009-0008-9200-0863")),
     person("Sabrina", "Kumschick",email =  "sabrina.kumschick@gmail.com", 
-    role = c("ctb"),
+    role = c("aut","ctb"),
            comment = c(ORCID = "0000-0001-8034-5831")),
     person("Sandra", "MacFadyen",email =  "sandra@biogis.co.za", 
     role = c( "ctb"),
@@ -21,7 +21,7 @@ Description: Compute impact indicators of alien taxa using GBIF occurrence cube
     and EICAT assessment of alien species. Aggregates species impact of various 
     scores due to mecahnism. Aggregates site impact of various 
     scores due to species. 
-License: file LICENSE
+License: MIT + file LICENSE
 BugReports: https://github.com/b-cubed-eu/impIndicator/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
