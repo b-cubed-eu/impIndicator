@@ -19,7 +19,24 @@ library(impIndicator)
 ```
 
 # Process GBIF data from the environment
-1. import GBIF data using `read.csv()`, `readr::read_csv()`, or `readxl::read_excel()` based on the data set format. The `region` of the study has to be given as shapefile.
+1. import GBIF data using `read.csv()`, `readr::read_csv()`, or `readxl::read_excel()` based on the data set format.
+
+Here is an example a GBIF occurrences data with required columns.`decimalLatitude`,
+`decimalLongitude`,`species`,`speciesKey`,`coordinateUncertaintyInMeters` and
+`year`
+```{r echo=FALSE, results='asis'}
+library(knitr)
+taxa_Acacia %>% dplyr::select(decimalLatitude,
+                      decimalLongitude,
+                      species,
+                      speciesKey,
+                      coordinateUncertaintyInMeters,
+                      year
+) %>% head(10) %>% 
+  kable()
+```
+
+The `region` of the study has to be given as a shapefile.
 
 ```{r}
 acacia_cube <- taxa_cube(
@@ -32,7 +49,7 @@ acacia_cube <- taxa_cube(
 
 ```
 
-The cube is `sim_cube` object. Below is an the example of acacia taxa
+The cube is a `sim_cube` object. Below is an the example of acacia taxa
 ```{r}
 # view processed cube
 acacia_cube$cube
