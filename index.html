@@ -39,6 +39,12 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/Prepare_data.html">Prepare_data</a></li>
+  </ul>
+</li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -84,35 +90,23 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <code class="sourceCode R"><span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://b-cubed-eu.github.io/impIndicator/">impIndicator</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/b3gbi" class="external-link">b3gbi</a></span><span class="op">)</span>       <span class="co"># Biodiversity indicators for data cubes</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>   <span class="co"># Data wrangling and visualisation</span></span>
-<span><span class="co">#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">#&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.5</span></span>
-<span><span class="co">#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.1</span></span>
-<span><span class="co">#&gt; ✔ ggplot2   3.5.1     ✔ tibble    3.2.1</span></span>
-<span><span class="co">#&gt; ✔ lubridate 1.9.3     ✔ tidyr     1.3.1</span></span>
-<span><span class="co">#&gt; ✔ purrr     1.0.2     </span></span>
-<span><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span><span class="co">#&gt; ✖ dplyr::filter() masks stats::filter()</span></span>
-<span><span class="co">#&gt; ✖ dplyr::lag()    masks stats::lag()</span></span>
-<span><span class="co">#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span>          <span class="co"># Spatial features</span></span>
-<span><span class="co">#&gt; Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.3.1; sf_use_s2() is TRUE</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">southAfrica_sf</span>, main <span class="op">=</span> <span class="st">"South African map"</span>,col<span class="op">=</span><span class="st">"green"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-2-1.png" width="100%"></p>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/b3gbi" class="external-link">b3gbi</a></span><span class="op">)</span> <span class="co"># Biodiversity indicators for data cubes</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># Data wrangling and visualisation</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span> <span class="co"># Spatial features</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level1">
 <h1 id="process-occurrence-cube">Process occurrence cube<a class="anchor" aria-label="anchor" href="#process-occurrence-cube"></a>
 </h1>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># load the GBIF occurrence data for taxa</span></span>
 <span></span>
-<span><span class="va">acacia_cube</span><span class="op">&lt;-</span><span class="fu"><a href="reference/taxa_cube.html">taxa_cube</a></span><span class="op">(</span>taxa<span class="op">=</span><span class="va">taxa_Acacia</span>,</span>
-<span>                    region<span class="op">=</span><span class="va">southAfrica_sf</span>,</span>
-<span>                    res<span class="op">=</span><span class="fl">0.25</span>,</span>
-<span>                    first_year<span class="op">=</span><span class="fl">2010</span><span class="op">)</span></span>
+<span><span class="va">acacia_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/taxa_cube.html">taxa_cube</a></span><span class="op">(</span></span>
+<span>  taxa <span class="op">=</span> <span class="va">taxa_Acacia</span>,</span>
+<span>  region <span class="op">=</span> <span class="va">southAfrica_sf</span>,</span>
+<span>  res <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>  first_year <span class="op">=</span> <span class="fl">2010</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -169,15 +163,17 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <li>
 <strong><em>max_mech</em></strong>: sum of the maximum impact per mechanisms</li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">full_species_list</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">full_species_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">agg_impact</span><span class="op">&lt;-</span><span class="fu"><a href="reference/impact_cat.html">impact_cat</a></span><span class="op">(</span>impact_data<span class="op">=</span><span class="va">eicat_data</span>,</span>
-<span>                     species_list<span class="op">=</span><span class="va">full_species_list</span>,</span>
-<span>                     col_category<span class="op">=</span><span class="st">"impact_category"</span>,</span>
-<span>                     col_species<span class="op">=</span><span class="st">"scientific_name"</span>,</span>
-<span>                     col_mechanism<span class="op">=</span><span class="st">"impact_mechanism"</span>,</span>
-<span>                     trans<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">agg_impact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_cat.html">impact_cat</a></span><span class="op">(</span></span>
+<span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
+<span>  species_list <span class="op">=</span> <span class="va">full_species_list</span>,</span>
+<span>  col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
+<span>  col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
+<span>  col_mechanism <span class="op">=</span> <span class="st">"impact_mechanism"</span>,</span>
+<span>  trans <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">agg_impact</span></span>
 <span><span class="co">#&gt;                       max     mean max_mech</span></span>
 <span><span class="co">#&gt; Acacia acinacea        NA       NA       NA</span></span>
@@ -226,20 +222,22 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <li>
 <strong><em>cumulative</em></strong>: cumulative score across species’ sum of maximum score per mechanism</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">siteImpact</span><span class="op">&lt;-</span><span class="fu"><a href="reference/site_impact.html">site_impact</a></span><span class="op">(</span>cube<span class="op">=</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
-<span>                       impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
-<span>                       col_category<span class="op">=</span><span class="st">"impact_category"</span>,</span>
-<span>                       col_species<span class="op">=</span><span class="st">"scientific_name"</span>,</span>
-<span>                       col_mechanism<span class="op">=</span><span class="st">"impact_mechanism"</span>,</span>
-<span>                       trans<span class="op">=</span><span class="fl">1</span>,</span>
-<span>                       type <span class="op">=</span> <span class="st">"mean cumulative"</span>,</span>
-<span>                       coords<span class="op">=</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/site_impact.html">site_impact</a></span><span class="op">(</span></span>
+<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
+<span>  col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
+<span>  col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
+<span>  col_mechanism <span class="op">=</span> <span class="st">"impact_mechanism"</span>,</span>
+<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span>,</span>
+<span>  coords <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">coords</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#impact map</span></span>
-<span><span class="co">#visualize last four years for readability</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">siteImpact</span>, region.sf <span class="op">=</span> <span class="va">southAfrica_sf</span>, first_year<span class="op">=</span><span class="fl">2021</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<span><span class="co"># impact map</span></span>
+<span><span class="co"># visualize last four years for readability</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">siteImpact</span>, region.sf <span class="op">=</span> <span class="va">southAfrica_sf</span>, first_year <span class="op">=</span> <span class="fl">2021</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-3-1.png" width="100%"></p>
 </div>
 </div>
 <div class="section level1">
@@ -249,77 +247,85 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 - <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>i</mi></msub><annotation encoding="application/x-tex">I_i</annotation></semantics></math> is impact score at year <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>.<br>
 - <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>S</mi><mi>i</mi></msub><annotation encoding="application/x-tex">S_i</annotation></semantics></math> is the sum of risk map value, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>s</mi><mn>1</mn></msub><mo>,</mo><msub><mi>s</mi><mn>2</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>s</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">S=\{s_1,s_2,...,s_n\}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>n</mi></msub><annotation encoding="application/x-tex">s_n</annotation></semantics></math> is the site score for site <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math><br>
 - <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> is number of sites occupied through out the study years of the region.<br><strong>Note</strong>: This is the only method incorporated as at now. Other methods will be considered later.<br><strong>Note</strong>: A function <code>impact_uncertainty()</code> is being developed to use bootstrap method to compute confidence interval of the indicator rather than using <code>geom_smooth()</code> used below.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#sum of impact risk map for each year</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># sum of impact risk map for each year</span></span>
 <span></span>
-<span><span class="va">impactIndicator</span><span class="op">&lt;-</span><span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span>cube<span class="op">=</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
-<span>                                  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
-<span>                                  col_category<span class="op">=</span><span class="st">"impact_category"</span>,</span>
-<span>                                  col_species<span class="op">=</span><span class="st">"scientific_name"</span>,</span>
-<span>                                  col_mechanism<span class="op">=</span><span class="st">"impact_mechanism"</span>,</span>
-<span>                                  trans<span class="op">=</span><span class="fl">1</span>,</span>
-<span>                                  type <span class="op">=</span> <span class="st">"mean cumulative"</span><span class="op">)</span></span>
+<span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
+<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
+<span>  col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
+<span>  col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
+<span>  col_mechanism <span class="op">=</span> <span class="st">"impact_mechanism"</span>,</span>
+<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co"># visualise impact indicator</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">impactIndicator</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 <div class="section level2">
 <h2 id="impact-indicator-per-species">Impact indicator per species<a class="anchor" aria-label="anchor" href="#impact-indicator-per-species"></a>
 </h2>
 <p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#  impact indicator per species</span></span>
 <span></span>
-<span><span class="va">species_value</span><span class="op">&lt;-</span><span class="fu"><a href="reference/species_impact.html">species_impact</a></span><span class="op">(</span>cube<span class="op">=</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
-<span>                        impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
-<span>                        col_category<span class="op">=</span><span class="st">"impact_category"</span>,</span>
-<span>                        col_species<span class="op">=</span><span class="st">"scientific_name"</span>,</span>
-<span>                        col_mechanism<span class="op">=</span><span class="st">"impact_mechanism"</span>,</span>
-<span>                        trans<span class="op">=</span><span class="fl">1</span>,</span>
-<span>                        type <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span>
+<span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/species_impact.html">species_impact</a></span><span class="op">(</span></span>
+<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
+<span>  col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
+<span>  col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
+<span>  col_mechanism <span class="op">=</span> <span class="st">"impact_mechanism"</span>,</span>
+<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"mean"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#visualise species impact</span></span>
+<span><span class="co"># visualise species impact</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">species_value</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 9 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 </div>
 </div>
 <div class="section level1">
 <h1 id="comparing-type-of-indicators">Comparing type of indicators<a class="anchor" aria-label="anchor" href="#comparing-type-of-indicators"></a>
 </h1>
 <p>To compare type of impact indicators for a case study, we provide a plot which can be adapted by a user to compare a set of method.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot all type of impact indicators</span></span>
-<span><span class="va">types</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"precautionary"</span>,</span>
-<span>         <span class="st">"precautionary cumulative"</span>,</span>
-<span>         <span class="st">"mean"</span>,</span>
-<span>         <span class="st">"mean cumulative"</span>,</span>
-<span>         <span class="st">"cumulative"</span><span class="op">)</span></span>
+<span><span class="va">types</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>  <span class="st">"precautionary"</span>,</span>
+<span>  <span class="st">"precautionary cumulative"</span>,</span>
+<span>  <span class="st">"mean"</span>,</span>
+<span>  <span class="st">"mean cumulative"</span>,</span>
+<span>  <span class="st">"cumulative"</span></span>
+<span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">all_impact</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"year"</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">type</span> <span class="kw">in</span> <span class="va">types</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">impact_value</span><span class="op">&lt;-</span><span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span>cube<span class="op">=</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
-<span>                                 impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
-<span>                                 col_category<span class="op">=</span><span class="st">"impact_category"</span>,</span>
-<span>                                 col_species<span class="op">=</span><span class="st">"scientific_name"</span>,</span>
-<span>                                 col_mechanism<span class="op">=</span><span class="st">"impact_mechanism"</span>,</span>
-<span>                                 trans<span class="op">=</span><span class="fl">1</span>,</span>
-<span>                                 type <span class="op">=</span> <span class="va">type</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="va">all_impact</span><span class="op">[</span><span class="va">type</span><span class="op">]</span><span class="op">&lt;-</span><span class="va">impact_value</span><span class="op">$</span><span class="va">value</span></span>
+<span><span class="va">all_impact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"year"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">type</span> <span class="kw">in</span> <span class="va">types</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">impact_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
+<span>    cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>    impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
+<span>    col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
+<span>    col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
+<span>    col_mechanism <span class="op">=</span> <span class="st">"impact_mechanism"</span>,</span>
+<span>    trans <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    type <span class="op">=</span> <span class="va">type</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">all_impact</span><span class="op">[</span><span class="va">type</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">impact_value</span><span class="op">$</span><span class="va">value</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">all_impact</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">gather</span><span class="op">(</span><span class="op">-</span><span class="va">year</span>,key <span class="op">=</span> <span class="st">"indicator_type"</span>, value <span class="op">=</span> <span class="st">"impact_score"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">gather</span><span class="op">(</span><span class="op">-</span><span class="va">year</span>, key <span class="op">=</span> <span class="st">"indicator_type"</span>, value <span class="op">=</span> <span class="st">"impact_score"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">impact_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">indicator_type</span><span class="op">)</span>,linewidth<span class="op">=</span><span class="fl">1.5</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">indicator_type</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>   <span class="fu">labs</span><span class="op">(</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Type of indicators"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"impact score"</span></span>
-<span>  <span class="op">)</span><span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>text<span class="op">=</span><span class="fu">element_text</span><span class="op">(</span>size<span class="op">=</span><span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 
   </main><aside class="col-md-3"><div class="links">
@@ -333,8 +339,8 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li>file <a href="LICENSE-text.html">LICENSE</a>
-</li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
 
@@ -357,6 +363,10 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Mukhtar Muhammed Yahaya <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0008-9200-0863" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Sabrina Kumschick <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0001-8034-5831" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Sandra MacFadyen <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-5316-440X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Cang Hui <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-3660-8160" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Pietro Landi <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-6373-2992" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -374,7 +384,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mukhtar Muhammed Yahaya.</p>
+  <p>Developed by Mukhtar Muhammed Yahaya, Sabrina Kumschick, Sandra MacFadyen, Cang Hui, Pietro Landi.</p>
 </div>
 
 <div class="pkgdown-footer-right">
