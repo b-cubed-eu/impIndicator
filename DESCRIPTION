@@ -3,25 +3,28 @@ Title: Impact Indicators of Alien Taxa
 Version: 0.0.0.9000
 Authors@R: 
     c(
-    person("Mukhtar Muhammed", "Yahaya", email = "yahayamukhtar.m@gmail.com", 
+    person("Mukhtar", "Yahaya","Muhammed", email = "yahayamukhtar.m@gmail.com", 
     role = c("aut", "cre"),
            comment = c(ORCID = "0009-0008-9200-0863")),
     person("Sabrina", "Kumschick",email =  "sabrina.kumschick@gmail.com", 
-    role = c("ctb"),
+    role = c("aut","ctb"),
            comment = c(ORCID = "0000-0001-8034-5831")),
     person("Sandra", "MacFadyen",email =  "sandra@biogis.co.za", 
-    role = c( "ctb"),
+    role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0002-5316-440X")),
     person("Cang", "Hui", email = "chui@sun.ac.za", 
-    role = c("ctb"),
+    role = c("aut","ctb"),
            comment = c(ORCID = "0000-0002-3660-8160")),
+    person("Pietro", "Landi", email = "landi@sun.ac.za", 
+    role = c("aut","ctb"),
+           comment = c(ORCID = "0000-0002-6373-2992")),
     person("Stellenbosch University (SU)", , 
     email = "info@sun.ac.za", role = "cph"))
 Description: Compute impact indicators of alien taxa using GBIF occurrence cube
     and EICAT assessment of alien species. Aggregates species impact of various 
     scores due to mecahnism. Aggregates site impact of various 
     scores due to species. 
-License: file LICENSE
+License: MIT + file LICENSE
 BugReports: https://github.com/b-cubed-eu/impIndicator/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
@@ -43,7 +46,10 @@ Depends:
     R (>= 2.10)
 LazyData: true
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 URL: https://b-cubed-eu.github.io/impIndicator/
+VignetteBuilder: knitr

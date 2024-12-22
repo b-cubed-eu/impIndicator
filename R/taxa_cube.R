@@ -57,7 +57,7 @@ taxa_cube <- function(taxa,
   }
 
   # check if last_year is a number if provided
-  if (!is.null(last_year) & !assertthat::is.number(first_year)) {
+  if (!is.null(last_year) & !assertthat::is.number(last_year)) {
     cli::cli_abort(c("{.var last_year} must be a number of length 1 if provided"))
   }
 
@@ -122,7 +122,7 @@ taxa_cube <- function(taxa,
         "speciesKey", "coordinateUncertaintyInMeters",
         "year"
       ) %in% colnames(taxa)]
-      cli::cli_abort(c("{.var {missingcol}} {?is/are} not in the {.var taxa} column ",
+      cli::cli_abort(c("{.var {missingcol}} {?is/are} not in {.var taxa} column ",
         "x" = "{.var taxa} should be a data of GBIF format "
       ))
     }

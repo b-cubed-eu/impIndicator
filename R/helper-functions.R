@@ -1,5 +1,3 @@
-
-
 #' Species by site
 #'
 #' @description
@@ -15,15 +13,14 @@
 
 #'
 #' @noRd
-species_by_site <- function(cube,y){
-
-  #avoid "no visible binding for global variable" NOTE for the following names
-  year=scientificName=cellCode=obs=NULL
-  sbs<-cube$data %>%
-    dplyr::filter(year==y) %>%
-    dplyr::select(scientificName,cellCode,obs) %>%
-    #remove duplicates of a species per site
-    dplyr::distinct(scientificName,cellCode, .keep_all = TRUE) %>%
+species_by_site <- function(cube, y) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  year <- scientificName <- cellCode <- obs <- NULL
+  sbs <- cube$data %>%
+    dplyr::filter(year == y) %>%
+    dplyr::select(scientificName, cellCode, obs) %>%
+    # remove duplicates of a species per site
+    dplyr::distinct(scientificName, cellCode, .keep_all = TRUE) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = obs) %>%
     dplyr::arrange(cellCode) %>%
     tibble::column_to_rownames(var = "cellCode")
@@ -45,19 +42,17 @@ species_by_site <- function(cube,y){
 #' @return Numerical values corresponding to the EICAT  base on a tranfomation
 #' @noRd
 
-cat_num<-function(cat,trans){
-  name<-c("MC", "MN", "MO", "MR", "MV")
-  if(trans==1){
-    x<-c(0,1,2,3,4)
-    names(x)<-name
-  } else if (trans==2){
-    x<-c(1,2,3,4,5)
-    names(x)<-name
+cat_num <- function(cat, trans) {
+  name <- c("MC", "MN", "MO", "MR", "MV")
+  if (trans == 1) {
+    x <- c(0, 1, 2, 3, 4)
+    names(x) <- name
+  } else if (trans == 2) {
+    x <- c(1, 2, 3, 4, 5)
+    names(x) <- name
+  } else { # else if trans = 3
+    x <- c(0, 1, 10, 100, 1000, 10000)
+    names(x) <- name
   }
-  else if (trans==3){
-    x<-c(0,1,10,100,1000,10000)
-    names(x)<-name
-  } else { stop("`trans` must be 1, 2, or 3")}
-
   return(x[cat])
 }

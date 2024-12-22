@@ -1,0 +1,42 @@
+---
+title: "Prepare_data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Prepare_data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(impIndicator)
+```
+
+# Process GBIF data from the environment
+1. import GBIF data using `read.csv()`, `readr::read_csv()`, or `readxl::read_excel()` based on the data set format. The `region` of the study has to be given as shapefile.
+
+```{r}
+acacia_cube <- taxa_cube(
+  taxa = taxa_Acacia,
+  region = southAfrica_sf,
+  res = 0.25,
+  first_year = 2010,
+  last_year = 2023
+)
+
+```
+
+The cube is `sim_cube` object. Below is an the example of acacia taxa
+```{r}
+# view processed cube
+acacia_cube$cube
+
+# view coordinates
+head(acacia_cube$coords)
+```
