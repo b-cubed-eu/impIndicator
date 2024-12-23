@@ -1,8 +1,8 @@
 ---
-title: "Prepare_data"
+title: "Prepare data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Prepare_data}
+  %\VignetteIndexEntry{Prepare data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
