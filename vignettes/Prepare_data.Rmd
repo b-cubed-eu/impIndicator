@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(impIndicator)
+library(sf)
 ```
 
 # Process GBIF data from the R environment
@@ -37,7 +38,7 @@ taxa_Acacia %>% dplyr::select(decimalLatitude,
 
 The `region` of the study has to be given as a shapefile. An example is:
 ```{r}
-
+southAfrica_sf
 ```
 
 ```{r}
