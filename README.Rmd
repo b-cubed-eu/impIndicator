@@ -133,11 +133,8 @@ To compute the impact indicator of alien taxa, we sum all the yearly impact scor
 $$I_i = \frac{\sum{S_i}}{N}$$\
 - $I_i$ is impact score at year $i$.\
 - $S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and  $s_n$ is the site score for site $n$\
-- $N$ is number of sites occupied through out the study years of the region.\
-**Note**: This is the only method incorporated as at now. Other methods will be considered later.\
-**Note**: A function `impact_uncertainty()` is being developed to use bootstrap 
-method to compute confidence interval of the indicator rather than using `geom_smooth()`
-used below.
+- $N$ is number of sites occupied through out the study years of the region.
+
 ```{r}
 # sum of impact risk map for each year
 
