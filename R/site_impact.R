@@ -46,6 +46,9 @@ site_impact <- function(cube,
                         col_mechanism = NULL,
                         trans = 1,
                         type = NULL) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <- xcoord <- ycoord <- NULL
+
   # check arguments
   # cube
   if (!("sim_cube" %in% class(cube))) {
@@ -101,7 +104,7 @@ site_impact <- function(cube,
         #suppress warning when -Inf produced  by max() due to site with no impact
           suppressWarnings()
 
-      } else { # elsecompute precautionary cumulative
+      } else { # else compute precautionary cumulative
         siteScore <- apply(impactScore, 1, function(x) {
           sum(x,
             na.rm = TRUE

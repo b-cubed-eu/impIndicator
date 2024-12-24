@@ -90,6 +90,10 @@ impact_indicator <- function(cube,
         }) %>%
           # suppress warning when -Inf produced  by max() due to site with no impact
           suppressWarnings()
+
+        #d rop -Inf
+        siteScore <- siteScore[siteScore!=-Inf]
+
         impact <- sum(siteScore, na.rm = TRUE) / cube$num_cells
 
         impact_values <- rbind(impact_values, c(y, impact))
