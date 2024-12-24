@@ -27,7 +27,7 @@
 #'
 #' # compute impact indicator
 #' impact_value <- impact_indicator(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
@@ -95,7 +95,7 @@ plot.impact_indicator <- function(x,
 #'
 #' # compute species impact
 #' speciesImpact <- species_impact(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
@@ -180,14 +180,13 @@ plot.species_impact <- function(x,
 #'
 #' # compute site impact
 #' siteImpact <- site_impact(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
 #'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
-#'   type = "precautionary cumulative",
-#'   coords = acacia_cube$coords
+#'   type = "precautionary cumulative"
 #' )
 #'
 #' # visualise site impact
@@ -201,7 +200,7 @@ plot.site_impact <- function(x,
                              title_lab = "Impact map",
                              text_size = 14, ...) {
   # avoid R CMD warnings (global varaible not found)
-  year <- X <- Y <- impact <- siteID <- NULL
+  year <- xcoord <- ycoord <- impact <- cellCode <- NULL
 
 
   if (!inherits(x, "site_impact")) {
@@ -209,7 +208,7 @@ plot.site_impact <- function(x,
   }
 
   x <- x %>%
-    tidyr::gather(-c(siteID, X, Y), key = "year", value = "impact") %>%
+    tidyr::gather(-c(cellCode, xcoord, ycoord), key = "year", value = "impact") %>%
     stats::na.omit()
 
 
@@ -227,7 +226,7 @@ plot.site_impact <- function(x,
     x %>%
       ggplot2::ggplot() +
       ggplot2::geom_tile(
-        ggplot2::aes(x = X, y = Y, fill = impact),
+        ggplot2::aes(x = xcoord, y = ycoord, fill = impact),
         color = "black", ...
       ) +
       ggplot2::geom_sf(data = region.sf, fill = NA, color = "black", alpha = 0.5) +
@@ -246,7 +245,7 @@ plot.site_impact <- function(x,
     x %>%
       ggplot2::ggplot() +
       ggplot2::geom_tile(
-        ggplot2::aes(x = X, y = Y, fill = impact),
+        ggplot2::aes(x = xcoord, y = ycoord, fill = impact),
         color = "black", ...
       ) +
       ggplot2::scale_fill_gradient(

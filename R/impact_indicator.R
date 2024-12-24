@@ -32,7 +32,7 @@
 #'   first_year = 2010
 #' )
 #' impact_value <- impact_indicator(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",

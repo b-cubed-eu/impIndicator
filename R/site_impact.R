@@ -16,7 +16,6 @@
 #' @param type The type indicators based on the aggregation of within and
 #' across species in a site. The type can be precautionary, precautionary cumulative,
 #' mean, mean cumulative or cumulative.
-#' @param coords The dataframe containing coordinates of the sites of the region.
 #'
 #' @return The dataframe of impact indicator per sites
 #' @export
@@ -31,14 +30,13 @@
 #' )
 #'
 #' siteImpact <- site_impact(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
 #'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
-#'   type = "precautionary cumulative",
-#'   coords = acacia_cube$coords
+#'   type = "precautionary cumulative"
 #' )
 #'
 site_impact <- function(cube,
@@ -47,8 +45,7 @@ site_impact <- function(cube,
                         col_species = NULL,
                         col_mechanism = NULL,
                         trans = 1,
-                        type = NULL,
-                        coords = NULL) {
+                        type = NULL) {
   # check arguments
   # cube
   if (!("sim_cube" %in% class(cube))) {
@@ -57,12 +54,16 @@ site_impact <- function(cube,
     ))
   }
 
-  if (!("data.frame" %in% class(coords)) &
-    !all(c("siteID", "X", "Y") %in% names(coords))) {
-    cli::cli_abort(
-      "{.var coords} must be a {.cls dataframe} with columns {.var siteID},{.var X} and {.var Y}"
-    )
-  }
+  # if (!("data.frame" %in% class(coords)) &
+  #   !all(c("siteID", "X", "Y") %in% names(coords))) {
+  #   cli::cli_abort(
+  #     "{.var coords} must be a {.cls dataframe} with columns {.var siteID},{.var X} and {.var Y}"
+  #   )
+  # }
+
+  # create site coordinates
+  coords <- dplyr::distinct(cube$data,cellCode,xcoord,ycoord) %>%
+    dplyr::arrange(cellCode)
 
 
   full_species_list <- sort(unique(cube$data$scientificName))
@@ -148,11 +149,12 @@ site_impact <- function(cube,
     # convert siteScore to dataframe
     siteScore <- siteScore %>%
       as.data.frame() %>%
-      tibble::rownames_to_column(var = "siteID")
+      tibble::rownames_to_column(var = "cellCode") %>%
+      dplyr::mutate(cellCode = as.integer(cellCode))
 
     names(siteScore)[2] <- as.character(y)
 
-    coords <- dplyr::left_join(coords, siteScore, by = "siteID")
+    coords <- dplyr::left_join(coords, siteScore, by = "cellCode")
   }
 
   # remove -Inf produced by max(.,na.rm=TRUE)

@@ -30,7 +30,7 @@
 #' )
 #'
 #' speciesImpact <- species_impact(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
@@ -49,7 +49,7 @@ species_impact <- function(cube,
   # cube
   if (!("sim_cube" %in% class(cube))) {
     cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube}",
-      "i" = "cube must be processed from {pkg. b3gi}"
+      "i" = "cube must be processed from {pkg. b3gbi}"
     ))
   }
 
