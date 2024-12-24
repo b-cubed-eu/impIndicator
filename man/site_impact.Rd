@@ -11,8 +11,7 @@ site_impact(
   col_species = NULL,
   col_mechanism = NULL,
   trans = 1,
-  type = NULL,
-  coords = NULL
+  type = NULL
 )
 }
 \arguments{
@@ -38,8 +37,6 @@ numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
 \item{type}{The type indicators based on the aggregation of within and
 across species in a site. The type can be precautionary, precautionary cumulative,
 mean, mean cumulative or cumulative.}
-
-\item{coords}{The dataframe containing coordinates of the sites of the region.}
 }
 \value{
 The dataframe of impact indicator per sites
@@ -57,14 +54,13 @@ acacia_cube <- taxa_cube(
 )
 
 siteImpact <- site_impact(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
   trans = 1,
-  type = "precautionary cumulative",
-  coords = acacia_cube$coords
+  type = "precautionary cumulative"
 )
 
 }

@@ -5,7 +5,7 @@ test_that("taxa cube function works", {
                          first_year=2010)
 
 
-  expect_equal(class(result),"list")
+  expect_equal(class(result),"sim_cube")
 
   ##### takes time to run####
   # #test scientific name

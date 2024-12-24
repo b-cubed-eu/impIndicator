@@ -54,7 +54,7 @@ acacia_cube <- taxa_cube(
 )
 
 speciesImpact <- species_impact(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",

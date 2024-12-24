@@ -42,7 +42,7 @@ taxa_cube <- function(taxa,
                       first_year = NULL,
                       last_year = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
-  cellid <- geometry <- decimalLatitude <- decimalLongitude <- species <- speciesKey <- NULL
+  cellCode <- geometry <- decimalLatitude <- decimalLongitude <- species <- speciesKey <- NULL
   coordinateUncertaintyInMeters <- . <- year <- NULL
 
 
@@ -71,17 +71,18 @@ taxa_cube <- function(taxa,
       )
     ) %>%
     sf::st_sf() %>%
-    dplyr::mutate(cellid = dplyr::row_number())
+    dplyr::mutate(cellCode = dplyr::row_number())
 
-  grid_filtered <- grid %>%
+  grid <- grid %>%
     suppressWarnings(sf::st_intersection(region)) %>%
-    dplyr::select(cellid, geometry)
+    dplyr::select(cellCode, geometry)
 
 
   # get coordinates of the occurrence sites
   coords <- sf::st_coordinates(sf::st_centroid(grid)) %>%
     as.data.frame() %>%
-    tibble::rownames_to_column(var = "siteID") %>%
+    tibble::rownames_to_column(var = "cellCode") %>%
+    dplyr::mutate(cellCode=as.integer(cellCode)) %>%
     suppressWarnings()
 
   #  try to download taxa if the scientific name is given as character
@@ -145,15 +146,17 @@ taxa_cube <- function(taxa,
       coords = c("decimalLongitude", "decimalLatitude"),
       crs = 4326
     ) %>%
-    sf::st_join(grid_filtered) %>%
+    sf::st_join(grid) %>%
     as.data.frame() %>%
+    dplyr::left_join(coords, by="cellCode") %>%
     dplyr::select(-geometry) %>%
+    dplyr::rename(c(xcoord="X",ycoord="Y")) %>%
     dplyr::mutate(occurrences = 1)
 
 
   taxa_cube <- b3gbi::process_cube(taxa.sf,
     grid_type = "custom",
-    cols_cellCode = "cellid",
+    cols_cellCode = "cellCode",
     cols_year = "year",
     cols_occurrences = "occurrences",
     cols_species = "species",
@@ -164,5 +167,5 @@ taxa_cube <- function(taxa,
     last_year = last_year
   )
 
-  return(list("cube" = taxa_cube, "coords" = coords))
+  return(taxa_cube)
 }
