@@ -15,8 +15,8 @@ species_impact(
 )
 }
 \arguments{
-\item{cube}{The list containing data cube of class \code{sim_cube} or
-\code{processed_cube} from \code{b3gbi::process_cube()}.}
+\item{cube}{The data cube of class \code{sim_cube} or
+\code{processed_cube} from \code{b3gbi::process_cube()}}
 
 \item{impact_data}{The dataframe of species impact which contains columns of category,
 species and mechanism.}
@@ -39,7 +39,7 @@ across species in a site. The type can be precautionary, precautionary cumulativ
 mean, mean cumulative or cumulative.}
 }
 \value{
-A dataframe of impact indicator per species
+A dataframe of impact indicator per species (class \code{species_impact})
 }
 \description{
 Compute species impact indicator

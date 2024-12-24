@@ -35,8 +35,7 @@ the GBIP occurrences data should be downloaded.}
 \item{last_year}{The year at which the occurrence should end}
 }
 \value{
-A list containing the \code{sim_cubes} of taxa and the dataframe of
-coordinates of sites
+A data cube of \code{sim_cubes}
 }
 \description{
 Prepare data cube to calculate species impact .

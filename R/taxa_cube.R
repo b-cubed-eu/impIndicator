@@ -20,8 +20,7 @@
 #' @param first_year The year from which the occurrence should start from
 #' @param last_year The year at which the occurrence should end
 #'
-#' @return A list containing the `sim_cubes` of taxa and the dataframe of
-#' coordinates of sites
+#' @return A data cube of `sim_cubes`
 #'
 #' @export
 #'

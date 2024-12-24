@@ -15,8 +15,8 @@ impact_indicator(
 )
 }
 \arguments{
-\item{cube}{The list containing data cube of class \code{sim_cube} or
-\code{processed_cube} from \code{b3gbi::process_cube()}.}
+\item{cube}{The data cube of class \code{sim_cube} or \code{processed_cube} from
+\code{b3gbi::process_cube()}}
 
 \item{impact_data}{The dataframe of species impact which contains columns of category,
 species and mechanism.}
@@ -39,8 +39,7 @@ across species in a site. The type can be precautionary, precautionary cumulativ
 mean, mean cumulative or cumulative.}
 }
 \value{
-A list containing dataframes impact indicator, species impact indicator
-and sites impact indicator
+A dataframe of the invasive alien impact trend (class \code{impact_indicator})
 }
 \description{
 Compute impact indicators of alien taxa
