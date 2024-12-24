@@ -199,6 +199,7 @@ for (type in types) {
   all_impact[type] <- impact_value$value
 }
 
+#plot the trend
 all_impact %>%
   gather(-year, key = "indicator_type", value = "impact_score") %>%
   ggplot(aes(x = year, y = impact_score)) +
