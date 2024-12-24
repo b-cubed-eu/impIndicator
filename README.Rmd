@@ -69,8 +69,7 @@ acacia_cube <- taxa_cube(
   first_year = 2010
 )
 
-acacia_cube$cube
-head(acacia_cube$coords)
+acacia_cube
 ```
 
 ## Aggregate impact scores for each species
@@ -83,7 +82,7 @@ There are often several impact records per species in different mechanisms and r
 - ***max_mech***: sum of the maximum impact per mechanisms
 
 ```{r Aggregate within species impact}
-full_species_list <- sort(unique(acacia_cube$cube$data$scientificName))
+full_species_list <- sort(unique(acacia_cube$data$scientificName))
 
 agg_impact <- impact_cat(
   impact_data = eicat_data,
@@ -111,14 +110,13 @@ indicators, namely, ***precautionary***, ***precautionary cumulative***, ***mean
 - ***cumulative***: cumulative score across species' sum of maximum score per mechanism\
 ```{r}
 siteImpact <- site_impact(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
   trans = 1,
-  type = "mean cumulative",
-  coords = acacia_cube$coords
+  type = "mean cumulative"
 )
 
 # impact map
@@ -139,7 +137,7 @@ $$I_i = \frac{\sum{S_i}}{N}$$\
 # sum of impact risk map for each year
 
 impactIndicator <- impact_indicator(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
@@ -158,7 +156,7 @@ We compute the impact indicator per species by summing the impact risk map per s
 #  impact indicator per species
 
 species_value <- species_impact(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
@@ -186,10 +184,10 @@ types <- c(
   "cumulative"
 )
 
-all_impact <- data.frame("year" = unique(acacia_cube$cube$data$year))
+all_impact <- data.frame("year" = unique(acacia_cube$data$year))
 for (type in types) {
   impact_value <- impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",

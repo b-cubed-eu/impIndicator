@@ -89,7 +89,7 @@ acacia_cube <- taxa_cube(
   first_year = 2010
 )
 
-acacia_cube$cube
+acacia_cube
 #> 
 #> Simulated data cube for calculating biodiversity indicators
 #> 
@@ -97,7 +97,7 @@ acacia_cube$cube
 #> Number of cells: 369 
 #> Grid reference system: custom 
 #> Coordinate range:
-#> [1] "Coordinates not provided"
+#> [1] 16.60833
 #> 
 #> Total number of observations: 5559 
 #> Number of species represented: 25 
@@ -107,29 +107,22 @@ acacia_cube$cube
 #> 
 #> First 10 rows of data (use n = to show more):
 #> 
-#> # A tibble: 5,559 × 6
-#>    scientificName   taxonKey minCoordinateUncertaintyInMe…¹  year cellCode   obs
-#>    <chr>               <dbl>                          <dbl> <dbl>    <int> <dbl>
-#>  1 Acacia implexa    2979232                              1  2010      206     1
-#>  2 Acacia cyclops    2980425                            122  2010      668     1
-#>  3 Acacia saligna    2978552                              1  2010      206     1
-#>  4 Acacia pycnantha  2978604                              1  2010      206     1
-#>  5 Acacia mearnsii   2979775                            110  2010      215     1
-#>  6 Acacia mearnsii   2979775                              1  2010      215     1
-#>  7 Acacia mearnsii   2979775                              8  2010     1376     1
-#>  8 Acacia saligna    2978552                              1  2011      206     1
-#>  9 Acacia saligna    2978552                             15  2011     1312     1
-#> 10 Acacia mearnsii   2979775                              1  2011      230     1
+#> # A tibble: 5,559 × 8
+#>    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord
+#>    <chr>               <dbl>                  <dbl> <dbl>    <int>  <dbl>  <dbl>
+#>  1 Acacia implexa    2979232                      1  2010      206   18.4  -33.9
+#>  2 Acacia cyclops    2980425                    122  2010      668   18.4  -32.2
+#>  3 Acacia saligna    2978552                      1  2010      206   18.4  -33.9
+#>  4 Acacia pycnantha  2978604                      1  2010      206   18.4  -33.9
+#>  5 Acacia mearnsii   2979775                    110  2010      215   20.6  -33.9
+#>  6 Acacia mearnsii   2979775                      1  2010      215   20.6  -33.9
+#>  7 Acacia mearnsii   2979775                      8  2010     1376   30.4  -29.7
+#>  8 Acacia saligna    2978552                      1  2011      206   18.4  -33.9
+#>  9 Acacia saligna    2978552                     15  2011     1312   30.9  -29.9
+#> 10 Acacia mearnsii   2979775                      1  2011      230   24.4  -33.9
 #> # ℹ 5,549 more rows
 #> # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters
-head(acacia_cube$coords)
-#>   siteID        X       Y
-#> 1      1 16.60833 -34.697
-#> 2      2 16.85833 -34.697
-#> 3      3 17.10833 -34.697
-#> 4      4 17.35833 -34.697
-#> 5      5 17.60833 -34.697
-#> 6      6 17.85833 -34.697
+#> # ℹ 1 more variable: obs <dbl>
 ```
 
 ## Aggregate impact scores for each species
@@ -144,7 +137,7 @@ for each species. The `impact_cat()` aggregates impact using ***max***,
 - ***max_mech***: sum of the maximum impact per mechanisms
 
 ``` r
-full_species_list <- sort(unique(acacia_cube$cube$data$scientificName))
+full_species_list <- sort(unique(acacia_cube$data$scientificName))
 
 agg_impact <- impact_cat(
   impact_data = eicat_data,
@@ -206,14 +199,13 @@ and site leads to five type of indicators, namely, ***precautionary***,
 
 ``` r
 siteImpact <- site_impact(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
   trans = 1,
-  type = "mean cumulative",
-  coords = acacia_cube$coords
+  type = "mean cumulative"
 )
 
 # impact map
@@ -235,18 +227,13 @@ $$I_i = \frac{\sum{S_i}}{N}$$
 - $S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and
 $s_n$ is the site score for site $n$  
 - $N$ is number of sites occupied through out the study years of the
-region.  
-**Note**: This is the only method incorporated as at now. Other methods
-will be considered later.  
-**Note**: A function `impact_uncertainty()` is being developed to use
-bootstrap method to compute confidence interval of the indicator rather
-than using `geom_smooth()` used below.
+region.
 
 ``` r
 # sum of impact risk map for each year
 
 impactIndicator <- impact_indicator(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
@@ -269,7 +256,7 @@ map per species and correct for sampling effort by dividing by $N$.
 #  impact indicator per species
 
 species_value <- species_impact(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
@@ -301,10 +288,10 @@ types <- c(
   "cumulative"
 )
 
-all_impact <- data.frame("year" = unique(acacia_cube$cube$data$year))
+all_impact <- data.frame("year" = unique(acacia_cube$data$year))
 for (type in types) {
   impact_value <- impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
