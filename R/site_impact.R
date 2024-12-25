@@ -1,7 +1,7 @@
 #' Compute site impact indicator
 #'
-#' @param cube The list containing data cube of class `sim_cube` or `processed_cube`from
-#' `b3gbi::process_cube()`.
+#' @param cube The data cube of class `sim_cube` or `processed_cube` from
+#' `b3gbi::process_cube()`
 #' @param impact_data The dataframe of species impact which contains columns of category,
 #'  species and mechanism.
 #' @param col_category The name of the column containing the impact categories.
@@ -16,9 +16,8 @@
 #' @param type The type indicators based on the aggregation of within and
 #' across species in a site. The type can be precautionary, precautionary cumulative,
 #' mean, mean cumulative or cumulative.
-#' @param coords The dataframe containing coordinates of the sites of the region.
 #'
-#' @return The dataframe of impact indicator per sites
+#' @return The dataframe of impact indicator per sites (class `site_impact`)
 #' @export
 #'
 #' @examples
@@ -31,14 +30,13 @@
 #' )
 #'
 #' siteImpact <- site_impact(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
 #'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
-#'   type = "precautionary cumulative",
-#'   coords = acacia_cube$coords
+#'   type = "precautionary cumulative"
 #' )
 #'
 site_impact <- function(cube,
@@ -47,8 +45,10 @@ site_impact <- function(cube,
                         col_species = NULL,
                         col_mechanism = NULL,
                         trans = 1,
-                        type = NULL,
-                        coords = NULL) {
+                        type = NULL) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <- xcoord <- ycoord <- NULL
+
   # check arguments
   # cube
   if (!("sim_cube" %in% class(cube))) {
@@ -57,12 +57,16 @@ site_impact <- function(cube,
     ))
   }
 
-  if (!("data.frame" %in% class(coords)) &
-    !all(c("siteID", "X", "Y") %in% names(coords))) {
-    cli::cli_abort(
-      "{.var coords} must be a {.cls dataframe} with columns {.var siteID},{.var X} and {.var Y}"
-    )
-  }
+  # if (!("data.frame" %in% class(coords)) &
+  #   !all(c("siteID", "X", "Y") %in% names(coords))) {
+  #   cli::cli_abort(
+  #     "{.var coords} must be a {.cls dataframe} with columns {.var siteID},{.var X} and {.var Y}"
+  #   )
+  # }
+
+  # create site coordinates
+  coords <- dplyr::distinct(cube$data,cellCode,xcoord,ycoord) %>%
+    dplyr::arrange(cellCode)
 
 
   full_species_list <- sort(unique(cube$data$scientificName))
@@ -100,7 +104,7 @@ site_impact <- function(cube,
         #suppress warning when -Inf produced  by max() due to site with no impact
           suppressWarnings()
 
-      } else { # elsecompute precautionary cumulative
+      } else { # else compute precautionary cumulative
         siteScore <- apply(impactScore, 1, function(x) {
           sum(x,
             na.rm = TRUE
@@ -148,11 +152,12 @@ site_impact <- function(cube,
     # convert siteScore to dataframe
     siteScore <- siteScore %>%
       as.data.frame() %>%
-      tibble::rownames_to_column(var = "siteID")
+      tibble::rownames_to_column(var = "cellCode") %>%
+      dplyr::mutate(cellCode = as.integer(cellCode))
 
     names(siteScore)[2] <- as.character(y)
 
-    coords <- dplyr::left_join(coords, siteScore, by = "siteID")
+    coords <- dplyr::left_join(coords, siteScore, by = "cellCode")
   }
 
   # remove -Inf produced by max(.,na.rm=TRUE)

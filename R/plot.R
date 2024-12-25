@@ -27,7 +27,7 @@
 #'
 #' # compute impact indicator
 #' impact_value <- impact_indicator(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
@@ -95,7 +95,7 @@ plot.impact_indicator <- function(x,
 #'
 #' # compute species impact
 #' speciesImpact <- species_impact(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
@@ -119,7 +119,7 @@ plot.species_impact <- function(x,
     cli::cli_abort("'x' is not a class 'species_impact'")
   }
 
-  if (alien_species == "all") {
+  if (length(alien_species) == 1 && alien_species == "all") {
     x %>%
       tibble::rownames_to_column("year") %>%
       dplyr::mutate(year = as.numeric(year)) %>%
@@ -132,7 +132,7 @@ plot.species_impact <- function(x,
         y = y_lab, ...
       ) +
       ggplot2::theme(text = ggplot2::element_text(size = text_size))
-  } else {
+  } else if (is.character(alien_species)){
     x %>%
       dplyr::select(dplyr::all_of(alien_species)) %>%
       tibble::rownames_to_column("year") %>%
@@ -146,6 +146,11 @@ plot.species_impact <- function(x,
         y = y_lab, ...
       ) +
       ggplot2::theme(text = ggplot2::element_text(size = text_size))
+  }
+  else {
+    cli::cli_abort(c(
+      "Invalid input for {.var alien_species}. Must be 'all' or a {.cls character} vector",
+      "x"="You've supplied a {.cls {class (alien_species)}}"))
   }
 }
 
@@ -180,14 +185,13 @@ plot.species_impact <- function(x,
 #'
 #' # compute site impact
 #' siteImpact <- site_impact(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
 #'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
-#'   type = "precautionary cumulative",
-#'   coords = acacia_cube$coords
+#'   type = "precautionary cumulative"
 #' )
 #'
 #' # visualise site impact
@@ -201,7 +205,7 @@ plot.site_impact <- function(x,
                              title_lab = "Impact map",
                              text_size = 14, ...) {
   # avoid R CMD warnings (global varaible not found)
-  year <- X <- Y <- impact <- siteID <- NULL
+  year <- xcoord <- ycoord <- impact <- cellCode <- NULL
 
 
   if (!inherits(x, "site_impact")) {
@@ -209,9 +213,23 @@ plot.site_impact <- function(x,
   }
 
   x <- x %>%
-    tidyr::gather(-c(siteID, X, Y), key = "year", value = "impact") %>%
+    tidyr::gather(-c(cellCode, xcoord, ycoord), key = "year", value = "impact") %>%
     stats::na.omit()
 
+  # check if first_year is a number if provided
+  if (!is.null(first_year) & !assertthat::is.number(first_year)) {
+    cli::cli_abort(c("{.var first_year} must be a number of length 1 if provided"))
+  }
+
+  # check if last_year is a number if provided
+  if (!is.null(last_year) & !assertthat::is.number(last_year)) {
+    cli::cli_abort(c("{.var last_year} must be a number of length 1 if provided"))
+  }
+
+  # check if text_size is a number
+  if (!assertthat::is.number(text_size)) {
+    cli::cli_abort(c("{.var text_size} must be a number of length 1"))
+  }
 
   if (!is.null(first_year)) {
     x <- x %>%
@@ -223,11 +241,31 @@ plot.site_impact <- function(x,
       dplyr::filter(year <= last_year)
   }
 
-  if (!is.null(region.sf)) {
+
+  if (is.null(region.sf)) {
     x %>%
       ggplot2::ggplot() +
       ggplot2::geom_tile(
-        ggplot2::aes(x = X, y = Y, fill = impact),
+        ggplot2::aes(x = xcoord, y = ycoord, fill = impact),
+        color = "black", ...
+      ) +
+      ggplot2::scale_fill_gradient(
+        low = "yellow",
+        high = "red"
+      ) +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(
+        title = title_lab,
+        y = "Latitude", x = "Longitude"
+      ) +
+      ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
+      ggplot2::facet_wrap(~year)
+
+  } else if ("sf" %in% class(region.sf)){
+    x %>%
+      ggplot2::ggplot() +
+      ggplot2::geom_tile(
+        ggplot2::aes(x = xcoord, y = ycoord, fill = impact),
         color = "black", ...
       ) +
       ggplot2::geom_sf(data = region.sf, fill = NA, color = "black", alpha = 0.5) +
@@ -243,22 +281,6 @@ plot.site_impact <- function(x,
       ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::facet_wrap(~year)
   } else {
-    x %>%
-      ggplot2::ggplot() +
-      ggplot2::geom_tile(
-        ggplot2::aes(x = X, y = Y, fill = impact),
-        color = "black", ...
-      ) +
-      ggplot2::scale_fill_gradient(
-        low = "yellow",
-        high = "red"
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::labs(
-        title = title_lab,
-        y = "Latitude", x = "Longitude"
-      ) +
-      ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
-      ggplot2::facet_wrap(~year)
+    cli::cli_abort(c("{.var region.sf} is not an {.cls sf}"))
   }
 }

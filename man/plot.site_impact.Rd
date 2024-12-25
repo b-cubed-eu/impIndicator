@@ -49,14 +49,13 @@ acacia_cube <- taxa_cube(
 
 # compute site impact
 siteImpact <- site_impact(
-  cube = acacia_cube$cube,
+  cube = acacia_cube,
   impact_data = eicat_data,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
   trans = 1,
-  type = "precautionary cumulative",
-  coords = acacia_cube$coords
+  type = "precautionary cumulative"
 )
 
 # visualise site impact

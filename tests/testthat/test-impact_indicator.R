@@ -8,7 +8,7 @@ acacia_cube <- taxa_cube(
 
 test_that("impact indicator function return correct result", {
   result <- impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -19,12 +19,12 @@ test_that("impact indicator function return correct result", {
 
   expect_equal(class(result), c("impact_indicator", "data.frame"))
 
-  expect_equal(unique(acacia_cube$cube$data$year), result[, 1])
+  expect_equal(unique(acacia_cube$data$year), result[, 1])
 
   expect_no_error(result)
 
   expect_no_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -34,7 +34,7 @@ test_that("impact indicator function return correct result", {
   ))
 
   expect_no_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -44,7 +44,7 @@ test_that("impact indicator function return correct result", {
   ))
 
   expect_no_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -55,7 +55,7 @@ test_that("impact indicator function return correct result", {
 
 
   expect_no_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -65,7 +65,7 @@ test_that("impact indicator function return correct result", {
   ))
 
   expect_no_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -77,7 +77,7 @@ test_that("impact indicator function return correct result", {
 
 test_that("impact indicator function returns errors", {
   expect_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -88,7 +88,7 @@ test_that("impact indicator function returns errors", {
 
   expect_error(
     impact_indicator(
-      cube = acacia_cube$cube,
+      cube = acacia_cube,
       impact_data = eicat_data,
       col_category = "impact_category",
       col_species = "scientific_name",
@@ -101,7 +101,7 @@ i see the function documentation for details"
   )
 
   expect_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "a",
     col_species = "scientific_name",
@@ -111,7 +111,7 @@ i see the function documentation for details"
   ))
 
   expect_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "a",
@@ -121,7 +121,7 @@ i see the function documentation for details"
   ))
 
   expect_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = eicat_data,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -131,7 +131,7 @@ i see the function documentation for details"
   ))
 
   expect_error(impact_indicator(
-    cube = acacia_cube$cube,
+    cube = acacia_cube,
     impact_data = "a",
     col_category = "impact_category",
     col_species = "scientific_name",

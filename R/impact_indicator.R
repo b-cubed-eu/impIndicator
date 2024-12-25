@@ -3,8 +3,8 @@
 #' @description
 #' Compute impact indicators of alien taxa
 #'
-#' @param cube The list containing data cube of class `sim_cube` or
-#' `processed_cube` from `b3gbi::process_cube()`.
+#' @param cube The data cube of class `sim_cube` or `processed_cube` from
+#' `b3gbi::process_cube()`
 #' @param impact_data The dataframe of species impact which contains columns of category,
 #'  species and mechanism.
 #' @param col_category The name of the column containing the impact categories.
@@ -20,8 +20,7 @@
 #' across species in a site. The type can be precautionary, precautionary cumulative,
 #' mean, mean cumulative or cumulative.
 
-#' @return A list containing dataframes impact indicator, species impact indicator
-#' and sites impact indicator
+#' @return A dataframe of the invasive alien impact trend (class `impact_indicator`)
 #' @export
 #'
 #' @examples
@@ -32,7 +31,7 @@
 #'   first_year = 2010
 #' )
 #' impact_value <- impact_indicator(
-#'   cube = acacia_cube$cube,
+#'   cube = acacia_cube,
 #'   impact_data = eicat_data,
 #'   col_category = "impact_category",
 #'   col_species = "scientific_name",
@@ -90,6 +89,10 @@ impact_indicator <- function(cube,
         }) %>%
           # suppress warning when -Inf produced  by max() due to site with no impact
           suppressWarnings()
+
+        #d rop -Inf
+        siteScore <- siteScore[siteScore!=-Inf]
+
         impact <- sum(siteScore, na.rm = TRUE) / cube$num_cells
 
         impact_values <- rbind(impact_values, c(y, impact))
