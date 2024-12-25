@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   Prepare_data: Prepare_data.html
-last_built: 2024-12-22T17:52Z
+last_built: 2024-12-25T22:37Z
 urls:
   reference: https://b-cubed-eu.github.io/impIndicator/reference
   article: https://b-cubed-eu.github.io/impIndicator/articles

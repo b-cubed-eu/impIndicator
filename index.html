@@ -42,7 +42,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/Prepare_data.html">Prepare_data</a></li>
+<li><a class="dropdown-item" href="articles/Prepare_data.html">Prepare data</a></li>
   </ul>
 </li>
       </ul>
@@ -108,7 +108,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span>  first_year <span class="op">=</span> <span class="fl">2010</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span></span>
+<span><span class="va">acacia_cube</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Simulated data cube for calculating biodiversity indicators</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -116,7 +116,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="co">#&gt; Number of cells: 369 </span></span>
 <span><span class="co">#&gt; Grid reference system: custom </span></span>
 <span><span class="co">#&gt; Coordinate range:</span></span>
-<span><span class="co">#&gt; [1] "Coordinates not provided"</span></span>
+<span><span class="co">#&gt; [1] 16.60833</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Total number of observations: 5559 </span></span>
 <span><span class="co">#&gt; Number of species represented: 25 </span></span>
@@ -126,29 +126,22 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; First 10 rows of data (use n = to show more):</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # A tibble: 5,559 × 6</span></span>
-<span><span class="co">#&gt;    scientificName   taxonKey minCoordinateUncertaintyInMe…¹  year cellCode   obs</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt;                          &lt;dbl&gt; &lt;dbl&gt;    &lt;int&gt; &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 Acacia implexa    2979232                              1  2010      206     1</span></span>
-<span><span class="co">#&gt;  2 Acacia cyclops    2980425                            122  2010      668     1</span></span>
-<span><span class="co">#&gt;  3 Acacia saligna    2978552                              1  2010      206     1</span></span>
-<span><span class="co">#&gt;  4 Acacia pycnantha  2978604                              1  2010      206     1</span></span>
-<span><span class="co">#&gt;  5 Acacia mearnsii   2979775                            110  2010      215     1</span></span>
-<span><span class="co">#&gt;  6 Acacia mearnsii   2979775                              1  2010      215     1</span></span>
-<span><span class="co">#&gt;  7 Acacia mearnsii   2979775                              8  2010     1376     1</span></span>
-<span><span class="co">#&gt;  8 Acacia saligna    2978552                              1  2011      206     1</span></span>
-<span><span class="co">#&gt;  9 Acacia saligna    2978552                             15  2011     1312     1</span></span>
-<span><span class="co">#&gt; 10 Acacia mearnsii   2979775                              1  2011      230     1</span></span>
+<span><span class="co">#&gt; # A tibble: 5,559 × 8</span></span>
+<span><span class="co">#&gt;    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt;                  &lt;dbl&gt; &lt;dbl&gt;    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Acacia implexa    2979232                      1  2010      206   18.4  -33.9</span></span>
+<span><span class="co">#&gt;  2 Acacia cyclops    2980425                    122  2010      668   18.4  -32.2</span></span>
+<span><span class="co">#&gt;  3 Acacia saligna    2978552                      1  2010      206   18.4  -33.9</span></span>
+<span><span class="co">#&gt;  4 Acacia pycnantha  2978604                      1  2010      206   18.4  -33.9</span></span>
+<span><span class="co">#&gt;  5 Acacia mearnsii   2979775                    110  2010      215   20.6  -33.9</span></span>
+<span><span class="co">#&gt;  6 Acacia mearnsii   2979775                      1  2010      215   20.6  -33.9</span></span>
+<span><span class="co">#&gt;  7 Acacia mearnsii   2979775                      8  2010     1376   30.4  -29.7</span></span>
+<span><span class="co">#&gt;  8 Acacia saligna    2978552                      1  2011      206   18.4  -33.9</span></span>
+<span><span class="co">#&gt;  9 Acacia saligna    2978552                     15  2011     1312   30.9  -29.9</span></span>
+<span><span class="co">#&gt; 10 Acacia mearnsii   2979775                      1  2011      230   24.4  -33.9</span></span>
 <span><span class="co">#&gt; # ℹ 5,549 more rows</span></span>
 <span><span class="co">#&gt; # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">coords</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   siteID        X       Y</span></span>
-<span><span class="co">#&gt; 1      1 16.60833 -34.697</span></span>
-<span><span class="co">#&gt; 2      2 16.85833 -34.697</span></span>
-<span><span class="co">#&gt; 3      3 17.10833 -34.697</span></span>
-<span><span class="co">#&gt; 4      4 17.35833 -34.697</span></span>
-<span><span class="co">#&gt; 5      5 17.60833 -34.697</span></span>
-<span><span class="co">#&gt; 6      6 17.85833 -34.697</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 1 more variable: obs &lt;dbl&gt;</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="aggregate-impact-scores-for-each-species">Aggregate impact scores for each species<a class="anchor" aria-label="anchor" href="#aggregate-impact-scores-for-each-species"></a>
 </h2>
@@ -164,7 +157,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <strong><em>max_mech</em></strong>: sum of the maximum impact per mechanisms</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">full_species_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">full_species_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">scientificName</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">agg_impact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_cat.html">impact_cat</a></span><span class="op">(</span></span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
@@ -224,14 +217,13 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/site_impact.html">site_impact</a></span><span class="op">(</span></span>
-<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
 <span>  col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
 <span>  col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
 <span>  col_mechanism <span class="op">=</span> <span class="st">"impact_mechanism"</span>,</span>
 <span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span>,</span>
-<span>  coords <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">coords</span></span>
+<span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># impact map</span></span>
@@ -246,12 +238,12 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <p>To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.<br><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mi>i</mi></msub><mo>=</mo><mfrac><mrow><mo>∑</mo><msub><mi>S</mi><mi>i</mi></msub></mrow><mi>N</mi></mfrac></mrow><annotation encoding="application/x-tex">I_i = \frac{\sum{S_i}}{N}</annotation></semantics></math><br>
 - <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mi>i</mi></msub><annotation encoding="application/x-tex">I_i</annotation></semantics></math> is impact score at year <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>.<br>
 - <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>S</mi><mi>i</mi></msub><annotation encoding="application/x-tex">S_i</annotation></semantics></math> is the sum of risk map value, where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>s</mi><mn>1</mn></msub><mo>,</mo><msub><mi>s</mi><mn>2</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>s</mi><mi>n</mi></msub><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">S=\{s_1,s_2,...,s_n\}</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>n</mi></msub><annotation encoding="application/x-tex">s_n</annotation></semantics></math> is the site score for site <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math><br>
-- <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> is number of sites occupied through out the study years of the region.<br><strong>Note</strong>: This is the only method incorporated as at now. Other methods will be considered later.<br><strong>Note</strong>: A function <code>impact_uncertainty()</code> is being developed to use bootstrap method to compute confidence interval of the indicator rather than using <code>geom_smooth()</code> used below.</p>
+- <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> is number of sites occupied through out the study years of the region.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># sum of impact risk map for each year</span></span>
 <span></span>
 <span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
-<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
 <span>  col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
 <span>  col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
@@ -270,7 +262,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <code class="sourceCode R"><span><span class="co">#  impact indicator per species</span></span>
 <span></span>
 <span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/species_impact.html">species_impact</a></span><span class="op">(</span></span>
-<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
 <span>  col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
 <span>  col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
@@ -300,10 +292,10 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span>  <span class="st">"cumulative"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">all_impact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"year"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">all_impact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"year"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">type</span> <span class="kw">in</span> <span class="va">types</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">impact_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
-<span>    cube <span class="op">=</span> <span class="va">acacia_cube</span><span class="op">$</span><span class="va">cube</span>,</span>
+<span>    cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>    impact_data <span class="op">=</span> <span class="va">eicat_data</span>,</span>
 <span>    col_category <span class="op">=</span> <span class="st">"impact_category"</span>,</span>
 <span>    col_species <span class="op">=</span> <span class="st">"scientific_name"</span>,</span>
@@ -315,6 +307,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span>  <span class="va">all_impact</span><span class="op">[</span><span class="va">type</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">impact_value</span><span class="op">$</span><span class="va">value</span></span>
 <span><span class="op">}</span></span>
 <span></span>
+<span><span class="co">#plot the trend</span></span>
 <span><span class="va">all_impact</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">gather</span><span class="op">(</span><span class="op">-</span><span class="va">year</span>, key <span class="op">=</span> <span class="st">"indicator_type"</span>, value <span class="op">=</span> <span class="st">"impact_score"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">impact_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -376,6 +369,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <ul class="list-unstyled">
 <li><a href="https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://www.repostatus.org/#wip" class="external-link"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="repo status"></a></li>
+<li><a href="https://app.codecov.io/gh/b-cubed-eu/impIndicator" class="external-link"><img src="https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
