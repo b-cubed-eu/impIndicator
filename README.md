@@ -8,8 +8,6 @@
 [![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![repo
 status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
-[![Codecov test
-coverage](https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg)](https://app.codecov.io/gh/b-cubed-eu/impIndicator)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate
@@ -21,7 +19,7 @@ different studies.
 
 The impIndicator produces three main products and can be useful as
 stated below:  
-- **impact indicator**  
+- **impact indicator** \<`impact_indicator()`\>  
 The impact indicator offers a nuanced representation of the trends of
 biological invasions of an area (local, regional, or global scales). By
 tracking the increase and decrease of ecological threats over time, this
@@ -30,7 +28,7 @@ impacts, helping assess whether current management practices are
 effective or need adjustment. The temporal analysis of impact indicator
 enables targeted resource allocation, fostering proactive interventions
 to mitigate biodiversity loss and ecosystem degradation.  
-- **site impact**  
+- **site impact** \<`site_indicator()`  
 The site impact as a map serves as a visual and analytical tool to
 represent the intensity of biological invasions across different parts
 of an area. By enabling spatial comparisons—such as between provinces,
@@ -39,7 +37,7 @@ of invasion impact. This spatial data is useful for prioritising
 management actions, coordinating restoration projects, and fostering
 cross-regional collaboration to address invasive species impacts
 effectively.  
-- **species impact**  
+- **species impact** \<`species_impact()`  
 The species impact produces the trends of individual invasive alien
 species, enabling a species-specific impact caused by invasions. This
 data supports comparisons of individual species’ impacts, revealing
@@ -68,7 +66,8 @@ impact indicator per site. The functions feeds in species GBIF
 occurrence cube from the `b3gbi::process_cube()` using `taxa_cube()`
 and  
 Environmental Impact Classification of Alien Taxa (EICAT) impact score
-of species using `impact_cat()`.
+of species. Read about the background of the products at
+<https://b-cubed-eu.github.io/impIndicator/articles/Background.html>
 
 ``` r
 # Load packages
@@ -79,7 +78,7 @@ library(tidyverse) # Data wrangling and visualisation
 library(sf) # Spatial features
 ```
 
-# Process occurrence cube
+## Process occurrence cube
 
 ``` r
 # load the GBIF occurrence data for taxa
@@ -127,77 +126,39 @@ acacia_cube
 #> # ℹ 1 more variable: obs <dbl>
 ```
 
-## Aggregate impact scores for each species
+## EICAT data
 
-There are often several impact records per species in different
-mechanisms and regions. There is need to aggregate these impact records
-for each species. The `impact_cat()` aggregates impact using ***max***,
-***mean*** and ***max_mech*** as metrics as used by different studies.
-
-- ***max***: maximum impact score across all records for the species  
-- ***mean***: mean impact score across all records  
-- ***max_mech***: sum of the maximum impact per mechanisms
+An example of an EICAT data is:
 
 ``` r
-full_species_list <- sort(unique(acacia_cube$data$scientificName))
-
-agg_impact <- impact_cat(
-  impact_data = eicat_data,
-  species_list = full_species_list,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
-  trans = 1
-)
-agg_impact
-#>                       max     mean max_mech
-#> Acacia acinacea        NA       NA       NA
-#> Acacia adunca          NA       NA       NA
-#> Acacia baileyana        3 3.000000        3
-#> Acacia binervata       NA       NA       NA
-#> Acacia crassiuscula    NA       NA       NA
-#> Acacia cultriformis    NA       NA       NA
-#> Acacia cyclops          3 1.333333        8
-#> Acacia dealbata         3 1.739130       39
-#> Acacia decurrens        3 2.500000        5
-#> Acacia elata            1 1.000000        1
-#> Acacia falciformis     NA       NA       NA
-#> Acacia implexa         NA       NA       NA
-#> Acacia longifolia       3 1.869565       37
-#> Acacia mearnsii         3 1.736842       27
-#> Acacia melanoxylon      3 1.142857        8
-#> Acacia paradoxa        NA       NA       NA
-#> Acacia piligera        NA       NA       NA
-#> Acacia podalyriifolia  NA       NA       NA
-#> Acacia provincialis    NA       NA       NA
-#> Acacia pycnantha        3 3.000000        3
-#> Acacia saligna          3 1.952381       38
-#> Acacia schinoides      NA       NA       NA
-#> Acacia stricta         NA       NA       NA
-#> Acacia ulicifolia      NA       NA       NA
-#> Acacia viscidula       NA       NA       NA
+# view EICAT data. Convert to tibble for a nicer display
+head(as_tibble(eicat_data),10)
+#> # A tibble: 10 × 4
+#>    scientific_name   impact_category impact_mechanism                probability
+#>    <chr>             <chr>           <chr>                                 <dbl>
+#>  1 Acacia saligna    MC              (1) Competition                           0
+#>  2 Acacia saligna    MC              (12) Indirect impacts through …           0
+#>  3 Acacia saligna    MC              (1) Competition                           0
+#>  4 Acacia saligna    MC              (1) Competition; (9) Chemical …           0
+#>  5 Acacia mearnsii   MC              (6) Poisoning/toxicity                    0
+#>  6 Acacia longifolia MC              (9) Chemical impact on ecosyst…           0
+#>  7 Acacia dealbata   MC              (9) Chemical impact on ecosyst…           0
+#>  8 Acacia dealbata   MC              (9) Chemical impact on ecosyst…           0
+#>  9 Acacia saligna    MC              (9) Chemical impact on ecosyst…           0
+#> 10 Acacia dealbata   MC              (12) Indirect impacts through …           0
 ```
 
-## Compute impact risk map
+## Compute impact map
 
 The impact risk map shows the impact score for each site, where multiple
 species can be present. To compute the impact risk per site, aggregated
 scores across species at each site are needed. The `site_impact()` uses
-***max***, ***sum*** and ***mean*** metrics to aggregate impact scores
-as proposed by Boulesnane-Guengant et al., (in preparation). The
-combinations of aggregation metrics from `impact_cat()` for each species
-and site leads to five type of indicators, namely, ***precautionary***,
-***precautionary cumulative***, ***mean***, ***mean cumulative*** and
-***cumulative***.  
-
-- ***precautionary***: maximum score across species’ max in each site  
-- ***precautionary cumulative***: cumulative score across species’ max
-  in each site  
-- ***mean***: mean score across species’ mean in each site  
-- ***mean cumulative***: cumulative score across species’ mean in each
-  site  
-- ***cumulative***: cumulative score across species’ sum of maximum
-  score per mechanism  
+*max*, *sum* and *mean* metrics to aggregate impact scores across
+species as proposed by Boulesnane-Guengant et al., (in preparation). The
+combinations of within species aggregation metrics for each species and
+across species for each site leads to five type of indicators, namely,
+**precautionary**, **precautionary cumulative**, **mean**, **mean
+cumulative** and **cumulative**.  
 
 ``` r
 siteImpact <- site_impact(
@@ -212,27 +173,21 @@ siteImpact <- site_impact(
 
 # impact map
 # visualize last four years for readability
-plot(siteImpact, region.sf = southAfrica_sf, first_year = 2021)
+plot(x = siteImpact, region.sf = southAfrica_sf, first_year = 2021)
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-# Compute impact indicators
+## Compute impact indicators
 
 To compute the impact indicator of alien taxa, we sum all the yearly
 impact scores of each site of the study region. To correct for sampling
 effort we divide the yearly impact scores by number of sites in the
 study region with at least a single occurrence throughout the whole
-year.  
-$$I_i = \frac{\sum{S_i}}{N}$$  
-- $I_i$ is impact score at year $i$.  
-- $S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and
-$s_n$ is the site score for site $n$  
-- $N$ is number of sites occupied through out the study years of the
-region.
+year.
 
 ``` r
-# sum of impact risk map for each year
+# impact indicator
 
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
@@ -247,7 +202,7 @@ impactIndicator <- impact_indicator(
 plot(impactIndicator)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ## Impact indicator per species
 
@@ -273,7 +228,7 @@ plot(species_value)
 #> (`geom_line()`).
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 # Comparing type of indicators
 
@@ -318,4 +273,4 @@ all_impact %>%
   theme(text = element_text(size = 14))
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
