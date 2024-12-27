@@ -70,7 +70,7 @@ taxa_cube <- function(taxa,
       )
     ) %>%
     sf::st_sf() %>%
-    dplyr::mutate(cellCode = dplyr::row_number())
+    dplyr::mutate(cellCode = as.character(dplyr::row_number()))
 
   grid <- grid %>%
     suppressWarnings(sf::st_intersection(region)) %>%
@@ -81,7 +81,6 @@ taxa_cube <- function(taxa,
   coords <- sf::st_coordinates(sf::st_centroid(grid)) %>%
     as.data.frame() %>%
     tibble::rownames_to_column(var = "cellCode") %>%
-    dplyr::mutate(cellCode=as.integer(cellCode)) %>%
     suppressWarnings()
 
   #  try to download taxa if the scientific name is given as character

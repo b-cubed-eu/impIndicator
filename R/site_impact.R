@@ -51,11 +51,12 @@ site_impact <- function(cube,
 
   # check arguments
   # cube
-  if (!("sim_cube" %in% class(cube))) {
-    cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube}",
-      "i" = "cube must be processed from {pkg. b3gi}"
+  if (!("sim_cube" %in% class(cube) | "processed_cube" %in% class(cube))) {
+    cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
+                     "i" = "cube must be processed from `b3gbi`"
     ))
   }
+
 
   # if (!("data.frame" %in% class(coords)) &
   #   !all(c("siteID", "X", "Y") %in% names(coords))) {
@@ -152,8 +153,7 @@ site_impact <- function(cube,
     # convert siteScore to dataframe
     siteScore <- siteScore %>%
       as.data.frame() %>%
-      tibble::rownames_to_column(var = "cellCode") %>%
-      dplyr::mutate(cellCode = as.integer(cellCode))
+      tibble::rownames_to_column(var = "cellCode")
 
     names(siteScore)[2] <- as.character(y)
 

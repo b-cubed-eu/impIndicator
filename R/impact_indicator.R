@@ -46,6 +46,15 @@ impact_indicator <- function(cube,
                              col_mechanism = NULL,
                              trans = 1,
                              type = NULL) {
+
+  # check arguments
+  # cube
+  if (!("sim_cube" %in% class(cube) | "processed_cube" %in% class(cube))) {
+    cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
+                     "i" = "cube must be processed from `b3gbi`"
+    ))
+  }
+
   full_species_list <- sort(unique(cube$data$scientificName))
 
   period <- unique(cube$data$year)
