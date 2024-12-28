@@ -161,7 +161,8 @@ plot.species_impact <- function(x,
 #' Produces the yearly impact map of a region
 #'
 #' @param x A dataframe of impact indicator. Must be a class of "site_impact"
-#' @param region.sf The shapefile of the region of study. It is not compulsory
+#' @param region sf or character. The shapefile of the region of study or a
+#' character which represent the name of a country. It is not compulsory
 #' but makes the plot more comprehensible.
 #' @param first_year The first year the impact map should include.
 #' Default starts from the first year included in `x`.
@@ -196,10 +197,10 @@ plot.species_impact <- function(x,
 #'
 #' # visualise site impact
 #' plot(x=siteImpact,
-#' region.sf= southAfrica_sf,
+#' region= southAfrica_sf,
 #' first_year = 2021)
 plot.site_impact <- function(x,
-                             region.sf = NULL,
+                             region = NULL,
                              first_year = NULL,
                              last_year = NULL,
                              title_lab = "Impact map",
@@ -242,7 +243,7 @@ plot.site_impact <- function(x,
   }
 
 
-  if (is.null(region.sf)) {
+  if (is.null(region)) {
     x %>%
       ggplot2::ggplot() +
       ggplot2::geom_tile(
@@ -261,14 +262,14 @@ plot.site_impact <- function(x,
       ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::facet_wrap(~year)
 
-  } else if ("sf" %in% class(region.sf)){
+  } else if ("sf" %in% class(region)){
     x %>%
       ggplot2::ggplot() +
       ggplot2::geom_tile(
         ggplot2::aes(x = xcoord, y = ycoord, fill = impact),
         color = "black", ...
       ) +
-      ggplot2::geom_sf(data = region.sf, fill = NA, color = "black", alpha = 0.5) +
+      ggplot2::geom_sf(data = region, fill = NA, color = "black", alpha = 0.5) +
       ggplot2::scale_fill_gradient(
         low = "yellow",
         high = "red"
@@ -280,7 +281,35 @@ plot.site_impact <- function(x,
       ) +
       ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::facet_wrap(~year)
+  } else if(assertthat::is.string(region)){
+
+    # download country sf
+    region <- rnaturalearth::ne_countries(scale = "medium",
+                                          country = region,
+                                          returnclass = "sf") %>%
+      sf::st_as_sf() %>%
+      sf::st_transform(crs = 4326)
+
+    x %>%
+      ggplot2::ggplot() +
+      ggplot2::geom_tile(
+        ggplot2::aes(x = xcoord, y = ycoord, fill = impact),
+        color = "black", ...
+      ) +
+      ggplot2::geom_sf(data = region, fill = NA, color = "black", alpha = 0.5) +
+      ggplot2::scale_fill_gradient(
+        low = "yellow",
+        high = "red"
+      ) +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(
+        title = title_lab,
+        y = "Latitude", x = "Longitude"
+      ) +
+      ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
+      ggplot2::facet_wrap(~year)
+
   } else {
-    cli::cli_abort(c("{.var region.sf} is not an {.cls sf}"))
+    cli::cli_abort(c("{.var region} must be an {.cls sf} or {.cls character}"))
   }
 }

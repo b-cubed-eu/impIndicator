@@ -246,42 +246,50 @@ siteImpact <- site_impact(
 
 test_that("Plot.site_impact works",{
   expect_no_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = NULL,
                        last_year = NULL,
                        title_lab = "Impact map",
                        text_size = 14))
 
   expect_no_error(plot(siteImpact,
-                       region.sf = southAfrica_sf,
+                       region = southAfrica_sf,
                        first_year = NULL,
                        last_year = NULL,
                        title_lab = "Impact map",
                        text_size = 14))
 
   expect_no_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = "South Africa",
+                       first_year = NULL,
+                       last_year = NULL,
+                       title_lab = "Impact map",
+                       text_size = 14))
+
+
+  expect_no_error(plot(siteImpact,
+                       region = NULL,
                        first_year = 2021,
                        last_year = NULL,
                        title_lab = "Impact map",
                        text_size = 14))
 
   expect_no_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = NULL,
                        last_year = 2024,
                        title_lab = "Impact map",
                        text_size = 14))
 
   expect_no_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = NULL,
                        last_year = NULL,
                        title_lab = "Title",
                        text_size = 14))
 
   expect_no_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = NULL,
                        last_year = NULL,
                        title_lab = "Impact map",
@@ -292,28 +300,28 @@ test_that("Plot.site_impact works",{
 test_that("Plot.site_impact throws error",{
 
   expect_error(plot(siteImpact,
-                       region.sf = "a",
+                       region = "a",
                        first_year = NULL,
                        last_year = NULL,
                        title_lab = "Impact map",
                        text_size = 14))
 
   expect_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = "a",
                        last_year = NULL,
                        title_lab = "Impact map",
                        text_size = 14))
 
   expect_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = NULL,
                        last_year = "a",
                        title_lab = "Impact map",
                        text_size = 14))
 
   expect_error(plot(siteImpact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = NULL,
                        last_year = NULL,
                        title_lab = "Impact map",
@@ -322,7 +330,7 @@ test_that("Plot.site_impact throws error",{
   # siteImpact is not of correct class
   wrong_class_site_impact <-as.matrix(siteImpact)
   expect_error(plot.site_impact(wrong_class_site_impact,
-                       region.sf = NULL,
+                       region = NULL,
                        first_year = NULL,
                        last_year = NULL,
                        title_lab = "Impact map",

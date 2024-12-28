@@ -20,7 +20,8 @@ name of the focal taxa while the dataframe is the GBIF occurrences data which mu
 contain "decimalLatitude","decimalLongitude","species","speciesKey",
 "coordinateUncertaintyInMeters","dateIdentified", and "year".}
 
-\item{region}{The shapefile of the region of study}
+\item{region}{sf or character. The shapefile of the region of study or a
+character which represent the name of a country}
 
 \item{limit}{Number of records to return from GBIF download.
 Default is set to 500}
