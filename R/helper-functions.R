@@ -18,6 +18,7 @@ species_by_site <- function(cube, y) {
   year <- scientificName <- cellCode <- obs <- NULL
   sbs <- cube$data %>%
     dplyr::filter(year == y) %>%
+    dplyr::mutate(obs=1) %>%
     dplyr::select(scientificName, cellCode, obs) %>%
     # remove duplicates of a species per site
     dplyr::distinct(scientificName, cellCode, .keep_all = TRUE) %>%

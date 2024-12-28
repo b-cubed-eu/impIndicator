@@ -7,6 +7,11 @@ test_that("taxa cube function works", {
 
   expect_equal(class(result),"sim_cube")
 
+  expect_no_error(taxa_cube(taxa=taxa_Acacia,
+                            region="South Africa",
+                            res=0.25,
+                            first_year=2010))
+
   ##### takes time to run####
   # #test scientific name
   # taxa<-"acacia"

@@ -6,7 +6,7 @@
 \usage{
 \method{plot}{site_impact}(
   x,
-  region.sf = NULL,
+  region = NULL,
   first_year = NULL,
   last_year = NULL,
   title_lab = "Impact map",
@@ -17,7 +17,8 @@
 \arguments{
 \item{x}{A dataframe of impact indicator. Must be a class of "site_impact"}
 
-\item{region.sf}{The shapefile of the region of study. It is not compulsory
+\item{region}{sf or character. The shapefile of the region of study or a
+character which represent the name of a country. It is not compulsory
 but makes the plot more comprehensible.}
 
 \item{first_year}{The first year the impact map should include.
@@ -60,6 +61,6 @@ siteImpact <- site_impact(
 
 # visualise site impact
 plot(x=siteImpact,
-region.sf= southAfrica_sf,
+region= southAfrica_sf,
 first_year = 2021)
 }

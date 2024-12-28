@@ -25,11 +25,11 @@ The goal of **impIndicator** is to allow users to seamlessly calculate and visua
 of calculating impact indicators based on different studies.\
 
 The impIndicator produces three main products and can be useful as stated below:\
-- **impact indicator**\
+- **impact indicator** <`impact_indicator()`>\
 The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of invasive alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.\
-- **site impact**\
+- **site impact** <`site_indicator()`\
 The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address invasive species impacts effectively.\
-- **species impact**\
+- **species impact** <`species_impact()`\
 The species impact produces the trends of individual invasive alien species, enabling a species-specific impact caused by invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing eradication strategies, and advancing research on alien species' ecological roles and adaptation patterns.
 
 
@@ -45,8 +45,8 @@ remotes::install_github("b-cubed-eu/impIndicator")
 ## Demonstration
 
 This Markdown demonstrates the computation and visualisation of impact indicator of biological invasions using the `impact_indicator()` to compute impact indicator of alien taxa, the `species_impact()` to compute impact indicator per species, and the `site_impact()` to compute impact indicator per site. The functions feeds in species GBIF occurrence cube from the `b3gbi::process_cube()` using `taxa_cube()` and  
-Environmental Impact Classification of Alien Taxa (EICAT) impact score of species
-using `impact_cat()`.
+Environmental Impact Classification of Alien Taxa (EICAT) impact score of species.
+Read about the background of the products at https://b-cubed-eu.github.io/impIndicator/articles/Background.html
 
 ```{r load packages, message=FALSE}
 # Load packages
@@ -58,7 +58,7 @@ library(sf) # Spatial features
 ```
 
 
-# Process occurrence cube
+## Process occurrence cube
 ```{r}
 # load the GBIF occurrence data for taxa
 
@@ -72,42 +72,20 @@ acacia_cube <- taxa_cube(
 acacia_cube
 ```
 
-## Aggregate impact scores for each species
+## EICAT data
 
-There are often several impact records per species in different mechanisms and regions. There is need to aggregate these impact records for each species. The 
-`impact_cat()` aggregates impact using ***max***, ***mean*** and  ***max_mech*** as metrics as used by different studies. 
-
-- ***max***: maximum impact score across all records for the species\
-- ***mean***: mean impact score across all records\
-- ***max_mech***: sum of the maximum impact per mechanisms
-
-```{r Aggregate within species impact}
-full_species_list <- sort(unique(acacia_cube$data$scientificName))
-
-agg_impact <- impact_cat(
-  impact_data = eicat_data,
-  species_list = full_species_list,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
-  trans = 1
-)
-agg_impact
+An example of an EICAT data is:
+```{r}
+# view EICAT data. Convert to tibble for a nicer display
+head(as_tibble(eicat_data),10)
 ```
 
-## Compute impact risk map
-
+## Compute impact map
 
 The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The 
-`site_impact()` uses ***max***, ***sum*** and ***mean*** metrics to aggregate impact scores as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of aggregation metrics from `impact_cat()` for each species and site leads to five type of
-indicators, namely, ***precautionary***, ***precautionary cumulative***, ***mean***, ***mean cumulative*** and ***cumulative***.\
+`site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five type of
+indicators, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.\
 
-
-- ***precautionary***: maximum score across species' max in each site\
-- ***precautionary cumulative***: cumulative score across species' max in each site\
-- ***mean***: mean score across species' mean in each site\
-- ***mean cumulative***: cumulative score across species' mean in each site\
-- ***cumulative***: cumulative score across species' sum of maximum score per mechanism\
 ```{r}
 siteImpact <- site_impact(
   cube = acacia_cube,
@@ -121,20 +99,16 @@ siteImpact <- site_impact(
 
 # impact map
 # visualize last four years for readability
-plot(siteImpact, region.sf = southAfrica_sf, first_year = 2021)
+plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 ```
 
 
-# Compute impact indicators
+## Compute impact indicators
 
-To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.\
-$$I_i = \frac{\sum{S_i}}{N}$$\
-- $I_i$ is impact score at year $i$.\
-- $S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and  $s_n$ is the site score for site $n$\
-- $N$ is number of sites occupied through out the study years of the region.
+To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.
 
 ```{r}
-# sum of impact risk map for each year
+# impact indicator
 
 impactIndicator <- impact_indicator(
   cube = acacia_cube,

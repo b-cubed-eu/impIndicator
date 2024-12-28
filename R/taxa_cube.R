@@ -10,7 +10,8 @@
 #' name of the focal taxa while the dataframe is the GBIF occurrences data which must
 #' contain "decimalLatitude","decimalLongitude","species","speciesKey",
 #' "coordinateUncertaintyInMeters","dateIdentified", and "year".
-#' @param region The shapefile of the region of study
+#' @param region sf or character. The shapefile of the region of study or a
+#' character which represent the name of a country
 #' @param limit Number of records to return from GBIF download.
 #' Default is set to 500
 #'
@@ -44,7 +45,6 @@ taxa_cube <- function(taxa,
   cellCode <- geometry <- decimalLatitude <- decimalLongitude <- species <- speciesKey <- NULL
   coordinateUncertaintyInMeters <- . <- year <- NULL
 
-
   # check if res is a number
   if (!assertthat::is.number(res)) {
     cli::cli_abort(c("{.var res} must be a number of length 1"))
@@ -60,8 +60,24 @@ taxa_cube <- function(taxa,
     cli::cli_abort(c("{.var last_year} must be a number of length 1 if provided"))
   }
 
+  if ("sf" %in% class(region)){
+    region <- region
+  } else if(assertthat::is.string(region)){
+
+    # download country sf
+    region <- rnaturalearth::ne_countries(scale = "medium",
+                                country = region,
+                                returnclass = "sf") %>%
+      sf::st_as_sf() %>%
+      sf::st_transform(crs = 4326)
+
+  } else {
+    cli::cli_abort(c("{.var region} must be an {.cls sf} or {.cls character}"))
+
+  }
 
   grid <- region %>%
+    sf::st_transform(crs=4326) %>%  # transform to EPSG:4326
     sf::st_make_grid(
       cellsize = c(res, res),
       offset = c(
@@ -70,7 +86,7 @@ taxa_cube <- function(taxa,
       )
     ) %>%
     sf::st_sf() %>%
-    dplyr::mutate(cellCode = dplyr::row_number())
+    dplyr::mutate(cellCode = as.character(dplyr::row_number()))
 
   grid <- grid %>%
     suppressWarnings(sf::st_intersection(region)) %>%
@@ -81,7 +97,6 @@ taxa_cube <- function(taxa,
   coords <- sf::st_coordinates(sf::st_centroid(grid)) %>%
     as.data.frame() %>%
     tibble::rownames_to_column(var = "cellCode") %>%
-    dplyr::mutate(cellCode=as.integer(cellCode)) %>%
     suppressWarnings()
 
   #  try to download taxa if the scientific name is given as character
