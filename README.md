@@ -173,7 +173,7 @@ siteImpact <- site_impact(
 
 # impact map
 # visualize last four years for readability
-plot(x = siteImpact, region.sf = southAfrica_sf, first_year = 2021)
+plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
