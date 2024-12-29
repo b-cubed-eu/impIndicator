@@ -13,7 +13,7 @@ status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatu
 The goal of **impIndicator** is to allow users to seamlessly calculate
 and visualise the impact of alien taxa and individual species in a given
 area. It calculates and visualises impact per site as a map. It takes in
-GBIF occurrence data and EICAT assessment list. It enables users to
+GBIF occurrence data and EICAT assessment data. It enables users to
 choose from various methods of calculating impact indicators based on
 different studies.  
 
@@ -126,9 +126,13 @@ acacia_cube
 #> # ℹ 1 more variable: obs <dbl>
 ```
 
-## EICAT data
+## EICAT assessment data
 
-An example of an EICAT data is:
+The Environmental Impact Classification for Alien Taxa (EICAT)
+assessment data is the reported impact of alien taxa based on EICAT
+method which is the IUCN standard. An assessed alien taxa with adequate
+data is classified into massive, major, moderate, minor , or minimal
+concern. An example of an EICAT data is:
 
 ``` r
 # view EICAT data

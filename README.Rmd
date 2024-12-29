@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![repo status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 <!-- badges: end -->
 
-The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises impact per site as a map. It takes in GBIF occurrence data and EICAT assessment list. It enables users to choose from various methods 
+The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods 
 of calculating impact indicators based on different studies.\
 
 The impIndicator produces three main products and can be useful as stated below:\
@@ -72,8 +72,9 @@ acacia_cube <- taxa_cube(
 acacia_cube
 ```
 
-## EICAT data
-
+## EICAT assessment data
+The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the IUCN standard. An assessed alien taxa with adequate data is classified into massive,
+major, moderate, minor , or minimal concern.
 An example of an EICAT data is:
 ```{r}
 # view EICAT data
