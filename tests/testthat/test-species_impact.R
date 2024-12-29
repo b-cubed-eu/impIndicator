@@ -5,7 +5,7 @@ acacia_cube<-taxa_cube(taxa=taxa_Acacia,
 
 test_that("species impact function works", {
   expect_no_error(species_impact(cube=acacia_cube,
-                                 impact_data = eicat_data,
+                                 impact_data = eicat_acacia,
                                  col_category="impact_category",
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
@@ -13,7 +13,7 @@ test_that("species impact function works", {
                                  type = "mean"))
 
   expect_no_error(species_impact(cube=acacia_cube,
-                                 impact_data = eicat_data,
+                                 impact_data = eicat_acacia,
                                  col_category="impact_category",
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
@@ -21,7 +21,7 @@ test_that("species impact function works", {
                                  type = "mean"))
 
   expect_no_error(species_impact(cube=acacia_cube,
-                                 impact_data = eicat_data,
+                                 impact_data = eicat_acacia,
                                  col_category="impact_category",
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
@@ -29,7 +29,7 @@ test_that("species impact function works", {
                                  type = "mean"))
 
   expect_no_error(species_impact(cube=acacia_cube,
-                                 impact_data = eicat_data,
+                                 impact_data = eicat_acacia,
                                  col_category="impact_category",
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
@@ -37,7 +37,7 @@ test_that("species impact function works", {
                                  type = "max"))
 
   expect_no_error(species_impact(cube=acacia_cube,
-                                 impact_data = eicat_data,
+                                 impact_data = eicat_acacia,
                                  col_category="impact_category",
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
@@ -49,7 +49,7 @@ test_that("species impact function works", {
 
 test_that("species impact function throws error",{
   expect_error(species_impact(cube="a",
-                                 impact_data = eicat_data,
+                                 impact_data = eicat_acacia,
                                  col_category="impact_category",
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
@@ -66,7 +66,7 @@ test_that("species impact function throws error",{
                               type = "mean"))
 
   expect_error(species_impact(cube=acacia_cube,
-                              impact_data = eicat_data,
+                              impact_data = eicat_acacia,
                               col_category=NULL,
                               col_species="scientific_name",
                               col_mechanism="impact_mechanism",
@@ -75,7 +75,7 @@ test_that("species impact function throws error",{
 
 
   expect_error(species_impact(cube=acacia_cube,
-                                 impact_data = eicat_data,
+                                 impact_data = eicat_acacia,
                                  col_category="impact_category",
                                  col_species=NULL,
                                  col_mechanism="impact_mechanism",
@@ -83,7 +83,7 @@ test_that("species impact function throws error",{
                                  type = "mean"))
 
   expect_error(species_impact(cube=acacia_cube,
-                              impact_data = eicat_data,
+                              impact_data = eicat_acacia,
                               col_category="impact_category",
                               col_species="scientific_name",
                               col_mechanism=NULL,
@@ -92,7 +92,7 @@ test_that("species impact function throws error",{
 
 
   expect_error(species_impact(cube=acacia_cube,
-                              impact_data = eicat_data,
+                              impact_data = eicat_acacia,
                               col_category="impact_category",
                               col_species="scientific_name",
                               col_mechanism="impact_mechanism",
@@ -101,7 +101,7 @@ test_that("species impact function throws error",{
 
 
   expect_error(species_impact(cube=acacia_cube,
-                              impact_data = eicat_data,
+                              impact_data = eicat_acacia,
                               col_category="impact_category",
                               col_species="scientific_name",
                               col_mechanism="impact_mechanism",

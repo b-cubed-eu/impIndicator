@@ -33,18 +33,17 @@
 
 
 
-#' GBIF occurrences data of acacia in South Africa
-#' An example of occurrence data from GBIF containing required column for impact indicator.
+#' EICAT data of acacia taxa
+#' An example of EICAT data containing species name, impact category and mechanism.
 #'
-#' @format A dataframe object containing 138 observations and 4 variables
+#' @format A dataframe object containing 138 observations and 3 variables
 #' \describe{
 #'   \item{scientific_name}{species scientific name}
 #'   \item{impact_category}{EICAT impact category}
 #'   \item{impact_mechanism}{mecahnism of impact}
-#'   \item{probability}{weight of impact}
 #' }
 #' @examples
-#'   head(eicat_data,10)
+#'   head(eicat_acacia,10)
 #'
 #' @source \url{https://github.com/Oceane-Boulesnane-Guengant/Risk_maps_Acacia_SA/tree/main/data}
-"eicat_data"
+"eicat_acacia"

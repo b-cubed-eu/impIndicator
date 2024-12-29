@@ -110,17 +110,17 @@ acacia_cube
 #> 
 #> # A tibble: 5,559 × 8
 #>    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord
-#>    <chr>               <dbl>                  <dbl> <dbl>    <int>  <dbl>  <dbl>
-#>  1 Acacia implexa    2979232                      1  2010      206   18.4  -33.9
-#>  2 Acacia cyclops    2980425                    122  2010      668   18.4  -32.2
-#>  3 Acacia saligna    2978552                      1  2010      206   18.4  -33.9
-#>  4 Acacia pycnantha  2978604                      1  2010      206   18.4  -33.9
-#>  5 Acacia mearnsii   2979775                    110  2010      215   20.6  -33.9
-#>  6 Acacia mearnsii   2979775                      1  2010      215   20.6  -33.9
-#>  7 Acacia mearnsii   2979775                      8  2010     1376   30.4  -29.7
-#>  8 Acacia saligna    2978552                      1  2011      206   18.4  -33.9
-#>  9 Acacia saligna    2978552                     15  2011     1312   30.9  -29.9
-#> 10 Acacia mearnsii   2979775                      1  2011      230   24.4  -33.9
+#>    <chr>               <dbl>                  <dbl> <dbl> <chr>     <dbl>  <dbl>
+#>  1 Acacia implexa    2979232                      1  2010 206        18.4  -33.9
+#>  2 Acacia cyclops    2980425                    122  2010 668        18.4  -32.2
+#>  3 Acacia saligna    2978552                      1  2010 206        18.4  -33.9
+#>  4 Acacia pycnantha  2978604                      1  2010 206        18.4  -33.9
+#>  5 Acacia mearnsii   2979775                    110  2010 215        20.6  -33.9
+#>  6 Acacia mearnsii   2979775                      1  2010 215        20.6  -33.9
+#>  7 Acacia mearnsii   2979775                      8  2010 1376       30.4  -29.7
+#>  8 Acacia saligna    2978552                      1  2011 206        18.4  -33.9
+#>  9 Acacia saligna    2978552                     15  2011 1312       30.9  -29.9
+#> 10 Acacia mearnsii   2979775                      1  2011 230        24.4  -33.9
 #> # ℹ 5,549 more rows
 #> # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters
 #> # ℹ 1 more variable: obs <dbl>
@@ -131,21 +131,21 @@ acacia_cube
 An example of an EICAT data is:
 
 ``` r
-# view EICAT data. Convert to tibble for a nicer display
-head(as_tibble(eicat_data),10)
-#> # A tibble: 10 × 4
-#>    scientific_name   impact_category impact_mechanism                probability
-#>    <chr>             <chr>           <chr>                                 <dbl>
-#>  1 Acacia saligna    MC              (1) Competition                           0
-#>  2 Acacia saligna    MC              (12) Indirect impacts through …           0
-#>  3 Acacia saligna    MC              (1) Competition                           0
-#>  4 Acacia saligna    MC              (1) Competition; (9) Chemical …           0
-#>  5 Acacia mearnsii   MC              (6) Poisoning/toxicity                    0
-#>  6 Acacia longifolia MC              (9) Chemical impact on ecosyst…           0
-#>  7 Acacia dealbata   MC              (9) Chemical impact on ecosyst…           0
-#>  8 Acacia dealbata   MC              (9) Chemical impact on ecosyst…           0
-#>  9 Acacia saligna    MC              (9) Chemical impact on ecosyst…           0
-#> 10 Acacia dealbata   MC              (12) Indirect impacts through …           0
+# view EICAT data
+head(eicat_acacia,10)
+#> # A tibble: 10 × 3
+#>    scientific_name   impact_category impact_mechanism                           
+#>    <chr>             <chr>           <chr>                                      
+#>  1 Acacia saligna    MC              (1) Competition                            
+#>  2 Acacia saligna    MC              (12) Indirect impacts through interaction …
+#>  3 Acacia saligna    MC              (1) Competition                            
+#>  4 Acacia saligna    MC              (1) Competition; (9) Chemical impact on th…
+#>  5 Acacia mearnsii   MC              (6) Poisoning/toxicity                     
+#>  6 Acacia longifolia MC              (9) Chemical impact on ecosystems          
+#>  7 Acacia dealbata   MC              (9) Chemical impact on ecosystems          
+#>  8 Acacia dealbata   MC              (9) Chemical impact on ecosystems          
+#>  9 Acacia saligna    MC              (9) Chemical impact on ecosystems          
+#> 10 Acacia dealbata   MC              (12) Indirect impacts through interaction …
 ```
 
 ## Compute impact map
@@ -163,7 +163,7 @@ cumulative** and **cumulative**.
 ``` r
 siteImpact <- site_impact(
   cube = acacia_cube,
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
@@ -191,7 +191,7 @@ year.
 
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
@@ -214,7 +214,7 @@ map per species and correct for sampling effort by dividing by $N$.
 
 species_value <- species_impact(
   cube = acacia_cube,
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
@@ -249,7 +249,7 @@ all_impact <- data.frame("year" = unique(acacia_cube$data$year))
 for (type in types) {
   impact_value <- impact_indicator(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",

@@ -2,7 +2,7 @@ test_that("impact cat function works", {
   species_list <- sort(unique(taxa_Acacia$species))
 
   expect_no_error(impact_cat(
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     species_list = species_list,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -11,7 +11,7 @@ test_that("impact cat function works", {
   ))
 
   expect_no_error(impact_cat(
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     species_list = species_list,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -20,7 +20,7 @@ test_that("impact cat function works", {
   ))
 
   expect_no_error(impact_cat(
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     species_list = species_list,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -30,7 +30,7 @@ test_that("impact cat function works", {
 
   # test output format
   result <- impact_cat(
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     species_list = species_list,
     col_category = "impact_category",
     col_species = "scientific_name",
@@ -43,7 +43,7 @@ test_that("impact cat function works", {
   expect_named(result)
 
   # test with matched eicat column names
-  matched_eicat <- eicat_data %>%
+  matched_eicat <- eicat_acacia %>%
     dplyr::rename(c(
       category = "impact_category",
       species = "scientific_name",
@@ -77,7 +77,7 @@ test_that("impact cat function throws error", {
   # species is not expected structure
   expect_error(
     impact_cat(
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       species_list = 1,
       col_category = "impact_category",
       col_species = "scientific_name",
@@ -89,7 +89,7 @@ test_that("impact cat function throws error", {
 
   expect_error(
     impact_cat(
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       species_list = species_list,
       col_category = NULL,
       col_species = "scientific_name",
@@ -103,7 +103,7 @@ i columns `col_category`, `col_species` and `col_mechanism` must all be given"
 
   expect_error(
     impact_cat(
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       species_list = species_list,
       col_category = "scientific_name",
       col_species = NULL,
@@ -117,7 +117,7 @@ i columns `col_category`, `col_species` and `col_mechanism` must all be given"
 
   expect_error(
     impact_cat(
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       species_list = species_list,
       col_category = "scientific_name",
       col_species = "scientific_name",
@@ -130,7 +130,7 @@ i columns `col_category`, `col_species` and `col_mechanism` must all be given"
 
   expect_error(
     impact_cat(
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       species_list = species_list,
       col_category = "impact_category",
       col_species = "scientific_name",
