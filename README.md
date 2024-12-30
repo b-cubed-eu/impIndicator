@@ -81,7 +81,7 @@ library(sf) # Spatial features
 ## Process occurrence cube
 
 ``` r
-# load the GBIF occurrence data for taxa
+# Process cube from GBIF in the R studio environment
 
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
@@ -131,8 +131,11 @@ acacia_cube
 The Environmental Impact Classification for Alien Taxa (EICAT)
 assessment data is the reported impact of alien taxa based on EICAT
 method which is the IUCN standard. An assessed alien taxa with adequate
-data is classified into massive, major, moderate, minor , or minimal
-concern. An example of an EICAT data is:
+data is classified into massive (MV), major (MR), moderate (MO), minor
+(MN), or minimal concern (MC) depending on the severity of the impact
+caused on recipient ecosystem. Additional information such as the
+mechanisms and location of impact are reported. An example of an EICAT
+data is:
 
 ``` r
 # view EICAT data
