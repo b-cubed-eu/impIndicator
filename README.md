@@ -8,6 +8,8 @@
 [![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![repo
 status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-project.org/package=impIndicator)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate
@@ -80,8 +82,12 @@ library(sf) # Spatial features
 
 ## Process occurrence cube
 
+The Global Biodiversity Information Facility (GBIF) occurrence data is a
+standardised species information that documents the presence or absence
+of species at particular locations and times.
+
 ``` r
-# Process cube from GBIF in the R studio environment
+# Process cube from GBIF occurrence data in the R studio environment
 
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
@@ -134,8 +140,8 @@ method which is the IUCN standard. An assessed alien taxa with adequate
 data is classified into massive (MV), major (MR), moderate (MO), minor
 (MN), or minimal concern (MC) depending on the severity of the impact
 caused on recipient ecosystem. Additional information such as the
-mechanisms and location of impact are reported. An example of an EICAT
-data is:
+mechanisms and location of impact are also recorded. An example of an
+EICAT data is:
 
 ``` r
 # view EICAT data
