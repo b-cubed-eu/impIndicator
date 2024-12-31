@@ -53,7 +53,7 @@ acacia_cube <- taxa_cube(
 )
 impact_value <- impact_indicator(
   cube = acacia_cube,
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",

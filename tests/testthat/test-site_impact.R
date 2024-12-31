@@ -9,7 +9,7 @@ acacia_cube <- taxa_cube(
 test_that("site impact function works", {
   expect_no_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -19,7 +19,7 @@ test_that("site impact function works", {
 
   expect_no_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -29,7 +29,7 @@ test_that("site impact function works", {
 
   expect_no_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -39,7 +39,7 @@ test_that("site impact function works", {
 
   expect_no_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -48,7 +48,7 @@ test_that("site impact function works", {
   ))
   expect_no_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -58,7 +58,7 @@ test_that("site impact function works", {
 
   expect_no_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -68,7 +68,7 @@ test_that("site impact function works", {
 
   expect_no_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -81,7 +81,7 @@ test_that("site impact throws errors", {
   expect_error(
     site_impact(
       cube = "a",
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       col_category = "impact_category",
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
@@ -120,7 +120,7 @@ test_that("site impact throws errors", {
 
   expect_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = NULL,
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
@@ -130,7 +130,7 @@ test_that("site impact throws errors", {
 
   expect_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = NULL,
     col_mechanism = "impact_mechanism",
@@ -141,7 +141,7 @@ test_that("site impact throws errors", {
 
   expect_error(site_impact(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = NULL,
@@ -152,7 +152,7 @@ test_that("site impact throws errors", {
   expect_error(
     site_impact(
       cube = acacia_cube,
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       col_category = "impact_category",
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
@@ -166,7 +166,7 @@ i see the function documentation for details"
   expect_error(
     site_impact(
       cube = acacia_cube,
-      impact_data = eicat_data,
+      impact_data = eicat_acacia,
       col_category = "impact_category",
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
@@ -181,7 +181,7 @@ See the function desciption or double check the spelling"
 #   expect_error(
 #     site_impact(
 #       cube = acacia_cube,
-#       impact_data = eicat_data,
+#       impact_data = eicat_acacia,
 #       col_category = "impact_category",
 #       col_species = "scientific_name",
 #       col_mechanism = "impact_mechanism",

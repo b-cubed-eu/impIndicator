@@ -19,9 +19,10 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![repo status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![CRAN status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-project.org/package=impIndicator)
 <!-- badges: end -->
 
-The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises impact per site as a map. It takes in GBIF occurrence data and EICAT assessment list. It enables users to choose from various methods 
+The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods 
 of calculating impact indicators based on different studies.\
 
 The impIndicator produces three main products and can be useful as stated below:\
@@ -59,8 +60,9 @@ library(sf) # Spatial features
 
 
 ## Process occurrence cube
+The Global Biodiversity Information Facility (GBIF) occurrence data is a standardised species information that documents the presence or absence of species at particular locations and times. 
 ```{r}
-# load the GBIF occurrence data for taxa
+# Process cube from GBIF occurrence data in the R studio environment
 
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
@@ -72,12 +74,13 @@ acacia_cube <- taxa_cube(
 acacia_cube
 ```
 
-## EICAT data
-
+## EICAT assessment data
+The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the IUCN standard. An assessed alien taxa with adequate data is classified into massive (MV),
+major (MR), moderate (MO), minor (MN), or minimal concern (MC) depending on the severity of the impact caused on recipient ecosystem. Additional information such as the mechanisms and location of impact are also recorded. 
 An example of an EICAT data is:
 ```{r}
-# view EICAT data. Convert to tibble for a nicer display
-head(as_tibble(eicat_data),10)
+# view EICAT data
+head(eicat_acacia,10)
 ```
 
 ## Compute impact map
@@ -89,7 +92,7 @@ indicators, namely, **precautionary**, **precautionary cumulative**, **mean**, *
 ```{r}
 siteImpact <- site_impact(
   cube = acacia_cube,
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
@@ -112,7 +115,7 @@ To compute the impact indicator of alien taxa, we sum all the yearly impact scor
 
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
@@ -131,7 +134,7 @@ We compute the impact indicator per species by summing the impact risk map per s
 
 species_value <- species_impact(
   cube = acacia_cube,
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   col_category = "impact_category",
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
@@ -162,7 +165,7 @@ all_impact <- data.frame("year" = unique(acacia_cube$data$year))
 for (type in types) {
   impact_value <- impact_indicator(
     cube = acacia_cube,
-    impact_data = eicat_data,
+    impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",

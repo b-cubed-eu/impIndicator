@@ -41,8 +41,6 @@ impact per categories of a species
 Aggregate species impact categories from impact data.
 }
 \examples{
-# read the impact data
-# eicat_data<-readRDS("data/eicat_data.rds")
 # define species list
 species_list <- c(
   "Acacia adunca",
@@ -57,7 +55,7 @@ species_list <- c(
 )
 
 agg_impact <- impact_cat(
-  impact_data = eicat_data,
+  impact_data = eicat_acacia,
   species_list = species_list,
   col_category = "impact_category",
   col_species = "scientific_name",
