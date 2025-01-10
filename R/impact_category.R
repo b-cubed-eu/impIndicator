@@ -51,7 +51,7 @@ impact_cat <- function(impact_data,
                        col_mechanism = NULL,
                        trans = 1) {
   # avoid "no visible binding for global variable" NOTE for the followin names
-  category <- species <- mechanism <- category_value <- . <- rowname <- NULL
+  category <- species <- mechanism <- category_value <- . <- scientificName<-rowname <- NULL
 
 
   # check arguments
@@ -154,9 +154,8 @@ impact_cat <- function(impact_data,
 
 
   impact_matrix <- impact_matrix %>%
-    dplyr::mutate(rowname = row.names(.)) %>%
-    dplyr::arrange(rowname) %>%
-    dplyr::select(-rowname)
+    dplyr::mutate(scientificName = row.names(.)) %>%
+    dplyr::arrange(scientificName)
 
   return(impact_matrix)
 }
