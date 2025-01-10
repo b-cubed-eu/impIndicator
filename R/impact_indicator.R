@@ -46,14 +46,13 @@ impact_indicator <- function(cube,
                              col_mechanism = NULL,
                              trans = 1,
                              type = NULL) {
-
-  taxonKey<-year<-cellCode<-max_mech<-scientificName<-NULL
+  taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
 
   # check arguments
   # cube
   if (!("sim_cube" %in% class(cube) | "processed_cube" %in% class(cube))) {
     cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
-                     "i" = "cube must be processed from `b3gbi`"
+      "i" = "cube must be processed from `b3gbi`"
     ))
   }
 
@@ -71,64 +70,64 @@ impact_indicator <- function(cube,
   )
 
   # create cube with impact score
-  impact_cube<-dplyr::left_join(cube$data,impact_score_list,
-                                by="scientificName")
+  impact_cube_data <- dplyr::left_join(cube$data, impact_score_list,
+    by = "scientificName"
+  ) %>%
+    tidyr::drop_na(max, mean, max_mech) # remove occurrences with no impact score
 
-  if(type=="precautionary"){
-    impact_values <- impact_cube %>%
+
+
+
+  if (type == "precautionary") {
+    impact_values <- impact_cube_data %>%
       # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,cellCode) %>%
-      dplyr::summarise(dplyr::across(max,max),.groups = "drop") %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode) %>%
+      dplyr::summarise(dplyr::across(max, max), .groups = "drop") %>%
       dplyr::group_by(year) %>%
-      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
-      dplyr::mutate(max=max/cube$num_cells) %>%
-      dplyr::rename(value="max")
-
-  } else if(type=="precautionary cumulative"){
-    impact_values <- impact_cube %>%
+      dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
+      dplyr::mutate(max = max / cube$num_cells) %>%
+      dplyr::rename(value = "max")
+  } else if (type == "precautionary cumulative") {
+    impact_values <- impact_cube_data %>%
       # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,cellCode) %>%
-      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode) %>%
+      dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
       dplyr::group_by(year) %>%
-      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
-      dplyr::mutate(max=max/cube$num_cells) %>%
-      dplyr::rename(value="max")
-
-  } else if(type=="mean"){
-    impact_values <- impact_cube %>%
+      dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
+      dplyr::mutate(max = max / cube$num_cells) %>%
+      dplyr::rename(value = "max")
+  } else if (type == "mean") {
+    impact_values <- impact_cube_data %>%
       # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,cellCode) %>%
-      dplyr::summarise(dplyr::across(mean,mean),.groups = "drop") %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode) %>%
+      dplyr::summarise(dplyr::across(mean, mean), .groups = "drop") %>%
       dplyr::group_by(year) %>%
-      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
-      dplyr::mutate(mean=mean/cube$num_cells) %>%
-      dplyr::rename(value="mean")
-
-  } else if(type=="mean cumulative"){
-    impact_values <- impact_cube %>%
+      dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
+      dplyr::mutate(mean = mean / cube$num_cells) %>%
+      dplyr::rename(value = "mean")
+  } else if (type == "mean cumulative") {
+    impact_values <- impact_cube_data %>%
       # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,cellCode) %>%
-      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode) %>%
+      dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
       dplyr::group_by(year) %>%
-      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
-      dplyr::mutate(mean=mean/cube$num_cells) %>%
-      dplyr::rename(value="mean")
-
-  } else if(type=="cumulative"){
-    impact_values <- impact_cube %>%
+      dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
+      dplyr::mutate(mean = mean / cube$num_cells) %>%
+      dplyr::rename(value = "mean")
+  } else if (type == "cumulative") {
+    impact_values <- impact_cube_data %>%
       # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,cellCode) %>%
-      dplyr::summarise(dplyr::across(max_mech,sum),.groups = "drop") %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode) %>%
+      dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
       dplyr::group_by(year) %>%
-      dplyr::summarise(dplyr::across(max_mech,sum),.groups = "drop") %>%
-      dplyr::mutate(max_mech=max_mech/cube$num_cells) %>%
-      dplyr::rename(value="max_mech")
-
+      dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
+      dplyr::mutate(max_mech = max_mech / cube$num_cells) %>%
+      dplyr::rename(value = "max_mech")
   } else {
     cli::cli_abort(c(
       "{.var type} is not valid",
