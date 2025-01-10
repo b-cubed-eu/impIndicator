@@ -47,6 +47,8 @@ impact_indicator <- function(cube,
                              trans = 1,
                              type = NULL) {
 
+  taxonKey<-year<-cellCode<-max_mech<-scientificName<-NULL
+
   # check arguments
   # cube
   if (!("sim_cube" %in% class(cube) | "processed_cube" %in% class(cube))) {
@@ -55,121 +57,87 @@ impact_indicator <- function(cube,
     ))
   }
 
+  # get species list
   full_species_list <- sort(unique(cube$data$scientificName))
 
-  period <- unique(cube$data$year)
+  # get impact score list
+  impact_score_list <- impact_cat(
+    impact_data = impact_data,
+    species_list = full_species_list,
+    col_category = col_category,
+    col_species = col_species,
+    col_mechanism = col_mechanism,
+    trans = trans
+  )
 
-  # create empty vector and dataframe for impact indicators and species impact
-  # indicator
-  impact_values <- c()
-  species_values <- data.frame()
+  # create cube with impact score
+  impact_cube<-dplyr::left_join(cube$data,impact_score_list,
+                                by="scientificName")
 
-  for (y in period) {
-    sbs.taxon <- species_by_site(cube, y)
+  if(type=="precautionary"){
+    impact_values <- impact_cube %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,cellCode) %>%
+      dplyr::summarise(dplyr::across(max,max),.groups = "drop") %>%
+      dplyr::group_by(year) %>%
+      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
+      dplyr::mutate(max=max/cube$num_cells) %>%
+      dplyr::rename(value="max")
 
-    species_list <- unique(names(sbs.taxon))
+  } else if(type=="precautionary cumulative"){
+    impact_values <- impact_cube %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,cellCode) %>%
+      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
+      dplyr::group_by(year) %>%
+      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
+      dplyr::mutate(max=max/cube$num_cells) %>%
+      dplyr::rename(value="max")
 
-    if (!exists("eicat_score_list")) {
-      eicat_score_list <- impact_cat(
-        impact_data = impact_data,
-        species_list = full_species_list,
-        col_category = col_category,
-        col_species = col_species,
-        col_mechanism = col_mechanism,
-        trans = trans
-      )
+  } else if(type=="mean"){
+    impact_values <- impact_cube %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,cellCode) %>%
+      dplyr::summarise(dplyr::across(mean,mean),.groups = "drop") %>%
+      dplyr::group_by(year) %>%
+      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
+      dplyr::mutate(mean=mean/cube$num_cells) %>%
+      dplyr::rename(value="mean")
 
-      impact_species <- eicat_score_list %>%
-        stats::na.omit() %>%
-        rownames()
-    }
+  } else if(type=="mean cumulative"){
+    impact_values <- impact_cube %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,cellCode) %>%
+      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
+      dplyr::group_by(year) %>%
+      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
+      dplyr::mutate(mean=mean/cube$num_cells) %>%
+      dplyr::rename(value="mean")
 
-    if (type %in% c("precautionary", "precautionary cumulative")) {
-      eicat_score <- eicat_score_list[species_list, "max"]
+  } else if(type=="cumulative"){
+    impact_values <- impact_cube %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,cellCode) %>%
+      dplyr::summarise(dplyr::across(max_mech,sum),.groups = "drop") %>%
+      dplyr::group_by(year) %>%
+      dplyr::summarise(dplyr::across(max_mech,sum),.groups = "drop") %>%
+      dplyr::mutate(max_mech=max_mech/cube$num_cells) %>%
+      dplyr::rename(value="max_mech")
 
-      # impact score multiply by species by site
-      impactScore <- sweep(sbs.taxon, 2, eicat_score, FUN = "*")
-
-      if (type == "precautionary") {
-        siteScore <- apply(impactScore, 1, function(x) {
-          max(x,
-            na.rm = TRUE
-          )
-        }) %>%
-          # suppress warning when -Inf produced  by max() due to site with no impact
-          suppressWarnings()
-
-        #d rop -Inf
-        siteScore <- siteScore[siteScore!=-Inf]
-
-        impact <- sum(siteScore, na.rm = TRUE) / cube$num_cells
-
-        impact_values <- rbind(impact_values, c(y, impact))
-      } else {
-        # Precautionary cumulative
-        siteScore <- apply(impactScore, 1, function(x) {
-          sum(x,
-            na.rm = TRUE
-          )
-        })
-
-
-        impact <- sum(siteScore, na.rm = TRUE) / cube$num_cells
-        impact_values <- rbind(impact_values, c(y, impact))
-      }
-    } else if (type %in% c("mean cumulative", "mean")) {
-      eicat_score <- eicat_score_list[species_list, "mean"]
-
-      # impact score multiply by species by site
-      impactScore <- sweep(sbs.taxon, 2, eicat_score, FUN = "*")
-
-
-      if (type == "mean cumulative") {
-        siteScore <- apply(impactScore, 1, function(x) {
-          sum(x,
-            na.rm = TRUE
-          )
-        })
-
-        impact <- sum(siteScore, na.rm = TRUE) / cube$num_cells
-        impact_values <- rbind(impact_values, c(y, impact))
-      } else {
-        # mean
-        siteScore <- apply(impactScore, 1, function(x) {
-          mean(x,
-            na.rm = TRUE
-          )
-        })
-
-
-        impact <- sum(siteScore, na.rm = TRUE) / cube$num_cells
-        impact_values <- rbind(impact_values, c(y, impact))
-      }
-    } else if (type == "cumulative") {
-      eicat_score <- eicat_score_list[species_list, "max_mech"]
-
-      # impact score multiply by species by site
-      impactScore <- sweep(sbs.taxon, 2, eicat_score, FUN = "*")
-
-      siteScore <- apply(impactScore, 1, function(x) {
-        sum(x,
-          na.rm = TRUE
-        )
-      })
-
-      impact <- sum(siteScore, na.rm = TRUE) / cube$num_cells
-      impact_values <- rbind(impact_values, c(y, impact))
-    } else {
-      cli::cli_abort(c(
-        "{.var type} is not valid",
-        "x" = "{.var type} must be from the options provided",
-        "See the function desciption or double check the spelling"
-      ))
-    }
+  } else {
+    cli::cli_abort(c(
+      "{.var type} is not valid",
+      "x" = "{.var type} must be from the options provided",
+      "See the function desciption or double check the spelling"
+    ))
   }
 
-  impact_values <- as.data.frame(impact_values)
-  names(impact_values) <- c("year", "value")
+
   class(impact_values) <- c("impact_indicator", class(impact_values))
   return(impact_values)
 }
