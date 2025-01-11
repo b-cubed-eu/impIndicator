@@ -4,13 +4,18 @@ acacia_cube<-taxa_cube(taxa=taxa_Acacia,
                        first_year=2010)
 
 test_that("species impact function works", {
-  expect_no_error(species_impact(cube=acacia_cube,
-                                 impact_data = eicat_acacia,
-                                 col_category="impact_category",
-                                 col_species="scientific_name",
-                                 col_mechanism="impact_mechanism",
-                                 trans=1,
-                                 type = "mean"))
+
+  result<-species_impact(cube=acacia_cube,
+                 impact_data = eicat_acacia,
+                 col_category="impact_category",
+                 col_species="scientific_name",
+                 col_mechanism="impact_mechanism",
+                 trans=1,
+                 type = "mean")
+
+  expect_equal(class(result), c("species_impact","tbl_df" ,"tbl" ,"data.frame"))
+
+  expect_no_error(result)
 
   expect_no_error(species_impact(cube=acacia_cube,
                                  impact_data = eicat_acacia,
