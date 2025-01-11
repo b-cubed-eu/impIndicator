@@ -44,7 +44,7 @@ site_impact <- function(cube,
                         trans = 1,
                         type = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
-  cellCode <- xcoord <- ycoord <- NULL
+  cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech<- NULL
 
   # check arguments
   # cube
@@ -54,119 +54,64 @@ site_impact <- function(cube,
     ))
   }
 
-
-  # if (!("data.frame" %in% class(coords)) &
-  #   !all(c("siteID", "X", "Y") %in% names(coords))) {
-  #   cli::cli_abort(
-  #     "{.var coords} must be a {.cls dataframe} with columns {.var siteID},{.var X} and {.var Y}"
-  #   )
-  # }
-
-  # create site coordinates
-  coords <- dplyr::distinct(cube$data,cellCode,xcoord,ycoord) %>%
-    dplyr::arrange(cellCode)
-
-
+  # get species list
   full_species_list <- sort(unique(cube$data$scientificName))
 
-  period <- unique(cube$data$year)
+  # get impact score list
+  impact_score_list <- impact_cat(
+    impact_data = impact_data,
+    species_list = full_species_list,
+    col_category = col_category,
+    col_species = col_species,
+    col_mechanism = col_mechanism,
+    trans = trans
+  )
 
-  for (y in period) {
-    sbs.taxon <- species_by_site(cube = cube, y = y)
+  # create cube with impact score
+  impact_cube_data <- dplyr::left_join(cube$data, impact_score_list,
+                                       by = "scientificName"
+  ) %>%
+    tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
-    species_list <- unique(names(sbs.taxon))
-
-    if (!exists("eicat_score_list")) {
-      eicat_score_list <- impact_cat(
-        impact_data = impact_data,
-        species_list = full_species_list,
-        col_category = col_category,
-        col_species = col_species,
-        col_mechanism = col_mechanism,
-        trans = trans
-      )
-    }
-
-    if (type %in% c("precautionary", "precautionary cumulative")) {
-      eicat_score <- eicat_score_list[species_list, "max"]
-
-      # impact score multiply by species by site
-      impactScore <- sweep(sbs.taxon, 2, eicat_score, FUN = "*")
-
-      if (type == "precautionary") {
-        siteScore <- apply(impactScore, 1, function(x) {
-          max(x,
-            na.rm = TRUE
-          )
-        }) %>%
-        #suppress warning when -Inf produced  by max() due to site with no impact
-          suppressWarnings()
-
-      } else { # else compute precautionary cumulative
-        siteScore <- apply(impactScore, 1, function(x) {
-          sum(x,
-            na.rm = TRUE
-          )
-        })
-      }
-    } else if (type %in% c("mean cumulative", "mean")) {
-      eicat_score <- eicat_score_list[species_list, "mean"]
-
-      # impact score multiply by species by site
-      impactScore <- sweep(sbs.taxon, 2, eicat_score, FUN = "*")
-
-      if (type == "mean") {
-        siteScore <- apply(impactScore, 1, function(x) {
-          mean(x,
-            na.rm = TRUE
-          )
-        })
-      } else { # else compute mean cumulative
-        siteScore <- apply(impactScore, 1, function(x) {
-          sum(x,
-            na.rm = TRUE
-          )
-        })
-      }
-    } else if (type == "cumulative") {
-      eicat_score <- eicat_score_list[species_list, "max_mech"]
-
-      # impact score multiply by species by site
-      impactScore <- sweep(sbs.taxon, 2, eicat_score, FUN = "*")
-
-      siteScore <- apply(impactScore, 1, function(x) {
-        sum(x,
-          na.rm = TRUE
-        )
-      })
-    } else {
-      cli::cli_abort(c(
-        "{.var type} is not valid",
-        "x" = "{.var type} must be from the options provided",
-        "See the function desciption or double check the spelling"
-      ))
-    }
-
-    # convert siteScore to dataframe
-    siteScore <- siteScore %>%
-      as.data.frame() %>%
-      tibble::rownames_to_column(var = "cellCode")
-
-    names(siteScore)[2] <- as.character(y)
-
-    coords <- dplyr::left_join(coords, siteScore, by = "cellCode")
+  if (type == "precautionary") {
+    site_values <- impact_cube_data %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
+      dplyr::summarise(dplyr::across(max, max), .groups = "drop") %>%
+      tidyr::pivot_wider(names_from = year, values_from = max)
+  } else if (type == "precautionary cumulative") {
+    site_values <- impact_cube_data %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
+      dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
+      tidyr::pivot_wider(names_from = year, values_from = max)
+  } else if (type == "mean") {
+    site_values <- impact_cube_data %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
+      dplyr::summarise(dplyr::across(mean, mean), .groups = "drop") %>%
+      tidyr::pivot_wider(names_from = year, values_from = mean)
+  } else if (type == "mean cumulative") {
+    site_values <- impact_cube_data %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
+      dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
+      tidyr::pivot_wider(names_from = year, values_from = mean)
+  } else if (type == "cumulative") {
+    site_values <- impact_cube_data %>%
+      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
+      dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
+      tidyr::pivot_wider(names_from = year, values_from = max_mech)
+  } else {
+    cli::cli_abort(c(
+      "{.var type} is not valid",
+      "x" = "{.var type} must be from the options provided",
+      "See the function desciption or double check the spelling"
+    ))
   }
 
-  # remove -Inf produced by max(.,na.rm=TRUE)
-  # remove NaN produced by mean(.,na.rm=TRUE)
-  # remove 0 produced by sum(.,na.rm=TRUE)
 
-  coords <- coords %>%
-    dplyr::mutate(dplyr::across(
-      dplyr::all_of(dplyr::everything()),
-      ~ ifelse(. == -Inf | is.nan(.) | . == 0, NA, .)
-    ))
-
-  class(coords)<-c("site_impact",class(coords))
-  return(coords)
+  class(site_values)<-c("site_impact",class(site_values))
+  return(site_values)
 }

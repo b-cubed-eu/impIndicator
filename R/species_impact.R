@@ -43,6 +43,7 @@ species_impact <- function(cube,
                            trans = 1,
                            type = NULL) {
 
+  # avoid "no visible binding for global variable" NOTE for the following names
   taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
   # check arguments
   # cube

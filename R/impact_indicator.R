@@ -43,6 +43,7 @@ impact_indicator <- function(cube,
                              col_mechanism = NULL,
                              trans = 1,
                              type = NULL) {
+  # avoid "no visible binding for global variable" NOTE for the following names
   taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
 
   # check arguments
@@ -71,8 +72,6 @@ impact_indicator <- function(cube,
     by = "scientificName"
   ) %>%
     tidyr::drop_na(max, mean, max_mech) # remove occurrences with no impact score
-
-
 
 
   if (type == "precautionary") {
