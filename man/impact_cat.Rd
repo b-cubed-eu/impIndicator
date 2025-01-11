@@ -14,8 +14,8 @@ impact_cat(
 )
 }
 \arguments{
-\item{impact_data}{The dataframe of species impact which contains columns of category,
-species and mechanism.}
+\item{impact_data}{The dataframe of species impact which contains columns of \verb{impact_category,}
+\code{scientific_name} and \code{impact_mechanism.}}
 
 \item{species_list}{The vector of species' list to aggregate their impact categories}
 

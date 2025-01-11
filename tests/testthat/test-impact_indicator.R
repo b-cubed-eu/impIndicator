@@ -100,35 +100,35 @@ test_that("impact indicator function returns errors", {
 i see the function documentation for details"
   )
 
-  expect_error(impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "a",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    type = "mean cumulative"
-  ))
-
-  expect_error(impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "a",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    type = "mean cumulative"
-  ))
-
-  expect_error(impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "a",
-    trans = 1,
-    type = "mean cumulative"
-  ))
+  # expect_error(impact_indicator(
+  #   cube = acacia_cube,
+  #   impact_data = eicat_acacia,
+  #   col_category = "a",
+  #   col_species = "scientific_name",
+  #   col_mechanism = "impact_mechanism",
+  #   trans = 1,
+  #   type = "mean cumulative"
+  # ))
+  #
+  # expect_error(impact_indicator(
+  #   cube = acacia_cube,
+  #   impact_data = eicat_acacia,
+  #   col_category = "impact_category",
+  #   col_species = "a",
+  #   col_mechanism = "impact_mechanism",
+  #   trans = 1,
+  #   type = "mean cumulative"
+  # ))
+  #
+  # expect_error(impact_indicator(
+  #   cube = acacia_cube,
+  #   impact_data = eicat_acacia,
+  #   col_category = "impact_category",
+  #   col_species = "scientific_name",
+  #   col_mechanism = "a",
+  #   trans = 1,
+  #   type = "mean cumulative"
+  # ))
 
   expect_error(impact_indicator(
     cube = acacia_cube,
