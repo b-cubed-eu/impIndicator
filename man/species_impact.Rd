@@ -18,8 +18,8 @@ species_impact(
 \item{cube}{The data cube of class \code{sim_cube} or
 \code{processed_cube} from \code{b3gbi::process_cube()}}
 
-\item{impact_data}{The dataframe of species impact which contains columns of category,
-species and mechanism.}
+\item{impact_data}{The dataframe of species impact which contains columns of \verb{impact_category,}
+\code{scientific_name} and \code{impact_mechanism}}
 
 \item{col_category}{The name of the column containing the impact categories.
 The first two letters each categories must be an EICAT short names
@@ -56,9 +56,6 @@ acacia_cube <- taxa_cube(
 speciesImpact <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1,
   type = "mean"
 )

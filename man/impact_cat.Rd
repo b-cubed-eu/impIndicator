@@ -57,9 +57,6 @@ species_list <- c(
 agg_impact <- impact_cat(
   impact_data = eicat_acacia,
   species_list = species_list,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1
 )
 

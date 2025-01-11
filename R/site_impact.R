@@ -2,8 +2,8 @@
 #'
 #' @param cube The data cube of class `sim_cube` or `processed_cube` from
 #' `b3gbi::process_cube()`
-#' @param impact_data The dataframe of species impact which contains columns of category,
-#'  species and mechanism.
+#' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
+#' `scientific_name` and `impact_mechanism`
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
 #' (e.g "MC - Minimal concern")
@@ -32,9 +32,6 @@
 #' siteImpact <- site_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   col_category = "impact_category",
-#'   col_species = "scientific_name",
-#'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
 #'   type = "precautionary cumulative"
 #' )

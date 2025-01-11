@@ -93,9 +93,6 @@ indicators, namely, **precautionary**, **precautionary cumulative**, **mean**, *
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1,
   type = "mean cumulative"
 )
@@ -116,9 +113,6 @@ To compute the impact indicator of alien taxa, we sum all the yearly impact scor
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1,
   type = "mean cumulative"
 )
@@ -135,9 +129,6 @@ We compute the impact indicator per species by summing the impact risk map per s
 species_value <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1,
   type = "mean"
 )
@@ -166,9 +157,6 @@ for (type in types) {
   impact_value <- impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
     trans = 1,
     type = type
   )

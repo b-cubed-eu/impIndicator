@@ -101,33 +101,33 @@ acacia_cube
 #> Simulated data cube for calculating biodiversity indicators
 #> 
 #> Date Range: 2010 - 2024 
-#> Number of cells: 369 
+#> Number of cells: 402 
 #> Grid reference system: custom 
 #> Coordinate range:
 #> [1] 16.60833
 #> 
-#> Total number of observations: 5559 
-#> Number of species represented: 25 
+#> Total number of observations: 6508 
+#> Number of species represented: 29 
 #> Number of families represented: Data not present 
 #> 
 #> Kingdoms represented: Data not present 
 #> 
 #> First 10 rows of data (use n = to show more):
 #> 
-#> # A tibble: 5,559 × 8
+#> # A tibble: 6,508 × 8
 #>    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord
 #>    <chr>               <dbl>                  <dbl> <dbl> <chr>     <dbl>  <dbl>
-#>  1 Acacia implexa    2979232                      1  2010 206        18.4  -33.9
-#>  2 Acacia cyclops    2980425                    122  2010 668        18.4  -32.2
-#>  3 Acacia saligna    2978552                      1  2010 206        18.4  -33.9
+#>  1 Acacia mearnsii   2979775                      8  2010 1376       30.4  -29.7
+#>  2 Acacia saligna    2978552                      1  2010 206        18.4  -33.9
+#>  3 Acacia implexa    2979232                      1  2010 206        18.4  -33.9
 #>  4 Acacia pycnantha  2978604                      1  2010 206        18.4  -33.9
-#>  5 Acacia mearnsii   2979775                    110  2010 215        20.6  -33.9
+#>  5 Acacia cyclops    2980425                    122  2010 668        18.4  -32.2
 #>  6 Acacia mearnsii   2979775                      1  2010 215        20.6  -33.9
-#>  7 Acacia mearnsii   2979775                      8  2010 1376       30.4  -29.7
+#>  7 Acacia mearnsii   2979775                    110  2010 215        20.6  -33.9
 #>  8 Acacia saligna    2978552                      1  2011 206        18.4  -33.9
-#>  9 Acacia saligna    2978552                     15  2011 1312       30.9  -29.9
-#> 10 Acacia mearnsii   2979775                      1  2011 230        24.4  -33.9
-#> # ℹ 5,549 more rows
+#>  9 Acacia saligna    2978552                      1  2011 144        19.4  -34.2
+#> 10 Acacia melanoxy…  2979000                      1  2011 206        18.4  -33.9
+#> # ℹ 6,498 more rows
 #> # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters
 #> # ℹ 1 more variable: obs <dbl>
 ```
@@ -177,9 +177,6 @@ cumulative** and **cumulative**.
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1,
   type = "mean cumulative"
 )
@@ -205,9 +202,6 @@ year.
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1,
   type = "mean cumulative"
 )
@@ -228,9 +222,6 @@ map per species and correct for sampling effort by dividing by $N$.
 species_value <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1,
   type = "mean"
 )
@@ -263,9 +254,6 @@ for (type in types) {
   impact_value <- impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
     trans = 1,
     type = type
   )

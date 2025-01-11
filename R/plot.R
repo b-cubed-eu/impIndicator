@@ -29,9 +29,6 @@
 #' impact_value <- impact_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   col_category = "impact_category",
-#'   col_species = "scientific_name",
-#'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
 #'   type = "mean cumulative"
 #' )
@@ -97,9 +94,6 @@ plot.impact_indicator <- function(x,
 #' speciesImpact <- species_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   col_category = "impact_category",
-#'   col_species = "scientific_name",
-#'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
 #'   type = "mean"
 #' )
@@ -188,9 +182,6 @@ plot.species_impact <- function(x,
 #' siteImpact <- site_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   col_category = "impact_category",
-#'   col_species = "scientific_name",
-#'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
 #'   type = "precautionary cumulative"
 #' )
