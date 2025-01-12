@@ -118,36 +118,36 @@ test_that("site impact throws errors", {
   )
 
 
-  expect_error(site_impact(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = NULL,
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    type = "precautionary cumulative"
-  ))
-
-  expect_error(site_impact(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = NULL,
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    type = "precautionary cumulative"
-  ))
-
-
-  expect_error(site_impact(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = NULL,
-    trans = 1,
-    type = "precautionary cumulative"
-  ))
+  # expect_error(site_impact(
+  #   cube = acacia_cube,
+  #   impact_data = eicat_acacia,
+  #   col_category = NULL,
+  #   col_species = "scientific_name",
+  #   col_mechanism = "impact_mechanism",
+  #   trans = 1,
+  #   type = "precautionary cumulative"
+  # ))
+  #
+  # expect_error(site_impact(
+  #   cube = acacia_cube,
+  #   impact_data = eicat_acacia,
+  #   col_category = "impact_category",
+  #   col_species = NULL,
+  #   col_mechanism = "impact_mechanism",
+  #   trans = 1,
+  #   type = "precautionary cumulative"
+  # ))
+  #
+  #
+  # expect_error(site_impact(
+  #   cube = acacia_cube,
+  #   impact_data = eicat_acacia,
+  #   col_category = "impact_category",
+  #   col_species = "scientific_name",
+  #   col_mechanism = NULL,
+  #   trans = 1,
+  #   type = "precautionary cumulative"
+  # ))
 
   expect_error(
     site_impact(

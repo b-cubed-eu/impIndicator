@@ -3,8 +3,8 @@
 #' @description
 #' Aggregate species impact categories from impact data.
 #'
-#' @param impact_data The dataframe of species impact which contains columns of category,
-#'  species and mechanism.
+#' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
+#' `scientific_name` and `impact_mechanism.`
 #' @param species_list The vector of species' list to aggregate their impact categories
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
@@ -38,9 +38,6 @@
 #' agg_impact <- impact_cat(
 #'   impact_data = eicat_acacia,
 #'   species_list = species_list,
-#'   col_category = "impact_category",
-#'   col_species = "scientific_name",
-#'   col_mechanism = "impact_mechanism",
 #'   trans = 1
 #' )
 #'
@@ -51,7 +48,7 @@ impact_cat <- function(impact_data,
                        col_mechanism = NULL,
                        trans = 1) {
   # avoid "no visible binding for global variable" NOTE for the followin names
-  category <- species <- mechanism <- category_value <- . <- rowname <- NULL
+  impact_category <- scientific_name <- impact_mechanism <- category_value <- . <- scientificName<-rowname <- NULL
 
 
   # check arguments
@@ -74,9 +71,9 @@ impact_cat <- function(impact_data,
 
 
   if (all(c(
-    "category",
-    "species",
-    "mechanism"
+    "impact_category",
+    "scientific_name",
+    "impact_mechanism"
   ) %in% names(impact_data))) {
     impact_data <- impact_data
   } else if (all(c(
@@ -86,56 +83,56 @@ impact_cat <- function(impact_data,
   ))) {
     impact_data <- impact_data %>%
       dplyr::rename(dplyr::all_of(c(
-        category = col_category,
-        species = col_species,
-        mechanism = col_mechanism
+        impact_category = col_category,
+        scientific_name = col_species,
+        impact_mechanism = col_mechanism
       )))
   } else {
     cli::cli_abort(c(
-      "columns {.var category}, {.var species} and {.var mechanism} are not found in the {.var impact_data}",
+      "columns {.var impact_category}, {.var scientific_name} and {.var impact_mechanism} are not found in the {.var impact_data}",
       "i" = "columns {.var col_category}, {.var col_species} and {.var col_mechanism} must all be given"
     ))
   }
 
   category_max_mean <- impact_data %>%
-    dplyr::mutate(category = substr(category, 1, 2)) %>%
-    dplyr::filter(category %in% c("MC", "MN", "MO", "MR", "MV")) %>%
-    dplyr::select(species, mechanism, category) %>%
-    dplyr::mutate(category_value = cat_num(category, trans)) %>%
-    dplyr::distinct(species, mechanism, category,
+    dplyr::mutate(impact_category = substr(impact_category, 1, 2)) %>%
+    dplyr::filter(impact_category %in% c("MC", "MN", "MO", "MR", "MV")) %>%
+    dplyr::select(scientific_name, impact_mechanism, impact_category) %>%
+    dplyr::mutate(category_value = cat_num(impact_category, trans)) %>%
+    dplyr::distinct(scientific_name, impact_mechanism, impact_category,
       .keep_all = TRUE
     ) %>%
-    dplyr::group_by(species) %>%
+    dplyr::group_by(scientific_name) %>%
     dplyr::summarise(
       max_value = max(category_value, na.rm = TRUE),
       mean_value = mean(category_value, na.rm = TRUE),
       .groups = "drop"
     ) %>%
-    dplyr::filter(species %in% species_list)
+    dplyr::filter(scientific_name %in% species_list)
 
 
   category_sum_mech <- impact_data %>%
-    dplyr::mutate(category = substr(category, 1, 2)) %>%
-    dplyr::filter(category %in% c("MC", "MN", "MO", "MR", "MV")) %>%
-    dplyr::select(species, mechanism, category) %>%
-    dplyr::mutate(category_value = cat_num(category, trans)) %>%
-    dplyr::distinct(species, mechanism, category,
+    dplyr::mutate(impact_category = substr(impact_category, 1, 2)) %>%
+    dplyr::filter(impact_category %in% c("MC", "MN", "MO", "MR", "MV")) %>%
+    dplyr::select(scientific_name, impact_mechanism, impact_category) %>%
+    dplyr::mutate(category_value = cat_num(impact_category, trans)) %>%
+    dplyr::distinct(scientific_name, impact_mechanism, impact_category,
       .keep_all = TRUE
     ) %>%
-    dplyr::group_by(species, mechanism) %>%
+    dplyr::group_by(scientific_name, impact_mechanism) %>%
     dplyr::summarise(dplyr::across(category_value, max),
       .groups = "drop"
     ) %>%
-    dplyr::group_by(species) %>%
+    dplyr::group_by(scientific_name) %>%
     dplyr::summarise(dplyr::across(category_value, sum),
       .groups = "drop"
     ) %>%
-    dplyr::filter(species %in% species_list)
+    dplyr::filter(scientific_name %in% species_list)
 
   category_M <- dplyr::left_join(category_max_mean, category_sum_mech,
-    by = dplyr::join_by(species)
+    by = dplyr::join_by(scientific_name)
   ) %>%
-    tibble::column_to_rownames(var = "species")
+    tibble::column_to_rownames(var = "scientific_name")
 
   names(category_M) <- c("max", "mean", "max_mech")
 
@@ -154,9 +151,8 @@ impact_cat <- function(impact_data,
 
 
   impact_matrix <- impact_matrix %>%
-    dplyr::mutate(rowname = row.names(.)) %>%
-    dplyr::arrange(rowname) %>%
-    dplyr::select(-rowname)
+    dplyr::mutate(scientificName = row.names(.)) %>%
+    dplyr::arrange(scientificName)
 
   return(impact_matrix)
 }

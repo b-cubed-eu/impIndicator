@@ -2,8 +2,8 @@
 #'
 #' @param cube The data cube of class `sim_cube` or
 #' `processed_cube` from `b3gbi::process_cube()`
-#' @param impact_data The dataframe of species impact which contains columns of category,
-#'  species and mechanism.
+#' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
+#' `scientific_name` and `impact_mechanism`
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
 #' (e.g "MC - Minimal concern")
@@ -32,9 +32,6 @@
 #' speciesImpact <- species_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   col_category = "impact_category",
-#'   col_species = "scientific_name",
-#'   col_mechanism = "impact_mechanism",
 #'   trans = 1,
 #'   type = "mean"
 #' )
@@ -45,6 +42,9 @@ species_impact <- function(cube,
                            col_mechanism = NULL,
                            trans = 1,
                            type = NULL) {
+
+  # avoid "no visible binding for global variable" NOTE for the following names
+  taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
   # check arguments
   # cube
   if (!("sim_cube" %in% class(cube) | "processed_cube" %in% class(cube))) {
@@ -53,59 +53,64 @@ species_impact <- function(cube,
     ))
   }
 
+  # get species list
   full_species_list <- sort(unique(cube$data$scientificName))
 
-  period <- unique(cube$data$year)
+  # get impact score list
+  impact_score_list <- impact_cat(
+    impact_data = impact_data,
+    species_list = full_species_list,
+    col_category = col_category,
+    col_species = col_species,
+    col_mechanism = col_mechanism,
+    trans = trans
+  )
 
-  # create empty vector for species impact
-  speciesImpact <- c()
+  # create cube with impact score
+  impact_cube_data <- dplyr::left_join(cube$data, impact_score_list,
+                                       by = "scientificName"
+  ) %>%
+    tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
-  for (y in period) {
-    sbs.taxon <- species_by_site(cube, y)
-
-    species_list <- unique(names(sbs.taxon))
-
-    if (!exists("eicat_score_list")) {
-      eicat_score_list <- impact_cat(
-        impact_data = impact_data,
-        species_list = full_species_list,
-        col_category = col_category,
-        col_species = col_species,
-        col_mechanism = col_mechanism,
-        trans = trans
-      )
-
-      impact_species <- eicat_score_list %>%
-        stats::na.omit() %>%
-        rownames()
-    }
-
-    if (type == "max") {
-      eicat_score <- eicat_score_list[species_list, type]
-    } else if (type == "mean") {
-      eicat_score <- eicat_score_list[species_list, type]
-    } else if (type == "max_mech") {
-      eicat_score <- eicat_score_list[species_list, type]
-    } else {
-      cli::cli_abort(c(
-        "{.var type} should be one of max, mean or max_mech options"
-      ))
-    }
-
-    # site by species impact
-    impactScore <- sweep(sbs.taxon, 2, eicat_score, FUN = "*")
-    # Species impact sport
-    speciesScore <- colSums(impactScore, na.rm = TRUE) / cube$num_cells
-
-    speciesImpact <- dplyr::bind_rows(speciesImpact, speciesScore)
+  if (type == "max") {
+    species_values<-impact_cube_data %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,scientificName) %>%
+      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
+      dplyr::mutate(max = max/cube$num_cells) %>%
+      dplyr::arrange(scientificName) %>%
+      tidyr::pivot_wider(names_from = scientificName, values_from = max) %>%
+      dplyr::arrange(year) %>%
+      tibble::column_to_rownames(var="year")
+  } else if (type == "mean") {
+    species_values<-impact_cube_data %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,scientificName) %>%
+      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
+      dplyr::mutate(mean = mean/cube$num_cells) %>%
+      dplyr::arrange(scientificName) %>%
+      tidyr::pivot_wider(names_from = scientificName, values_from = mean) %>%
+      dplyr::arrange(year) %>%
+      tibble::column_to_rownames(var="year")
+  } else if (type == "max_mech") {
+    species_values<-impact_cube_data %>%
+      # keep only one occurrence of a species at each site per year
+      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+      dplyr::group_by(year,scientificName) %>%
+      dplyr::summarise(dplyr::across(max_mech,sum),.groups = "drop") %>%
+      dplyr::mutate(max_mech = max_mech/cube$num_cells) %>%
+      dplyr::arrange(scientificName) %>%
+      tidyr::pivot_wider(names_from = scientificName, values_from = max_mech) %>%
+      dplyr::arrange(year) %>%
+      tibble::column_to_rownames(var="year")
+  } else {
+    cli::cli_abort(c(
+      "{.var type} should be one of max, mean or max_mech options"
+    ))
   }
-
-
-  speciesImpact <- speciesImpact %>%
-    dplyr::select(dplyr::any_of(impact_species)) %>%
-    as.data.frame()
-
-  rownames(speciesImpact) <- as.character(period)
-  class(speciesImpact) <- c("species_impact", class(speciesImpact))
-  return(speciesImpact)
+  species_values<-tibble::as_tibble(species_values)
+  class(species_values) <- c("species_impact", class(species_values))
+  return(species_values)
 }

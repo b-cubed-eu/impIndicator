@@ -14,8 +14,8 @@ impact_cat(
 )
 }
 \arguments{
-\item{impact_data}{The dataframe of species impact which contains columns of category,
-species and mechanism.}
+\item{impact_data}{The dataframe of species impact which contains columns of \verb{impact_category,}
+\code{scientific_name} and \code{impact_mechanism.}}
 
 \item{species_list}{The vector of species' list to aggregate their impact categories}
 
@@ -57,9 +57,6 @@ species_list <- c(
 agg_impact <- impact_cat(
   impact_data = eicat_acacia,
   species_list = species_list,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
   trans = 1
 )
 

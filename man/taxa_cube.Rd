@@ -50,7 +50,6 @@ names is given.
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,
-  res = 0.25,
   first_year = 2010
 )
 
