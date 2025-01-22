@@ -1,15 +1,17 @@
-#' Precautionary cumulative
+#' Precautionary indicator
 #'
-#' Compute impact indicator based on precautionary cumulative method
+#' Compute impact indicator based on the precautionary method
 #'
-#' @param impact_cube_data
+#' @param data A dataframe containing species occurrences and
+#' their aggregated impact score (from`impact_cat()`). Must be of the
+#' form $data slot of `processed_cube` or `sim_cube`).
 #'
-#' @return
+#' @return A dataframe containing the value of impact score for each year
 #' @export
-#'
-#' @examples
-prec_indicator<-function(impact_cube_data){
-  impact_cube_data %>%
+#' @noRd
+
+prec_indicator <- function(data) {
+  data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
     dplyr::group_by(year, cellCode) %>%
@@ -20,16 +22,20 @@ prec_indicator<-function(impact_cube_data){
     dplyr::rename(value = "max")
 }
 
-#' Title
+#' Precautionary cumulative indicator
 #'
-#' @param impact_cube_data
+#' Compute impact indicator based on the precautionary cumulative method
 #'
-#' @return
-#' @export
+#' @param data A dataframe containing species occurrences and
+#' their aggregated impact score (from`impact_cat()`). Must be of the
+#' form $data slot of `processed_cube` or `sim_cube`).
 #'
-#' @examples
-prec_cum_indicator<-function(impact_cube_data){
-  impact_cube_data %>%
+#' @return A dataframe containing the value of impact score for each year
+#' @noRd
+#'
+
+prec_cum_indicator <- function(data) {
+  data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
     dplyr::group_by(year, cellCode) %>%
@@ -40,9 +46,20 @@ prec_cum_indicator<-function(impact_cube_data){
     dplyr::rename(value = "max")
 }
 
+#' Mean indicator
+#'
+#' Compute impact indicator based on the mean method
+#'
+#' @param data A dataframe containing species occurrences and
+#' their aggregated impact score (from`impact_cat()`). Must be of the
+#' form $data slot of `processed_cube` or `sim_cube`).
+#'
+#' @return A dataframe containing the value of impact score for each year in data
+#' @noRd
+#'
 
-mean_indicator<-function(impact_cube_data){
-  impact_cube_data %>%
+mean_indicator <- function(data) {
+  data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
     dplyr::group_by(year, cellCode) %>%
@@ -53,8 +70,20 @@ mean_indicator<-function(impact_cube_data){
     dplyr::rename(value = "mean")
 }
 
-mean_cum_indicator<-function(impact_cube_data){
-  impact_cube_data %>%
+#' Mean cumulative indicator
+#'
+#' Compute impact indicator based on the mean cumulative method
+#'
+#' @param data A dataframe containing species occurrences and
+#' their aggregated impact score (from`impact_cat()`). Must be of the
+#' form $data slot of `processed_cube` or `sim_cube`).
+#'
+#' @return A dataframe containing the value of impact score for each year in data
+#' @noRd
+#'
+
+mean_cum_indicator <- function(data) {
+  data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
     dplyr::group_by(year, cellCode) %>%
@@ -65,8 +94,20 @@ mean_cum_indicator<-function(impact_cube_data){
     dplyr::rename(value = "mean")
 }
 
-cum_indicatator<-function(impact_cube_data){
-  impact_cube_data %>%
+#' Cumulative indicator
+#'
+#' Compute impact indicator based on the cumulative method
+#'
+#' @param data A dataframe containing species occurrences and
+#' their aggregated impact score (from`impact_cat()`). Must be of the
+#' form $data slot of `processed_cube` or `sim_cube`).
+#'
+#' @return A dataframe containing the value of impact score for each year in data
+#' @noRd
+#'
+
+cum_indicatator <- function(data) {
+  data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
     dplyr::group_by(year, cellCode) %>%
