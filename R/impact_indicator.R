@@ -75,7 +75,7 @@ impact_indicator <- function(cube,
 
 
   if (type == "precautionary") {
-    impact_value<-prec_indicator(impact_cube_data)
+    impact_values <- prec_indicator(impact_cube_data)
   } else if (type == "precautionary cumulative") {
     impact_values <- prec_cum_indicator(impact_cube_data)
   } else if (type == "mean") {

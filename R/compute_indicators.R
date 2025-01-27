@@ -18,7 +18,7 @@ prec_indicator <- function(data) {
     dplyr::summarise(dplyr::across(max, max), .groups = "drop") %>%
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
-    dplyr::mutate(max = max / cube$num_cells) %>%
+    dplyr::mutate(max = max / length(unique(data$cellCode))) %>%
     dplyr::rename(value = "max")
 }
 
@@ -42,7 +42,7 @@ prec_cum_indicator <- function(data) {
     dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
-    dplyr::mutate(max = max / cube$num_cells) %>%
+    dplyr::mutate(max = max / length(unique(data$cellCode))) %>%
     dplyr::rename(value = "max")
 }
 
@@ -66,7 +66,7 @@ mean_indicator <- function(data) {
     dplyr::summarise(dplyr::across(mean, mean), .groups = "drop") %>%
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
-    dplyr::mutate(mean = mean / cube$num_cells) %>%
+    dplyr::mutate(mean = mean / length(unique(data$cellCode))) %>%
     dplyr::rename(value = "mean")
 }
 
@@ -90,7 +90,7 @@ mean_cum_indicator <- function(data) {
     dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
-    dplyr::mutate(mean = mean / cube$num_cells) %>%
+    dplyr::mutate(mean = mean / length(unique(data$cellCode))) %>%
     dplyr::rename(value = "mean")
 }
 
@@ -114,6 +114,6 @@ cum_indicatator <- function(data) {
     dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
-    dplyr::mutate(max_mech = max_mech / cube$num_cells) %>%
+    dplyr::mutate(max_mech = max_mech / length(unique(data$cellCode))) %>%
     dplyr::rename(value = "max_mech")
 }
