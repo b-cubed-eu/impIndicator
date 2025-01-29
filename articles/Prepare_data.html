@@ -187,8 +187,9 @@ columns.<code>decimalLatitude</code>, <code>decimalLongitude</code>,
 </tr>
 </tbody>
 </table>
-<p>The <code>region</code> of the study has to be given as a shapefile.
-An example is:</p>
+<p>The <code>region</code> of the study has to be given as a shapefile
+of the study area or a character representing the country of study area
+. An example is:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">southAfrica_sf</span></span>
 <span><span class="co">#&gt; Simple feature collection with 1 feature and 0 fields</span></span>
@@ -202,7 +203,6 @@ An example is:</p>
 <code class="sourceCode R"><span><span class="va">acacia_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/taxa_cube.html">taxa_cube</a></span><span class="op">(</span></span>
 <span>  taxa <span class="op">=</span> <span class="va">taxa_Acacia</span>,</span>
 <span>  region <span class="op">=</span> <span class="va">southAfrica_sf</span>,</span>
-<span>  res <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>  first_year <span class="op">=</span> <span class="fl">2010</span>,</span>
 <span>  last_year <span class="op">=</span> <span class="fl">2023</span></span>
 <span><span class="op">)</span></span></code></pre></div>

@@ -70,7 +70,7 @@
 <p>The impIndicator produces three main products and can be useful as stated below:<br>
 - <strong>impact indicator</strong> &lt;<code><a href="reference/impact_indicator.html">impact_indicator()</a></code>&gt;<br>
 The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of invasive alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.<br>
-- <strong>site impact</strong> &lt;<code>site_indicator()</code><br>
+- <strong>site impact</strong> &lt;<code><a href="reference/site_impact.html">site_impact()</a></code><br>
 The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address invasive species impacts effectively.<br>
 - <strong>species impact</strong> &lt;<code><a href="reference/species_impact.html">species_impact()</a></code><br>
 The species impact produces the trends of individual invasive alien species, enabling a species-specific impact caused by invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing eradication strategies, and advancing research on alien species’ ecological roles and adaptation patterns.</p>
@@ -105,7 +105,6 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="va">acacia_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/taxa_cube.html">taxa_cube</a></span><span class="op">(</span></span>
 <span>  taxa <span class="op">=</span> <span class="va">taxa_Acacia</span>,</span>
 <span>  region <span class="op">=</span> <span class="va">southAfrica_sf</span>,</span>
-<span>  res <span class="op">=</span> <span class="fl">0.25</span>,</span>
 <span>  first_year <span class="op">=</span> <span class="fl">2010</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -147,7 +146,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <div class="section level2">
 <h2 id="eicat-assessment-data">EICAT assessment data<a class="anchor" aria-label="anchor" href="#eicat-assessment-data"></a>
 </h2>
-<p>The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the IUCN standard. An assessed alien taxa with adequate data is classified into massive (MV), major (MR), moderate (MO), minor (MN), or minimal concern (MC) depending on the severity of the impact caused on recipient ecosystem. Additional information such as the mechanisms and location of impact are also recorded. An example of an EICAT data is:</p>
+<p>The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the International Union for Conservation of Nature (IUCN) standard. An assessed alien taxa with adequate data is classified into massive (MV), major (MR), moderate (MO), minor (MN), or minimal concern (MC) depending on the severity of the impact caused on recipient ecosystem. Additional information such as the mechanisms and location of impact are also recorded. An example of an EICAT data is:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># view EICAT data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">eicat_acacia</span>,<span class="fl">10</span><span class="op">)</span></span>
@@ -173,7 +172,6 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/site_impact.html">site_impact</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -192,7 +190,6 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># visualise impact indicator</span></span>
@@ -209,7 +206,6 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/species_impact.html">species_impact</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"mean"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
