@@ -14,7 +14,9 @@ A dataframe object containing 138 observations and 3 variables
 }
 }
 \source{
-\url{https://github.com/Oceane-Boulesnane-Guengant/Risk_maps_Acacia_SA/tree/main/data}
+Jansen, C., Kumschick, S. A global impact assessment of Acacia species
+introduced to South Africa. Biol Invasions 24, 175–187 (2022).
+\url{https://doi.org/10.1007/s10530-021-02642-0}
 }
 \usage{
 eicat_acacia

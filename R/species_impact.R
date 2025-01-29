@@ -73,39 +73,12 @@ species_impact <- function(cube,
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
   if (type == "max") {
-    species_values<-impact_cube_data %>%
-      # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,scientificName) %>%
-      dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
-      dplyr::mutate(max = max/cube$num_cells) %>%
-      dplyr::arrange(scientificName) %>%
-      tidyr::pivot_wider(names_from = scientificName, values_from = max) %>%
-      dplyr::arrange(year) %>%
-      tibble::column_to_rownames(var="year")
+    species_values<-max_species_impact(impact_cube_data)
   } else if (type == "mean") {
-    species_values<-impact_cube_data %>%
-      # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,scientificName) %>%
-      dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
-      dplyr::mutate(mean = mean/cube$num_cells) %>%
-      dplyr::arrange(scientificName) %>%
-      tidyr::pivot_wider(names_from = scientificName, values_from = mean) %>%
-      dplyr::arrange(year) %>%
-      tibble::column_to_rownames(var="year")
+    species_values<-mean_species_impact(impact_cube_data)
   } else if (type == "max_mech") {
-    species_values<-impact_cube_data %>%
-      # keep only one occurrence of a species at each site per year
-      dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-      dplyr::group_by(year,scientificName) %>%
-      dplyr::summarise(dplyr::across(max_mech,sum),.groups = "drop") %>%
-      dplyr::mutate(max_mech = max_mech/cube$num_cells) %>%
-      dplyr::arrange(scientificName) %>%
-      tidyr::pivot_wider(names_from = scientificName, values_from = max_mech) %>%
-      dplyr::arrange(year) %>%
-      tibble::column_to_rownames(var="year")
-  } else {
+    species_values<-max_mech_species_impact(impact_cube_data)}
+  else{
     cli::cli_abort(c(
       "{.var type} should be one of max, mean or max_mech options"
     ))
