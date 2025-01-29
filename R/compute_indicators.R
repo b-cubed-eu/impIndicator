@@ -7,10 +7,12 @@
 #' form $data slot of `processed_cube` or `sim_cube`).
 #'
 #' @return A dataframe containing the value of impact score for each year
-#' @export
 #' @noRd
 
 prec_indicator <- function(data) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- NULL
+
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
@@ -35,6 +37,8 @@ prec_indicator <- function(data) {
 #'
 
 prec_cum_indicator <- function(data) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
@@ -59,6 +63,8 @@ prec_cum_indicator <- function(data) {
 #'
 
 mean_indicator <- function(data) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
@@ -83,6 +89,8 @@ mean_indicator <- function(data) {
 #'
 
 mean_cum_indicator <- function(data) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
@@ -107,6 +115,9 @@ mean_cum_indicator <- function(data) {
 #'
 
 cum_indicatator <- function(data) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- max_mech<- NULL
+
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%

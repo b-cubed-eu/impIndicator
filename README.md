@@ -30,7 +30,7 @@ impacts, helping assess whether current management practices are
 effective or need adjustment. The temporal analysis of impact indicator
 enables targeted resource allocation, fostering proactive interventions
 to mitigate biodiversity loss and ecosystem degradation.  
-- **site impact** \<`site_indicator()`  
+- **site impact** \<`site_impact()`  
 The site impact as a map serves as a visual and analytical tool to
 represent the intensity of biological invasions across different parts
 of an area. By enabling spatial comparisons—such as between provinces,

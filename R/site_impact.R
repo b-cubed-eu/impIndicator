@@ -74,35 +74,15 @@ site_impact <- function(cube,
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
   if (type == "precautionary") {
-    site_values <- impact_cube_data %>%
-      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
-      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
-      dplyr::summarise(dplyr::across(max, max), .groups = "drop") %>%
-      tidyr::pivot_wider(names_from = year, values_from = max)
+    site_values <- prec_site_impact(impact_cube_data)
   } else if (type == "precautionary cumulative") {
-    site_values <- impact_cube_data %>%
-      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
-      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
-      dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
-      tidyr::pivot_wider(names_from = year, values_from = max)
+    site_values <- prec_cum_site_impact(impact_cube_data)
   } else if (type == "mean") {
-    site_values <- impact_cube_data %>%
-      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
-      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
-      dplyr::summarise(dplyr::across(mean, mean), .groups = "drop") %>%
-      tidyr::pivot_wider(names_from = year, values_from = mean)
+    site_values <- mean_site_impact(impact_cube_data)
   } else if (type == "mean cumulative") {
-    site_values <- impact_cube_data %>%
-      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
-      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
-      dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
-      tidyr::pivot_wider(names_from = year, values_from = mean)
+    site_values <- mean_cum_site_impact(impact_cube_data)
   } else if (type == "cumulative") {
-    site_values <- impact_cube_data %>%
-      dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
-      dplyr::group_by(year, cellCode, xcoord, ycoord) %>%
-      dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
-      tidyr::pivot_wider(names_from = year, values_from = max_mech)
+    site_values <- cum_site_impact(impact_cube_data)
   } else {
     cli::cli_abort(c(
       "{.var type} is not valid",
