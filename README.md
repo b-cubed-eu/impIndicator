@@ -92,7 +92,6 @@ of species at particular locations and times.
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,
-  res = 0.25,
   first_year = 2010
 )
 
@@ -136,12 +135,12 @@ acacia_cube
 
 The Environmental Impact Classification for Alien Taxa (EICAT)
 assessment data is the reported impact of alien taxa based on EICAT
-method which is the IUCN standard. An assessed alien taxa with adequate
-data is classified into massive (MV), major (MR), moderate (MO), minor
-(MN), or minimal concern (MC) depending on the severity of the impact
-caused on recipient ecosystem. Additional information such as the
-mechanisms and location of impact are also recorded. An example of an
-EICAT data is:
+method which is the International Union for Conservation of Nature
+(IUCN) standard. An assessed alien taxa with adequate data is classified
+into massive (MV), major (MR), moderate (MO), minor (MN), or minimal
+concern (MC) depending on the severity of the impact caused on recipient
+ecosystem. Additional information such as the mechanisms and location of
+impact are also recorded. An example of an EICAT data is:
 
 ``` r
 # view EICAT data
@@ -177,7 +176,6 @@ cumulative** and **cumulative**.
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
   type = "mean cumulative"
 )
 
@@ -202,7 +200,6 @@ year.
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
   type = "mean cumulative"
 )
 # visualise impact indicator
@@ -222,7 +219,6 @@ map per species and correct for sampling effort by dividing by $N$.
 species_value <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
   type = "mean"
 )
 
