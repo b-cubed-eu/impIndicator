@@ -13,20 +13,20 @@
 
 #'
 #' @noRd
-species_by_site <- function(cube, y) {
-  # avoid "no visible binding for global variable" NOTE for the following names
-  year <- scientificName <- cellCode <- obs <- NULL
-  sbs <- cube$data %>%
-    dplyr::filter(year == y) %>%
-    dplyr::mutate(obs=1) %>%
-    dplyr::select(scientificName, cellCode, obs) %>%
-    # remove duplicates of a species per site
-    dplyr::distinct(scientificName, cellCode, .keep_all = TRUE) %>%
-    tidyr::pivot_wider(names_from = scientificName, values_from = obs) %>%
-    dplyr::arrange(cellCode) %>%
-    tibble::column_to_rownames(var = "cellCode")
-  return(sbs)
-}
+# species_by_site <- function(cube, y) {
+#   # avoid "no visible binding for global variable" NOTE for the following names
+#   year <- scientificName <- cellCode <- obs <- NULL
+#   sbs <- cube$data %>%
+#     dplyr::filter(year == y) %>%
+#     dplyr::mutate(obs=1) %>%
+#     dplyr::select(scientificName, cellCode, obs) %>%
+#     # remove duplicates of a species per site
+#     dplyr::distinct(scientificName, cellCode, .keep_all = TRUE) %>%
+#     tidyr::pivot_wider(names_from = scientificName, values_from = obs) %>%
+#     dplyr::arrange(cellCode) %>%
+#     tibble::column_to_rownames(var = "cellCode")
+#   return(sbs)
+# }
 
 
 #' EICAT category to numeric
