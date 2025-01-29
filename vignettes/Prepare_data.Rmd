@@ -37,7 +37,8 @@ taxa_Acacia %>% dplyr::select(decimalLatitude,
   kable()
 ```
 
-The `region` of the study has to be given as a shapefile. An example is:
+The `region` of the study has to be given as a shapefile of the study area 
+or a character representing the country of study area . An example is:
 ```{r}
 southAfrica_sf
 ```
@@ -46,7 +47,6 @@ southAfrica_sf
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,
-  res = 0.25,
   first_year = 2010,
   last_year = 2023
 )
