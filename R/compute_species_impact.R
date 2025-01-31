@@ -17,8 +17,7 @@ max_species_impact<-function(data){
     dplyr::mutate(max = max/length(unique(data$cellCode))) %>%
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = max) %>%
-    dplyr::arrange(year) %>%
-    tibble::column_to_rownames(var="year")
+    dplyr::arrange(year)
 }
 
 #' Mean species impact
@@ -40,8 +39,7 @@ mean_species_impact<-function(data){
     dplyr::mutate(mean = mean/length(unique(data$cellCode))) %>%
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = mean) %>%
-    dplyr::arrange(year) %>%
-    tibble::column_to_rownames(var="year")
+    dplyr::arrange(year)
 
 }
 
@@ -64,6 +62,5 @@ max_mech_species_impact<-function(data){
     dplyr::mutate(max_mech = max_mech/length(unique(data$cellCode))) %>%
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = max_mech) %>%
-    dplyr::arrange(year) %>%
-    tibble::column_to_rownames(var="year")
+    dplyr::arrange(year)
 }

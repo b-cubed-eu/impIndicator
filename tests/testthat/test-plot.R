@@ -169,7 +169,7 @@ test_that("plot.species_impact works", {
                            y_lab = "impact score",
                            text_size = 14))
 
-  some_alien <- names(speciesImpact)[1:4]
+  some_alien <- names(speciesImpact)[2:5]
 
   expect_no_error(plot(speciesImpact,
                        alien_species = some_alien,

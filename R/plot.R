@@ -115,7 +115,6 @@ plot.species_impact <- function(x,
 
   if (length(alien_species) == 1 && alien_species == "all") {
     x %>%
-      tibble::rownames_to_column("year") %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
@@ -128,8 +127,7 @@ plot.species_impact <- function(x,
       ggplot2::theme(text = ggplot2::element_text(size = text_size))
   } else if (is.character(alien_species)){
     x %>%
-      dplyr::select(dplyr::all_of(alien_species)) %>%
-      tibble::rownames_to_column("year") %>%
+      dplyr::select(dplyr::all_of(c("year",alien_species))) %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
