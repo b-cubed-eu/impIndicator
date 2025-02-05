@@ -21,7 +21,7 @@ prec_indicator <- function(data) {
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
     dplyr::mutate(max = max / length(unique(data$cellCode))) %>%
-    dplyr::rename(value = "max")
+    dplyr::rename(diversity_val = "max")
 }
 
 #' Precautionary cumulative indicator
@@ -47,7 +47,7 @@ prec_cum_indicator <- function(data) {
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
     dplyr::mutate(max = max / length(unique(data$cellCode))) %>%
-    dplyr::rename(value = "max")
+    dplyr::rename(diversity_val = "max")
 }
 
 #' Mean indicator
@@ -73,7 +73,7 @@ mean_indicator <- function(data) {
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
     dplyr::mutate(mean = mean / length(unique(data$cellCode))) %>%
-    dplyr::rename(value = "mean")
+    dplyr::rename(diversity_val = "mean")
 }
 
 #' Mean cumulative indicator
@@ -99,7 +99,7 @@ mean_cum_indicator <- function(data) {
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
     dplyr::mutate(mean = mean / length(unique(data$cellCode))) %>%
-    dplyr::rename(value = "mean")
+    dplyr::rename(diversity_val = "mean")
 }
 
 #' Cumulative indicator
@@ -114,7 +114,7 @@ mean_cum_indicator <- function(data) {
 #' @noRd
 #'
 
-cum_indicatator <- function(data) {
+cum_indicator <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  taxonKey <- year <- max_mech<- NULL
 
@@ -126,5 +126,5 @@ cum_indicatator <- function(data) {
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
     dplyr::mutate(max_mech = max_mech / length(unique(data$cellCode))) %>%
-    dplyr::rename(value = "max_mech")
+    dplyr::rename(diversity_val = "max_mech")
 }

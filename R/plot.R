@@ -42,13 +42,13 @@ plot.impact_indicator <- function(x,
                                   y_lab = "impact score",
                                   text_size = 14, ...) {
   # avoid R CMD warnings
-  value <- year <- NULL
+  value <- year <- diversity_val <- NULL
 
   if (!inherits(x, "impact_indicator")) {
     cli::cli_abort("'x' is not a class 'impact_indicator'")
   }
   ggplot2::ggplot(data = x) +
-    ggplot2::geom_line(ggplot2::aes(y = value, x = year),
+    ggplot2::geom_line(ggplot2::aes(y = diversity_val, x = year),
       colour = colour,
       stat = "identity",
       linewidth = linewidth, ...
@@ -115,7 +115,6 @@ plot.species_impact <- function(x,
 
   if (length(alien_species) == 1 && alien_species == "all") {
     x %>%
-      tibble::rownames_to_column("year") %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
@@ -128,8 +127,7 @@ plot.species_impact <- function(x,
       ggplot2::theme(text = ggplot2::element_text(size = text_size))
   } else if (is.character(alien_species)){
     x %>%
-      dplyr::select(dplyr::all_of(alien_species)) %>%
-      tibble::rownames_to_column("year") %>%
+      dplyr::select(dplyr::all_of(c("year",alien_species))) %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +

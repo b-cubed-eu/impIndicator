@@ -1,18 +1,5 @@
-#' Species by site
-#'
-#' @description
-#' Compute species by site from an occurrence cube
-#'
-#'
-#' @param cube The list containing data cube of class `sim_cube` from
-#' `b3gbi::process_cube()`.
-#' @param y The year to compute it species by site
-#'
-#' @return A data frame of specie by site. The row represent the site and column
-#' represent the species
 
 #'
-#' @noRd
 # species_by_site <- function(cube, y) {
 #   # avoid "no visible binding for global variable" NOTE for the following names
 #   year <- scientificName <- cellCode <- obs <- NULL

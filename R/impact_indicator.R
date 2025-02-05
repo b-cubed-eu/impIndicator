@@ -83,7 +83,7 @@ impact_indicator <- function(cube,
   } else if (type == "mean cumulative") {
     impact_values <- mean_cum_indicator(impact_cube_data)
   } else if (type == "cumulative") {
-    impact_values <- cum_indicatator(impact_cube_data)
+    impact_values <- cum_indicator(impact_cube_data)
   } else {
     cli::cli_abort(c(
       "{.var type} is not valid",
