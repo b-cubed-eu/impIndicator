@@ -9,6 +9,8 @@
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
 max_species_impact<-function(data){
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- scientificName <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
@@ -31,6 +33,8 @@ max_species_impact<-function(data){
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
 mean_species_impact<-function(data){
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- scientificName <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
@@ -54,6 +58,8 @@ mean_species_impact<-function(data){
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
 max_mech_species_impact<-function(data){
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- max_mech <-scientificName<- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
     dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%

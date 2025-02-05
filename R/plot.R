@@ -42,13 +42,13 @@ plot.impact_indicator <- function(x,
                                   y_lab = "impact score",
                                   text_size = 14, ...) {
   # avoid R CMD warnings
-  value <- year <- NULL
+  value <- year <- diversity_val <- NULL
 
   if (!inherits(x, "impact_indicator")) {
     cli::cli_abort("'x' is not a class 'impact_indicator'")
   }
   ggplot2::ggplot(data = x) +
-    ggplot2::geom_line(ggplot2::aes(y = value, x = year),
+    ggplot2::geom_line(ggplot2::aes(y = diversity_val, x = year),
       colour = colour,
       stat = "identity",
       linewidth = linewidth, ...
