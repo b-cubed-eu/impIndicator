@@ -14,7 +14,7 @@ test_that("site impact function works", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "precautionary cumulative"
+    method = "precautionary cumulative"
   ))
 
   expect_no_error(site_impact(
@@ -24,7 +24,7 @@ test_that("site impact function works", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 2,
-    type = "precautionary cumulative"
+    method = "precautionary cumulative"
   ))
 
   expect_no_error(site_impact(
@@ -34,7 +34,7 @@ test_that("site impact function works", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 3,
-    type = "precautionary cumulative"
+    method = "precautionary cumulative"
   ))
 
   expect_no_error(site_impact(
@@ -44,7 +44,7 @@ test_that("site impact function works", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "precautionary"
+    method = "precautionary"
   ))
   expect_no_error(site_impact(
     cube = acacia_cube,
@@ -53,17 +53,7 @@ test_that("site impact function works", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "cumulative"
-  ))
-
-  expect_no_error(site_impact(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    type = "mean cumulative"
+    method = "cumulative"
   ))
 
   expect_no_error(site_impact(
@@ -73,7 +63,17 @@ test_that("site impact function works", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "mean"
+    method = "mean cumulative"
+  ))
+
+  expect_no_error(site_impact(
+    cube = acacia_cube,
+    impact_data = eicat_acacia,
+    col_category = "impact_category",
+    col_species = "scientific_name",
+    col_mechanism = "impact_mechanism",
+    trans = 1,
+    method = "mean"
   ))
 })
 
@@ -86,7 +86,7 @@ test_that("site impact throws errors", {
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
       trans = 1,
-      type = "precautionary cumulative"
+      method = "precautionary cumulative"
     )
   )
 
@@ -98,7 +98,7 @@ test_that("site impact throws errors", {
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
       trans = 1,
-      type = "precautionary cumulative"
+      method = "precautionary cumulative"
     ),
     "`impact_data` must be a <dataframe>"
   )
@@ -112,7 +112,7 @@ test_that("site impact throws errors", {
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
       trans = 1,
-      type = "precautionary cumulative"
+      method = "precautionary cumulative"
     ),
     "`impact_data` must be a <dataframe>"
   )
@@ -125,7 +125,7 @@ test_that("site impact throws errors", {
   #   col_species = "scientific_name",
   #   col_mechanism = "impact_mechanism",
   #   trans = 1,
-  #   type = "precautionary cumulative"
+  #   method = "precautionary cumulative"
   # ))
   #
   # expect_error(site_impact(
@@ -135,7 +135,7 @@ test_that("site impact throws errors", {
   #   col_species = NULL,
   #   col_mechanism = "impact_mechanism",
   #   trans = 1,
-  #   type = "precautionary cumulative"
+  #   method = "precautionary cumulative"
   # ))
   #
   #
@@ -146,7 +146,7 @@ test_that("site impact throws errors", {
   #   col_species = "scientific_name",
   #   col_mechanism = NULL,
   #   trans = 1,
-  #   type = "precautionary cumulative"
+  #   method = "precautionary cumulative"
   # ))
 
   expect_error(
@@ -157,7 +157,7 @@ test_that("site impact throws errors", {
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
       trans = "a",
-      type = "precautionary cumulative"
+      method = "precautionary cumulative"
     ),
     "`trans` must be a number from 1,2 or 3
 i see the function documentation for details"
@@ -171,10 +171,10 @@ i see the function documentation for details"
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
       trans = 1,
-      type = "a"
+      method = "a"
     ),
-    "`type` is not valid
-x `type` must be from the options provided
+    "`method` is not valid
+x `method` must be from the options provided
 See the function desciption or double check the spelling"
   )
 #
@@ -186,7 +186,7 @@ See the function desciption or double check the spelling"
 #       col_species = "scientific_name",
 #       col_mechanism = "impact_mechanism",
 #       trans = 1,
-#       type = "precautionary cumulative"
+#       method = "precautionary cumulative"
 #     ),
 #     "coords` must be a <dataframe> with columns `siteID`,`X` and `Y`"
 #   )

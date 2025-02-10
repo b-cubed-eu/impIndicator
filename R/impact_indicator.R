@@ -12,13 +12,14 @@
 #' (e.g "MC - Minimal concern")
 #' @param col_species The name of the column containing species names
 #' @param col_mechanism The name of the column containing mechanisms of impact
-#' @param trans Numeric. The type of transformation to convert the EICAT categories to
+#' @param trans Numeric. The method of transformation to convert the EICAT categories to
 #' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
 #' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
 #' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
-#' @param type The type indicators based on the aggregation of within and
-#' across species in a site. The type can be precautionary, precautionary cumulative,
-#' mean, mean cumulative or cumulative.
+#' @param method The method of computing the indicator. The method used in
+#' the aggregation of within and across species in a site.
+#' The method can be precautionary, precautionary cumulative, mean,
+#' mean cumulative or cumulative.
 
 #' @return A dataframe of the invasive alien impact trend (class `impact_indicator`)
 #' @export
@@ -34,7 +35,7 @@
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   trans = 1,
-#'   type = "mean cumulative"
+#'   method = "mean cumulative"
 #' )
 impact_indicator <- function(cube,
                              impact_data = NULL,
@@ -42,7 +43,7 @@ impact_indicator <- function(cube,
                              col_species = NULL,
                              col_mechanism = NULL,
                              trans = 1,
-                             type = NULL) {
+                             method = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
 
@@ -74,20 +75,20 @@ impact_indicator <- function(cube,
     tidyr::drop_na(max, mean, max_mech) # remove occurrences with no impact score
 
 
-  if (type == "precautionary") {
+  if (method == "precautionary") {
     impact_values <- prec_indicator(impact_cube_data)
-  } else if (type == "precautionary cumulative") {
+  } else if (method == "precautionary cumulative") {
     impact_values <- prec_cum_indicator(impact_cube_data)
-  } else if (type == "mean") {
+  } else if (method == "mean") {
     impact_values <- mean_indicator(impact_cube_data)
-  } else if (type == "mean cumulative") {
+  } else if (method == "mean cumulative") {
     impact_values <- mean_cum_indicator(impact_cube_data)
-  } else if (type == "cumulative") {
+  } else if (method == "cumulative") {
     impact_values <- cum_indicator(impact_cube_data)
   } else {
     cli::cli_abort(c(
-      "{.var type} is not valid",
-      "x" = "{.var type} must be from the options provided",
+      "{.var method} is not valid",
+      "x" = "{.var method} must be from the options provided",
       "See the function desciption or double check the spelling"
     ))
   }

@@ -14,7 +14,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "mean cumulative"
+    method = "mean cumulative"
   )
 
   expect_equal(class(result), c("impact_indicator","tbl_df" ,"tbl" ,"data.frame"))
@@ -30,7 +30,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "mean cumulative"
+    method = "mean cumulative"
   ))
 
   expect_no_error(impact_indicator(
@@ -40,7 +40,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "mean"
+    method = "mean"
   ))
 
   expect_no_error(impact_indicator(
@@ -50,7 +50,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "cumulative"
+    method = "cumulative"
   ))
 
 
@@ -61,7 +61,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "precautionary cumulative"
+    method = "precautionary cumulative"
   ))
 
   expect_no_error(impact_indicator(
@@ -71,7 +71,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "precautionary"
+    method = "precautionary"
   ))
 })
 
@@ -83,7 +83,7 @@ test_that("impact indicator function returns errors", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "a"
+    method = "a"
   ))
 
   expect_error(
@@ -94,7 +94,7 @@ test_that("impact indicator function returns errors", {
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
       trans = "a",
-      type = "mean cumulative"
+      method = "mean cumulative"
     ),
     "`trans` must be a number from 1,2 or 3
 i see the function documentation for details"
@@ -107,7 +107,7 @@ i see the function documentation for details"
   #   col_species = "scientific_name",
   #   col_mechanism = "impact_mechanism",
   #   trans = 1,
-  #   type = "mean cumulative"
+  #   method = "mean cumulative"
   # ))
   #
   # expect_error(impact_indicator(
@@ -117,7 +117,7 @@ i see the function documentation for details"
   #   col_species = "a",
   #   col_mechanism = "impact_mechanism",
   #   trans = 1,
-  #   type = "mean cumulative"
+  #   method = "mean cumulative"
   # ))
   #
   # expect_error(impact_indicator(
@@ -127,7 +127,7 @@ i see the function documentation for details"
   #   col_species = "scientific_name",
   #   col_mechanism = "a",
   #   trans = 1,
-  #   type = "mean cumulative"
+  #   method = "mean cumulative"
   # ))
 
   expect_error(impact_indicator(
@@ -137,7 +137,7 @@ i see the function documentation for details"
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "mean cumulative"
+    method = "mean cumulative"
   ))
 
   expect_error(impact_indicator(
@@ -147,6 +147,6 @@ i see the function documentation for details"
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    type = "mean cumulative"
+    method = "mean cumulative"
   ))
 })
