@@ -4,20 +4,20 @@
 #' `b3gbi::process_cube()`
 #' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
 #' `scientific_name` and `impact_mechanism`
+#' @param method The method of computing the indicator. The method used in
+#' the aggregation of within and across species in a site.
+#' The method can be precautionary, precautionary cumulative, mean,
+#' mean cumulative or cumulative.
+#' @param trans Numeric. The method of transformation to convert the EICAT categories to
+#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
+#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
+#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
 #' (e.g "MC - Minimal concern")
 #' @param col_species The name of the column containing species names
 #' @param col_mechanism The name of the column containing mechanisms of impact
-#' @param trans Numeric. The method of transformation to convert the EICAT categories to
-#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
-#' @param method The method of computing the indicator. The method used in
-#' the aggregation of within and across species in a site.
-#' The method can be precautionary, precautionary cumulative, mean,
-#' mean cumulative or cumulative.
-#'
+
 #' @return The dataframe of impact indicator per sites (class `site_impact`)
 #' @export
 #'
@@ -33,17 +33,17 @@
 #' siteImpact <- site_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   trans = 1,
-#'   method = "precautionary cumulative"
+#'   method = "precautionary cumulative",
+#'   trans = 1
 #' )
 #'
 site_impact <- function(cube,
                         impact_data = NULL,
+                        method = NULL,
+                        trans = 1,
                         col_category = NULL,
                         col_species = NULL,
-                        col_mechanism = NULL,
-                        trans = 1,
-                        method = NULL) {
+                        col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech<- NULL
 
@@ -62,10 +62,11 @@ site_impact <- function(cube,
   impact_score_list <- impact_cat(
     impact_data = impact_data,
     species_list = full_species_list,
+    trans = trans,
     col_category = col_category,
     col_species = col_species,
-    col_mechanism = col_mechanism,
-    trans = trans
+    col_mechanism = col_mechanism
+
   )
 
   # create cube with impact score
