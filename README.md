@@ -21,7 +21,7 @@ different studies.
 
 The impIndicator produces three main products and can be useful as
 stated below:  
-- **impact indicator** \<`impact_indicator()`\>  
+-**impact indicator** \<`impact_indicator()`\>  
 The impact indicator offers a nuanced representation of the trends of
 biological invasions of an area (local, regional, or global scales). By
 tracking the increase and decrease of ecological threats over time, this
@@ -30,7 +30,7 @@ impacts, helping assess whether current management practices are
 effective or need adjustment. The temporal analysis of impact indicator
 enables targeted resource allocation, fostering proactive interventions
 to mitigate biodiversity loss and ecosystem degradation.  
-- **site impact** \<`site_impact()`  
+-**site impact** \<`site_impact()`  
 The site impact as a map serves as a visual and analytical tool to
 represent the intensity of biological invasions across different parts
 of an area. By enabling spatial comparisons—such as between provinces,
@@ -39,7 +39,7 @@ of invasion impact. This spatial data is useful for prioritising
 management actions, coordinating restoration projects, and fostering
 cross-regional collaboration to address invasive species impacts
 effectively.  
-- **species impact** \<`species_impact()`  
+-**species impact** \<`species_impact()`  
 The species impact produces the trends of individual invasive alien
 species, enabling a species-specific impact caused by invasions. This
 data supports comparisons of individual species’ impacts, revealing
@@ -168,15 +168,15 @@ scores across species at each site are needed. The `site_impact()` uses
 *max*, *sum* and *mean* metrics to aggregate impact scores across
 species as proposed by Boulesnane-Guengant et al., (in preparation). The
 combinations of within species aggregation metrics for each species and
-across species for each site leads to five type of indicators, namely,
-**precautionary**, **precautionary cumulative**, **mean**, **mean
-cumulative** and **cumulative**.  
+across species for each site leads to five methods of calculating an
+impact indicator, namely, **precautionary**, **precautionary
+cumulative**, **mean**, **mean cumulative** and **cumulative**.  
 
 ``` r
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  type = "mean cumulative"
+  method = "mean cumulative"
 )
 
 # impact map
@@ -200,7 +200,7 @@ year.
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  type = "mean cumulative"
+  method = "mean cumulative"
 )
 # visualise impact indicator
 plot(impactIndicator)
@@ -219,7 +219,7 @@ map per species and correct for sampling effort by dividing by $N$.
 species_value <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  type = "mean"
+  method = "mean"
 )
 
 # visualise species impact
@@ -230,14 +230,15 @@ plot(species_value)
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
-# Comparing type of indicators
+# Comparing method of indicators
 
-To compare type of impact indicators for a case study, we provide a plot
-which can be adapted by a user to compare a set of method.
+To compare methods used in calculating of impact indicators for a case
+study, we provide a plot which can be adapted by a user to compare a set
+of method.
 
 ``` r
-# plot all type of impact indicators
-types <- c(
+# plot all method of impact indicators
+methods <- c(
   "precautionary",
   "precautionary cumulative",
   "mean",
@@ -246,25 +247,25 @@ types <- c(
 )
 
 all_impact <- data.frame("year" = unique(acacia_cube$data$year))
-for (type in types) {
+for (method in methods) {
   impact_value <- impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
-    trans = 1,
-    type = type
+    method = method,
+    trans = 1
   )
 
-  all_impact[type] <- impact_value$value
+  all_impact[method] <- impact_value$diversity_val
 }
 
 #plot the trend
 all_impact %>%
-  gather(-year, key = "indicator_type", value = "impact_score") %>%
+  gather(-year, key = "indicator_method", value = "impact_score") %>%
   ggplot(aes(x = year, y = impact_score)) +
-  geom_line(aes(color = indicator_type), linewidth = 1.5) +
+  geom_line(aes(color = indicator_method), linewidth = 1.5) +
   theme_minimal() +
   labs(
-    title = "Type of indicators",
+    title = "Indicator of different menthods",
     y = "impact score"
   ) +
   theme(text = element_text(size = 14))

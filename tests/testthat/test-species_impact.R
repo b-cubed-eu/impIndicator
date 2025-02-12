@@ -11,7 +11,7 @@ test_that("species impact function works", {
                  col_species="scientific_name",
                  col_mechanism="impact_mechanism",
                  trans=1,
-                 type = "mean")
+                 method = "mean")
 
   expect_equal(class(result), c("species_impact","tbl_df" ,"tbl" ,"data.frame"))
 
@@ -23,7 +23,7 @@ test_that("species impact function works", {
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
                                  trans=2,
-                                 type = "mean"))
+                                 method = "mean"))
 
   expect_no_error(species_impact(cube=acacia_cube,
                                  impact_data = eicat_acacia,
@@ -31,7 +31,7 @@ test_that("species impact function works", {
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
                                  trans=3,
-                                 type = "mean"))
+                                 method = "mean"))
 
   expect_no_error(species_impact(cube=acacia_cube,
                                  impact_data = eicat_acacia,
@@ -39,7 +39,7 @@ test_that("species impact function works", {
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
                                  trans=1,
-                                 type = "max"))
+                                 method = "max"))
 
   expect_no_error(species_impact(cube=acacia_cube,
                                  impact_data = eicat_acacia,
@@ -47,7 +47,7 @@ test_that("species impact function works", {
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
                                  trans=1,
-                                 type = "max_mech"))
+                                 method = "max_mech"))
 
 
 })
@@ -59,7 +59,7 @@ test_that("species impact function throws error",{
                                  col_species="scientific_name",
                                  col_mechanism="impact_mechanism",
                                  trans=1,
-                                 type = "mean"))
+                                 method = "mean"))
 
 
   expect_error(species_impact(cube=acacia_cube,
@@ -68,7 +68,7 @@ test_that("species impact function throws error",{
                               col_species="scientific_name",
                               col_mechanism="impact_mechanism",
                               trans=1,
-                              type = "mean"))
+                              method = "mean"))
 
   expect_error(species_impact(cube=acacia_cube,
                               impact_data = unmatched_eicat,
@@ -76,7 +76,7 @@ test_that("species impact function throws error",{
                               col_species="scientific_name",
                               col_mechanism="impact_mechanism",
                               trans=1,
-                              type = "mean"))
+                              method = "mean"))
 
 
   expect_error(species_impact(cube=acacia_cube,
@@ -85,7 +85,7 @@ test_that("species impact function throws error",{
                                  col_species=NULL,
                                  col_mechanism="impact_mechanism",
                                  trans=1,
-                                 type = "mean"))
+                                 method = "mean"))
 
   expect_error(species_impact(cube=acacia_cube,
                               impact_data = unmatched_eicat,
@@ -93,7 +93,7 @@ test_that("species impact function throws error",{
                               col_species="scientific_name",
                               col_mechanism=NULL,
                               trans=1,
-                              type = "mean"))
+                              method = "mean"))
 
 
   expect_error(species_impact(cube=acacia_cube,
@@ -102,7 +102,7 @@ test_that("species impact function throws error",{
                               col_species="scientific_name",
                               col_mechanism="impact_mechanism",
                               trans="a",
-                              type = "mean"))
+                              method = "mean"))
 
 
   expect_error(species_impact(cube=acacia_cube,
@@ -111,5 +111,5 @@ test_that("species impact function throws error",{
                               col_species="scientific_name",
                               col_mechanism="impact_mechanism",
                               trans=1,
-                              type = "a"))
+                              method = "a"))
 })

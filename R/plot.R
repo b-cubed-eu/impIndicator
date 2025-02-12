@@ -29,8 +29,8 @@
 #' impact_value <- impact_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   trans = 1,
-#'   type = "mean cumulative"
+#'   method = "mean cumulative",
+#'   trans = 1
 #' )
 #' # plot impact indicator
 #' plot(impact_value)
@@ -58,7 +58,9 @@ plot.impact_indicator <- function(x,
       y = y_lab
     ) +
     ggplot2::theme_minimal() +
-    ggplot2::theme(text = ggplot2::element_text(size = text_size))
+    ggplot2::theme(text = ggplot2::element_text(size = text_size))+
+    ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
+    ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
 }
 
 
@@ -94,8 +96,8 @@ plot.impact_indicator <- function(x,
 #' speciesImpact <- species_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   trans = 1,
-#'   type = "mean"
+#'   method = "mean",
+#'   trans = 1
 #' )
 #'
 #' # visualise species impact
@@ -118,26 +120,32 @@ plot.species_impact <- function(x,
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
-      ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth) +
+      ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth,
+                         ...) +
       ggplot2::theme_minimal() +
       ggplot2::labs(
         title = title_lab,
-        y = y_lab, ...
+        y = y_lab
       ) +
-      ggplot2::theme(text = ggplot2::element_text(size = text_size))
+      ggplot2::theme(text = ggplot2::element_text(size = text_size))+
+      ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
+      ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
   } else if (is.character(alien_species)){
     x %>%
       dplyr::select(dplyr::all_of(c("year",alien_species))) %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
-      ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth) +
+      ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth,
+                         ...) +
       ggplot2::theme_minimal() +
       ggplot2::labs(
         title = title_lab,
-        y = y_lab, ...
+        y = y_lab
       ) +
-      ggplot2::theme(text = ggplot2::element_text(size = text_size))
+      ggplot2::theme(text = ggplot2::element_text(size = text_size))+
+      ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
+      ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
   }
   else {
     cli::cli_abort(c(
@@ -180,8 +188,9 @@ plot.species_impact <- function(x,
 #' siteImpact <- site_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   trans = 1,
-#'   type = "precautionary cumulative"
+#'   method = "precautionary cumulative",
+#'   trans = 1
+#'
 #' )
 #'
 #' # visualise site impact

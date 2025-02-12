@@ -52,8 +52,9 @@ acacia_cube <- taxa_cube(
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
-  type = "precautionary cumulative"
+  method = "precautionary cumulative",
+  trans = 1
+
 )
 
 # visualise site impact

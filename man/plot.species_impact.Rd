@@ -51,8 +51,8 @@ acacia_cube <- taxa_cube(
 speciesImpact <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
-  type = "mean"
+  method = "mean",
+  trans = 1
 )
 
 # visualise species impact

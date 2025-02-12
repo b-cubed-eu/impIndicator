@@ -6,15 +6,15 @@
 #' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
 #' `scientific_name` and `impact_mechanism.`
 #' @param species_list The vector of species' list to aggregate their impact categories
+#' @param trans Numeric. The type of transformation to convert the EICAT categories to
+#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
+#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
+#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
 #' (e.g "MC -Minimal concern")
 #' @param col_species The name of the column containing species names
 #' @param col_mechanism The name of the column containing mechanisms of impact
-#' @param trans Numeric. The type of transformation to convert the EICAT categories to
-#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
 #'
 #' @return The dataframe containing the aggregated species impact. max - maximum
 #' impact of a species. mean - mean impact of a species. max_mech - sum of maximum
@@ -43,10 +43,10 @@
 #'
 impact_cat <- function(impact_data,
                        species_list,
+                       trans = 1,
                        col_category = NULL,
                        col_species = NULL,
-                       col_mechanism = NULL,
-                       trans = 1) {
+                       col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the followin names
   impact_category <- scientific_name <- impact_mechanism <- category_value <- . <- scientificName<-rowname <- NULL
 

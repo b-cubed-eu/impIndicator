@@ -11,7 +11,7 @@ impact_indicator(
   col_species = NULL,
   col_mechanism = NULL,
   trans = 1,
-  type = NULL
+  method = NULL
 )
 }
 \arguments{
@@ -29,14 +29,15 @@ The first two letters of each categories must be an EICAT short names
 
 \item{col_mechanism}{The name of the column containing mechanisms of impact}
 
-\item{trans}{Numeric. The type of transformation to convert the EICAT categories to
+\item{trans}{Numeric. The method of transformation to convert the EICAT categories to
 numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)}
 
-\item{type}{The type indicators based on the aggregation of within and
-across species in a site. The type can be precautionary, precautionary cumulative,
-mean, mean cumulative or cumulative.}
+\item{method}{The method of computing the indicator. The method used in
+the aggregation of within and across species in a site.
+The method can be precautionary, precautionary cumulative, mean,
+mean cumulative or cumulative.}
 }
 \value{
 A dataframe of the invasive alien impact trend (class \code{impact_indicator})
@@ -54,7 +55,7 @@ acacia_cube <- taxa_cube(
 impact_value <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
-  type = "mean cumulative"
+  method = "mean cumulative",
+  trans = 1
 )
 }
