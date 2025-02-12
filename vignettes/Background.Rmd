@@ -21,8 +21,7 @@ We provide methodology for computing the three main product of the *impIndicator
 # Impact map
 
 The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The 
-`site_impact()` uses ***max***, ***sum*** and ***mean*** metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five type of
-indicators, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.\
+`site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.\
 
 
 - **precautionary**: maximum score across species' max in each site\
