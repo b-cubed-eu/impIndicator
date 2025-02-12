@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,11 +68,11 @@
 
 <p>The goal of <strong>impIndicator</strong> is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods of calculating impact indicators based on different studies.</p>
 <p>The impIndicator produces three main products and can be useful as stated below:<br>
-- <strong>impact indicator</strong> &lt;<code><a href="reference/impact_indicator.html">impact_indicator()</a></code>&gt;<br>
+-<strong>impact indicator</strong> &lt;<code><a href="reference/impact_indicator.html">impact_indicator()</a></code>&gt;<br>
 The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of invasive alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.<br>
-- <strong>site impact</strong> &lt;<code><a href="reference/site_impact.html">site_impact()</a></code><br>
+-<strong>site impact</strong> &lt;<code><a href="reference/site_impact.html">site_impact()</a></code><br>
 The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address invasive species impacts effectively.<br>
-- <strong>species impact</strong> &lt;<code><a href="reference/species_impact.html">species_impact()</a></code><br>
+-<strong>species impact</strong> &lt;<code><a href="reference/species_impact.html">species_impact()</a></code><br>
 The species impact produces the trends of individual invasive alien species, enabling a species-specific impact caused by invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing eradication strategies, and advancing research on alien species’ ecological roles and adaptation patterns.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -167,12 +167,12 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <div class="section level2">
 <h2 id="compute-impact-map">Compute impact map<a class="anchor" aria-label="anchor" href="#compute-impact-map"></a>
 </h2>
-<p>The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The <code><a href="reference/site_impact.html">site_impact()</a></code> uses <em>max</em>, <em>sum</em> and <em>mean</em> metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five type of indicators, namely, <strong>precautionary</strong>, <strong>precautionary cumulative</strong>, <strong>mean</strong>, <strong>mean cumulative</strong> and <strong>cumulative</strong>.</p>
+<p>The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The <code><a href="reference/site_impact.html">site_impact()</a></code> uses <em>max</em>, <em>sum</em> and <em>mean</em> metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, <strong>precautionary</strong>, <strong>precautionary cumulative</strong>, <strong>mean</strong>, <strong>mean cumulative</strong> and <strong>cumulative</strong>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/site_impact.html">site_impact</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
+<span>  method <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># impact map</span></span>
@@ -190,7 +190,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
+<span>  method <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># visualise impact indicator</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">impactIndicator</span><span class="op">)</span></span></code></pre></div>
@@ -206,7 +206,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/species_impact.html">species_impact</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"mean"</span></span>
+<span>  method <span class="op">=</span> <span class="st">"mean"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># visualise species impact</span></span>
@@ -217,12 +217,12 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 </div>
 </div>
 <div class="section level1">
-<h1 id="comparing-type-of-indicators">Comparing type of indicators<a class="anchor" aria-label="anchor" href="#comparing-type-of-indicators"></a>
+<h1 id="comparing-method-of-indicators">Comparing method of indicators<a class="anchor" aria-label="anchor" href="#comparing-method-of-indicators"></a>
 </h1>
-<p>To compare type of impact indicators for a case study, we provide a plot which can be adapted by a user to compare a set of method.</p>
+<p>To compare methods used in calculating of impact indicators for a case study, we provide a plot which can be adapted by a user to compare a set of method.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot all type of impact indicators</span></span>
-<span><span class="va">types</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="co"># plot all method of impact indicators</span></span>
+<span><span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"precautionary"</span>,</span>
 <span>  <span class="st">"precautionary cumulative"</span>,</span>
 <span>  <span class="st">"mean"</span>,</span>
@@ -231,25 +231,25 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">all_impact</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="st">"year"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">acacia_cube</span><span class="op">$</span><span class="va">data</span><span class="op">$</span><span class="va">year</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">type</span> <span class="kw">in</span> <span class="va">types</span><span class="op">)</span> <span class="op">{</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">method</span> <span class="kw">in</span> <span class="va">methods</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">impact_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
 <span>    cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>    impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>    trans <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>    type <span class="op">=</span> <span class="va">type</span></span>
+<span>    method <span class="op">=</span> <span class="va">method</span>,</span>
+<span>    trans <span class="op">=</span> <span class="fl">1</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
-<span>  <span class="va">all_impact</span><span class="op">[</span><span class="va">type</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">impact_value</span><span class="op">$</span><span class="va">value</span></span>
+<span>  <span class="va">all_impact</span><span class="op">[</span><span class="va">method</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">impact_value</span><span class="op">$</span><span class="va">diversity_val</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co">#plot the trend</span></span>
 <span><span class="va">all_impact</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">gather</span><span class="op">(</span><span class="op">-</span><span class="va">year</span>, key <span class="op">=</span> <span class="st">"indicator_type"</span>, value <span class="op">=</span> <span class="st">"impact_score"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">gather</span><span class="op">(</span><span class="op">-</span><span class="va">year</span>, key <span class="op">=</span> <span class="st">"indicator_method"</span>, value <span class="op">=</span> <span class="st">"impact_score"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">impact_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">indicator_type</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">indicator_method</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Type of indicators"</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"Indicator of different menthods"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"impact score"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -293,8 +293,8 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 <li>Mukhtar Muhammed Yahaya <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0008-9200-0863" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Sabrina Kumschick <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0001-8034-5831" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Sandra MacFadyen <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-5316-440X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Cang Hui <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-3660-8160" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Pietro Landi <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-6373-2992" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Cang Hui <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-3660-8160" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -313,7 +313,7 @@ Environmental Impact Classification of Alien Taxa (EICAT) impact score of specie
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mukhtar Muhammed Yahaya, Sabrina Kumschick, Sandra MacFadyen, Cang Hui, Pietro Landi.</p>
+  <p>Developed by Mukhtar Muhammed Yahaya, Sabrina Kumschick, Sandra MacFadyen, Pietro Landi, Cang Hui.</p>
 </div>
 
 <div class="pkgdown-footer-right">

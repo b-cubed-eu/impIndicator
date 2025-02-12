@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,10 +45,10 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">impact_cat</span><span class="op">(</span></span>
 <span>  <span class="va">impact_data</span>,</span>
 <span>  <span class="va">species_list</span>,</span>
+<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  col_category <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_mechanism <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  trans <span class="op">=</span> <span class="fl">1</span></span>
+<span>  col_mechanism <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -65,6 +65,13 @@
 <dd><p>The vector of species' list to aggregate their impact categories</p></dd>
 
 
+<dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
+<dd><p>Numeric. The type of transformation to convert the EICAT categories to
+numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
+2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
+3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)</p></dd>
+
+
 <dt id="arg-col-category">col_category<a class="anchor" aria-label="anchor" href="#arg-col-category"></a></dt>
 <dd><p>The name of the column containing the impact categories.
 The first two letters each categories must be an EICAT short names
@@ -77,13 +84,6 @@ The first two letters each categories must be an EICAT short names
 
 <dt id="arg-col-mechanism">col_mechanism<a class="anchor" aria-label="anchor" href="#arg-col-mechanism"></a></dt>
 <dd><p>The name of the column containing mechanisms of impact</p></dd>
-
-
-<dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
-<dd><p>Numeric. The type of transformation to convert the EICAT categories to
-numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -121,7 +121,7 @@ impact per categories of a species</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mukhtar Muhammed Yahaya, Sabrina Kumschick, Sandra MacFadyen, Cang Hui, Pietro Landi.</p>
+  <p>Developed by Mukhtar Muhammed Yahaya, Sabrina Kumschick, Sandra MacFadyen, Pietro Landi, Cang Hui.</p>
 </div>
 
 <div class="pkgdown-footer-right">
