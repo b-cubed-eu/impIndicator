@@ -56,3 +56,9 @@ impact_value <- impact_indicator(
 plot(impact_value)
 
 }
+\seealso{
+Other Plot: 
+\code{\link{plot.site_impact}()},
+\code{\link{plot.species_impact}()}
+}
+\concept{Plot}

@@ -20,7 +20,7 @@
 #' impact of a species. mean - mean impact of a species. max_mech - sum of maximum
 #' impact per categories of a species
 #' @export
-#'
+#' @family Prepare data
 #' @examples
 #' # define species list
 #' species_list <- c(

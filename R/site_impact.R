@@ -20,6 +20,7 @@
 
 #' @return The dataframe of impact indicator per sites (class `site_impact`)
 #' @export
+#' @family Indicator function
 #'
 #' @examples
 #' # define cube for taxa

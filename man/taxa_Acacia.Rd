@@ -30,4 +30,10 @@ An example of occurrence data from GBIF containing required column for impact in
   head(taxa_Acacia,10)
 
 }
+\seealso{
+Other Data: 
+\code{\link{eicat_acacia}},
+\code{\link{southAfrica_sf}}
+}
+\concept{Data}
 \keyword{datasets}

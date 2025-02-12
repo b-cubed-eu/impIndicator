@@ -10,6 +10,7 @@
 #'   \item{coordinateUncertaintyInMeters}{radius of the uncertainty circle around geographic point}
 #'   \item{year}{year occurrence was recorded}
 #' }
+#' @family Data
 #' @examples
 #'   head(taxa_Acacia,10)
 #'
@@ -26,6 +27,7 @@
 #'   \item{geometry}{geometry of polygon}
 
 #' }
+#' @family Data
 #' @examples
 #'   sf::plot_sf(southAfrica_sf)
 #'
@@ -42,6 +44,7 @@
 #'   \item{impact_category}{EICAT impact category}
 #'   \item{impact_mechanism}{mecahnism of impact}
 #' }
+#' @family Data
 #' @examples
 #'   head(eicat_acacia,10)
 #'

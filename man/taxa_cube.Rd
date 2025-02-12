@@ -54,3 +54,8 @@ acacia_cube <- taxa_cube(
 )
 
 }
+\seealso{
+Other Prepare data: 
+\code{\link{impact_cat}()}
+}
+\concept{Prepare data}

@@ -22,7 +22,7 @@
 #' @param last_year The year at which the occurrence should end
 #'
 #' @return A data cube of `sim_cubes`
-#'
+#' @family Prepare data
 #' @export
 #'
 #' @examples
