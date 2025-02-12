@@ -7,11 +7,11 @@
 site_impact(
   cube,
   impact_data = NULL,
+  method = NULL,
+  trans = 1,
   col_category = NULL,
   col_species = NULL,
-  col_mechanism = NULL,
-  trans = 1,
-  type = NULL
+  col_mechanism = NULL
 )
 }
 \arguments{
@@ -21,6 +21,16 @@ site_impact(
 \item{impact_data}{The dataframe of species impact which contains columns of \verb{impact_category,}
 \code{scientific_name} and \code{impact_mechanism}}
 
+\item{method}{The method of computing the indicator. The method used in
+the aggregation of within and across species in a site.
+The method can be precautionary, precautionary cumulative, mean,
+mean cumulative or cumulative.}
+
+\item{trans}{Numeric. The method of transformation to convert the EICAT categories to
+numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
+2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
+3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)}
+
 \item{col_category}{The name of the column containing the impact categories.
 The first two letters each categories must be an EICAT short names
 (e.g "MC - Minimal concern")}
@@ -28,15 +38,6 @@ The first two letters each categories must be an EICAT short names
 \item{col_species}{The name of the column containing species names}
 
 \item{col_mechanism}{The name of the column containing mechanisms of impact}
-
-\item{trans}{Numeric. The type of transformation to convert the EICAT categories to
-numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)}
-
-\item{type}{The type indicators based on the aggregation of within and
-across species in a site. The type can be precautionary, precautionary cumulative,
-mean, mean cumulative or cumulative.}
 }
 \value{
 The dataframe of impact indicator per sites (class \code{site_impact})
@@ -56,8 +57,8 @@ acacia_cube <- taxa_cube(
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
-  type = "precautionary cumulative"
+  method = "precautionary cumulative",
+  trans = 1
 )
 
 }

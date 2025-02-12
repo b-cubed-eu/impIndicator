@@ -49,8 +49,8 @@ acacia_cube <- taxa_cube(
 impact_value <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  trans = 1,
-  type = "mean cumulative"
+  method = "mean cumulative",
+  trans = 1
 )
 # plot impact indicator
 plot(impact_value)
