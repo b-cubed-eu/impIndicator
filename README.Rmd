@@ -20,6 +20,8 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![repo status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![CRAN status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-project.org/package=impIndicator)
+[![test-coverage](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml)
+[![Codecov test coverage](https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg)](https://app.codecov.io/gh/b-cubed-eu/impIndicator)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises potential impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods 
