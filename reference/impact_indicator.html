@@ -45,11 +45,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">impact_indicator</span><span class="op">(</span></span>
 <span>  <span class="va">cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  method <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  col_category <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_mechanism <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>  method <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  col_mechanism <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -67,6 +67,20 @@
 <code>scientific_name</code> and <code>impact_mechanism</code></p></dd>
 
 
+<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
+<dd><p>The method of computing the indicator. The method used in
+the aggregation of within and across species in a site.
+The method can be precautionary, precautionary cumulative, mean,
+mean cumulative or cumulative.</p></dd>
+
+
+<dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
+<dd><p>Numeric. The method of transformation to convert the EICAT categories to
+numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
+2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
+3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)</p></dd>
+
+
 <dt id="arg-col-category">col_category<a class="anchor" aria-label="anchor" href="#arg-col-category"></a></dt>
 <dd><p>The name of the column containing the impact categories.
 The first two letters of each categories must be an EICAT short names
@@ -80,24 +94,16 @@ The first two letters of each categories must be an EICAT short names
 <dt id="arg-col-mechanism">col_mechanism<a class="anchor" aria-label="anchor" href="#arg-col-mechanism"></a></dt>
 <dd><p>The name of the column containing mechanisms of impact</p></dd>
 
-
-<dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
-<dd><p>Numeric. The method of transformation to convert the EICAT categories to
-numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)</p></dd>
-
-
-<dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>The method of computing the indicator. The method used in
-the aggregation of within and across species in a site.
-The method can be precautionary, precautionary cumulative, mean,
-mean cumulative or cumulative.</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A dataframe of the invasive alien impact trend (class <code>impact_indicator</code>)</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index"><p>Other Indicator function:
+<code><a href="site_impact.html">site_impact</a>()</code>,
+<code><a href="species_impact.html">species_impact</a>()</code></p></div>
     </div>
 
     <div class="section level2">
