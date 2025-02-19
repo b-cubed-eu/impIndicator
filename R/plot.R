@@ -15,6 +15,7 @@
 #' @return The ggplot object of the impact indicator, with the y- and x-axes
 #' representing the impact score and time respectively.
 #' @export
+#' @family Plot
 #'
 #' @examples
 #' # create data_cube
@@ -82,6 +83,7 @@ plot.impact_indicator <- function(x,
 #' @return The ggplot object of the species impact, with the y- and x-axes
 #' representing the impact score and time respectively.
 #' @export
+#'@family Plot
 #'
 #' @examples
 #' # create data cube
@@ -174,6 +176,7 @@ plot.species_impact <- function(x,
 #'
 #' @return The ggplot of species yearly impact on the region.
 #' @export
+#' @family Plot
 #'
 #' @examples
 #' # define cube for taxa

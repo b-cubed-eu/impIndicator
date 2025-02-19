@@ -18,6 +18,7 @@
 #' @param col_mechanism The name of the column containing mechanisms of impact
 #' @return A dataframe of impact indicator per species (class `species_impact`)
 #' @export
+#' @family Indicator function
 #'
 #' @examples
 #'

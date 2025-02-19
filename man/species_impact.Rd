@@ -60,3 +60,9 @@ speciesImpact <- species_impact(
   trans = 1
 )
 }
+\seealso{
+Other Indicator function: 
+\code{\link{impact_indicator}()},
+\code{\link{site_impact}()}
+}
+\concept{Indicator function}

@@ -62,3 +62,9 @@ siteImpact <- site_impact(
 )
 
 }
+\seealso{
+Other Indicator function: 
+\code{\link{impact_indicator}()},
+\code{\link{species_impact}()}
+}
+\concept{Indicator function}

@@ -29,4 +29,10 @@ An example of EICAT data containing species name, impact category and mechanism.
   head(eicat_acacia,10)
 
 }
+\seealso{
+Other Data: 
+\code{\link{southAfrica_sf}},
+\code{\link{taxa_Acacia}}
+}
+\concept{Data}
 \keyword{datasets}

@@ -22,7 +22,7 @@
 #' @param last_year The year at which the occurrence should end
 #'
 #' @return A data cube of `sim_cubes`
-#'
+#' @family Prepare data
 #' @export
 #'
 #' @examples
@@ -60,7 +60,8 @@ taxa_cube <- function(taxa,
   }
 
   if ("sf" %in% class(region)){
-    region <- region
+    region <- region %>%
+      sf::st_transform(crs = 4326)
   } else if(assertthat::is.string(region)){
 
     # download country sf
@@ -87,16 +88,17 @@ taxa_cube <- function(taxa,
     sf::st_sf() %>%
     dplyr::mutate(cellCode = as.character(dplyr::row_number()))
 
-  grid <- grid %>%
-    suppressWarnings(sf::st_intersection(region)) %>%
-    dplyr::select(cellCode, geometry)
-
-
   # get coordinates of the occurrence sites
   coords <- sf::st_coordinates(sf::st_centroid(grid)) %>%
     as.data.frame() %>%
     tibble::rownames_to_column(var = "cellCode") %>%
     suppressWarnings()
+
+  grid <- grid %>%
+    sf::st_intersection(region) %>%
+    suppressWarnings() %>%
+    dplyr::select(cellCode, geometry)
+
 
   #  try to download taxa if the scientific name is given as character
   if (assertthat::is.string(taxa)) {

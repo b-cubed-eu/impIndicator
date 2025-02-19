@@ -22,4 +22,10 @@ An example of region sf for impact indicator.
   sf::plot_sf(southAfrica_sf)
 
 }
+\seealso{
+Other Data: 
+\code{\link{eicat_acacia}},
+\code{\link{taxa_Acacia}}
+}
+\concept{Data}
 \keyword{datasets}

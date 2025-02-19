@@ -62,3 +62,9 @@ plot(x=siteImpact,
 region= southAfrica_sf,
 first_year = 2021)
 }
+\seealso{
+Other Plot: 
+\code{\link{plot.impact_indicator}()},
+\code{\link{plot.species_impact}()}
+}
+\concept{Plot}

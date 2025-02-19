@@ -61,3 +61,8 @@ agg_impact <- impact_cat(
 )
 
 }
+\seealso{
+Other Prepare data: 
+\code{\link{taxa_cube}()}
+}
+\concept{Prepare data}
