@@ -10,43 +10,48 @@
 status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-project.org/package=impIndicator)
+[![test-coverage](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml)
+[![Codecov test
+coverage](https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg)](https://app.codecov.io/gh/b-cubed-eu/impIndicator)
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate
 and visualise the impact of alien taxa and individual species in a given
-area. It calculates and visualises impact per site as a map. It takes in
-GBIF occurrence data and EICAT assessment data. It enables users to
-choose from various methods of calculating impact indicators based on
-different studies.  
+area. It calculates and visualises potential impact per site as a map.
+It takes in GBIF occurrence data and EICAT assessment data. It enables
+users to choose from various methods of calculating impact indicators
+based on different assumptions.  
 
 The impIndicator produces three main products and can be useful as
 stated below:  
--**impact indicator** \<`impact_indicator()`\>  
-The impact indicator offers a nuanced representation of the trends of
-biological invasions of an area (local, regional, or global scales). By
-tracking the increase and decrease of ecological threats over time, this
-product provides insights into the dynamics of invasive alien species
-impacts, helping assess whether current management practices are
-effective or need adjustment. The temporal analysis of impact indicator
-enables targeted resource allocation, fostering proactive interventions
-to mitigate biodiversity loss and ecosystem degradation.  
--**site impact** \<`site_impact()`  
-The site impact as a map serves as a visual and analytical tool to
-represent the intensity of biological invasions across different parts
-of an area. By enabling spatial comparisons—such as between provinces,
-states, or conservation areas—it highlights hotspots and areas at risk
-of invasion impact. This spatial data is useful for prioritising
-management actions, coordinating restoration projects, and fostering
-cross-regional collaboration to address invasive species impacts
-effectively.  
--**species impact** \<`species_impact()`  
-The species impact produces the trends of individual invasive alien
-species, enabling a species-specific impact caused by invasions. This
-data supports comparisons of individual species’ impacts, revealing
-their roles and interactions within invaded area. The species impact is
-invaluable for prioritising species-specific management efforts,
-informing eradication strategies, and advancing research on alien
-species’ ecological roles and adaptation patterns.
+
+- **impact indicator** \<`impact_indicator()`\>  
+  The impact indicator offers a nuanced representation of the trends of
+  biological invasions of an area (local, regional, or global scales).
+  By tracking the increase and decrease of ecological threats over time,
+  this product provides insights into the dynamics of alien species
+  impacts, helping assess whether current management practices are
+  effective or need adjustment. The temporal analysis of impact
+  indicator enables targeted resource allocation, fostering proactive
+  interventions to mitigate biodiversity loss and ecosystem
+  degradation.  
+- **site impact** \<`site_impact()`  
+  The site impact as a map serves as a visual and analytical tool to
+  represent the intensity of biological invasions across different parts
+  of an area. By enabling spatial comparisons—such as between provinces,
+  states, or conservation areas, it highlights hotspots and areas at
+  risk of invasion impact. This spatial data is useful for prioritising
+  management actions, coordinating restoration projects, and fostering
+  cross-regional collaboration to address alien species impacts
+  effectively.  
+- **species impact** \<`species_impact()`  
+  The species impact produces the trends of individual alien species,
+  enabling a species-specific impact attributed to invasions. This data
+  supports comparisons of individual species’ impacts, revealing their
+  roles and interactions within invaded area. The species impact is
+  invaluable for prioritising species-specific management efforts,
+  informing control and eradication strategies, and advancing research
+  on alien species’ ecological roles and adaptation patterns.
 
 ## Installation
 
@@ -65,9 +70,8 @@ indicator of biological invasions using the `impact_indicator()` to
 compute impact indicator of alien taxa, the `species_impact()` to
 compute impact indicator per species, and the `site_impact()` to compute
 impact indicator per site. The functions feeds in species GBIF
-occurrence cube from the `b3gbi::process_cube()` using `taxa_cube()`
-and  
-Environmental Impact Classification of Alien Taxa (EICAT) impact score
+occurrence cube from the `b3gbi::process_cube()` using `taxa_cube()` and
+Environmental Impact Classification for Alien Taxa (EICAT) impact score
 of species. Read about the background of the products at
 <https://b-cubed-eu.github.io/impIndicator/articles/Background.html>
 
@@ -100,12 +104,12 @@ acacia_cube
 #> Simulated data cube for calculating biodiversity indicators
 #> 
 #> Date Range: 2010 - 2024 
-#> Number of cells: 402 
+#> Number of cells: 398 
 #> Grid reference system: custom 
 #> Coordinate range:
 #> [1] 16.60833
 #> 
-#> Total number of observations: 6508 
+#> Total number of observations: 6252 
 #> Number of species represented: 29 
 #> Number of families represented: Data not present 
 #> 
@@ -113,7 +117,7 @@ acacia_cube
 #> 
 #> First 10 rows of data (use n = to show more):
 #> 
-#> # A tibble: 6,508 × 8
+#> # A tibble: 6,252 × 8
 #>    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord
 #>    <chr>               <dbl>                  <dbl> <dbl> <chr>     <dbl>  <dbl>
 #>  1 Acacia mearnsii   2979775                      8  2010 1376       30.4  -29.7
@@ -126,7 +130,7 @@ acacia_cube
 #>  8 Acacia saligna    2978552                      1  2011 206        18.4  -33.9
 #>  9 Acacia saligna    2978552                      1  2011 144        19.4  -34.2
 #> 10 Acacia melanoxy…  2979000                      1  2011 206        18.4  -33.9
-#> # ℹ 6,498 more rows
+#> # ℹ 6,242 more rows
 #> # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters
 #> # ℹ 1 more variable: obs <dbl>
 ```
@@ -232,13 +236,13 @@ plot(species_value)
 
 # Comparing method of indicators
 
-To compare methods used in calculating of impact indicators for a case
-study, we provide a plot which can be adapted by a user to compare a set
-of method.
+To compare type of impact indicators for a case study, we provide a plot
+which can be adapted by the user to compare a set of methods.
 
 ``` r
-# plot all method of impact indicators
+# plot all methods of impact indicators
 methods <- c(
+
   "precautionary",
   "precautionary cumulative",
   "mean",
