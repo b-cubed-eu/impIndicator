@@ -6,7 +6,7 @@
   "name": "impIndicator: Impact Indicators of Alien Taxa",
   "issueTracker": "https://github.com/b-cubed-eu/impIndicator/issues",
   "license": "file LICENSE",
-  "version": "0.0.0.9000",
+  "version": "0.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
