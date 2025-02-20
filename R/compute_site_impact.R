@@ -84,7 +84,7 @@ mean_cum_site_impact<-function(data){
 }
 
 
-#' Cummlative site impact
+#' Cumulative site impact
 #'
 #' Compute site impact based on the cumulative method
 #'

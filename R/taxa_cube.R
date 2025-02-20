@@ -16,7 +16,7 @@
 #' Default is set to 500
 #'
 #' @param country Two-letter country code (ISO-3166-1) of Country for which
-#' the GBIP occurrences data should be downloaded.
+#' the GBIF occurrences data should be downloaded.
 #' @param res The resolution of grid cells to be used. Default is 0.25
 #' @param first_year The year from which the occurrence should start from
 #' @param last_year The year at which the occurrence should end

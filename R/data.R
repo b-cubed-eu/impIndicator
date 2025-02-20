@@ -42,7 +42,7 @@
 #' \describe{
 #'   \item{scientific_name}{species scientific name}
 #'   \item{impact_category}{EICAT impact category}
-#'   \item{impact_mechanism}{mecahnism of impact}
+#'   \item{impact_mechanism}{mechanism of impact}
 #' }
 #' @family Data
 #' @examples

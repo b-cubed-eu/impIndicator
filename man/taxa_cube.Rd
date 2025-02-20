@@ -27,7 +27,7 @@ character which represent the name of a country}
 Default is set to 500}
 
 \item{country}{Two-letter country code (ISO-3166-1) of Country for which
-the GBIP occurrences data should be downloaded.}
+the GBIF occurrences data should be downloaded.}
 
 \item{res}{The resolution of grid cells to be used. Default is 0.25}
 
