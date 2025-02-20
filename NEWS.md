@@ -1,4 +1,4 @@
-# impIndicator 0.0.1
+# impIndicator 0.1.0
 
 * Set up basic package structure.
 
