@@ -1,33 +1,28 @@
 Package: impIndicator
 Title: Impact Indicators of Alien Taxa
 Version: 0.1.0
-Authors@R: 
-    c(
-    person("Mukhtar Muhammed", "Yahaya", email = "yahayamukhtar.m@gmail.com", 
-    role = c("aut", "cre"),
+Authors@R: c(
+    person("Mukhtar Muhammed", "Yahaya", , "yahayamukhtar.m@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0008-9200-0863")),
-    person("Sabrina", "Kumschick",email =  "sabrina.kumschick@gmail.com", 
-    role = c("aut","ctb"),
+    person("Sabrina", "Kumschick", , "sabrina.kumschick@gmail.com", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0001-8034-5831")),
-    person("Sandra", "MacFadyen",email =  "sandra@biogis.co.za", 
-    role = c("aut", "ctb"),
+    person("Sandra", "MacFadyen", , "sandra@biogis.co.za", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0002-5316-440X")),
-    person("Pietro", "Landi", email = "landi@sun.ac.za", 
-    role = c("aut","ctb"),
+    person("Pietro", "Landi", , "landi@sun.ac.za", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0002-6373-2992")),
-           person("Cang", "Hui", email = "chui@sun.ac.za", 
-    role = c("aut","ctb"),
+    person("Cang", "Hui", , "chui@sun.ac.za", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0002-3660-8160")),
-    person("Stellenbosch University (SU)", , 
-    email = "info@sun.ac.za", role = "cph"))
-Description: Compute impact indicators of alien taxa using GBIF occurrence cube
-    and EICAT assessment of alien species. Aggregates species impact of various 
-    scores due to mecahnism. Aggregates site impact of various 
-    scores due to species. 
+    person("Stellenbosch University (SU)", , , "info@sun.ac.za", role = "cph")
+  )
+Description: Compute impact indicators of alien taxa using GBIF occurrence
+    cube and EICAT assessment of alien species. Aggregates species impact
+    of various scores due to mecahnism. Aggregates site impact of various
+    scores due to species.
 License: MIT + file LICENSE
+URL: https://b-cubed-eu.github.io/impIndicator/
 BugReports: https://github.com/b-cubed-eu/impIndicator/issues
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Depends: 
+    R (>= 2.10)
 Imports: 
     assertthat,
     b3gbi (>= 0.2.2),
@@ -41,18 +36,18 @@ Imports:
     stats,
     tibble,
     tidyr
-Remotes: 
-    b-cubed-eu/b3gbi
-Depends: 
-    R (>= 2.10)
-LazyData: true
 Suggests: 
     knitr,
     rmarkdown,
     rnaturalearthdata,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
+Remotes: 
+    b-cubed-eu/b3gbi
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-GB
-URL: https://b-cubed-eu.github.io/impIndicator/
-VignetteBuilder: knitr
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
