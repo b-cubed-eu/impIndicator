@@ -16,8 +16,8 @@ taxa_cube(
 }
 \arguments{
 \item{taxa}{Character or dataframe. The character should be the scientific
-name of the focal taxa while the dataframe is the GBIF occurrences data which must
-contain "decimalLatitude","decimalLongitude","species","speciesKey",
+name of the focal taxa while the dataframe is the GBIF occurrences data which
+must contain "decimalLatitude","decimalLongitude","species","speciesKey",
 "coordinateUncertaintyInMeters","dateIdentified", and "year".}
 
 \item{region}{sf or character. The shapefile of the region of study or a

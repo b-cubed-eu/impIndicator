@@ -16,31 +16,32 @@ impact_indicator(
 }
 \arguments{
 \item{cube}{The data cube of class \code{sim_cube} or \code{processed_cube} from
-\code{b3gbi::process_cube()}}
+\code{b3gbi::process_cube()}.}
 
-\item{impact_data}{The dataframe of species impact which contains columns of \verb{impact_category,}
-\code{scientific_name} and \code{impact_mechanism}}
+\item{impact_data}{The dataframe of species impact which contains columns of
+\code{impact_category}, \code{scientific_name} and \code{impact_mechanism}.}
 
 \item{method}{The method of computing the indicator. The method used in
 the aggregation of within and across species in a site.
 The method can be precautionary, precautionary cumulative, mean,
 mean cumulative or cumulative.}
 
-\item{trans}{Numeric. The method of transformation to convert the EICAT categories to
-numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)}
+\item{trans}{Numeric. The method of transformation to convert the EICAT
+categories to numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to
+(0, 1, 2, 3, 4) 2 converts ("MC", "MN", "MO", "MR", "MV") to (1, 2, 3, 4, 5)
+and 3 converts ("MC", "MN", "MO", "MR", "MV") to (1, 10, 100, 1000, 10000).}
 
 \item{col_category}{The name of the column containing the impact categories.
-The first two letters of each categories must be an EICAT short names
-(e.g "MC - Minimal concern")}
+The first two letters each categories must be an EICAT short names
+(e.g "MC - Minimal concern").}
 
-\item{col_species}{The name of the column containing species names}
+\item{col_species}{The name of the column containing species names.}
 
-\item{col_mechanism}{The name of the column containing mechanisms of impact}
+\item{col_mechanism}{The name of the column containing mechanisms of impact.}
 }
 \value{
-A dataframe of the invasive alien impact trend (class \code{impact_indicator})
+A dataframe of the invasive alien impact trend
+(class \code{impact_indicator})
 }
 \description{
 Compute impact indicators of alien taxa

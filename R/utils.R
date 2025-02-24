@@ -1,7 +1,6 @@
 # Copy of breaks_pretty from scales package
 #' @noRd
-breaks_pretty_int <- function (n = 5, ...)
-{
+breaks_pretty_int <- function(n = 5, ...) {
   force_all(n, ...)
   n_default <- n
   function(x, n = n_default) {

@@ -8,7 +8,7 @@
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
-prec_site_impact<-function(data){
+prec_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
 
@@ -29,8 +29,7 @@ prec_site_impact<-function(data){
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
-prec_cum_site_impact<-function(data){
-
+prec_cum_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
 
@@ -51,7 +50,7 @@ prec_cum_site_impact<-function(data){
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
-mean_site_impact<-function(data){
+mean_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
 
@@ -72,7 +71,7 @@ mean_site_impact<-function(data){
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
-mean_cum_site_impact<-function(data){
+mean_cum_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
 
@@ -82,7 +81,6 @@ mean_cum_site_impact<-function(data){
     dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
     tidyr::pivot_wider(names_from = year, values_from = mean)
 }
-
 
 #' Cumulative site impact
 #'
@@ -94,10 +92,9 @@ mean_cum_site_impact<-function(data){
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
-cum_site_impact<-function(data){
-
+cum_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
-  cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech<- NULL
+  cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech <- NULL
   data %>%
     dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
     dplyr::group_by(year, cellCode, xcoord, ycoord) %>%

@@ -4,7 +4,8 @@
 \name{eicat_acacia}
 \alias{eicat_acacia}
 \title{EICAT data of acacia taxa
-An example of EICAT data containing species name, impact category and mechanism.}
+An example of EICAT data containing species name, impact category and
+mechanism.}
 \format{
 A dataframe object containing 138 observations and 3 variables
 \describe{
@@ -16,17 +17,18 @@ A dataframe object containing 138 observations and 3 variables
 \source{
 Jansen, C., Kumschick, S. A global impact assessment of Acacia species
 introduced to South Africa. Biol Invasions 24, 175–187 (2022).
-\url{https://doi.org/10.1007/s10530-021-02642-0}
+\doi{10.1007/s10530-021-02642-0}
 }
 \usage{
 eicat_acacia
 }
 \description{
 EICAT data of acacia taxa
-An example of EICAT data containing species name, impact category and mechanism.
+An example of EICAT data containing species name, impact category and
+mechanism.
 }
 \examples{
-  head(eicat_acacia,10)
+head(eicat_acacia, 10)
 
 }
 \seealso{

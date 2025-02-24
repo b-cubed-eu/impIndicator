@@ -8,15 +8,15 @@
 #'
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
-max_species_impact<-function(data){
+max_species_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  taxonKey <- year <- scientificName <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
-    dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-    dplyr::group_by(year,scientificName) %>%
-    dplyr::summarise(dplyr::across(max,sum),.groups = "drop") %>%
-    dplyr::mutate(max = max/length(unique(data$cellCode))) %>%
+    dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+    dplyr::group_by(year, scientificName) %>%
+    dplyr::summarise(dplyr::across(max, sum), .groups = "drop") %>%
+    dplyr::mutate(max = max / length(unique(data$cellCode))) %>%
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = max) %>%
     dplyr::arrange(year)
@@ -32,15 +32,15 @@ max_species_impact<-function(data){
 #'
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
-mean_species_impact<-function(data){
+mean_species_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  taxonKey <- year <- scientificName <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
-    dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-    dplyr::group_by(year,scientificName) %>%
-    dplyr::summarise(dplyr::across(mean,sum),.groups = "drop") %>%
-    dplyr::mutate(mean = mean/length(unique(data$cellCode))) %>%
+    dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+    dplyr::group_by(year, scientificName) %>%
+    dplyr::summarise(dplyr::across(mean, sum), .groups = "drop") %>%
+    dplyr::mutate(mean = mean / length(unique(data$cellCode))) %>%
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = mean) %>%
     dplyr::arrange(year)
@@ -57,15 +57,15 @@ mean_species_impact<-function(data){
 #'
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
-max_mech_species_impact<-function(data){
+max_mech_species_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
-  cellCode <-  taxonKey <- year <- max_mech <-scientificName<- NULL
+  cellCode <-  taxonKey <- year <- max_mech <- scientificName <- NULL
   data %>%
     # keep only one occurrence of a species at each site per year
-    dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
-    dplyr::group_by(year,scientificName) %>%
-    dplyr::summarise(dplyr::across(max_mech,sum),.groups = "drop") %>%
-    dplyr::mutate(max_mech = max_mech/length(unique(data$cellCode))) %>%
+    dplyr::distinct(taxonKey, year, cellCode, .keep_all = TRUE) %>%
+    dplyr::group_by(year, scientificName) %>%
+    dplyr::summarise(dplyr::across(max_mech, sum), .groups = "drop") %>%
+    dplyr::mutate(max_mech = max_mech / length(unique(data$cellCode))) %>%
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = max_mech) %>%
     dplyr::arrange(year)

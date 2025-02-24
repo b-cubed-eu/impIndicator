@@ -15,7 +15,8 @@
 )
 }
 \arguments{
-\item{x}{A dataframe of impact indicator. Must be a class of "impact_indicator"}
+\item{x}{A dataframe of impact indicator. Must be a class of
+"impact_indicator"}
 
 \item{linewidth}{The width size of the line. Default is 2}
 

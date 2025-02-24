@@ -16,7 +16,7 @@ impact_value <- impact_indicator(
   method = "mean cumulative"
 )
 
-test_that("plot.impact_indicator works",{
+test_that("plot.impact_indicator works", {
 
   expect_no_error(plot(impact_value,
                                 linewidth = 2,
@@ -79,12 +79,12 @@ test_that("plot.impact_indicator works",{
                        title_lab = "Impact indicator",
                        y_lab = "impact score",
                        text_size = 14,
-                       linejoin="round"
+                       linejoin = "round"
 
   ))
 })
 
-test_that("plot.impact indicator throws error",{
+test_that("plot.impact indicator throws error", {
 
   # wrong class of impact indicator
   wrong_class_impact_indicator <- as.data.frame(impact_value)
@@ -208,7 +208,7 @@ test_that("plot.species_impact works", {
                        text_size = 14))
 })
 
-test_that("plot.species_impact throws error",{
+test_that("plot.species_impact throws error", {
 
 
   # class is not species_impact
@@ -244,7 +244,7 @@ siteImpact <- site_impact(
 )
 
 
-test_that("Plot.site_impact works",{
+test_that("Plot.site_impact works", {
   expect_no_error(plot(siteImpact,
                        region = NULL,
                        first_year = NULL,
@@ -297,7 +297,7 @@ test_that("Plot.site_impact works",{
 
 })
 
-test_that("Plot.site_impact throws error",{
+test_that("Plot.site_impact throws error", {
 
   expect_error(plot(siteImpact,
                        region = "a",
@@ -328,7 +328,7 @@ test_that("Plot.site_impact throws error",{
                        text_size = "a"))
 
   # siteImpact is not of correct class
-  wrong_class_site_impact <-as.matrix(siteImpact)
+  wrong_class_site_impact <- as.matrix(siteImpact)
   expect_error(plot.site_impact(wrong_class_site_impact,
                        region = NULL,
                        first_year = NULL,
