@@ -13,15 +13,19 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 # impIndicator <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
-
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
+
 [![repo status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Release](https://img.shields.io/github/release/b-cubed-eu/impIndicator.svg)](https://github.com/b-cubed-eu/impIndicator/releases)
+[![impIndicator status badge](https://b-cubed-eu.r-universe.dev/impIndicator/badges/version)](https://b-cubed-eu.r-universe.dev/impIndicator)
 [![CRAN status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-project.org/package=impIndicator)
-[![test-coverage](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml)
+[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg)](https://app.codecov.io/gh/b-cubed-eu/impIndicator)
+[![name status badge](https://b-cubed-eu.r-universe.dev/badges/:name?color=6CDDB4)](https://b-cubed-eu.r-universe.dev/)
+
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises potential impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods 
@@ -36,11 +40,15 @@ The site impact as a map serves as a visual and analytical tool to represent the
 - **species impact** <`species_impact()`\
 The species impact produces the trends of individual alien species, enabling a species-specific impact attributed to invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing control and eradication strategies, and advancing research on alien species' ecological roles and adaptation patterns.
 
-
-
 ## Installation
 
-You can install the development version of impIndicator from [GitHub](https://github.com/b-cubed-eu/impIndicator) with:
+Install **impIndicator** in R:
+
+```r
+install.packages("impIndicator", repos = "https://b-cubed-eu.r-universe.dev")
+```
+
+You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")

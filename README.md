@@ -5,14 +5,19 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![repo
 status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Release](https://img.shields.io/github/release/b-cubed-eu/impIndicator.svg)](https://github.com/b-cubed-eu/impIndicator/releases)
+[![impIndicator status
+badge](https://b-cubed-eu.r-universe.dev/impIndicator/badges/version)](https://b-cubed-eu.r-universe.dev/impIndicator)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-project.org/package=impIndicator)
-[![test-coverage](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml)
+[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg)](https://app.codecov.io/gh/b-cubed-eu/impIndicator)
+[![name status
+badge](https://b-cubed-eu.r-universe.dev/badges/:name?color=6CDDB4)](https://b-cubed-eu.r-universe.dev/)
+
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate
@@ -55,8 +60,14 @@ stated below:
 
 ## Installation
 
-You can install the development version of impIndicator from
-[GitHub](https://github.com/b-cubed-eu/impIndicator) with:
+Install **impIndicator** in R:
+
+``` r
+install.packages("impIndicator", repos = "https://b-cubed-eu.r-universe.dev")
+```
+
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
