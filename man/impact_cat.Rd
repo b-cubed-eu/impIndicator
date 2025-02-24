@@ -20,10 +20,14 @@ impact_cat(
 \item{species_list}{The vector of species' list to aggregate their impact
 categories.}
 
-\item{trans}{Numeric. The method of transformation to convert the EICAT
-categories to numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to
-(0, 1, 2, 3, 4) 2 converts ("MC", "MN", "MO", "MR", "MV") to (1, 2, 3, 4, 5)
-and 3 converts ("MC", "MN", "MO", "MR", "MV") to (1, 10, 100, 1000, 10000).}
+\item{trans}{Numeric: \code{1} (default), \code{2} or \code{3}. The method of transformation
+to convert the EICAT categories \code{c("MC", "MN", "MO", "MR", "MV")} to
+numerical values:
+\itemize{
+\item \code{1}: converts the categories to \code{c(0, 1, 2, 3, 4)}
+\item \code{2}: converts the categories to to \code{c(1, 2, 3, 4, 5)}
+\item \code{3}: converts the categories to to \code{c(1, 10, 100, 1000, 10000)}
+}}
 
 \item{col_category}{The name of the column containing the impact categories.
 The first two letters each categories must be an EICAT short names

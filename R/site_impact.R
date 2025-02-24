@@ -6,12 +6,18 @@
 #' `impact_category`, `scientific_name` and `impact_mechanism`.
 #' @param method The method of computing the indicator. The method used in
 #' the aggregation of within and across species in a site.
-#' The method can be precautionary, precautionary cumulative, mean,
-#' mean cumulative or cumulative.
-#' @param trans Numeric. The method of transformation to convert the EICAT
-#' categories to numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to
-#' (0, 1, 2, 3, 4) 2 converts ("MC", "MN", "MO", "MR", "MV") to (1, 2, 3, 4, 5)
-#' and 3 converts ("MC", "MN", "MO", "MR", "MV") to (1, 10, 100, 1000, 10000).
+#' The method can be one of
+#'   - `"precautionary"`: ...
+#'   - `"precautionary cumulative"`: ...
+#'   - `"mean"`: ...
+#'   - `"mean cumulative"`: ...
+#'   - `"cumulative"`: ...
+#' @param trans Numeric: `1` (default), `2` or `3`. The method of transformation
+#' to convert the EICAT categories `c("MC", "MN", "MO", "MR", "MV")` to
+#' numerical values:
+#'   - `1`: converts the categories to `c(0, 1, 2, 3, 4)`
+#'   - `2`: converts the categories to to `c(1, 2, 3, 4, 5)`
+#'   - `3`: converts the categories to to `c(1, 10, 100, 1000, 10000)`
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
 #' (e.g "MC - Minimal concern").
