@@ -33,14 +33,13 @@
 cat_num <- function(cat, trans) {
   name <- c("MC", "MN", "MO", "MR", "MV")
   if (trans == 1) {
-    x <- c(0, 1, 2, 3, 4)
-    names(x) <- name
+    x <- 0:4
   } else if (trans == 2) {
-    x <- c(1, 2, 3, 4, 5)
-    names(x) <- name
+    x <- 1:5
   } else { # else if trans = 3
     x <- c(0, 1, 10, 100, 1000, 10000)
-    names(x) <- name
   }
+  names(x) <- name
+
   return(x[cat])
 }
