@@ -40,16 +40,16 @@ stated below:
   indicator enables targeted resource allocation, fostering proactive
   interventions to mitigate biodiversity loss and ecosystem
   degradation.  
-- **site impact** \<`site_impact()`  
+- **site impact** \<`site_impact()`\>  
   The site impact as a map serves as a visual and analytical tool to
   represent the intensity of biological invasions across different parts
   of an area. By enabling spatial comparisons—such as between provinces,
-  states, or conservation areas, it highlights hotspots and areas at
+  states, or conservation areas—, it highlights hotspots and areas at
   risk of invasion impact. This spatial data is useful for prioritising
   management actions, coordinating restoration projects, and fostering
   cross-regional collaboration to address alien species impacts
   effectively.  
-- **species impact** \<`species_impact()`  
+- **species impact** \<`species_impact()`\>  
   The species impact produces the trends of individual alien species,
   enabling a species-specific impact attributed to invasions. This data
   supports comparisons of individual species’ impacts, revealing their
@@ -76,34 +76,34 @@ remotes::install_github("b-cubed-eu/impIndicator")
 
 ## Demonstration
 
-This Markdown demonstrates the computation and visualisation of impact
-indicator of biological invasions using the `impact_indicator()` to
-compute impact indicator of alien taxa, the `species_impact()` to
-compute impact indicator per species, and the `site_impact()` to compute
-impact indicator per site. The functions feeds in species GBIF
-occurrence cube from the `b3gbi::process_cube()` using `taxa_cube()` and
+We demonstrate the computation and visualisation of impact indicator of
+biological invasions using the **impIndicator** package: the
+`impact_indicator()` function to compute impact indicators of alien
+taxa, the `species_impact()` function to compute impact indicators per
+species, and the `site_impact()` function to compute impact indicators
+per site. The functions require (1) a species occurrence cube processed
+by the `b3gbi::process_cube()` function within `taxa_cube()`, and (2)
 Environmental Impact Classification for Alien Taxa (EICAT) impact score
-of species. Read about the background of the products at
-<https://b-cubed-eu.github.io/impIndicator/articles/Background.html>
+of species. Go to `vignette("Background", package = "impIndicator")` to
+read about the background of the inputs.
 
 ``` r
 # Load packages
 library(impIndicator)
 
-library(b3gbi) # Biodiversity indicators for data cubes
-library(tidyverse) # Data wrangling and visualisation
-library(sf) # Spatial features
+library(b3gbi)     # General biodiversity indicators for data cubes
+library(ggplot2)   # Visualisation
+library(tidyr)     # Data wrangling
 ```
 
-## Process occurrence cube
+### Process occurrence cube
 
 The Global Biodiversity Information Facility (GBIF) occurrence data is a
-standardised species information that documents the presence or absence
-of species at particular locations and times.
+standardised species dataset that documents the presence or absence of
+species at particular locations and time points.
 
 ``` r
 # Process cube from GBIF occurrence data in the R studio environment
-
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,
@@ -146,7 +146,7 @@ acacia_cube
 #> # ℹ 1 more variable: obs <dbl>
 ```
 
-## EICAT assessment data
+### EICAT assessment data
 
 The Environmental Impact Classification for Alien Taxa (EICAT)
 assessment data is the reported impact of alien taxa based on EICAT
@@ -155,11 +155,11 @@ method which is the International Union for Conservation of Nature
 into massive (MV), major (MR), moderate (MO), minor (MN), or minimal
 concern (MC) depending on the severity of the impact caused on recipient
 ecosystem. Additional information such as the mechanisms and location of
-impact are also recorded. An example of an EICAT data is:
+impact are also recorded. An example of an EICAT dataset is:
 
 ``` r
-# view EICAT data
-head(eicat_acacia,10)
+# View EICAT data
+head(eicat_acacia, 10)
 #> # A tibble: 10 × 3
 #>    scientific_name   impact_category impact_mechanism                           
 #>    <chr>             <chr>           <chr>                                      
@@ -175,7 +175,7 @@ head(eicat_acacia,10)
 #> 10 Acacia dealbata   MC              (12) Indirect impacts through interaction …
 ```
 
-## Compute impact map
+### Compute impact map
 
 The impact risk map shows the impact score for each site, where multiple
 species can be present. To compute the impact risk per site, aggregated
@@ -194,14 +194,14 @@ siteImpact <- site_impact(
   method = "mean cumulative"
 )
 
-# impact map
-# visualize last four years for readability
+# Impact map
+# Visualise last four years for readability
 plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-## Compute impact indicators
+### Compute impact indicators
 
 To compute the impact indicator of alien taxa, we sum all the yearly
 impact scores of each site of the study region. To correct for sampling
@@ -210,34 +210,33 @@ study region with at least a single occurrence throughout the whole
 year.
 
 ``` r
-# impact indicator
-
+# Impact indicator
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean cumulative"
 )
-# visualise impact indicator
+
+# Visualise impact indicator
 plot(impactIndicator)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
-## Impact indicator per species
+### Impact indicator per species
 
 We compute the impact indicator per species by summing the impact risk
 map per species and correct for sampling effort by dividing by $N$.
 
 ``` r
-#  impact indicator per species
-
+# Impact indicator per species
 species_value <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean"
 )
 
-# visualise species impact
+# Visualise species impact
 plot(species_value)
 #> Warning: Removed 9 rows containing missing values or values outside the scale range
 #> (`geom_line()`).
@@ -245,15 +244,14 @@ plot(species_value)
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
-# Comparing method of indicators
+### Comparing method of indicators
 
 To compare type of impact indicators for a case study, we provide a plot
 which can be adapted by the user to compare a set of methods.
 
 ``` r
-# plot all methods of impact indicators
+# Plot all methods of impact indicators
 methods <- c(
-
   "precautionary",
   "precautionary cumulative",
   "mean",
@@ -273,17 +271,18 @@ for (method in methods) {
   all_impact[method] <- impact_value$diversity_val
 }
 
-#plot the trend
+# Plot the trend
 all_impact %>%
-  gather(-year, key = "indicator_method", value = "impact_score") %>%
+  pivot_longer(
+    cols = -"year",
+    names_to = "indicator_method",
+    values_to = "impact_score"
+  ) %>%
   ggplot(aes(x = year, y = impact_score)) +
-  geom_line(aes(color = indicator_method), linewidth = 1.5) +
-  theme_minimal() +
-  labs(
-    title = "Indicator of different menthods",
-    y = "impact score"
-  ) +
-  theme(text = element_text(size = 14))
+    geom_line(aes(color = indicator_method), linewidth = 1.5) +
+    labs(title = "Indicator of different menthods", y = "impact score") +
+    theme_minimal() +
+    theme(text = element_text(size = 14))
 ```
 
 <img src="man/figures/README-unnamed-chunk-7-1.png" width="100%" />
