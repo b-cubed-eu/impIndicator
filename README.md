@@ -85,7 +85,7 @@ per site. The functions require (1) a species occurrence cube processed
 by the `b3gbi::process_cube()` function within `taxa_cube()`, and (2)
 Environmental Impact Classification for Alien Taxa (EICAT) impact score
 of species. Go to `vignette("Background", package = "impIndicator")` to
-read about the background of the inputs.
+read more about these functions.
 
 ``` r
 # Load packages
