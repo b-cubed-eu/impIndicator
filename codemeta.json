@@ -2,10 +2,12 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "impIndicator",
-  "description": "Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species. ",
+  "description": "Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species.",
   "name": "impIndicator: Impact Indicators of Alien Taxa",
+  "relatedLink": "https://b-cubed-eu.github.io/impIndicator/",
+  "codeRepository": "https://github.com/b-cubed-eu/impIndicator",
   "issueTracker": "https://github.com/b-cubed-eu/impIndicator/issues",
-  "license": "file LICENSE",
+  "license": "https://spdx.org/licenses/MIT",
   "version": "0.1.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
@@ -20,6 +22,34 @@
       "familyName": "Yahaya",
       "email": "yahayamukhtar.m@gmail.com",
       "@id": "https://orcid.org/0009-0008-9200-0863"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Sabrina",
+      "familyName": "Kumschick",
+      "email": "sabrina.kumschick@gmail.com",
+      "@id": "https://orcid.org/0000-0001-8034-5831"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Sandra",
+      "familyName": "MacFadyen",
+      "email": "sandra@biogis.co.za",
+      "@id": "https://orcid.org/0000-0002-5316-440X"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Pietro",
+      "familyName": "Landi",
+      "email": "landi@sun.ac.za",
+      "@id": "https://orcid.org/0000-0002-6373-2992"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Cang",
+      "familyName": "Hui",
+      "email": "chui@sun.ac.za",
+      "@id": "https://orcid.org/0000-0002-3660-8160"
     }
   ],
   "contributor": [
@@ -39,6 +69,13 @@
     },
     {
       "@type": "Person",
+      "givenName": "Pietro",
+      "familyName": "Landi",
+      "email": "landi@sun.ac.za",
+      "@id": "https://orcid.org/0000-0002-6373-2992"
+    },
+    {
+      "@type": "Person",
       "givenName": "Cang",
       "familyName": "Hui",
       "email": "chui@sun.ac.za",
@@ -52,6 +89,12 @@
       "email": "info@sun.ac.za"
     }
   ],
+  "funder": [
+    {
+      "@type": "Organization",
+      "name": "European Union's Horizon Europe Research and Innovation Programme (ID No 101059592)"
+    }
+  ],
   "maintainer": [
     {
       "@type": "Person",
@@ -62,6 +105,42 @@
     }
   ],
   "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rnaturalearthdata",
+      "name": "rnaturalearthdata",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rnaturalearthdata"
+    },
     {
       "@type": "SoftwareApplication",
       "identifier": "testthat",
@@ -79,6 +158,12 @@
   "softwareRequirements": {
     "1": {
       "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 2.10"
+    },
+    "2": {
+      "@type": "SoftwareApplication",
       "identifier": "assertthat",
       "name": "assertthat",
       "provider": {
@@ -89,14 +174,14 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=assertthat"
     },
-    "2": {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "b3gbi",
       "name": "b3gbi",
       "version": ">= 0.2.2",
       "sameAs": "https://github.com/b-cubed-eu/b3gbi"
     },
-    "3": {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "cli",
       "name": "cli",
@@ -108,7 +193,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=cli"
     },
-    "4": {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "dplyr",
       "name": "dplyr",
@@ -120,7 +205,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
-    "5": {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
@@ -132,7 +217,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    "6": {
+    "7": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -144,7 +229,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    "7": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "rgbif",
       "name": "rgbif",
@@ -156,7 +241,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rgbif"
     },
-    "8": {
+    "9": {
+      "@type": "SoftwareApplication",
+      "identifier": "rnaturalearth",
+      "name": "rnaturalearth",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rnaturalearth"
+    },
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "sf",
       "name": "sf",
@@ -168,12 +265,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=sf"
     },
-    "9": {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    "10": {
+    "12": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -185,7 +282,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    "11": {
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -197,18 +294,47 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
-    "12": {
-      "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": ">= 2.10"
-    },
     "SystemRequirements": null
   },
-  "fileSize": "565.231KB",
-  "codeRepository": "https://github.com/b-cubed-eu/impIndicator",
+  "fileSize": "721.694KB",
+  "citation": [
+    {
+      "@type": "SoftwareSourceCode",
+      "datePublished": "2025",
+      "author": {
+        "author1": {
+          "@type": "Person",
+          "givenName": "Mukhtar Muhammed",
+          "familyName": "Yahaya"
+        },
+        "author2": {
+          "@type": "Person",
+          "givenName": "Sabrina",
+          "familyName": "Kumschick"
+        },
+        "author3": {
+          "@type": "Person",
+          "givenName": "Sandra",
+          "familyName": "MacFadyen"
+        },
+        "author4": {
+          "@type": "Person",
+          "givenName": "Pietro",
+          "familyName": "Landi"
+        },
+        "author5": {
+          "@type": "Person",
+          "givenName": "Cang",
+          "familyName": "Hui"
+        }
+      },
+      "name": "impIndicator: Impact Indicators of Alien Taxa. Version 0.1.0",
+      "url": "https://b-cubed-eu.github.io/impIndicator/"
+    }
+  ],
+  "releaseNotes": "https://github.com/b-cubed-eu/impIndicator/blob/master/NEWS.md",
   "readme": "https://github.com/b-cubed-eu/impIndicator/blob/main/README.md",
-  "contIntegration": "https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml",
+  "contIntegration": ["https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/b-cubed-eu/impIndicator"],
   "developmentStatus": "https://www.repostatus.org/#wip",
   "keywords": ["biodiversity-indicators", "impact", "invasive-species", "r"]
 }
