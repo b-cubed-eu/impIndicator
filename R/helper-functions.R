@@ -21,26 +21,27 @@
 #' @description
 #' Convert EICAT categories to numerical values
 #'
-#' @param cat The EICAT impct category. (e.g., "MC)
-#' @param trans Numeric. The type of transformation to convert the EICAT categories to
-#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
+#' @param cat The EICAT impact category. (e.g., "MC")
+#' @param trans Numeric: `1`, `2` or `3`. The method of transformation to
+#' convert the EICAT categories `c("MC", "MN", "MO", "MR", "MV")` to numerical
+#' values:
+#'   - `1`: converts the categories to `c(0, 1, 2, 3, 4)`
+#'   - `2`: converts the categories to to `c(1, 2, 3, 4, 5)`
+#'   - `3`: converts the categories to to `c(1, 10, 100, 1000, 10000)`
 #'
-#' @return Numerical values corresponding to the EICAT  base on a tranfomation
+#' @return Numerical values corresponding to the EICAT  base on a transformation
 #' @noRd
 
 cat_num <- function(cat, trans) {
   name <- c("MC", "MN", "MO", "MR", "MV")
   if (trans == 1) {
-    x <- c(0, 1, 2, 3, 4)
-    names(x) <- name
+    x <- 0:4
   } else if (trans == 2) {
-    x <- c(1, 2, 3, 4, 5)
-    names(x) <- name
+    x <- 1:5
   } else { # else if trans = 3
     x <- c(0, 1, 10, 100, 1000, 10000)
-    names(x) <- name
   }
+  names(x) <- name
+
   return(x[cat])
 }

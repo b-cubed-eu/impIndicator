@@ -16,36 +16,39 @@ species_impact(
 }
 \arguments{
 \item{cube}{The data cube of class \code{sim_cube} or
-\code{processed_cube} from \code{b3gbi::process_cube()}}
+\code{processed_cube} from \code{b3gbi::process_cube()}.}
 
-\item{impact_data}{The dataframe of species impact which contains columns of \verb{impact_category,}
-\code{scientific_name} and \code{impact_mechanism}}
+\item{impact_data}{The dataframe of species impact which contains columns of
+\code{impact_category}, \code{scientific_name} and \code{impact_mechanism}.}
 
 \item{method}{The method of computing the indicator.
 The method used in the aggregation of within impact of species.
 The method can be "max", "mean" or "max_mech".}
 
-\item{trans}{Numeric. The method of transformation to convert the EICAT categories to
-numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)}
+\item{trans}{Numeric: \code{1} (default), \code{2} or \code{3}. The method of transformation
+to convert the EICAT categories \code{c("MC", "MN", "MO", "MR", "MV")} to
+numerical values:
+\itemize{
+\item \code{1}: converts the categories to \code{c(0, 1, 2, 3, 4)}
+\item \code{2}: converts the categories to to \code{c(1, 2, 3, 4, 5)}
+\item \code{3}: converts the categories to to \code{c(1, 10, 100, 1000, 10000)}
+}}
 
 \item{col_category}{The name of the column containing the impact categories.
 The first two letters each categories must be an EICAT short names
-(e.g "MC - Minimal concern")}
+(e.g "MC - Minimal concern").}
 
-\item{col_species}{The name of the column containing species names}
+\item{col_species}{The name of the column containing species names.}
 
-\item{col_mechanism}{The name of the column containing mechanisms of impact}
+\item{col_mechanism}{The name of the column containing mechanisms of impact.}
 }
 \value{
-A dataframe of impact indicator per species (class \code{species_impact})
+A dataframe of impact indicator per species (class \code{species_impact}).
 }
 \description{
 Compute species impact indicator
 }
 \examples{
-
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,

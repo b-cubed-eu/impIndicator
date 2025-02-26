@@ -3,24 +3,30 @@
 #' @description
 #' Aggregate species impact categories from impact data.
 #'
-#' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
-#' `scientific_name` and `impact_mechanism.`
-#' @param species_list The vector of species' list to aggregate their impact categories
-#' @param trans Numeric. The type of transformation to convert the EICAT categories to
-#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
+#' @param impact_data The dataframe of species impact which contains columns of
+#' `impact_category`, `scientific_name` and `impact_mechanism`.
+#' @param species_list The vector of species' list to aggregate their impact
+#' categories.
+#' @param trans Numeric: `1` (default), `2` or `3`. The method of transformation
+#' to convert the EICAT categories `c("MC", "MN", "MO", "MR", "MV")` to
+#' numerical values:
+#'   - `1`: converts the categories to `c(0, 1, 2, 3, 4)`
+#'   - `2`: converts the categories to to `c(1, 2, 3, 4, 5)`
+#'   - `3`: converts the categories to to `c(1, 10, 100, 1000, 10000)`
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
-#' (e.g "MC -Minimal concern")
-#' @param col_species The name of the column containing species names
-#' @param col_mechanism The name of the column containing mechanisms of impact
+#' (e.g "MC - Minimal concern").
+#' @param col_species The name of the column containing species names.
+#' @param col_mechanism The name of the column containing mechanisms of impact.
 #'
 #' @return The dataframe containing the aggregated species impact. max - maximum
-#' impact of a species. mean - mean impact of a species. max_mech - sum of maximum
-#' impact per categories of a species
+#' impact of a species. mean - mean impact of a species.
+#' max_mech - sum of maximum impact per categories of a species
+#'
 #' @export
+#'
 #' @family Prepare data
+#'
 #' @examples
 #' # define species list
 #' species_list <- c(
@@ -40,16 +46,17 @@
 #'   species_list = species_list,
 #'   trans = 1
 #' )
-#'
-impact_cat <- function(impact_data,
-                       species_list,
-                       trans = 1,
-                       col_category = NULL,
-                       col_species = NULL,
-                       col_mechanism = NULL) {
-  # avoid "no visible binding for global variable" NOTE for the followin names
-  impact_category <- scientific_name <- impact_mechanism <- category_value <- . <- scientificName<-rowname <- NULL
 
+impact_cat <- function(
+    impact_data,
+    species_list,
+    trans = 1,
+    col_category = NULL,
+    col_species = NULL,
+    col_mechanism = NULL) {
+  # avoid "no visible binding for global variable" NOTE for the following names
+  impact_category <- scientific_name <- impact_mechanism <- NULL
+    category_value <- . <- scientificName <- rowname <- NULL
 
   # check arguments
   # impact_data
@@ -68,7 +75,6 @@ impact_cat <- function(impact_data,
       "i" = "see the function documentation for details"
     ))
   }
-
 
   if (all(c(
     "impact_category",
@@ -89,8 +95,10 @@ impact_cat <- function(impact_data,
       )))
   } else {
     cli::cli_abort(c(
-      "columns {.var impact_category}, {.var scientific_name} and {.var impact_mechanism} are not found in the {.var impact_data}",
-      "i" = "columns {.var col_category}, {.var col_species} and {.var col_mechanism} must all be given"
+      paste("columns {.var impact_category}, {.var scientific_name} and",
+            "{.var impact_mechanism} are not found in the {.var impact_data}"),
+      "i" = paste("columns {.var col_category}, {.var col_species} and",
+                  "{.var col_mechanism} must all be given")
     ))
   }
 
@@ -148,7 +156,6 @@ impact_cat <- function(impact_data,
   row.names(na.df) <- setdiff(species_list, rownames(impact_matrix))
   names(na.df) <- names(impact_matrix) # column names
   impact_matrix <- rbind(impact_matrix, na.df)
-
 
   impact_matrix <- impact_matrix %>%
     dplyr::mutate(scientificName = row.names(.)) %>%

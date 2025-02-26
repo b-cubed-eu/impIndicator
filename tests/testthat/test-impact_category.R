@@ -87,8 +87,9 @@ test_that("impact cat function throws error", {
       col_mechanism = "impact_mechanism",
       trans = 3
     ),
-    "columns `impact_category`, `scientific_name` and `impact_mechanism` are not found in the `impact_data`
-i columns `col_category`, `col_species` and `col_mechanism` must all be given"
+    paste("columns `impact_category`, `scientific_name` and `impact_mechanism`",
+          "are not found in the `impact_data`
+i columns `col_category`, `col_species` and `col_mechanism` must all be given")
   )
 
 
@@ -101,8 +102,9 @@ i columns `col_category`, `col_species` and `col_mechanism` must all be given"
       col_mechanism = "impact_mechanism",
       trans = 3
     ),
-    "columns `impact_category`, `scientific_name` and `impact_mechanism` are not found in the `impact_data`
-i columns `col_category`, `col_species` and `col_mechanism` must all be given"
+    paste("columns `impact_category`, `scientific_name` and `impact_mechanism`",
+          "are not found in the `impact_data`
+i columns `col_category`, `col_species` and `col_mechanism` must all be given")
   )
 
 
@@ -115,8 +117,9 @@ i columns `col_category`, `col_species` and `col_mechanism` must all be given"
       col_mechanism = NULL,
       trans = 3
     ),
-    "columns `impact_category`, `scientific_name` and `impact_mechanism` are not found in the `impact_data`
-i columns `col_category`, `col_species` and `col_mechanism` must all be given"
+    paste("columns `impact_category`, `scientific_name` and `impact_mechanism`",
+          "are not found in the `impact_data`
+i columns `col_category`, `col_species` and `col_mechanism` must all be given")
   )
 
   expect_error(

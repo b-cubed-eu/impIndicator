@@ -7,41 +7,43 @@
 #' names is given.
 #'
 #' @param taxa Character or dataframe. The character should be the scientific
-#' name of the focal taxa while the dataframe is the GBIF occurrences data which must
-#' contain "decimalLatitude","decimalLongitude","species","speciesKey",
-#' "coordinateUncertaintyInMeters","dateIdentified", and "year".
+#' name of the focal taxa while the dataframe is the GBIF occurrences data which
+#' must contain columns "decimalLatitude", "decimalLongitude", "species",
+#' "speciesKey", "coordinateUncertaintyInMeters", "dateIdentified", and "year".
 #' @param region sf or character. The shapefile of the region of study or a
 #' character which represent the name of a country
 #' @param limit Number of records to return from GBIF download.
 #' Default is set to 500
-#'
-#' @param country Two-letter country code (ISO-3166-1) of Country for which
-#' the GBIP occurrences data should be downloaded.
+#' @param country Two-letter country code (ISO-3166-1) of the country for which
+#' the GBIF occurrences data should be downloaded.
 #' @param res The resolution of grid cells to be used. Default is 0.25
 #' @param first_year The year from which the occurrence should start from
 #' @param last_year The year at which the occurrence should end
 #'
 #' @return A data cube of `sim_cubes`
+#'
 #' @family Prepare data
+#'
 #' @export
 #'
 #' @examples
-#'
 #' acacia_cube <- taxa_cube(
 #'   taxa = taxa_Acacia,
 #'   region = southAfrica_sf,
 #'   first_year = 2010
 #' )
-#'
-taxa_cube <- function(taxa,
-                      region,
-                      limit = 500,
-                      country = NULL,
-                      res = 0.25,
-                      first_year = NULL,
-                      last_year = NULL) {
+
+taxa_cube <- function(
+    taxa,
+    region,
+    limit = 500,
+    country = NULL,
+    res = 0.25,
+    first_year = NULL,
+    last_year = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
-  cellCode <- geometry <- decimalLatitude <- decimalLongitude <- species <- speciesKey <- NULL
+  cellCode <- geometry <- decimalLatitude <- decimalLongitude <- NULL
+  species <- speciesKey <- NULL
   coordinateUncertaintyInMeters <- . <- year <- NULL
 
   # check if res is a number
@@ -50,24 +52,30 @@ taxa_cube <- function(taxa,
   }
 
   # check if first_year is a number if provided
-  if (!is.null(first_year) & !assertthat::is.number(first_year)) {
-    cli::cli_abort(c("{.var first_year} must be a number of length 1 if provided"))
+  if (!is.null(first_year) && !assertthat::is.number(first_year)) {
+    cli::cli_abort(
+      c("{.var first_year} must be a number of length 1 if provided")
+      )
   }
 
   # check if last_year is a number if provided
-  if (!is.null(last_year) & !assertthat::is.number(last_year)) {
-    cli::cli_abort(c("{.var last_year} must be a number of length 1 if provided"))
+  if (!is.null(last_year) && !assertthat::is.number(last_year)) {
+    cli::cli_abort(
+      c("{.var last_year} must be a number of length 1 if provided")
+      )
   }
 
-  if ("sf" %in% class(region)){
+  if ("sf" %in% class(region)) {
     region <- region %>%
       sf::st_transform(crs = 4326)
-  } else if(assertthat::is.string(region)){
+  } else if (assertthat::is.string(region)) {
 
     # download country sf
-    region <- rnaturalearth::ne_countries(scale = "medium",
-                                country = region,
-                                returnclass = "sf") %>%
+    region <- rnaturalearth::ne_countries(
+        scale = "medium",
+        country = region,
+        returnclass = "sf"
+      ) %>%
       sf::st_as_sf() %>%
       sf::st_transform(crs = 4326)
 
@@ -77,7 +85,7 @@ taxa_cube <- function(taxa,
   }
 
   grid <- region %>%
-    sf::st_transform(crs=4326) %>%  # transform to EPSG:4326
+    sf::st_transform(crs = 4326) %>%  # transform to EPSG:4326
     sf::st_make_grid(
       cellsize = c(res, res),
       offset = c(
@@ -99,7 +107,6 @@ taxa_cube <- function(taxa,
     suppressWarnings() %>%
     dplyr::select(cellCode, geometry)
 
-
   #  try to download taxa if the scientific name is given as character
   if (assertthat::is.string(taxa)) {
     taxa.gbif_download <- rgbif::occ_data(
@@ -120,7 +127,6 @@ taxa_cube <- function(taxa,
       ))
     }
 
-
     # check if data fame contains the required columns
   } else if ("data.frame" %in% class(taxa)) {
     if (any(!c(
@@ -138,9 +144,10 @@ taxa_cube <- function(taxa,
         "speciesKey", "coordinateUncertaintyInMeters",
         "year"
       ) %in% colnames(taxa)]
-      cli::cli_abort(c("{.var {missingcol}} {?is/are} not in {.var taxa} column ",
-        "x" = "{.var taxa} should be a data of GBIF format "
-      ))
+      cli::cli_abort(
+        c("{.var {missingcol}} {?is/are} not in {.var taxa} column ",
+          "x" = "{.var taxa} should be a data of GBIF format ")
+        )
     }
     # take taxa data frame if accurate
     taxa.df <- taxa
@@ -148,14 +155,15 @@ taxa_cube <- function(taxa,
     cli::cli_abort(c("{.var taxa} is not a character or dataframe"))
   }
 
-
   taxa.sf <- taxa.df %>%
+    # select occurrence data
     dplyr::select(
       decimalLatitude, decimalLongitude,
       species, speciesKey,
       coordinateUncertaintyInMeters, year
-    ) %>% # select occurrence data
-    dplyr::filter_all(dplyr::all_vars(!is.na(.))) %>% # remove rows with missing data
+    ) %>%
+    # remove rows with missing data
+    dplyr::filter_all(dplyr::all_vars(!is.na(.))) %>%
     dplyr::filter(coordinateUncertaintyInMeters <= res * 1000) %>%
     sf::st_as_sf(
       coords = c("decimalLongitude", "decimalLatitude"),
@@ -163,11 +171,10 @@ taxa_cube <- function(taxa,
     ) %>%
     sf::st_join(grid) %>%
     as.data.frame() %>%
-    dplyr::left_join(coords, by="cellCode") %>%
+    dplyr::left_join(coords, by = "cellCode") %>%
     dplyr::select(-geometry) %>%
-    dplyr::rename(c(xcoord="X",ycoord="Y")) %>%
+    dplyr::rename(c(xcoord = "X", ycoord = "Y")) %>%
     dplyr::mutate(occurrences = 1)
-
 
   taxa_cube <- b3gbi::process_cube(taxa.sf,
     grid_type = "custom",

@@ -16,13 +16,11 @@ knitr::opts_chunk$set(
 
 # Introduction
 ...\
-We provide methodology for computing the three main product of the *impIndicator*.
+We provide methodology for computing the three main products of the *impIndicator*.
 
 # Impact map
 
-The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The 
-`site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.\
-
+The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The `site_impact()` function uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.
 
 - **precautionary**: maximum score across species' max in each site\
 - **precautionary cumulative**: cumulative score across species' max in each site\
@@ -35,7 +33,7 @@ The impact risk map shows the impact score for each site, where multiple species
 To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.\
 $$I_i = \frac{\sum{S_i}}{N}$$\
 - $I_i$ is impact score at year $i$.\
-- $S_i$ is the sum of risk map value, where $S=\{s_1,s_2,...,s_n\}$ and  $s_n$ is the site score for site $n$\
+- $S_i$ is the sum of risk map value, where $S=\{s_1,s_2,\dots,s_n\}$ and $s_n$ is the site score for site $n$\
 - $N$ is number of sites occupied through out the study years of the region.
 
 # Species impact

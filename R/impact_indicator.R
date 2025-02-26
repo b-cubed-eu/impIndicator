@@ -4,24 +4,34 @@
 #' Compute impact indicators of alien taxa
 #'
 #' @param cube The data cube of class `sim_cube` or `processed_cube` from
-#' `b3gbi::process_cube()`
-#' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
-#' `scientific_name` and `impact_mechanism`
+#' `b3gbi::process_cube()`.
+#' @param impact_data The dataframe of species impact which contains columns of
+#' `impact_category`, `scientific_name` and `impact_mechanism`.
 #' @param method The method of computing the indicator. The method used in
 #' the aggregation of within and across species in a site.
-#' The method can be precautionary, precautionary cumulative, mean,
-#' mean cumulative or cumulative.
-#' @param trans Numeric. The method of transformation to convert the EICAT categories to
-#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
+#' The method can be one of
+#'   - `"precautionary"`: ...
+#'   - `"precautionary cumulative"`: ...
+#'   - `"mean"`: ...
+#'   - `"mean cumulative"`: ...
+#'   - `"cumulative"`: ...
+#' @param trans Numeric: `1` (default), `2` or `3`. The method of transformation
+#' to convert the EICAT categories `c("MC", "MN", "MO", "MR", "MV")` to
+#' numerical values:
+#'   - `1`: converts the categories to `c(0, 1, 2, 3, 4)`
+#'   - `2`: converts the categories to to `c(1, 2, 3, 4, 5)`
+#'   - `3`: converts the categories to to `c(1, 10, 100, 1000, 10000)`
 #' @param col_category The name of the column containing the impact categories.
-#' The first two letters of each categories must be an EICAT short names
-#' (e.g "MC - Minimal concern")
-#' @param col_species The name of the column containing species names
-#' @param col_mechanism The name of the column containing mechanisms of impact
-#' @return A dataframe of the invasive alien impact trend (class `impact_indicator`)
+#' The first two letters each categories must be an EICAT short names
+#' (e.g "MC - Minimal concern").
+#' @param col_species The name of the column containing species names.
+#' @param col_mechanism The name of the column containing mechanisms of impact.
+#'
+#' @return A dataframe of the invasive alien impact trend
+#' (class `impact_indicator`)
+#'
 #' @export
+#'
 #' @family Indicator function
 #'
 #' @examples
@@ -37,22 +47,25 @@
 #'   method = "mean cumulative",
 #'   trans = 1
 #' )
-impact_indicator <- function(cube,
-                             impact_data = NULL,
-                             method = NULL,
-                             trans = 1,
-                             col_category = NULL,
-                             col_species = NULL,
-                             col_mechanism = NULL) {
+
+impact_indicator <- function(
+    cube,
+    impact_data = NULL,
+    method = NULL,
+    trans = 1,
+    col_category = NULL,
+    col_species = NULL,
+    col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
 
   # check arguments
   # cube
-  if (!("sim_cube" %in% class(cube) | "processed_cube" %in% class(cube))) {
-    cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
-      "i" = "cube must be processed from `b3gbi`"
-    ))
+  if (!("sim_cube" %in% class(cube) || "processed_cube" %in% class(cube))) {
+    cli::cli_abort(
+      c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
+      "i" = "cube must be processed from `b3gbi`")
+      )
   }
 
   # get species list
@@ -69,10 +82,10 @@ impact_indicator <- function(cube,
   )
 
   # create cube with impact score
-  impact_cube_data <- dplyr::left_join(cube$data, impact_score_list,
-    by = "scientificName"
-  ) %>%
-    tidyr::drop_na(max, mean, max_mech) # remove occurrences with no impact score
+  impact_cube_data <- dplyr::left_join(
+    cube$data, impact_score_list, by = "scientificName") %>%
+    # remove occurrences with no impact score
+    tidyr::drop_na(max, mean, max_mech)
 
 
   if (method == "precautionary") {

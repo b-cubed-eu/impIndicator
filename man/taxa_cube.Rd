@@ -16,9 +16,9 @@ taxa_cube(
 }
 \arguments{
 \item{taxa}{Character or dataframe. The character should be the scientific
-name of the focal taxa while the dataframe is the GBIF occurrences data which must
-contain "decimalLatitude","decimalLongitude","species","speciesKey",
-"coordinateUncertaintyInMeters","dateIdentified", and "year".}
+name of the focal taxa while the dataframe is the GBIF occurrences data which
+must contain columns "decimalLatitude", "decimalLongitude", "species",
+"speciesKey", "coordinateUncertaintyInMeters", "dateIdentified", and "year".}
 
 \item{region}{sf or character. The shapefile of the region of study or a
 character which represent the name of a country}
@@ -26,8 +26,8 @@ character which represent the name of a country}
 \item{limit}{Number of records to return from GBIF download.
 Default is set to 500}
 
-\item{country}{Two-letter country code (ISO-3166-1) of Country for which
-the GBIP occurrences data should be downloaded.}
+\item{country}{Two-letter country code (ISO-3166-1) of the country for which
+the GBIF occurrences data should be downloaded.}
 
 \item{res}{The resolution of grid cells to be used. Default is 0.25}
 
@@ -46,13 +46,11 @@ necessary columns. The GBIF occurrences is downloaded if scientific
 names is given.
 }
 \examples{
-
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,
   first_year = 2010
 )
-
 }
 \seealso{
 Other Prepare data: 

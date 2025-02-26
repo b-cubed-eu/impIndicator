@@ -1,0 +1,83 @@
+{
+  "title": "impIndicator: Impact Indicators of Alien Taxa",
+  "version": "0.1.0",
+  "license": "MIT",
+  "upload_type": "software",
+  "description": "<p>Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species.<\/p>",
+  "keywords": [
+    "impact",
+    "alien species",
+    "biodiversity indicators",
+    "data cubes"
+  ],
+  "access_right": "open",
+  "language": "eng",
+  "contributors": [
+    {
+      "name": "Yahaya, Mukhtar Muhammed",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0009-0008-9200-0863",
+      "type": "contactperson"
+    },
+    {
+      "name": "Kumschick, Sabrina",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0001-8034-5831",
+      "type": "projectmember"
+    },
+    {
+      "name": "MacFadyen, Sandra",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0002-5316-440X",
+      "type": "projectmember"
+    },
+    {
+      "name": "Landi, Pietro",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0002-6373-2992",
+      "type": "projectmember"
+    },
+    {
+      "name": "Hui, Cang",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0002-3660-8160",
+      "type": "projectmember"
+    },
+    {
+      "name": "Stellenbosch University (SU)",
+      "type": "rightsholder"
+    }
+  ],
+  "creators": [
+    {
+      "name": "Yahaya, Mukhtar Muhammed",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0009-0008-9200-0863"
+    },
+    {
+      "name": "Kumschick, Sabrina",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0001-8034-5831"
+    },
+    {
+      "name": "MacFadyen, Sandra",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0002-5316-440X"
+    },
+    {
+      "name": "Landi, Pietro",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0002-6373-2992"
+    },
+    {
+      "name": "Hui, Cang",
+      "affiliation": "Stellenbosch University (SU)",
+      "orcid": "0000-0002-3660-8160"
+    }
+  ],
+  "communities": [
+    {
+      "identifier": "b3"
+    }
+  ]
+}
