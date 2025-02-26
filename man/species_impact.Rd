@@ -49,7 +49,6 @@ A dataframe of impact indicator per species (class \code{species_impact}).
 Compute species impact indicator
 }
 \examples{
-
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,

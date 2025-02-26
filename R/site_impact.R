@@ -25,7 +25,9 @@
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 
 #' @return The dataframe of impact indicator per sites (class `site_impact`)
+#'
 #' @export
+#'
 #' @family Indicator function
 #'
 #' @examples
@@ -44,13 +46,14 @@
 #'   trans = 1
 #' )
 
-site_impact <- function(cube,
-                        impact_data = NULL,
-                        method = NULL,
-                        trans = 1,
-                        col_category = NULL,
-                        col_species = NULL,
-                        col_mechanism = NULL) {
+site_impact <- function(
+    cube,
+    impact_data = NULL,
+    method = NULL,
+    trans = 1,
+    col_category = NULL,
+    col_species = NULL,
+    col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech <- NULL
 

@@ -8,6 +8,7 @@
 #'
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
+
 max_species_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  taxonKey <- year <- scientificName <- NULL
@@ -32,6 +33,7 @@ max_species_impact <- function(data) {
 #'
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
+
 mean_species_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  taxonKey <- year <- scientificName <- NULL
@@ -44,7 +46,6 @@ mean_species_impact <- function(data) {
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = mean) %>%
     dplyr::arrange(year)
-
 }
 
 #' Maximum per mechanism species impact
@@ -57,6 +58,7 @@ mean_species_impact <- function(data) {
 #'
 #' @return A dataframe containing the value of species impact for each year
 #' @noRd
+
 max_mech_species_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  taxonKey <- year <- max_mech <- scientificName <- NULL

@@ -8,38 +8,39 @@
 #'
 #' @param taxa Character or dataframe. The character should be the scientific
 #' name of the focal taxa while the dataframe is the GBIF occurrences data which
-#' must contain "decimalLatitude","decimalLongitude","species","speciesKey",
-#' "coordinateUncertaintyInMeters","dateIdentified", and "year".
+#' must contain columns "decimalLatitude", "decimalLongitude", "species",
+#' "speciesKey", "coordinateUncertaintyInMeters", "dateIdentified", and "year".
 #' @param region sf or character. The shapefile of the region of study or a
 #' character which represent the name of a country
 #' @param limit Number of records to return from GBIF download.
 #' Default is set to 500
-#'
-#' @param country Two-letter country code (ISO-3166-1) of Country for which
+#' @param country Two-letter country code (ISO-3166-1) of the country for which
 #' the GBIF occurrences data should be downloaded.
 #' @param res The resolution of grid cells to be used. Default is 0.25
 #' @param first_year The year from which the occurrence should start from
 #' @param last_year The year at which the occurrence should end
 #'
 #' @return A data cube of `sim_cubes`
+#'
 #' @family Prepare data
+#'
 #' @export
 #'
 #' @examples
-#'
 #' acacia_cube <- taxa_cube(
 #'   taxa = taxa_Acacia,
 #'   region = southAfrica_sf,
 #'   first_year = 2010
 #' )
-#'
-taxa_cube <- function(taxa,
-                      region,
-                      limit = 500,
-                      country = NULL,
-                      res = 0.25,
-                      first_year = NULL,
-                      last_year = NULL) {
+
+taxa_cube <- function(
+    taxa,
+    region,
+    limit = 500,
+    country = NULL,
+    res = 0.25,
+    first_year = NULL,
+    last_year = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- geometry <- decimalLatitude <- decimalLongitude <- NULL
   species <- speciesKey <- NULL
@@ -70,9 +71,11 @@ taxa_cube <- function(taxa,
   } else if (assertthat::is.string(region)) {
 
     # download country sf
-    region <- rnaturalearth::ne_countries(scale = "medium",
-                                country = region,
-                                returnclass = "sf") %>%
+    region <- rnaturalearth::ne_countries(
+        scale = "medium",
+        country = region,
+        returnclass = "sf"
+      ) %>%
       sf::st_as_sf() %>%
       sf::st_transform(crs = 4326)
 
@@ -104,7 +107,6 @@ taxa_cube <- function(taxa,
     suppressWarnings() %>%
     dplyr::select(cellCode, geometry)
 
-
   #  try to download taxa if the scientific name is given as character
   if (assertthat::is.string(taxa)) {
     taxa.gbif_download <- rgbif::occ_data(
@@ -124,7 +126,6 @@ taxa_cube <- function(taxa,
         "i" = "Check the {.var taxa} spelling"
       ))
     }
-
 
     # check if data fame contains the required columns
   } else if ("data.frame" %in% class(taxa)) {
@@ -154,7 +155,6 @@ taxa_cube <- function(taxa,
     cli::cli_abort(c("{.var taxa} is not a character or dataframe"))
   }
 
-
   taxa.sf <- taxa.df %>%
     # select occurrence data
     dplyr::select(
@@ -175,7 +175,6 @@ taxa_cube <- function(taxa,
     dplyr::select(-geometry) %>%
     dplyr::rename(c(xcoord = "X", ycoord = "Y")) %>%
     dplyr::mutate(occurrences = 1)
-
 
   taxa_cube <- b3gbi::process_cube(taxa.sf,
     grid_type = "custom",

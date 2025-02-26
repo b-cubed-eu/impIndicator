@@ -8,6 +8,7 @@
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
+
 prec_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
@@ -29,6 +30,7 @@ prec_site_impact <- function(data) {
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
+
 prec_cum_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
@@ -50,6 +52,7 @@ prec_cum_site_impact <- function(data) {
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
+
 mean_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
@@ -71,6 +74,7 @@ mean_site_impact <- function(data) {
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
+
 mean_cum_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- NULL
@@ -92,6 +96,7 @@ mean_cum_site_impact <- function(data) {
 #'
 #' @return A dataframe containing the value of impact of each site for each year
 #' @noRd
+
 cum_site_impact <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech <- NULL

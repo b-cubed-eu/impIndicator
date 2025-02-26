@@ -34,7 +34,6 @@ prec_indicator <- function(data) {
 #'
 #' @return A dataframe containing the value of impact score for each year
 #' @noRd
-#'
 
 prec_cum_indicator <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
@@ -61,7 +60,6 @@ prec_cum_indicator <- function(data) {
 #' @return A dataframe containing the value of impact score for each year in
 #' data
 #' @noRd
-#'
 
 mean_indicator <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
@@ -88,7 +86,6 @@ mean_indicator <- function(data) {
 #' @return A dataframe containing the value of impact score for each year in
 #' data
 #' @noRd
-#'
 
 mean_cum_indicator <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names
@@ -115,7 +112,6 @@ mean_cum_indicator <- function(data) {
 #' @return A dataframe containing the value of impact score for each year in
 #' data
 #' @noRd
-#'
 
 cum_indicator <- function(data) {
   # avoid "no visible binding for global variable" NOTE for the following names

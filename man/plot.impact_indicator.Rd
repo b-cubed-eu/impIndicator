@@ -53,9 +53,9 @@ impact_value <- impact_indicator(
   method = "mean cumulative",
   trans = 1
 )
+
 # plot impact indicator
 plot(impact_value)
-
 }
 \seealso{
 Other Plot: 

@@ -22,8 +22,11 @@
 #' @return The dataframe containing the aggregated species impact. max - maximum
 #' impact of a species. mean - mean impact of a species.
 #' max_mech - sum of maximum impact per categories of a species
+#'
 #' @export
+#'
 #' @family Prepare data
+#'
 #' @examples
 #' # define species list
 #' species_list <- c(
@@ -43,17 +46,17 @@
 #'   species_list = species_list,
 #'   trans = 1
 #' )
-#'
-impact_cat <- function(impact_data,
-                       species_list,
-                       trans = 1,
-                       col_category = NULL,
-                       col_species = NULL,
-                       col_mechanism = NULL) {
+
+impact_cat <- function(
+    impact_data,
+    species_list,
+    trans = 1,
+    col_category = NULL,
+    col_species = NULL,
+    col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   impact_category <- scientific_name <- impact_mechanism <- NULL
     category_value <- . <- scientificName <- rowname <- NULL
-
 
   # check arguments
   # impact_data
@@ -72,7 +75,6 @@ impact_cat <- function(impact_data,
       "i" = "see the function documentation for details"
     ))
   }
-
 
   if (all(c(
     "impact_category",
@@ -154,7 +156,6 @@ impact_cat <- function(impact_data,
   row.names(na.df) <- setdiff(species_list, rownames(impact_matrix))
   names(na.df) <- names(impact_matrix) # column names
   impact_matrix <- rbind(impact_matrix, na.df)
-
 
   impact_matrix <- impact_matrix %>%
     dplyr::mutate(scientificName = row.names(.)) %>%

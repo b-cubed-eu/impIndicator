@@ -3,7 +3,6 @@
 #' @description
 #' Produces a ggplot object to show the trend of the impact.
 #'
-#'
 #' @param x A dataframe of impact indicator. Must be a class of
 #' "impact_indicator"
 #' @param linewidth The width size of the line. Default is 2
@@ -15,7 +14,9 @@
 #'
 #' @return The ggplot object of the impact indicator, with the y- and x-axes
 #' representing the impact score and time respectively.
+#'
 #' @export
+#'
 #' @family Plot
 #'
 #' @examples
@@ -34,15 +35,18 @@
 #'   method = "mean cumulative",
 #'   trans = 1
 #' )
+#'
 #' # plot impact indicator
 #' plot(impact_value)
-#'
-plot.impact_indicator <- function(x,
-                                  linewidth = 2,
-                                  colour = "red",
-                                  title_lab = "Impact indicator",
-                                  y_lab = "impact score",
-                                  text_size = 14, ...) {
+
+plot.impact_indicator <- function(
+    x,
+    linewidth = 2,
+    colour = "red",
+    title_lab = "Impact indicator",
+    y_lab = "impact score",
+    text_size = 14,
+    ...) {
   # avoid R CMD warnings
   value <- year <- diversity_val <- NULL
 
@@ -65,7 +69,6 @@ plot.impact_indicator <- function(x,
     ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
 }
 
-
 #' Plot species impact
 #'
 #' @description
@@ -83,8 +86,10 @@ plot.impact_indicator <- function(x,
 #'
 #' @return The ggplot object of the species impact, with the y- and x-axes
 #' representing the impact score and time respectively.
+#'
 #' @export
-#'@family Plot
+#'
+#' @family Plot
 #'
 #' @examples
 #' # create data cube
@@ -105,12 +110,15 @@ plot.impact_indicator <- function(x,
 #'
 #' # visualise species impact
 #' plot(speciesImpact)
-plot.species_impact <- function(x,
-                                alien_species = "all",
-                                linewidth = 1.5,
-                                title_lab = "Species impact",
-                                y_lab = "impact score",
-                                text_size = 14, ...) {
+
+plot.species_impact <- function(
+    x,
+    alien_species = "all",
+    linewidth = 1.5,
+    title_lab = "Species impact",
+    y_lab = "impact score",
+    text_size = 14,
+    ...) {
   # avoid R CMD warnings
   impact_score <- year <- `Alien species` <- NULL
 
@@ -159,7 +167,6 @@ plot.species_impact <- function(x,
   }
 }
 
-
 #' Plot site impact
 #'
 #' @description
@@ -178,7 +185,9 @@ plot.species_impact <- function(x,
 #' @param ... Additional arguments passed to geom_tile
 #'
 #' @return The ggplot of species yearly impact on the region.
+#'
 #' @export
+#'
 #' @family Plot
 #'
 #' @examples
@@ -200,16 +209,17 @@ plot.species_impact <- function(x,
 #' )
 #'
 #' # visualise site impact
-#' plot(x=siteImpact,
-#' region= southAfrica_sf,
-#' first_year = 2021)
-plot.site_impact <- function(x,
-                             region = NULL,
-                             first_year = NULL,
-                             last_year = NULL,
-                             title_lab = "Impact map",
-                             text_size = 14, ...) {
-  # avoid R CMD warnings (global varaible not found)
+#' plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
+
+plot.site_impact <- function(
+    x,
+    region = NULL,
+    first_year = NULL,
+    last_year = NULL,
+    title_lab = "Impact map",
+    text_size = 14,
+    ...) {
+  # avoid R CMD warnings (global variable not found)
   year <- xcoord <- ycoord <- impact <- cellCode <- NULL
 
 

@@ -29,7 +29,9 @@
 #'
 #' @return A dataframe of the invasive alien impact trend
 #' (class `impact_indicator`)
+#'
 #' @export
+#'
 #' @family Indicator function
 #'
 #' @examples
@@ -45,13 +47,15 @@
 #'   method = "mean cumulative",
 #'   trans = 1
 #' )
-impact_indicator <- function(cube,
-                             impact_data = NULL,
-                             method = NULL,
-                             trans = 1,
-                             col_category = NULL,
-                             col_species = NULL,
-                             col_mechanism = NULL) {
+
+impact_indicator <- function(
+    cube,
+    impact_data = NULL,
+    method = NULL,
+    trans = 1,
+    col_category = NULL,
+    col_species = NULL,
+    col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
 

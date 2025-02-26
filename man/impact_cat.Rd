@@ -64,7 +64,6 @@ agg_impact <- impact_cat(
   species_list = species_list,
   trans = 1
 )
-
 }
 \seealso{
 Other Prepare data: 

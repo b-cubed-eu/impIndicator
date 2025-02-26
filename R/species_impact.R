@@ -20,11 +20,12 @@
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 #'
 #' @return A dataframe of impact indicator per species (class `species_impact`).
+#'
 #' @export
+#'
 #' @family Indicator function
 #'
 #' @examples
-#'
 #' acacia_cube <- taxa_cube(
 #'   taxa = taxa_Acacia,
 #'   region = southAfrica_sf,
@@ -39,14 +40,14 @@
 #'   trans = 1
 #' )
 
-species_impact <- function(cube,
-                           impact_data = NULL,
-                           method = NULL,
-                           trans = 1,
-                           col_category = NULL,
-                           col_species = NULL,
-                           col_mechanism = NULL) {
-
+species_impact <- function(
+    cube,
+    impact_data = NULL,
+    method = NULL,
+    trans = 1,
+    col_category = NULL,
+    col_species = NULL,
+    col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
   # check arguments
