@@ -121,6 +121,7 @@ plot.species_impact <- function(x,
     x %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
+      tidyr::drop_na("impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
       ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth,
                          ...) +
@@ -137,6 +138,7 @@ plot.species_impact <- function(x,
       dplyr::select(dplyr::all_of(c("year",alien_species))) %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
+      tidyr::drop_na("impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
       ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth,
                          ...) +
