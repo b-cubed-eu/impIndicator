@@ -48,3 +48,27 @@ compute_site_impact <- function(data, col, fun) {
     dplyr::summarise(dplyr::across(dplyr::all_of(col), fun), .groups = "drop") %>%
     tidyr::pivot_wider(names_from = year, values_from = dplyr::all_of(col))
 }
+
+
+#' compute species impact
+#'
+#'
+#' @param data A dataframe containing species occurrences and
+#' their aggregated impact score (from`impact_cat()`). Must be of the
+#' form $data slot of `processed_cube` or `sim_cube`.
+#' @param col Method of aggregation of within species impact
+#' @return A dataframe containing the impact indicator per species
+#' @noRd
+compute_species_impact<-function(data, col){
+  # avoid "no visible binding for global variable" NOTE for the following names
+  cellCode <-  taxonKey <- year <- scientificName <- NULL
+  data %>%
+    # keep only one occurrence of a species at each site per year
+    dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
+    dplyr::group_by(year,scientificName) %>%
+    dplyr::summarise(dplyr::across(dplyr::all_of(col),sum),.groups = "drop") %>%
+    dplyr::mutate(col = .data[[col]]/length(unique(data$cellCode))) %>%
+    dplyr::arrange(scientificName) %>%
+    tidyr::pivot_wider(names_from = scientificName, values_from = dplyr::all_of(col)) %>%
+    dplyr::arrange(year)
+}
