@@ -107,7 +107,8 @@ acacia_cube
 #> Number of cells: 398 
 #> Grid reference system: custom 
 #> Coordinate range:
-#> [1] 16.60833
+#>      xmin      xmax      ymin      ymax 
+#>  16.60833  31.60833 -34.69700 -22.94701 
 #> 
 #> Total number of observations: 6252 
 #> Number of species represented: 29 
@@ -258,7 +259,6 @@ for (method in methods) {
     method = method,
     trans = 1
   )
-
   all_impact[method] <- impact_value$diversity_val
 }
 

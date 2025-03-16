@@ -73,11 +73,11 @@ species_impact <- function(cube,
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
   if (method == "max") {
-    species_values<-max_species_impact(impact_cube_data)
+    species_values<-compute_species_impact(impact_cube_data,"max")
   } else if (method == "mean") {
-    species_values<-mean_species_impact(impact_cube_data)
+    species_values<-compute_species_impact(impact_cube_data,"mean")
   } else if (method == "max_mech") {
-    species_values<-max_mech_species_impact(impact_cube_data)}
+    species_values<-compute_species_impact(impact_cube_data,"max_mech")}
   else{
     cli::cli_abort(c(
       "{.var method} should be one of max, mean or max_mech options"
