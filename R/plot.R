@@ -3,8 +3,8 @@
 #' @description
 #' Produces a ggplot object to show the trend of the impact.
 #'
-#'
-#' @param x A dataframe of impact indicator. Must be a class of "impact_indicator"
+#' @param x A dataframe of impact indicator. Must be a class of
+#' "impact_indicator"
 #' @param linewidth The width size of the line. Default is 2
 #' @param colour The colour of the line Default is "red"
 #' @param title_lab Title of the plot. Default is "Impact indicator"
@@ -14,7 +14,9 @@
 #'
 #' @return The ggplot object of the impact indicator, with the y- and x-axes
 #' representing the impact score and time respectively.
+#'
 #' @export
+#'
 #' @family Plot
 #'
 #' @examples
@@ -33,15 +35,18 @@
 #'   method = "mean cumulative",
 #'   trans = 1
 #' )
+#'
 #' # plot impact indicator
 #' plot(impact_value)
-#'
-plot.impact_indicator <- function(x,
-                                  linewidth = 2,
-                                  colour = "red",
-                                  title_lab = "Impact indicator",
-                                  y_lab = "impact score",
-                                  text_size = 14, ...) {
+
+plot.impact_indicator <- function(
+    x,
+    linewidth = 2,
+    colour = "red",
+    title_lab = "Impact indicator",
+    y_lab = "impact score",
+    text_size = 14,
+    ...) {
   # avoid R CMD warnings
   value <- year <- diversity_val <- NULL
 
@@ -59,11 +64,10 @@ plot.impact_indicator <- function(x,
       y = y_lab
     ) +
     ggplot2::theme_minimal() +
-    ggplot2::theme(text = ggplot2::element_text(size = text_size))+
+    ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
     ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
     ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
 }
-
 
 #' Plot species impact
 #'
@@ -82,8 +86,10 @@ plot.impact_indicator <- function(x,
 #'
 #' @return The ggplot object of the species impact, with the y- and x-axes
 #' representing the impact score and time respectively.
+#'
 #' @export
-#'@family Plot
+#'
+#' @family Plot
 #'
 #' @examples
 #' # create data cube
@@ -104,12 +110,15 @@ plot.impact_indicator <- function(x,
 #'
 #' # visualise species impact
 #' plot(speciesImpact)
-plot.species_impact <- function(x,
-                                alien_species = "all",
-                                linewidth = 1.5,
-                                title_lab = "Species impact",
-                                y_lab = "impact score",
-                                text_size = 14, ...) {
+
+plot.species_impact <- function(
+    x,
+    alien_species = "all",
+    linewidth = 1.5,
+    title_lab = "Species impact",
+    y_lab = "impact score",
+    text_size = 14,
+    ...) {
   # avoid R CMD warnings
   impact_score <- year <- `Alien species` <- NULL
 
@@ -123,41 +132,42 @@ plot.species_impact <- function(x,
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       tidyr::drop_na("impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
-      ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth,
+      ggplot2::geom_line(ggplot2::aes(color = `Alien species`),
+                         linewidth = linewidth,
                          ...) +
       ggplot2::theme_minimal() +
       ggplot2::labs(
         title = title_lab,
         y = y_lab
       ) +
-      ggplot2::theme(text = ggplot2::element_text(size = text_size))+
+      ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
       ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
-  } else if (is.character(alien_species)){
+  } else if (is.character(alien_species)) {
     x %>%
-      dplyr::select(dplyr::all_of(c("year",alien_species))) %>%
+      dplyr::select(dplyr::all_of(c("year", alien_species))) %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       tidyr::drop_na("impact_score") %>%
       ggplot2::ggplot(ggplot2::aes(x = year, y = impact_score)) +
-      ggplot2::geom_line(ggplot2::aes(color = `Alien species`), linewidth = linewidth,
+      ggplot2::geom_line(ggplot2::aes(color = `Alien species`),
+                         linewidth = linewidth,
                          ...) +
       ggplot2::theme_minimal() +
       ggplot2::labs(
         title = title_lab,
         y = y_lab
       ) +
-      ggplot2::theme(text = ggplot2::element_text(size = text_size))+
+      ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
       ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
-  }
-  else {
+  } else {
     cli::cli_abort(c(
-      "Invalid input for {.var alien_species}. Must be 'all' or a {.cls character} vector",
-      "x"="You've supplied a {.cls {class (alien_species)}}"))
+      paste("Invalid input for {.var alien_species}.",
+            "Must be 'all' or a {.cls character} vector"),
+      "x" = "You've supplied a {.cls {class (alien_species)}}"))
   }
 }
-
 
 #' Plot site impact
 #'
@@ -177,7 +187,9 @@ plot.species_impact <- function(x,
 #' @param ... Additional arguments passed to geom_tile
 #'
 #' @return The ggplot of species yearly impact on the region.
+#'
 #' @export
+#'
 #' @family Plot
 #'
 #' @examples
@@ -199,16 +211,17 @@ plot.species_impact <- function(x,
 #' )
 #'
 #' # visualise site impact
-#' plot(x=siteImpact,
-#' region= southAfrica_sf,
-#' first_year = 2021)
-plot.site_impact <- function(x,
-                             region = NULL,
-                             first_year = NULL,
-                             last_year = NULL,
-                             title_lab = "Impact map",
-                             text_size = 14, ...) {
-  # avoid R CMD warnings (global varaible not found)
+#' plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
+
+plot.site_impact <- function(
+    x,
+    region = NULL,
+    first_year = NULL,
+    last_year = NULL,
+    title_lab = "Impact map",
+    text_size = 14,
+    ...) {
+  # avoid R CMD warnings (global variable not found)
   year <- xcoord <- ycoord <- impact <- cellCode <- NULL
 
 
@@ -217,17 +230,22 @@ plot.site_impact <- function(x,
   }
 
   x <- x %>%
-    tidyr::gather(-c(cellCode, xcoord, ycoord), key = "year", value = "impact") %>%
+    tidyr::gather(-c(cellCode, xcoord, ycoord),
+                  key = "year", value = "impact") %>%
     stats::na.omit()
 
   # check if first_year is a number if provided
-  if (!is.null(first_year) & !assertthat::is.number(first_year)) {
-    cli::cli_abort(c("{.var first_year} must be a number of length 1 if provided"))
+  if (!is.null(first_year) && !assertthat::is.number(first_year)) {
+    cli::cli_abort(
+      c("{.var first_year} must be a number of length 1 if provided")
+      )
   }
 
   # check if last_year is a number if provided
-  if (!is.null(last_year) & !assertthat::is.number(last_year)) {
-    cli::cli_abort(c("{.var last_year} must be a number of length 1 if provided"))
+  if (!is.null(last_year) && !assertthat::is.number(last_year)) {
+    cli::cli_abort(
+      c("{.var last_year} must be a number of length 1 if provided")
+      )
   }
 
   # check if text_size is a number
@@ -265,7 +283,7 @@ plot.site_impact <- function(x,
       ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::facet_wrap(~year)
 
-  } else if ("sf" %in% class(region)){
+  } else if ("sf" %in% class(region)) {
     x %>%
       ggplot2::ggplot() +
       ggplot2::geom_tile(
@@ -284,8 +302,7 @@ plot.site_impact <- function(x,
       ) +
       ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::facet_wrap(~year)
-  } else if(assertthat::is.string(region)){
-
+  } else if (assertthat::is.string(region)) {
     # download country sf
     region <- rnaturalearth::ne_countries(scale = "medium",
                                           country = region,

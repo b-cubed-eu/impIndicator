@@ -13,15 +13,19 @@ knitr::opts_chunk$set(
   out.width = "100%"
 )
 ```
+
 # impIndicator <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
-
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
+
 [![repo status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Release](https://img.shields.io/github/release/b-cubed-eu/impIndicator.svg)](https://github.com/b-cubed-eu/impIndicator/releases)
+[![impIndicator status badge](https://b-cubed-eu.r-universe.dev/impIndicator/badges/version)](https://b-cubed-eu.r-universe.dev/impIndicator)
 [![CRAN status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-project.org/package=impIndicator)
-[![test-coverage](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml)
+[![R-CMD-check](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg)](https://app.codecov.io/gh/b-cubed-eu/impIndicator)
+[![name status badge](https://b-cubed-eu.r-universe.dev/badges/:name?color=6CDDB4)](https://b-cubed-eu.r-universe.dev/)
+
 <!-- badges: end -->
 
 The goal of **impIndicator** is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises potential impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods 
@@ -31,16 +35,20 @@ The impIndicator produces three main products and can be useful as stated below:
 
 - **impact indicator** <`impact_indicator()`>\
 The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.\
-- **site impact** <`site_impact()`\
-The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas, it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address alien species impacts effectively.\
-- **species impact** <`species_impact()`\
+- **site impact** <`site_impact()`>\
+The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—, it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address alien species impacts effectively.\
+- **species impact** <`species_impact()`>\
 The species impact produces the trends of individual alien species, enabling a species-specific impact attributed to invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing control and eradication strategies, and advancing research on alien species' ecological roles and adaptation patterns.
-
-
 
 ## Installation
 
-You can install the development version of impIndicator from [GitHub](https://github.com/b-cubed-eu/impIndicator) with:
+Install **impIndicator** in R:
+
+```r
+install.packages("impIndicator", repos = "https://b-cubed-eu.r-universe.dev")
+```
+
+You can install the development version from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("remotes")
@@ -49,25 +57,23 @@ remotes::install_github("b-cubed-eu/impIndicator")
 
 ## Demonstration
 
-This Markdown demonstrates the computation and visualisation of impact indicator of biological invasions using the `impact_indicator()` to compute impact indicator of alien taxa, the `species_impact()` to compute impact indicator per species, and the `site_impact()` to compute impact indicator per site. The functions feeds in species GBIF occurrence cube from the `b3gbi::process_cube()` using `taxa_cube()` and 
-Environmental Impact Classification for Alien Taxa (EICAT) impact score of species.
-Read about the background of the products at https://b-cubed-eu.github.io/impIndicator/articles/Background.html
+We demonstrate the computation and visualisation of impact indicator of biological invasions using the **impIndicator** package: the `impact_indicator()` function to compute impact indicators of alien taxa, the `species_impact()` function to compute impact indicators per species, and the `site_impact()` function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the `b3gbi::process_cube()` function within `taxa_cube()`, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to `vignette("Background", package = "impIndicator")` to read more about these functions.
 
 ```{r load packages, message=FALSE}
 # Load packages
 library(impIndicator)
 
-library(b3gbi) # Biodiversity indicators for data cubes
-library(tidyverse) # Data wrangling and visualisation
-library(sf) # Spatial features
+library(b3gbi)     # General biodiversity indicators for data cubes
+library(ggplot2)   # Visualisation
+library(tidyr)     # Data wrangling
 ```
 
+### Process occurrence cube
 
-## Process occurrence cube
-The Global Biodiversity Information Facility (GBIF) occurrence data is a standardised species information that documents the presence or absence of species at particular locations and times. 
+The Global Biodiversity Information Facility (GBIF) occurrence data is a standardised species dataset that documents the presence or absence of species at particular locations and time points.
+
 ```{r}
 # Process cube from GBIF occurrence data in the R studio environment
-
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
   region = southAfrica_sf,
@@ -77,19 +83,19 @@ acacia_cube <- taxa_cube(
 acacia_cube
 ```
 
-## EICAT assessment data
-The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the International Union for Conservation of Nature (IUCN) standard. An assessed alien taxa with adequate data is classified into massive (MV),
-major (MR), moderate (MO), minor (MN), or minimal concern (MC) depending on the severity of the impact caused on recipient ecosystem. Additional information such as the mechanisms and location of impact are also recorded. 
-An example of an EICAT data is:
+### EICAT assessment data
+
+The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the International Union for Conservation of Nature (IUCN) standard. An assessed alien taxa with adequate data is classified into massive (MV), major (MR), moderate (MO), minor (MN), or minimal concern (MC) depending on the severity of the impact caused on recipient ecosystem. Additional information such as the mechanisms and location of impact are also recorded. 
+An example of an EICAT dataset is:
+
 ```{r}
-# view EICAT data
-head(eicat_acacia,10)
+# View EICAT data
+head(eicat_acacia, 10)
 ```
 
-## Compute impact map
+### Compute impact map
 
-The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The 
-`site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.\
+The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The `site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.\
 
 ```{r}
 siteImpact <- site_impact(
@@ -98,54 +104,51 @@ siteImpact <- site_impact(
   method = "mean cumulative"
 )
 
-# impact map
-# visualize last four years for readability
+# Impact map
+# Visualise last four years for readability
 plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 ```
 
-
-## Compute impact indicators
+### Compute impact indicators
 
 To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.
 
 ```{r}
-# impact indicator
-
+# Impact indicator
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean cumulative"
 )
-# visualise impact indicator
+
+# Visualise impact indicator
 plot(impactIndicator)
 ```
 
-## Impact indicator per species
+### Impact indicator per species
 
 We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by $N$.
-```{r}
-#  impact indicator per species
 
+```{r}
+# Impact indicator per species
 species_value <- species_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean"
 )
 
-# visualise species impact
+# Visualise species impact
 plot(species_value)
 ```
 
-# Comparing method of indicators
-
+### Comparing method of indicators
 
 To compare type of impact indicators for a case study, we provide a plot which can
 be adapted by the user to compare a set of methods.
 
 ```{r}
-# plot all methods of impact indicators
+# Plot all methods of impact indicators
 methods <- c(
-
   "precautionary",
   "precautionary cumulative",
   "mean",
@@ -165,15 +168,16 @@ for (method in methods) {
   all_impact[method] <- impact_value$diversity_val
 }
 
-#plot the trend
+# Plot the trend
 all_impact %>%
-  gather(-year, key = "indicator_method", value = "impact_score") %>%
+  pivot_longer(
+    cols = -"year",
+    names_to = "indicator_method",
+    values_to = "impact_score"
+  ) %>%
   ggplot(aes(x = year, y = impact_score)) +
-  geom_line(aes(color = indicator_method), linewidth = 1.5) +
-  theme_minimal() +
-  labs(
-    title = "Indicator of different menthods",
-    y = "impact score"
-  ) +
-  theme(text = element_text(size = 14))
+    geom_line(aes(color = indicator_method), linewidth = 1.5) +
+    labs(title = "Indicator of different menthods", y = "impact score") +
+    theme_minimal() +
+    theme(text = element_text(size = 14))
 ```

@@ -1,12 +1,45 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it as below."
-authors:
-- family-names: "Yahaya"
-  given-names: "Mukhtar Muhammed"
-  orcid: "https://orcid.org/0009-0008-9200-0863"
-- family-names: "Kumschick"
-  given-names: "Sabrina"
-  orcid: "https://orcid.org/0000-0001-8034-5831"
+message: If you use this software, please cite it using these metadata.
 title: "impIndicator: Impact Indicators of Alien Taxa"
-version: 1.0.0
-url: "https://github.com/b-cubed-eu/impIndicator"
+authors:
+- given-names: Mukhtar Muhammed
+  family-names: Yahaya
+  affiliation: Stellenbosch University (SU)
+  orcid: 0009-0008-9200-0863
+- given-names: Sabrina
+  family-names: Kumschick
+  affiliation: Stellenbosch University (SU)
+  orcid: 0000-0001-8034-5831
+- given-names: Sandra
+  family-names: MacFadyen
+  affiliation: Stellenbosch University (SU)
+  orcid: 0000-0002-5316-440X
+- given-names: Pietro
+  family-names: Landi
+  affiliation: Stellenbosch University (SU)
+  orcid: 0000-0002-6373-2992
+- given-names: Cang
+  family-names: Hui
+  affiliation: Stellenbosch University (SU)
+  orcid: 0000-0002-3660-8160
+keywords:
+- impact
+- alien species
+- biodiversity indicators
+- data cubes
+contact:
+- given-names: Mukhtar Muhammed
+  family-names: Yahaya
+  affiliation: Stellenbosch University (SU)
+  orcid: 0009-0008-9200-0863
+doi: ~
+license: MIT
+repository-code: https://github.com/b-cubed-eu/impIndicator/
+type: software
+abstract: "Compute impact indicators of alien taxa using GBIF occurrence cube and
+  EICAT assessment of alien species. Aggregates species impact of various scores due
+  to mecahnism. Aggregates site impact of various scores due to species."
+identifiers:
+- type: url
+  value: https://b-cubed-eu.github.io/impIndicator/
+version: 0.1.0

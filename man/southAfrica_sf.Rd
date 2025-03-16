@@ -19,8 +19,7 @@ South African sf
 An example of region sf for impact indicator.
 }
 \examples{
-  sf::plot_sf(southAfrica_sf)
-
+sf::plot_sf(southAfrica_sf)
 }
 \seealso{
 Other Data: 

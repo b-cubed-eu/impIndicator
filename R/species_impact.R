@@ -1,27 +1,31 @@
 #' Compute species impact indicator
 #'
 #' @param cube The data cube of class `sim_cube` or
-#' `processed_cube` from `b3gbi::process_cube()`
-#' @param impact_data The dataframe of species impact which contains columns of `impact_category,`
-#' `scientific_name` and `impact_mechanism`
+#' `processed_cube` from `b3gbi::process_cube()`.
+#' @param impact_data The dataframe of species impact which contains columns of
+#' `impact_category`, `scientific_name` and `impact_mechanism`.
 #' @param method The method of computing the indicator.
 #' The method used in the aggregation of within impact of species.
 #' The method can be "max", "mean" or "max_mech".
+#' @param trans Numeric: `1` (default), `2` or `3`. The method of transformation
+#' to convert the EICAT categories `c("MC", "MN", "MO", "MR", "MV")` to
+#' numerical values:
+#'   - `1`: converts the categories to `c(0, 1, 2, 3, 4)`
+#'   - `2`: converts the categories to to `c(1, 2, 3, 4, 5)`
+#'   - `3`: converts the categories to to `c(1, 10, 100, 1000, 10000)`
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
-#' (e.g "MC - Minimal concern")
-#' @param trans Numeric. The method of transformation to convert the EICAT categories to
-#' numerical values. 1 converts ("MC", "MN", "MO", "MR", "MV") to (0,1,2,3,4)
-#' 2 converts ("MC", "MN", "MO", "MR", "MV") to (1,2,3,4,5) and
-#' 3 converts ("MC", "MN", "MO", "MR", "MV") to (1,10,100,1000,10000)
-#' @param col_species The name of the column containing species names
-#' @param col_mechanism The name of the column containing mechanisms of impact
-#' @return A dataframe of impact indicator per species (class `species_impact`)
+#' (e.g "MC - Minimal concern").
+#' @param col_species The name of the column containing species names.
+#' @param col_mechanism The name of the column containing mechanisms of impact.
+#'
+#' @return A dataframe of impact indicator per species (class `species_impact`).
+#'
 #' @export
+#'
 #' @family Indicator function
 #'
 #' @examples
-#'
 #' acacia_cube <- taxa_cube(
 #'   taxa = taxa_Acacia,
 #'   region = southAfrica_sf,
@@ -35,22 +39,24 @@
 #'   method = "mean",
 #'   trans = 1
 #' )
-species_impact <- function(cube,
-                           impact_data = NULL,
-                           method = NULL,
-                           trans = 1,
-                           col_category = NULL,
-                           col_species = NULL,
-                           col_mechanism = NULL) {
 
+species_impact <- function(
+    cube,
+    impact_data = NULL,
+    method = NULL,
+    trans = 1,
+    col_category = NULL,
+    col_species = NULL,
+    col_mechanism = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   taxonKey <- year <- cellCode <- max_mech <- scientificName <- NULL
   # check arguments
   # cube
-  if (!("sim_cube" %in% class(cube) | "processed_cube" %in% class(cube))) {
-    cli::cli_abort(c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
-      "i" = "cube must be processed from `b3gbi`"
-    ))
+  if (!("sim_cube" %in% class(cube) || "processed_cube" %in% class(cube))) {
+    cli::cli_abort(
+      c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
+      "i" = "cube must be processed from `b3gbi`")
+      )
   }
 
   # get species list
@@ -73,17 +79,17 @@ species_impact <- function(cube,
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
   if (method == "max") {
-    species_values<-max_species_impact(impact_cube_data)
+    species_values <- max_species_impact(impact_cube_data)
   } else if (method == "mean") {
-    species_values<-mean_species_impact(impact_cube_data)
+    species_values <- mean_species_impact(impact_cube_data)
   } else if (method == "max_mech") {
-    species_values<-max_mech_species_impact(impact_cube_data)}
-  else{
+    species_values <- max_mech_species_impact(impact_cube_data)
+  } else {
     cli::cli_abort(c(
       "{.var method} should be one of max, mean or max_mech options"
     ))
   }
-  species_values<-tibble::as_tibble(species_values)
+  species_values <- tibble::as_tibble(species_values)
   class(species_values) <- c("species_impact", class(species_values))
   return(species_values)
 }
