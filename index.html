@@ -14,9 +14,11 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/PT_Sans-0.4.9/font.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Impact Indicators of Alien Taxa">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><script src="deps/MathJax-3.2.2/tex-chtml.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
+<meta property="og:title" content="Impact Indicators of Alien Taxa">
 <meta name="description" content="Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species.">
 <meta property="og:description" content="Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species.">
 <meta property="og:image" content="https://b-cubed-eu.github.io/impIndicator/logo.png">
@@ -25,11 +27,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,11 +48,13 @@
     <li><a class="dropdown-item" href="articles/Prepare_data.html">Prepare data</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://b-cubed.eu/" aria-label="B-Cubed website"><span class="fa fa-cube"></span></a></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/b-cubed-eu/impIndicator/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
@@ -66,6 +70,7 @@
 </div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p>The goal of <strong>impIndicator</strong> is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises potential impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods of calculating impact indicators based on different assumptions.</p>
 <p>The impIndicator produces three main products and can be useful as stated below:</p>
 <ul>
@@ -74,40 +79,41 @@
 The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.<br>
 </li>
 <li>
-<strong>site impact</strong> &lt;<code><a href="reference/site_impact.html">site_impact()</a></code><br>
-The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas, it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address alien species impacts effectively.<br>
+<strong>site impact</strong> &lt;<code><a href="reference/site_impact.html">site_impact()</a></code>&gt;<br>
+The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—, it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address alien species impacts effectively.<br>
 </li>
 <li>
-<strong>species impact</strong> &lt;<code><a href="reference/species_impact.html">species_impact()</a></code><br>
+<strong>species impact</strong> &lt;<code><a href="reference/species_impact.html">species_impact()</a></code>&gt;<br>
 The species impact produces the trends of individual alien species, enabling a species-specific impact attributed to invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing control and eradication strategies, and advancing research on alien species’ ecological roles and adaptation patterns.</li>
 </ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of impIndicator from <a href="https://github.com/b-cubed-eu/impIndicator" class="external-link">GitHub</a> with:</p>
+<p>Install <strong>impIndicator</strong> in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"impIndicator"</span>, repos <span class="op">=</span> <span class="st">"https://b-cubed-eu.r-universe.dev"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"b-cubed-eu/impIndicator"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="demonstration">Demonstration<a class="anchor" aria-label="anchor" href="#demonstration"></a>
 </h2>
-<p>This Markdown demonstrates the computation and visualisation of impact indicator of biological invasions using the <code><a href="reference/impact_indicator.html">impact_indicator()</a></code> to compute impact indicator of alien taxa, the <code><a href="reference/species_impact.html">species_impact()</a></code> to compute impact indicator per species, and the <code><a href="reference/site_impact.html">site_impact()</a></code> to compute impact indicator per site. The functions feeds in species GBIF occurrence cube from the <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code> using <code><a href="reference/taxa_cube.html">taxa_cube()</a></code> and Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Read about the background of the products at <a href="https://b-cubed-eu.github.io/impIndicator/articles/Background.html" class="uri">https://b-cubed-eu.github.io/impIndicator/articles/Background.html</a></p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load packages</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://b-cubed-eu.github.io/impIndicator/">impIndicator</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/b3gbi" class="external-link">b3gbi</a></span><span class="op">)</span> <span class="co"># Biodiversity indicators for data cubes</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># Data wrangling and visualisation</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span> <span class="co"># Spatial features</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="process-occurrence-cube">Process occurrence cube<a class="anchor" aria-label="anchor" href="#process-occurrence-cube"></a>
-</h2>
-<p>The Global Biodiversity Information Facility (GBIF) occurrence data is a standardised species information that documents the presence or absence of species at particular locations and times.</p>
+<p>We demonstrate the computation and visualisation of impact indicator of biological invasions using the <strong>impIndicator</strong> package: the <code><a href="reference/impact_indicator.html">impact_indicator()</a></code> function to compute impact indicators of alien taxa, the <code><a href="reference/species_impact.html">species_impact()</a></code> function to compute impact indicators per species, and the <code><a href="reference/site_impact.html">site_impact()</a></code> function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code> function within <code><a href="reference/taxa_cube.html">taxa_cube()</a></code>, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to <code><a href="articles/Background.html">vignette("Background", package = "impIndicator")</a></code> to read more about these functions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Process cube from GBIF occurrence data in the R studio environment</span></span>
+<code class="sourceCode R"><span><span class="co"># Load packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/impIndicator" class="external-link">impIndicator</a></span><span class="op">)</span></span>
 <span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/b3gbi" class="external-link">b3gbi</a></span><span class="op">)</span>     <span class="co"># General biodiversity indicators for data cubes</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>   <span class="co"># Visualisation</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>     <span class="co"># Data wrangling</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="process-occurrence-cube">Process occurrence cube<a class="anchor" aria-label="anchor" href="#process-occurrence-cube"></a>
+</h3>
+<p>The Global Biodiversity Information Facility (GBIF) occurrence data is a standardised species dataset that documents the presence or absence of species at particular locations and time points.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Process cube from GBIF occurrence data in the R studio environment</span></span>
 <span><span class="va">acacia_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/taxa_cube.html">taxa_cube</a></span><span class="op">(</span></span>
 <span>  taxa <span class="op">=</span> <span class="va">taxa_Acacia</span>,</span>
 <span>  region <span class="op">=</span> <span class="va">southAfrica_sf</span>,</span>
@@ -149,13 +155,13 @@ The species impact produces the trends of individual alien species, enabling a s
 <span><span class="co">#&gt; # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters</span></span>
 <span><span class="co">#&gt; # ℹ 1 more variable: obs &lt;dbl&gt;</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="eicat-assessment-data">EICAT assessment data<a class="anchor" aria-label="anchor" href="#eicat-assessment-data"></a>
-</h2>
-<p>The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the International Union for Conservation of Nature (IUCN) standard. An assessed alien taxa with adequate data is classified into massive (MV), major (MR), moderate (MO), minor (MN), or minimal concern (MC) depending on the severity of the impact caused on recipient ecosystem. Additional information such as the mechanisms and location of impact are also recorded. An example of an EICAT data is:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># view EICAT data</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">eicat_acacia</span>,<span class="fl">10</span><span class="op">)</span></span>
+<div class="section level3">
+<h3 id="eicat-assessment-data">EICAT assessment data<a class="anchor" aria-label="anchor" href="#eicat-assessment-data"></a>
+</h3>
+<p>The Environmental Impact Classification for Alien Taxa (EICAT) assessment data is the reported impact of alien taxa based on EICAT method which is the International Union for Conservation of Nature (IUCN) standard. An assessed alien taxa with adequate data is classified into massive (MV), major (MR), moderate (MO), minor (MN), or minimal concern (MC) depending on the severity of the impact caused on recipient ecosystem. Additional information such as the mechanisms and location of impact are also recorded. An example of an EICAT dataset is:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># View EICAT data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">eicat_acacia</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 10 × 3</span></span>
 <span><span class="co">#&gt;    scientific_name   impact_category impact_mechanism                           </span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;             &lt;chr&gt;           &lt;chr&gt;                                      </span></span>
@@ -170,66 +176,63 @@ The species impact produces the trends of individual alien species, enabling a s
 <span><span class="co">#&gt;  9 Acacia saligna    MC              (9) Chemical impact on ecosystems          </span></span>
 <span><span class="co">#&gt; 10 Acacia dealbata   MC              (12) Indirect impacts through interaction …</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="compute-impact-map">Compute impact map<a class="anchor" aria-label="anchor" href="#compute-impact-map"></a>
-</h2>
+<div class="section level3">
+<h3 id="compute-impact-map">Compute impact map<a class="anchor" aria-label="anchor" href="#compute-impact-map"></a>
+</h3>
 <p>The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The <code><a href="reference/site_impact.html">site_impact()</a></code> uses <em>max</em>, <em>sum</em> and <em>mean</em> metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, <strong>precautionary</strong>, <strong>precautionary cumulative</strong>, <strong>mean</strong>, <strong>mean cumulative</strong> and <strong>cumulative</strong>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/site_impact.html">site_impact</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># impact map</span></span>
-<span><span class="co"># visualize last four years for readability</span></span>
+<span><span class="co"># Impact map</span></span>
+<span><span class="co"># Visualise last four years for readability</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">siteImpact</span>, region <span class="op">=</span> <span class="va">southAfrica_sf</span>, first_year <span class="op">=</span> <span class="fl">2021</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 </div>
-<div class="section level2">
-<h2 id="compute-impact-indicators">Compute impact indicators<a class="anchor" aria-label="anchor" href="#compute-impact-indicators"></a>
-</h2>
+<div class="section level3">
+<h3 id="compute-impact-indicators">Compute impact indicators<a class="anchor" aria-label="anchor" href="#compute-impact-indicators"></a>
+</h3>
 <p>To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># impact indicator</span></span>
-<span></span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Impact indicator</span></span>
 <span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"mean cumulative"</span></span>
 <span><span class="op">)</span></span>
-<span><span class="co"># visualise impact indicator</span></span>
+<span></span>
+<span><span class="co"># Visualise impact indicator</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">impactIndicator</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
 </div>
-<div class="section level2">
-<h2 id="impact-indicator-per-species">Impact indicator per species<a class="anchor" aria-label="anchor" href="#impact-indicator-per-species"></a>
-</h2>
-<p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#  impact indicator per species</span></span>
-<span></span>
+<div class="section level3">
+<h3 id="impact-indicator-per-species">Impact indicator per species<a class="anchor" aria-label="anchor" href="#impact-indicator-per-species"></a>
+</h3>
+<p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <span class="math inline">\(N\)</span>.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Impact indicator per species</span></span>
 <span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/species_impact.html">species_impact</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"mean"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># visualise species impact</span></span>
+<span><span class="co"># Visualise species impact</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">species_value</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Removed 9 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_line()`).</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
-</div>
-<div class="section level1">
-<h1 id="comparing-method-of-indicators">Comparing method of indicators<a class="anchor" aria-label="anchor" href="#comparing-method-of-indicators"></a>
-</h1>
+<div class="section level3">
+<h3 id="comparing-method-of-indicators">Comparing method of indicators<a class="anchor" aria-label="anchor" href="#comparing-method-of-indicators"></a>
+</h3>
 <p>To compare type of impact indicators for a case study, we provide a plot which can be adapted by the user to compare a set of methods.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># plot all methods of impact indicators</span></span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Plot all methods of impact indicators</span></span>
 <span><span class="va">methods</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span></span>
 <span>  <span class="st">"precautionary"</span>,</span>
 <span>  <span class="st">"precautionary cumulative"</span>,</span>
 <span>  <span class="st">"mean"</span>,</span>
@@ -249,20 +252,22 @@ The species impact produces the trends of individual alien species, enabling a s
 <span>  <span class="va">all_impact</span><span class="op">[</span><span class="va">method</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">impact_value</span><span class="op">$</span><span class="va">diversity_val</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="co">#plot the trend</span></span>
+<span><span class="co"># Plot the trend</span></span>
 <span><span class="va">all_impact</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">gather</span><span class="op">(</span><span class="op">-</span><span class="va">year</span>, key <span class="op">=</span> <span class="st">"indicator_method"</span>, value <span class="op">=</span> <span class="st">"impact_score"</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">impact_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">indicator_method</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">labs</span><span class="op">(</span></span>
-<span>    title <span class="op">=</span> <span class="st">"Indicator of different menthods"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"impact score"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme</span><span class="op">(</span>text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="op">-</span><span class="st">"year"</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"indicator_method"</span>,</span>
+<span>    values_to <span class="op">=</span> <span class="st">"impact_score"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">impact_score</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">indicator_method</span><span class="op">)</span>, linewidth <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Indicator of different menthods"</span>, y <span class="op">=</span> <span class="st">"impact score"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 </div>
-
+</div>
+</div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
@@ -302,6 +307,7 @@ The species impact produces the trends of individual alien species, enabling a s
 <li>Sandra MacFadyen <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-5316-440X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Pietro Landi <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-6373-2992" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Cang Hui <br><small class="roles"> Author, contributor </small> <a href="https://orcid.org/0000-0002-3660-8160" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>European Union's Horizon Europe Research and Innovation Programme (ID No 101059592) <br><small class="roles"> Funder </small>  </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -309,11 +315,13 @@ The species impact produces the trends of individual alien species, enabling a s
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://www.repostatus.org/#wip" class="external-link"><img src="https://www.repostatus.org/badges/latest/wip.svg" alt="repo status"></a></li>
+<li><a href="https://github.com/b-cubed-eu/impIndicator/releases" class="external-link"><img src="https://img.shields.io/github/release/b-cubed-eu/impIndicator.svg" alt="Release"></a></li>
+<li><a href="https://b-cubed-eu.r-universe.dev/impIndicator" class="external-link"><img src="https://b-cubed-eu.r-universe.dev/impIndicator/badges/version" alt="impIndicator status badge"></a></li>
 <li><a href="https://CRAN.R-project.org/package=impIndicator" class="external-link"><img src="https://www.r-pkg.org/badges/version/impIndicator" alt="CRAN status"></a></li>
-<li><a href="https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml" class="external-link"><img src="https://github.com/b-cubed-eu/impIndicator/actions/workflows/test-coverage.yaml/badge.svg" alt="test-coverage"></a></li>
+<li><a href="https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://app.codecov.io/gh/b-cubed-eu/impIndicator" class="external-link"><img src="https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://b-cubed-eu.r-universe.dev/" class="external-link"><img src="https://b-cubed-eu.r-universe.dev/badges/:name?color=6CDDB4" alt="name status badge"></a></li>
 </ul>
 </div>
 
@@ -322,7 +330,7 @@ The species impact produces the trends of individual alien species, enabling a s
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Mukhtar Muhammed Yahaya, Sabrina Kumschick, Sandra MacFadyen, Pietro Landi, Cang Hui.</p>
+  <p>Developed by Mukhtar Muhammed Yahaya, Sabrina Kumschick, Sandra MacFadyen, Pietro Landi, Cang Hui, European Union’s Horizon Europe Research and Innovation Programme (ID No 101059592).</p>
 </div>
 
 <div class="pkgdown-footer-right">
