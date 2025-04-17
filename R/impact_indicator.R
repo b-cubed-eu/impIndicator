@@ -89,15 +89,15 @@ impact_indicator <- function(
 
 
   if (method == "precautionary") {
-    impact_values <- prec_indicator(impact_cube_data)
+    impact_values <- compute_impact_indicator(impact_cube_data,"max",max)
   } else if (method == "precautionary cumulative") {
-    impact_values <- prec_cum_indicator(impact_cube_data)
+    impact_values <- compute_impact_indicator(impact_cube_data,"max",sum)
   } else if (method == "mean") {
-    impact_values <- mean_indicator(impact_cube_data)
+    impact_values <- compute_impact_indicator(impact_cube_data,"mean",mean)
   } else if (method == "mean cumulative") {
-    impact_values <- mean_cum_indicator(impact_cube_data)
+    impact_values <- compute_impact_indicator(impact_cube_data,"mean",sum)
   } else if (method == "cumulative") {
-    impact_values <- cum_indicator(impact_cube_data)
+    impact_values <- compute_impact_indicator(impact_cube_data,"max_mech",sum)
   } else {
     cli::cli_abort(c(
       "{.var method} is not valid",

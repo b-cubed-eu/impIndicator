@@ -87,16 +87,16 @@ site_impact <- function(
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
   if (method == "precautionary") {
-    site_values <- prec_site_impact(impact_cube_data)
+    site_values <- compute_site_impact(impact_cube_data,"max",max)
   } else if (method == "precautionary cumulative") {
-    site_values <- prec_cum_site_impact(impact_cube_data)
+    site_values <- compute_site_impact(impact_cube_data,"max",sum)
   } else if (method == "mean") {
-    site_values <- mean_site_impact(impact_cube_data)
+    site_values <- compute_site_impact(impact_cube_data,"mean",mean)
   } else if (method == "mean cumulative") {
-    site_values <- mean_cum_site_impact(impact_cube_data)
+    site_values <- compute_site_impact(impact_cube_data,"mean",sum)
   } else if (method == "cumulative") {
-    site_values <- cum_site_impact(impact_cube_data)
-  } else {
+    site_values <- compute_site_impact(impact_cube_data,"max_mech",sum)
+  }  else {
     cli::cli_abort(c(
       "{.var method} is not valid",
       "x" = "{.var method} must be from the options provided",
