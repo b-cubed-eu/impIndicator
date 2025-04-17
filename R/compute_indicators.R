@@ -8,6 +8,7 @@
 #' @param col Column on which `fun` is used.
 #' @param fun Method to aggregate impact accross species in each site.
 #' Can be `max`, `sum` or `mean`.
+#' @importFrom rlang .data
 #' @return A dataframe containing the value of impact score for each year
 #' @noRd
 
@@ -57,6 +58,7 @@ compute_site_impact <- function(data, col, fun) {
 #' their aggregated impact score (from`impact_cat()`). Must be of the
 #' form $data slot of `processed_cube` or `sim_cube`.
 #' @param col Method of aggregation of within species impact
+#' @importFrom rlang .data
 #' @return A dataframe containing the impact indicator per species
 #' @noRd
 compute_species_impact<-function(data, col){
