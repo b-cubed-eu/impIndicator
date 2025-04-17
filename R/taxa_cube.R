@@ -150,13 +150,11 @@ taxa_cube <- function(taxa,
 
 
   taxa.sf <- taxa.df %>%
-    dplyr::select(
-      decimalLatitude, decimalLongitude,
-      species, speciesKey,
-      coordinateUncertaintyInMeters, year
-    ) %>% # select occurrence data
-    dplyr::filter_all(dplyr::all_vars(!is.na(.))) %>% # remove rows with missing data
-    dplyr::filter(coordinateUncertaintyInMeters <= res * 1000) %>%
+    dplyr::filter(dplyr::if_all(c(
+      "decimalLatitude", "decimalLongitude",
+      "species", "speciesKey",
+      "coordinateUncertaintyInMeters", "year"
+    ), ~ !is.na(.))) %>% # remove rows with missing data
     sf::st_as_sf(
       coords = c("decimalLongitude", "decimalLatitude"),
       crs = 4326
