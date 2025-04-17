@@ -33,6 +33,7 @@ Imports:
     ggplot2,
     magrittr,
     rgbif,
+    rlang,
     rnaturalearth,
     sf,
     stats,
