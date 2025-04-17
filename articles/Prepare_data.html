@@ -14,7 +14,7 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/PT_Sans-0.4.9/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/PT_Sans-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="../deps/MathJax-3.2.2/tex-chtml.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
@@ -68,7 +68,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Prepare data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/v0.1.0/vignettes/Prepare_data.Rmd" class="external-link"><code>vignettes/Prepare_data.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/main/vignettes/Prepare_data.Rmd" class="external-link"><code>vignettes/Prepare_data.Rmd</code></a></small>
       <div class="d-none name"><code>Prepare_data.Rmd</code></div>
     </div>
 
@@ -220,13 +220,13 @@ the acacia taxa in South Africa</p>
 <span><span class="co">#&gt; Simulated data cube for calculating biodiversity indicators</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Date Range: 2010 - 2023 </span></span>
-<span><span class="co">#&gt; Number of cells: 369 </span></span>
+<span><span class="co">#&gt; Number of cells: 385 </span></span>
 <span><span class="co">#&gt; Grid reference system: custom </span></span>
 <span><span class="co">#&gt; Coordinate range:</span></span>
 <span><span class="co">#&gt;      xmin      xmax      ymin      ymax </span></span>
 <span><span class="co">#&gt;  16.60833  31.35833 -34.69700 -22.94701 </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Total number of observations: 5272 </span></span>
+<span><span class="co">#&gt; Total number of observations: 5663 </span></span>
 <span><span class="co">#&gt; Number of species represented: 28 </span></span>
 <span><span class="co">#&gt; Number of families represented: Data not present </span></span>
 <span><span class="co">#&gt; </span></span>
@@ -234,7 +234,7 @@ the acacia taxa in South Africa</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; First 10 rows of data (use n = to show more):</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5,272 × 8</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5,663 × 8</span></span></span>
 <span><span class="co">#&gt;    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord</span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> Acacia mearnsii   2<span style="text-decoration: underline;">979</span>775                      8  <span style="text-decoration: underline;">2</span>010 1376       30.4  -<span style="color: #BB0000;">29.7</span></span></span>
@@ -242,12 +242,12 @@ the acacia taxa in South Africa</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> Acacia implexa    2<span style="text-decoration: underline;">979</span>232                      1  <span style="text-decoration: underline;">2</span>010 206        18.4  -<span style="color: #BB0000;">33.9</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> Acacia pycnantha  2<span style="text-decoration: underline;">978</span>604                      1  <span style="text-decoration: underline;">2</span>010 206        18.4  -<span style="color: #BB0000;">33.9</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> Acacia cyclops    2<span style="text-decoration: underline;">980</span>425                    122  <span style="text-decoration: underline;">2</span>010 668        18.4  -<span style="color: #BB0000;">32.2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Acacia mearnsii   2<span style="text-decoration: underline;">979</span>775                      1  <span style="text-decoration: underline;">2</span>010 215        20.6  -<span style="color: #BB0000;">33.9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Acacia mearnsii   2<span style="text-decoration: underline;">979</span>775                    110  <span style="text-decoration: underline;">2</span>010 215        20.6  -<span style="color: #BB0000;">33.9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Acacia saligna    2<span style="text-decoration: underline;">978</span>552                      1  <span style="text-decoration: underline;">2</span>011 206        18.4  -<span style="color: #BB0000;">33.9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Acacia saligna    2<span style="text-decoration: underline;">978</span>552                      1  <span style="text-decoration: underline;">2</span>011 144        19.4  -<span style="color: #BB0000;">34.2</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Acacia melanoxy…  2<span style="text-decoration: underline;">979</span>000                      1  <span style="text-decoration: underline;">2</span>011 206        18.4  -<span style="color: #BB0000;">33.9</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5,262 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> Acacia mearnsii   2<span style="text-decoration: underline;">979</span>775                   <span style="text-decoration: underline;">1</span>100  <span style="text-decoration: underline;">2</span>010 1110       29.9  -<span style="color: #BB0000;">30.7</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> Acacia mearnsii   2<span style="text-decoration: underline;">979</span>775                      1  <span style="text-decoration: underline;">2</span>010 215        20.6  -<span style="color: #BB0000;">33.9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> Acacia mearnsii   2<span style="text-decoration: underline;">979</span>775                    110  <span style="text-decoration: underline;">2</span>010 215        20.6  -<span style="color: #BB0000;">33.9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> Acacia pycnantha  2<span style="text-decoration: underline;">978</span>604                   <span style="text-decoration: underline;">1</span>100  <span style="text-decoration: underline;">2</span>010 143        19.1  -<span style="color: #BB0000;">34.2</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> Acacia saligna    2<span style="text-decoration: underline;">978</span>552                      1  <span style="text-decoration: underline;">2</span>011 206        18.4  -<span style="color: #BB0000;">33.9</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 5,653 more rows</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: obs &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
@@ -278,7 +278,7 @@ cell, such as, eea and eqdgc which are processed from
 <span><span class="co">#&gt; Processed data cube for calculating biodiversity indicators</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Date Range: 2000 - 2024 </span></span>
-<span><span class="co">#&gt; Single-resolution cube with cell size 0.25degrees ^2</span></span>
+<span><span class="co">#&gt; Single-resolution cube with cell size 0.25degrees </span></span>
 <span><span class="co">#&gt; Number of cells: 265 </span></span>
 <span><span class="co">#&gt; Grid reference system: eqdgc </span></span>
 <span><span class="co">#&gt; Coordinate range:</span></span>
