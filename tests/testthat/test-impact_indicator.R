@@ -7,7 +7,7 @@ acacia_cube <- taxa_cube(
 )
 
 test_that("impact indicator function return correct result", {
-  result <- impact_indicator(
+  result <- compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -24,7 +24,7 @@ test_that("impact indicator function return correct result", {
 
   expect_no_error(result)
 
-  expect_no_error(impact_indicator(
+  expect_no_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -34,7 +34,7 @@ test_that("impact indicator function return correct result", {
     method = "mean_cum"
   ))
 
-  expect_no_error(impact_indicator(
+  expect_no_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -44,7 +44,7 @@ test_that("impact indicator function return correct result", {
     method = "mean"
   ))
 
-  expect_no_error(impact_indicator(
+  expect_no_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -55,7 +55,7 @@ test_that("impact indicator function return correct result", {
   ))
 
 
-  expect_no_error(impact_indicator(
+  expect_no_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -65,7 +65,7 @@ test_that("impact indicator function return correct result", {
     method = "precaut_cum"
   ))
 
-  expect_no_error(impact_indicator(
+  expect_no_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -77,7 +77,7 @@ test_that("impact indicator function return correct result", {
 })
 
 test_that("impact indicator function returns errors", {
-  expect_error(impact_indicator(
+  expect_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -88,7 +88,7 @@ test_that("impact indicator function returns errors", {
   ))
 
   expect_error(
-    impact_indicator(
+    compute_impact_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -131,7 +131,7 @@ i see the function documentation for details"
   #   method = "mean cumulative"
   # ))
 
-  expect_error(impact_indicator(
+  expect_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = "a",
     col_category = "impact_category",
@@ -141,7 +141,7 @@ i see the function documentation for details"
     method = "mean_cum"
   ))
 
-  expect_error(impact_indicator(
+  expect_error(compute_impact_indicator(
     cube = "a",
     impact_data = eicat_acacia,
     col_category = "impact_category",

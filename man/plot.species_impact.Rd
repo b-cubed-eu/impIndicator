@@ -51,7 +51,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute species impact
-speciesImpact <- species_impact(
+speciesImpact <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean",

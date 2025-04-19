@@ -49,7 +49,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute site impact
-siteImpact <- site_impact(
+siteImpact <- compute_impact_per_site(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",

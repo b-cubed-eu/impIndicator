@@ -12,7 +12,7 @@
 #' @return A dataframe containing the value of impact score for each year
 #' @noRd
 
-compute_impact_indicator <- function(data,col,fun) {
+compute_impact_indicators <- function(data,col,fun) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  taxonKey <- year <- NULL
 

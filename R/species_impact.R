@@ -53,14 +53,14 @@
 #'   first_year = 2010
 #' )
 #'
-#' speciesImpact <- species_impact(
+#' speciesImpact <- compute_impact_per_species(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean",
 #'   trans = 1
 #' )
 
-species_impact <- function(
+compute_impact_per_species <- function(
     cube,
     impact_data = NULL,
     method = NULL,

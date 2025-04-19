@@ -31,7 +31,7 @@ based on different assumptions.
 The impIndicator produces three main products and can be useful as
 stated below:  
 
-- **impact indicator** \<`impact_indicator()`\>  
+- **overall impact indicator** \<`compute_impact_indicator()`\>  
   The impact indicator offers a nuanced representation of the trends of
   biological invasions of an area (local, regional, or global scales).
   By tracking the increase and decrease of ecological threats over time,
@@ -41,7 +41,7 @@ stated below:
   indicator enables targeted resource allocation, fostering proactive
   interventions to mitigate biodiversity loss and ecosystem
   degradation.  
-- **site impact** \<`site_impact()`\>  
+- **site impact indicator** \<`compute_impact_per_site()`\>  
   The site impact as a map serves as a visual and analytical tool to
   represent the intensity of biological invasions across different parts
   of an area. By enabling spatial comparisons—such as between provinces,
@@ -50,7 +50,7 @@ stated below:
   management actions, coordinating restoration projects, and fostering
   cross-regional collaboration to address alien species impacts
   effectively.  
-- **species impact** \<`species_impact()`\>  
+- **species impact indicator** \<`compute_impact_per_species()`\>  
   The species impact produces the trends of individual alien species,
   enabling a species-specific impact attributed to invasions. This data
   supports comparisons of individual species’ impacts, revealing their
@@ -191,7 +191,7 @@ cumulative** (precaut_cum), **mean**, **mean cumulative** (mean_cum) and
 **cumulative** (cum).  
 
 ``` r
-siteImpact <- site_impact(
+siteImpact <- compute_impact_per_site(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum"
@@ -214,7 +214,7 @@ year.
 
 ``` r
 # Impact indicator
-impactIndicator <- impact_indicator(
+impactIndicator <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum"
@@ -233,7 +233,7 @@ map per species and correct for sampling effort by dividing by $N$.
 
 ``` r
 # Impact indicator per species
-species_value <- species_impact(
+species_value <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean"

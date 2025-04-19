@@ -7,7 +7,7 @@ acacia_cube <- taxa_cube(
 )
 
 test_that("site impact function works", {
-  expect_no_error(site_impact(
+  expect_no_error(compute_impact_per_site(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -17,7 +17,7 @@ test_that("site impact function works", {
     method = "precaut_cum"
   ))
 
-  expect_no_error(site_impact(
+  expect_no_error(compute_impact_per_site(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -27,7 +27,7 @@ test_that("site impact function works", {
     method = "precaut_cum"
   ))
 
-  expect_no_error(site_impact(
+  expect_no_error(compute_impact_per_site(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -37,7 +37,7 @@ test_that("site impact function works", {
     method = "precaut_cum"
   ))
 
-  expect_no_error(site_impact(
+  expect_no_error(compute_impact_per_site(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -46,7 +46,7 @@ test_that("site impact function works", {
     trans = 1,
     method = "precaut"
   ))
-  expect_no_error(site_impact(
+  expect_no_error(compute_impact_per_site(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -56,7 +56,7 @@ test_that("site impact function works", {
     method = "cum"
   ))
 
-  expect_no_error(site_impact(
+  expect_no_error(compute_impact_per_site(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -66,7 +66,7 @@ test_that("site impact function works", {
     method = "mean_cum"
   ))
 
-  expect_no_error(site_impact(
+  expect_no_error(compute_impact_per_site(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -79,7 +79,7 @@ test_that("site impact function works", {
 
 test_that("site impact throws errors", {
   expect_error(
-    site_impact(
+    compute_impact_per_site(
       cube = "a",
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -91,7 +91,7 @@ test_that("site impact throws errors", {
   )
 
   expect_error(
-    site_impact(
+    compute_impact_per_site(
       cube = acacia_cube,
       impact_data = 1,
       col_category = "impact_category",
@@ -105,7 +105,7 @@ test_that("site impact throws errors", {
 
 
   expect_error(
-    site_impact(
+    compute_impact_per_site(
       cube = acacia_cube,
       impact_data = "a",
       col_category = "impact_category",
@@ -118,7 +118,7 @@ test_that("site impact throws errors", {
   )
 
 
-  # expect_error(site_impact(
+  # expect_error(compute_impact_per_site(
   #   cube = acacia_cube,
   #   impact_data = eicat_acacia,
   #   col_category = NULL,
@@ -128,7 +128,7 @@ test_that("site impact throws errors", {
   #   method = "precautionary cumulative"
   # ))
   #
-  # expect_error(site_impact(
+  # expect_error(compute_impact_per_site(
   #   cube = acacia_cube,
   #   impact_data = eicat_acacia,
   #   col_category = "impact_category",
@@ -139,7 +139,7 @@ test_that("site impact throws errors", {
   # ))
   #
   #
-  # expect_error(site_impact(
+  # expect_error(compute_impact_per_site(
   #   cube = acacia_cube,
   #   impact_data = eicat_acacia,
   #   col_category = "impact_category",
@@ -150,7 +150,7 @@ test_that("site impact throws errors", {
   # ))
 
   expect_error(
-    site_impact(
+    compute_impact_per_site(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -164,7 +164,7 @@ i see the function documentation for details"
   )
 
   expect_error(
-    site_impact(
+    compute_impact_per_site(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -179,7 +179,7 @@ See the function desciption or double check the spelling"
   )
 #
 #   expect_error(
-#     site_impact(
+#     compute_impact_per_site(
 #       cube = acacia_cube,
 #       impact_data = eicat_acacia,
 #       col_category = "impact_category",
