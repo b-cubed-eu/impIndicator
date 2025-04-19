@@ -6,7 +6,23 @@
 #' `impact_category`, `scientific_name` and `impact_mechanism`.
 #' @param method The method of computing the indicator.
 #' The method used in the aggregation of within impact of species.
-#' The method can be "max", "mean" or "max_mech".
+#' The method can be
+#' - `"max"`:The maximum method assigns a species the maximum impact across all
+#' records of the species. It is best for precautionary approaches.
+#' Also, the assumption is that the management of the highest impact can
+#'  cover for the lower impact caused by a species and can be the best
+#'  when there is low confidence in the multiple impacts of species of interest.
+#'  However, the maximum method can overestimate the impact of a species
+#'  especially when the highest impact requires specific or rare conditions and
+#'  many lower impacts were recorded.
+#' - `"mean"`: assigns a species the mean impact of all the species impact.
+#' This method computes the expected impact of the species considering
+#' all species impact without differentiating between
+#' impacts. This method is adequate when there are many
+#' impact records per species.
+#' - `"max_mech"`: Assigns a species the summation of the maximum impact
+#' per mechanism. The assumption is that species with
+#' many mechanisms of impact have a higher potential to cause impact.
 #' @param trans Numeric: `1` (default), `2` or `3`. The method of transformation
 #' to convert the EICAT categories `c("MC", "MN", "MO", "MR", "MV")` to
 #' numerical values:

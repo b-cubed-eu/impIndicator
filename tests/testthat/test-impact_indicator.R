@@ -14,7 +14,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "mean cumulative"
+    method = "mean_cum"
   )
 
   expect_equal(class(result),
@@ -31,7 +31,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "mean cumulative"
+    method = "mean_cum"
   ))
 
   expect_no_error(impact_indicator(
@@ -51,7 +51,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "cumulative"
+    method = "cum"
   ))
 
 
@@ -62,7 +62,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "precautionary cumulative"
+    method = "precaut_cum"
   ))
 
   expect_no_error(impact_indicator(
@@ -72,7 +72,7 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "precautionary"
+    method = "precaut"
   ))
 })
 
@@ -95,7 +95,7 @@ test_that("impact indicator function returns errors", {
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
       trans = "a",
-      method = "mean cumulative"
+      method = "mean_cum"
     ),
     "`trans` must be a number from 1,2 or 3
 i see the function documentation for details"
@@ -138,7 +138,7 @@ i see the function documentation for details"
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "mean cumulative"
+    method = "mean_cum"
   ))
 
   expect_error(impact_indicator(
@@ -148,6 +148,6 @@ i see the function documentation for details"
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "mean cumulative"
+    method = "mean_cum"
   ))
 })

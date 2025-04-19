@@ -8,8 +8,9 @@
   x,
   alien_species = "all",
   linewidth = 1.5,
-  title_lab = "Species impact",
-  y_lab = "impact score",
+  title_lab = "Species impact indicator",
+  y_lab = "Impact score",
+  x_lab = "Year",
   text_size = 14,
   ...
 )
@@ -26,6 +27,8 @@ in the data frame}
 \item{title_lab}{Title of the plot. Default is "Species impact"}
 
 \item{y_lab}{Label of the y-axis. Default is "impact score"}
+
+\item{x_lab}{Label of the x-axis. Default is "Year"}
 
 \item{text_size}{The size of the text of the plot. Default is "14"}
 

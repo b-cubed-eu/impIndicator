@@ -13,7 +13,7 @@ impact_value <- impact_indicator(
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
   trans = 1,
-  method = "mean cumulative"
+  method = "mean_cum"
 )
 
 test_that("plot.impact_indicator works", {
@@ -40,7 +40,7 @@ test_that("plot.impact_indicator works", {
                        linewidth = 2,
                        colour = "blue",
                        title_lab = "Impact indicator",
-                       y_lab = "impact score",
+                       y_lab = "Impact score",
                        text_size = 14
 
   ))
@@ -240,7 +240,7 @@ siteImpact <- site_impact(
   col_species = "scientific_name",
   col_mechanism = "impact_mechanism",
   trans = 1,
-  method = "precautionary cumulative"
+  method = "precaut_cum"
 )
 
 
