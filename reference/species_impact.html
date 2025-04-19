@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,23 @@
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
 <dd><p>The method of computing the indicator.
 The method used in the aggregation of within impact of species.
-The method can be "max", "mean" or "max_mech".</p></dd>
+The method can be</p><ul><li><p><code>"max"</code>:The maximum method assigns a species the maximum impact across all
+records of the species. It is best for precautionary approaches.
+Also, the assumption is that the management of the highest impact can
+cover for the lower impact caused by a species and can be the best
+when there is low confidence in the multiple impacts of species of interest.
+However, the maximum method can overestimate the impact of a species
+especially when the highest impact requires specific or rare conditions and
+many lower impacts were recorded.</p></li>
+<li><p><code>"mean"</code>: assigns a species the mean impact of all the species impact.
+This method computes the expected impact of the species considering
+all species impact without differentiating between
+impacts. This method is adequate when there are many
+impact records per species.</p></li>
+<li><p><code>"max_mech"</code>: Assigns a species the summation of the maximum impact
+per mechanism. The assumption is that species with
+many mechanisms of impact have a higher potential to cause impact.</p></li>
+</ul></dd>
 
 
 <dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
