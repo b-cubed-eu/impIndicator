@@ -1,7 +1,9 @@
 #' Overall impact indicator
 #'
 #' @description
-#' Compute impact overall impact indicator of alien taxa
+#' Combines occurrences cube and impact data using the given method
+#' (e.g., mean cumulative) to compute the impact indicator of all
+#' species over a given region
 #'
 #' @param cube The data cube of class `sim_cube` or `processed_cube` from
 #' `b3gbi::process_cube()`.
@@ -60,14 +62,14 @@
 #'   res = 0.25,
 #'   first_year = 2010
 #' )
-#' impact_value <- impact_indicator(
+#' impact_value <- compute_impact_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",
 #'   trans = 1
 #' )
 
-impact_indicator <- function(
+compute_impact_indicator <- function(
     cube,
     impact_data = NULL,
     method = NULL,
@@ -108,15 +110,15 @@ impact_indicator <- function(
 
 
   if (method == "precaut") {
-    impact_values <- compute_impact_indicator(impact_cube_data,"max",max)
+    impact_values <- compute_impact_indicators(impact_cube_data,"max",max)
   } else if (method == "precaut_cum") {
-    impact_values <- compute_impact_indicator(impact_cube_data,"max",sum)
+    impact_values <- compute_impact_indicators(impact_cube_data,"max",sum)
   } else if (method == "mean") {
-    impact_values <- compute_impact_indicator(impact_cube_data,"mean",mean)
+    impact_values <- compute_impact_indicators(impact_cube_data,"mean",mean)
   } else if (method == "mean_cum") {
-    impact_values <- compute_impact_indicator(impact_cube_data,"mean",sum)
+    impact_values <- compute_impact_indicators(impact_cube_data,"mean",sum)
   } else if (method == "cum") {
-    impact_values <- compute_impact_indicator(impact_cube_data,"max_mech",sum)
+    impact_values <- compute_impact_indicators(impact_cube_data,"max_mech",sum)
   } else {
     cli::cli_abort(c(
       "{.var method} is not valid",

@@ -1,7 +1,7 @@
-#' Plot impact indicator
+#' Plot overall impact indicator
 #'
 #' @description
-#' Produces a ggplot object to show the trend of the impact.
+#' Produces a ggplot object to show the trend of the overall impact indicator.
 #'
 #' @param x A dataframe of impact indicator. Must be a class of
 #' "impact_indicator"
@@ -30,7 +30,7 @@
 #' )
 #'
 #' # compute impact indicator
-#' impact_value <- impact_indicator(
+#' impact_value <- compute_impact_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",
@@ -75,7 +75,7 @@ plot.impact_indicator <- function(
 #' Plot species impact
 #'
 #' @description
-#' Produces a ggplot to show the trend of the species impact.
+#' Produces a ggplot to show the trend of the species impact indicator.
 #'
 #' @param x A dataframe of impact indicator. Must be a class of "species_impact"
 #' @param alien_species The character vector containing names of the alien
@@ -105,7 +105,7 @@ plot.impact_indicator <- function(
 #' )
 #'
 #' # compute species impact
-#' speciesImpact <- species_impact(
+#' speciesImpact <- compute_impact_per_species(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean",
@@ -179,7 +179,7 @@ plot.species_impact <- function(
 #' Plot site impact
 #'
 #' @description
-#' Produces the yearly impact map of a region
+#' Produces the ggplot of site impact indicator
 #'
 #' @param x A dataframe of impact indicator. Must be a class of "site_impact"
 #' @param region sf or character. The shapefile of the region of study or a
@@ -209,7 +209,7 @@ plot.species_impact <- function(
 #' )
 #'
 #' # compute site impact
-#' siteImpact <- site_impact(
+#' siteImpact <- compute_impact_per_site(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",

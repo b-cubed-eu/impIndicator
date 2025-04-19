@@ -1,4 +1,8 @@
-#' Compute site impact indicator
+#' Site impact indicator
+#'
+#' @description
+#' Combines occurrences cube and impact data using the given method
+#' (e.g., mean cumulative) to compute the impact indicator per site.
 #'
 #' @param cube The data cube of class `sim_cube` or `processed_cube` from
 #' `b3gbi::process_cube()`.
@@ -58,14 +62,14 @@
 #'   first_year = 2010
 #' )
 #'
-#' siteImpact <- site_impact(
+#' siteImpact <- compute_impact_per_site(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",
 #'   trans = 1
 #' )
 
-site_impact <- function(
+compute_impact_per_site <- function(
     cube,
     impact_data = NULL,
     method = NULL,

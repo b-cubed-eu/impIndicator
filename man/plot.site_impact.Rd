@@ -37,7 +37,7 @@ Default ends in the last year included in \code{x}.}
 The ggplot of species yearly impact on the region.
 }
 \description{
-Produces the yearly impact map of a region
+Produces the ggplot of site impact indicator
 }
 \examples{
 # define cube for taxa
@@ -49,7 +49,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute site impact
-siteImpact <- site_impact(
+siteImpact <- compute_impact_per_site(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",

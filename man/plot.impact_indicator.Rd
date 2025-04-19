@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plot.impact_indicator}
 \alias{plot.impact_indicator}
-\title{Plot impact indicator}
+\title{Plot overall impact indicator}
 \usage{
 \method{plot}{impact_indicator}(
   x,
@@ -38,7 +38,7 @@ The ggplot object of the impact indicator, with the y- and x-axes
 representing the impact score and time respectively.
 }
 \description{
-Produces a ggplot object to show the trend of the impact.
+Produces a ggplot object to show the trend of the overall impact indicator.
 }
 \examples{
 # create data_cube
@@ -50,7 +50,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute impact indicator
-impact_value <- impact_indicator(
+impact_value <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",

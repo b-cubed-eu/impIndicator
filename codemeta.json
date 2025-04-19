@@ -8,7 +8,7 @@
   "codeRepository": "https://github.com/b-cubed-eu/impIndicator",
   "issueTracker": "https://github.com/b-cubed-eu/impIndicator/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -328,7 +328,7 @@
           "familyName": "Hui"
         }
       },
-      "name": "impIndicator: Impact Indicators of Alien Taxa. Version 0.1.0",
+      "name": "impIndicator: Impact Indicators of Alien Taxa. Version 0.2.0",
       "url": "https://b-cubed-eu.github.io/impIndicator/"
     }
   ],

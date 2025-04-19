@@ -5,7 +5,7 @@ acacia_cube <- taxa_cube(taxa = taxa_Acacia,
 
 test_that("species impact function works", {
 
-  result <- species_impact(cube = acacia_cube,
+  result <- compute_impact_per_species(cube = acacia_cube,
                  impact_data  =  eicat_acacia,
                  col_category = "impact_category",
                  col_species = "scientific_name",
@@ -18,7 +18,7 @@ test_that("species impact function works", {
 
   expect_no_error(result)
 
-  expect_no_error(species_impact(cube = acacia_cube,
+  expect_no_error(compute_impact_per_species(cube = acacia_cube,
                                  impact_data  =  eicat_acacia,
                                  col_category = "impact_category",
                                  col_species = "scientific_name",
@@ -26,7 +26,7 @@ test_that("species impact function works", {
                                  trans = 2,
                                  method  =  "mean"))
 
-  expect_no_error(species_impact(cube = acacia_cube,
+  expect_no_error(compute_impact_per_species(cube = acacia_cube,
                                  impact_data  =  eicat_acacia,
                                  col_category = "impact_category",
                                  col_species = "scientific_name",
@@ -34,7 +34,7 @@ test_that("species impact function works", {
                                  trans = 3,
                                  method  =  "mean"))
 
-  expect_no_error(species_impact(cube = acacia_cube,
+  expect_no_error(compute_impact_per_species(cube = acacia_cube,
                                  impact_data  =  eicat_acacia,
                                  col_category = "impact_category",
                                  col_species = "scientific_name",
@@ -42,7 +42,7 @@ test_that("species impact function works", {
                                  trans = 1,
                                  method  =  "max"))
 
-  expect_no_error(species_impact(cube = acacia_cube,
+  expect_no_error(compute_impact_per_species(cube = acacia_cube,
                                  impact_data  =  eicat_acacia,
                                  col_category = "impact_category",
                                  col_species = "scientific_name",
@@ -54,7 +54,7 @@ test_that("species impact function works", {
 })
 
 test_that("species impact function throws error", {
-  expect_error(species_impact(cube = "a",
+  expect_error(compute_impact_per_species(cube = "a",
                                  impact_data  =  eicat_acacia,
                                  col_category = "impact_category",
                                  col_species = "scientific_name",
@@ -63,7 +63,7 @@ test_that("species impact function throws error", {
                                  method  =  "mean"))
 
 
-  expect_error(species_impact(cube = acacia_cube,
+  expect_error(compute_impact_per_species(cube = acacia_cube,
                               impact_data  =  "a",
                               col_category = "impact_category",
                               col_species = "scientific_name",
@@ -71,7 +71,7 @@ test_that("species impact function throws error", {
                               trans = 1,
                               method  =  "mean"))
 
-  expect_error(species_impact(cube = acacia_cube,
+  expect_error(compute_impact_per_species(cube = acacia_cube,
                               impact_data  =  unmatched_eicat,
                               col_category = NULL,
                               col_species = "scientific_name",
@@ -80,7 +80,7 @@ test_that("species impact function throws error", {
                               method  =  "mean"))
 
 
-  expect_error(species_impact(cube = acacia_cube,
+  expect_error(compute_impact_per_species(cube = acacia_cube,
                                  impact_data  =  unmatched_eicat,
                                  col_category = "impact_category",
                                  col_species = NULL,
@@ -88,7 +88,7 @@ test_that("species impact function throws error", {
                                  trans = 1,
                                  method  =  "mean"))
 
-  expect_error(species_impact(cube = acacia_cube,
+  expect_error(compute_impact_per_species(cube = acacia_cube,
                               impact_data  =  unmatched_eicat,
                               col_category = "impact_category",
                               col_species = "scientific_name",
@@ -97,7 +97,7 @@ test_that("species impact function throws error", {
                               method  =  "mean"))
 
 
-  expect_error(species_impact(cube = acacia_cube,
+  expect_error(compute_impact_per_species(cube = acacia_cube,
                               impact_data  =  eicat_acacia,
                               col_category = "impact_category",
                               col_species = "scientific_name",
@@ -106,7 +106,7 @@ test_that("species impact function throws error", {
                               method  =  "mean"))
 
 
-  expect_error(species_impact(cube = acacia_cube,
+  expect_error(compute_impact_per_species(cube = acacia_cube,
                               impact_data  =  eicat_acacia,
                               col_category = "impact_category",
                               col_species = "scientific_name",

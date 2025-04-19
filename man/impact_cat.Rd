@@ -2,7 +2,7 @@
 % Please edit documentation in R/impact_category.R
 \name{impact_cat}
 \alias{impact_cat}
-\title{Compute impact categories}
+\title{Impact categories}
 \usage{
 impact_cat(
   impact_data,
@@ -43,7 +43,12 @@ impact of a species. mean - mean impact of a species.
 max_mech - sum of maximum impact per categories of a species
 }
 \description{
-Aggregate species impact categories from impact data.
+Aggregate species impact categories from impact data. Species are often
+reported to have multiple impact categories specific to different study
+locations and mechanisms through which they exert the impact.
+To get an estimate of a likely impact category which could apply more broadly,
+this function aggregate the multiple impact scores per species into
+one impact score per species.
 }
 \examples{
 # define species list

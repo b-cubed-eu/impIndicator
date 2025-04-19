@@ -39,7 +39,7 @@ The ggplot object of the species impact, with the y- and x-axes
 representing the impact score and time respectively.
 }
 \description{
-Produces a ggplot to show the trend of the species impact.
+Produces a ggplot to show the trend of the species impact indicator.
 }
 \examples{
 # create data cube
@@ -51,7 +51,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute species impact
-speciesImpact <- species_impact(
+speciesImpact <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean",

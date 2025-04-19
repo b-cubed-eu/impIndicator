@@ -6,7 +6,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute impact indicator
-impact_value <- impact_indicator(
+impact_value <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   col_category = "impact_category",
@@ -148,7 +148,7 @@ test_that("plot.impact indicator throws error", {
 ##### Plot method for specie impact ####
 
 # compute species impact
-speciesImpact <- species_impact(
+speciesImpact <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   col_category = "impact_category",
@@ -233,7 +233,7 @@ test_that("plot.species_impact throws error", {
 #### Plot method for site impact ####
 
 # compute site impact
-siteImpact <- site_impact(
+siteImpact <- compute_impact_per_site(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   col_category = "impact_category",
