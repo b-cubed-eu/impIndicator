@@ -64,7 +64,8 @@ The first two letters each categories must be an EICAT short names
 A dataframe of impact indicator per species (class \code{species_impact}).
 }
 \description{
-Compute species impact indicator
+Combines occurrences cube and impact data using the given method
+(e.g., mean) to compute the impact indicator per species.
 }
 \examples{
 acacia_cube <- taxa_cube(

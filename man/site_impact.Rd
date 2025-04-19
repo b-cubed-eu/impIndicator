@@ -2,7 +2,7 @@
 % Please edit documentation in R/site_impact.R
 \name{site_impact}
 \alias{site_impact}
-\title{Compute site impact indicator}
+\title{Site impact indicator}
 \usage{
 site_impact(
   cube,
@@ -72,7 +72,8 @@ The first two letters each categories must be an EICAT short names
 The dataframe of impact indicator per sites (class \code{site_impact})
 }
 \description{
-Compute site impact indicator
+Combines occurrences cube and impact data using the given method
+(e.g., mean cumulative) to compute the impact indicator per site.
 }
 \examples{
 # define cube for taxa

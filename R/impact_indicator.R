@@ -1,7 +1,9 @@
 #' Overall impact indicator
 #'
 #' @description
-#' Compute impact overall impact indicator of alien taxa
+#' Combines occurrences cube and impact data using the given method
+#' (e.g., mean cumulative) to compute the impact indicator of all
+#' species over a given region
 #'
 #' @param cube The data cube of class `sim_cube` or `processed_cube` from
 #' `b3gbi::process_cube()`.

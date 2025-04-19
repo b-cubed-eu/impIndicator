@@ -1,5 +1,9 @@
 #' Compute species impact indicator
 #'
+#' @description
+#' Combines occurrences cube and impact data using the given method
+#' (e.g., mean) to compute the impact indicator per species.
+#'
 #' @param cube The data cube of class `sim_cube` or
 #' `processed_cube` from `b3gbi::process_cube()`.
 #' @param impact_data The dataframe of species impact which contains columns of

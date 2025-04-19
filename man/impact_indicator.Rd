@@ -73,7 +73,9 @@ A dataframe of the invasive alien impact trend
 (class \code{impact_indicator})
 }
 \description{
-Compute impact overall impact indicator of alien taxa
+Combines occurrences cube and impact data using the given method
+(e.g., mean cumulative) to compute the impact indicator of all
+species over a given region
 }
 \examples{
 acacia_cube <- taxa_cube(
