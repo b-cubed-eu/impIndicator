@@ -90,7 +90,6 @@ read more about these functions.
 ``` r
 # Load packages
 library(impIndicator)
-#> Warning: package 'impIndicator' was built under R version 4.4.3
 
 library(b3gbi)     # General biodiversity indicators for data cubes
 library(ggplot2)   # Visualisation
@@ -116,13 +115,13 @@ acacia_cube
 #> Simulated data cube for calculating biodiversity indicators
 #> 
 #> Date Range: 2010 - 2024 
-#> Number of cells: 398 
+#> Number of cells: 415 
 #> Grid reference system: custom 
 #> Coordinate range:
 #>      xmin      xmax      ymin      ymax 
 #>  16.60833  31.60833 -34.69700 -22.94701 
 #> 
-#> Total number of observations: 6252 
+#> Total number of observations: 6728 
 #> Number of species represented: 29 
 #> Number of families represented: Data not present 
 #> 
@@ -130,7 +129,7 @@ acacia_cube
 #> 
 #> First 10 rows of data (use n = to show more):
 #> 
-#> # A tibble: 6,252 × 8
+#> # A tibble: 6,728 × 8
 #>    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord
 #>    <chr>               <dbl>                  <dbl> <dbl> <chr>     <dbl>  <dbl>
 #>  1 Acacia mearnsii   2979775                      8  2010 1376       30.4  -29.7
@@ -138,12 +137,12 @@ acacia_cube
 #>  3 Acacia implexa    2979232                      1  2010 206        18.4  -33.9
 #>  4 Acacia pycnantha  2978604                      1  2010 206        18.4  -33.9
 #>  5 Acacia cyclops    2980425                    122  2010 668        18.4  -32.2
-#>  6 Acacia mearnsii   2979775                      1  2010 215        20.6  -33.9
-#>  7 Acacia mearnsii   2979775                    110  2010 215        20.6  -33.9
-#>  8 Acacia saligna    2978552                      1  2011 206        18.4  -33.9
-#>  9 Acacia saligna    2978552                      1  2011 144        19.4  -34.2
-#> 10 Acacia melanoxy…  2979000                      1  2011 206        18.4  -33.9
-#> # ℹ 6,242 more rows
+#>  6 Acacia mearnsii   2979775                   1100  2010 1110       29.9  -30.7
+#>  7 Acacia mearnsii   2979775                      1  2010 215        20.6  -33.9
+#>  8 Acacia mearnsii   2979775                    110  2010 215        20.6  -33.9
+#>  9 Acacia pycnantha  2978604                   1100  2010 143        19.1  -34.2
+#> 10 Acacia saligna    2978552                      1  2011 206        18.4  -33.9
+#> # ℹ 6,718 more rows
 #> # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters
 #> # ℹ 1 more variable: obs <dbl>
 ```
@@ -186,14 +185,15 @@ scores across species at each site are needed. The `site_impact()` uses
 species as proposed by Boulesnane-Guengant et al., (in preparation). The
 combinations of within species aggregation metrics for each species and
 across species for each site leads to five methods of calculating an
-impact indicator, namely, **precautionary**, **precautionary
-cumulative**, **mean**, **mean cumulative** and **cumulative**.  
+impact indicator, namely, **precautionary** (precaut), **precautionary
+cumulative** (precaut_cum), **mean**, **mean cumulative** (mean_cum) and
+**cumulative** (cum).  
 
 ``` r
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean cumulative"
+  method = "mean_cum"
 )
 
 # Impact map
@@ -216,7 +216,7 @@ year.
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean cumulative"
+  method = "mean_cum"
 )
 
 # Visualise impact indicator

@@ -8,7 +8,8 @@
 #' @param linewidth The width size of the line. Default is 2
 #' @param colour The colour of the line Default is "red"
 #' @param title_lab Title of the plot. Default is "Impact indicator"
-#' @param y_lab Label of the y-axis. Default is "impact score"
+#' @param y_lab Label of the y-axis. Default is "Impact score"
+#' @param x_lab Label of the x-axis. Default is "Year"
 #' @param text_size The size of the text of the plot. Default is "14"
 #' @param ... Additional arguments passed to geom_line
 #'
@@ -32,7 +33,7 @@
 #' impact_value <- impact_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   method = "mean cumulative",
+#'   method = "mean_cum",
 #'   trans = 1
 #' )
 #'
@@ -43,8 +44,9 @@ plot.impact_indicator <- function(
     x,
     linewidth = 2,
     colour = "red",
-    title_lab = "Impact indicator",
-    y_lab = "impact score",
+    title_lab = "Overall impact indicator",
+    y_lab = "Impact value",
+    x_lab = "Year",
     text_size = 14,
     ...) {
   # avoid R CMD warnings
@@ -61,7 +63,8 @@ plot.impact_indicator <- function(
     ) +
     ggplot2::labs(
       title = title_lab,
-      y = y_lab
+      y = y_lab,
+      x = x_lab
     ) +
     ggplot2::theme_minimal() +
     ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
@@ -81,6 +84,7 @@ plot.impact_indicator <- function(
 #' @param linewidth The width size of the line. Default is 1.5
 #' @param title_lab Title of the plot. Default is "Species impact"
 #' @param y_lab Label of the y-axis. Default is "impact score"
+#' @param x_lab Label of the x-axis. Default is "Year"
 #' @param text_size The size of the text of the plot. Default is "14"
 #' @param ... Additional arguments passed to geom_line
 #'
@@ -115,8 +119,9 @@ plot.species_impact <- function(
     x,
     alien_species = "all",
     linewidth = 1.5,
-    title_lab = "Species impact",
-    y_lab = "impact score",
+    title_lab = "Species impact indicator",
+    y_lab = "Impact score",
+    x_lab = "Year",
     text_size = 14,
     ...) {
   # avoid R CMD warnings
@@ -138,7 +143,8 @@ plot.species_impact <- function(
       ggplot2::theme_minimal() +
       ggplot2::labs(
         title = title_lab,
-        y = y_lab
+        y = y_lab,
+        x = x_lab
       ) +
       ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
@@ -156,7 +162,8 @@ plot.species_impact <- function(
       ggplot2::theme_minimal() +
       ggplot2::labs(
         title = title_lab,
-        y = y_lab
+        y = y_lab,
+        x = x_lab
       ) +
       ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
       ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
@@ -205,7 +212,7 @@ plot.species_impact <- function(
 #' siteImpact <- site_impact(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   method = "precautionary cumulative",
+#'   method = "mean_cum",
 #'   trans = 1
 #'
 #' )
@@ -218,7 +225,7 @@ plot.site_impact <- function(
     region = NULL,
     first_year = NULL,
     last_year = NULL,
-    title_lab = "Impact map",
+    title_lab = "Site Impact map",
     text_size = 14,
     ...) {
   # avoid R CMD warnings (global variable not found)

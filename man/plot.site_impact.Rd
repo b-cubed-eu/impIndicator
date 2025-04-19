@@ -9,7 +9,7 @@
   region = NULL,
   first_year = NULL,
   last_year = NULL,
-  title_lab = "Impact map",
+  title_lab = "Site Impact map",
   text_size = 14,
   ...
 )
@@ -52,7 +52,7 @@ acacia_cube <- taxa_cube(
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "precautionary cumulative",
+  method = "mean_cum",
   trans = 1
 
 )

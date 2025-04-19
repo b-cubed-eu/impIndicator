@@ -95,13 +95,14 @@ head(eicat_acacia, 10)
 
 ### Compute impact map
 
-The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The `site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary**, **precautionary cumulative**, **mean**, **mean cumulative** and **cumulative**.\
+The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The `site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary** (precaut), 
+**precautionary cumulative** (precaut_cum), **mean**, **mean cumulative** (mean_cum) and **cumulative** (cum).\
 
 ```{r}
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean cumulative"
+  method = "mean_cum"
 )
 
 # Impact map
@@ -118,7 +119,7 @@ To compute the impact indicator of alien taxa, we sum all the yearly impact scor
 impactIndicator <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean cumulative"
+  method = "mean_cum"
 )
 
 # Visualise impact indicator

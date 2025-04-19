@@ -22,14 +22,33 @@ site_impact(
 \code{impact_category}, \code{scientific_name} and \code{impact_mechanism}.}
 
 \item{method}{The method of computing the indicator. The method used in
-the aggregation of within and across species in a site.
+the aggregation of within and across species in a site proposed
+by Boulesnane-Genguant et al. (submitted).
 The method can be one of
 \itemize{
-\item \code{"precautionary"}: ...
-\item \code{"precautionary cumulative"}: ...
-\item \code{"mean"}: ...
-\item \code{"mean cumulative"}: ...
-\item \code{"cumulative"}: ...
+\item \code{"precaut"}: The "\code{precautionary}" method assigns a species the
+maximum impact across all records of the species and then compute the
+maximum impact across species in each site
+\item \code{"precaut_cum"}: The "\verb{precautionary cumulative}" method assigns a
+species the maximum impact across all records of the species then
+compute the summation of all impacts in each site.
+The precautionary cumulative method provides the highest
+impact score possible for each species but considers
+the number of co-occurring species in each site.
+\item \code{"mean"}:The "\code{mean}" method assigns species the mean impact of all
+the species impact and then computes the mean of all species in each site.
+The mean provides the expected impact within individual species and
+across all species in each site.
+\item \code{"mean_cum"}: The "\verb{mean cumulative}" assigns a species the mean
+impact of all the species impact and then computes the summation of all
+impact scores in each site. The mean cumulative provides the expected
+impact score within individual species but adds co-occurring species’
+impact scores in each site.
+\item \code{"cum"}: The "\code{cumulative}" assigns a species the summation of the
+maximum impact per mechanism and then computes the summation of
+all species’ impacts per site. The cumulative method provides a
+comprehensive view of the overall impact while considering the impact
+and mechanisms of multiple species.
 }}
 
 \item{trans}{Numeric: \code{1} (default), \code{2} or \code{3}. The method of transformation
@@ -67,7 +86,7 @@ acacia_cube <- taxa_cube(
 siteImpact <- site_impact(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "precautionary cumulative",
+  method = "mean_cum",
   trans = 1
 )
 }

@@ -1,20 +1,39 @@
-#' Impact indicator
+#' Overall impact indicator
 #'
 #' @description
-#' Compute impact indicators of alien taxa
+#' Compute impact overall impact indicator of alien taxa
 #'
 #' @param cube The data cube of class `sim_cube` or `processed_cube` from
 #' `b3gbi::process_cube()`.
 #' @param impact_data The dataframe of species impact which contains columns of
 #' `impact_category`, `scientific_name` and `impact_mechanism`.
 #' @param method The method of computing the indicator. The method used in
-#' the aggregation of within and across species in a site.
+#' the aggregation of within and across species in a site proposed
+#' by Boulesnane-Genguant et al. (submitted).
 #' The method can be one of
-#'   - `"precautionary"`: ...
-#'   - `"precautionary cumulative"`: ...
-#'   - `"mean"`: ...
-#'   - `"mean cumulative"`: ...
-#'   - `"cumulative"`: ...
+#'   -  `"precaut"`: The "``precautionary``" method assigns a species the
+#'   maximum impact across all records of the species and then compute the
+#'   maximum impact across species in each site
+#'   - `"precaut_cum"`: The "``precautionary cumulative``" method assigns a
+#'   species the maximum impact across all records of the species then
+#'   compute the summation of all impacts in each site.
+#'   The precautionary cumulative method provides the highest
+#'   impact score possible for each species but considers
+#'   the number of co-occurring species in each site.
+#'   - `"mean"`:The "``mean``" method assigns species the mean impact of all
+#'   the species impact and then computes the mean of all species in each site.
+#'   The mean provides the expected impact within individual species and
+#'   across all species in each site.
+#'   - `"mean_cum"`: The "``mean cumulative``" assigns a species the mean
+#'   impact of all the species impact and then computes the summation of all
+#'   impact scores in each site. The mean cumulative provides the expected
+#'   impact score within individual species but adds co-occurring species’
+#'   impact scores in each site.
+#'   - `"cum"`: The "``cumulative``" assigns a species the summation of the
+#'   maximum impact per mechanism and then computes the summation of
+#'   all species’ impacts per site. The cumulative method provides a
+#'   comprehensive view of the overall impact while considering the impact
+#'   and mechanisms of multiple species.
 #' @param trans Numeric: `1` (default), `2` or `3`. The method of transformation
 #' to convert the EICAT categories `c("MC", "MN", "MO", "MR", "MV")` to
 #' numerical values:
@@ -44,7 +63,7 @@
 #' impact_value <- impact_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
-#'   method = "mean cumulative",
+#'   method = "mean_cum",
 #'   trans = 1
 #' )
 
@@ -88,15 +107,15 @@ impact_indicator <- function(
     tidyr::drop_na(max, mean, max_mech)
 
 
-  if (method == "precautionary") {
+  if (method == "precaut") {
     impact_values <- compute_impact_indicator(impact_cube_data,"max",max)
-  } else if (method == "precautionary cumulative") {
+  } else if (method == "precaut_cum") {
     impact_values <- compute_impact_indicator(impact_cube_data,"max",sum)
   } else if (method == "mean") {
     impact_values <- compute_impact_indicator(impact_cube_data,"mean",mean)
-  } else if (method == "mean cumulative") {
+  } else if (method == "mean_cum") {
     impact_values <- compute_impact_indicator(impact_cube_data,"mean",sum)
-  } else if (method == "cumulative") {
+  } else if (method == "cum") {
     impact_values <- compute_impact_indicator(impact_cube_data,"max_mech",sum)
   } else {
     cli::cli_abort(c(

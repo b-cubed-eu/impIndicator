@@ -8,8 +8,9 @@
   x,
   linewidth = 2,
   colour = "red",
-  title_lab = "Impact indicator",
-  y_lab = "impact score",
+  title_lab = "Overall impact indicator",
+  y_lab = "Impact value",
+  x_lab = "Year",
   text_size = 14,
   ...
 )
@@ -24,7 +25,9 @@
 
 \item{title_lab}{Title of the plot. Default is "Impact indicator"}
 
-\item{y_lab}{Label of the y-axis. Default is "impact score"}
+\item{y_lab}{Label of the y-axis. Default is "Impact score"}
+
+\item{x_lab}{Label of the x-axis. Default is "Year"}
 
 \item{text_size}{The size of the text of the plot. Default is "14"}
 
@@ -50,7 +53,7 @@ acacia_cube <- taxa_cube(
 impact_value <- impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean cumulative",
+  method = "mean_cum",
   trans = 1
 )
 
