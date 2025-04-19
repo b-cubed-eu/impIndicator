@@ -8,6 +8,7 @@
 [![repo
 status](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![Release](https://img.shields.io/github/release/b-cubed-eu/impIndicator.svg)](https://github.com/b-cubed-eu/impIndicator/releases)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15052675.svg)](https://doi.org/10.5281/zenodo.15052675)
 [![impIndicator status
 badge](https://b-cubed-eu.r-universe.dev/impIndicator/badges/version)](https://b-cubed-eu.r-universe.dev/impIndicator)
 [![CRAN
