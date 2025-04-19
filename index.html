@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,15 +75,15 @@
 <p>The impIndicator produces three main products and can be useful as stated below:</p>
 <ul>
 <li>
-<strong>impact indicator</strong> &lt;<code><a href="reference/impact_indicator.html">impact_indicator()</a></code>&gt;<br>
+<strong>overall impact indicator</strong> &lt;<code><a href="reference/compute_impact_indicator.html">compute_impact_indicator()</a></code>&gt;<br>
 The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.<br>
 </li>
 <li>
-<strong>site impact</strong> &lt;<code><a href="reference/site_impact.html">site_impact()</a></code>&gt;<br>
+<strong>site impact indicator</strong> &lt;<code><a href="reference/compute_impact_per_site.html">compute_impact_per_site()</a></code>&gt;<br>
 The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—, it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address alien species impacts effectively.<br>
 </li>
 <li>
-<strong>species impact</strong> &lt;<code><a href="reference/species_impact.html">species_impact()</a></code>&gt;<br>
+<strong>species impact indicator</strong> &lt;<code><a href="reference/compute_impact_per_species.html">compute_impact_per_species()</a></code>&gt;<br>
 The species impact produces the trends of individual alien species, enabling a species-specific impact attributed to invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing control and eradication strategies, and advancing research on alien species’ ecological roles and adaptation patterns.</li>
 </ul>
 <div class="section level2">
@@ -100,7 +100,7 @@ The species impact produces the trends of individual alien species, enabling a s
 <div class="section level2">
 <h2 id="demonstration">Demonstration<a class="anchor" aria-label="anchor" href="#demonstration"></a>
 </h2>
-<p>We demonstrate the computation and visualisation of impact indicator of biological invasions using the <strong>impIndicator</strong> package: the <code><a href="reference/impact_indicator.html">impact_indicator()</a></code> function to compute impact indicators of alien taxa, the <code><a href="reference/species_impact.html">species_impact()</a></code> function to compute impact indicators per species, and the <code><a href="reference/site_impact.html">site_impact()</a></code> function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code> function within <code><a href="reference/taxa_cube.html">taxa_cube()</a></code>, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to <code><a href="articles/Background.html">vignette("Background", package = "impIndicator")</a></code> to read more about these functions.</p>
+<p>We demonstrate the computation and visualisation of impact indicator of biological invasions using the <strong>impIndicator</strong> package: the <code>impact_indicator()</code> function to compute impact indicators of alien taxa, the <code>species_impact()</code> function to compute impact indicators per species, and the <code>site_impact()</code> function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code> function within <code><a href="reference/taxa_cube.html">taxa_cube()</a></code>, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to <code><a href="articles/Background.html">vignette("Background", package = "impIndicator")</a></code> to read more about these functions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/impIndicator" class="external-link">impIndicator</a></span><span class="op">)</span></span>
@@ -180,9 +180,9 @@ The species impact produces the trends of individual alien species, enabling a s
 <div class="section level3">
 <h3 id="compute-impact-map">Compute impact map<a class="anchor" aria-label="anchor" href="#compute-impact-map"></a>
 </h3>
-<p>The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The <code><a href="reference/site_impact.html">site_impact()</a></code> uses <em>max</em>, <em>sum</em> and <em>mean</em> metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, <strong>precautionary</strong> (precaut), <strong>precautionary cumulative</strong> (precaut_cum), <strong>mean</strong>, <strong>mean cumulative</strong> (mean_cum) and <strong>cumulative</strong> (cum).</p>
+<p>The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The <code>site_impact()</code> uses <em>max</em>, <em>sum</em> and <em>mean</em> metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, <strong>precautionary</strong> (precaut), <strong>precautionary cumulative</strong> (precaut_cum), <strong>mean</strong>, <strong>mean cumulative</strong> (mean_cum) and <strong>cumulative</strong> (cum).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/site_impact.html">site_impact</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_per_site.html">compute_impact_per_site</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"mean_cum"</span></span>
@@ -199,7 +199,7 @@ The species impact produces the trends of individual alien species, enabling a s
 <p>To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Impact indicator</span></span>
-<span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/impact_indicator.html">impact_indicator</a></span><span class="op">(</span></span>
+<span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_indicator.html">compute_impact_indicator</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"mean_cum"</span></span>
@@ -215,7 +215,7 @@ The species impact produces the trends of individual alien species, enabling a s
 <p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <span class="math inline">\(N\)</span>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Impact indicator per species</span></span>
-<span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/species_impact.html">species_impact</a></span><span class="op">(</span></span>
+<span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_per_species.html">compute_impact_per_species</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"mean"</span></span>
