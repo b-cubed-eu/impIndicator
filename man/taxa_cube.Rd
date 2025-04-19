@@ -2,7 +2,7 @@
 % Please edit documentation in R/taxa_cube.R
 \name{taxa_cube}
 \alias{taxa_cube}
-\title{Prepare Data Cubes}
+\title{Build occurrences cube}
 \usage{
 taxa_cube(
   taxa,

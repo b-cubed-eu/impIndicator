@@ -1,7 +1,7 @@
-#' Plot impact indicator
+#' Plot overall impact indicator
 #'
 #' @description
-#' Produces a ggplot object to show the trend of the impact.
+#' Produces a ggplot object to show the trend of the overall impact indicator.
 #'
 #' @param x A dataframe of impact indicator. Must be a class of
 #' "impact_indicator"
@@ -75,7 +75,7 @@ plot.impact_indicator <- function(
 #' Plot species impact
 #'
 #' @description
-#' Produces a ggplot to show the trend of the species impact.
+#' Produces a ggplot to show the trend of the species impact indicator.
 #'
 #' @param x A dataframe of impact indicator. Must be a class of "species_impact"
 #' @param alien_species The character vector containing names of the alien
@@ -179,7 +179,7 @@ plot.species_impact <- function(
 #' Plot site impact
 #'
 #' @description
-#' Produces the yearly impact map of a region
+#' Produces the ggplot of site impact indicator
 #'
 #' @param x A dataframe of impact indicator. Must be a class of "site_impact"
 #' @param region sf or character. The shapefile of the region of study or a

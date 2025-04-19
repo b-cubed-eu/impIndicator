@@ -1,4 +1,4 @@
-#' @title Prepare Data Cubes
+#' @title Build occurrences cube
 #'
 #' @description Prepare data cube to calculate species impact .
 #' The function `taxa_cube` can take in the scientific name of the

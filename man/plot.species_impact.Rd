@@ -39,7 +39,7 @@ The ggplot object of the species impact, with the y- and x-axes
 representing the impact score and time respectively.
 }
 \description{
-Produces a ggplot to show the trend of the species impact.
+Produces a ggplot to show the trend of the species impact indicator.
 }
 \examples{
 # create data cube

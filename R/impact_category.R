@@ -1,8 +1,12 @@
-#' Compute impact categories
+#' Impact categories
 #'
 #' @description
-#' Aggregate species impact categories from impact data.
-#'
+#' Aggregate species impact categories from impact data. Species are often
+#' reported to have multiple impact categories specific to different study
+#' locations and mechanisms through which they exert the impact.
+#' To get an estimate of a likely impact category which could apply more broadly,
+#' this function aggregate the multiple impact scores per species into
+#' one impact score per species.
 #' @param impact_data The dataframe of species impact which contains columns of
 #' `impact_category`, `scientific_name` and `impact_mechanism`.
 #' @param species_list The vector of species' list to aggregate their impact
