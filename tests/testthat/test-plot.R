@@ -97,51 +97,6 @@ test_that("plot.impact indicator throws error", {
 
   ),
   "'x' is not a class 'impact_indicator'")
-#
-#   expect_error(plot(impact_value,
-#                     linewidth = "a",
-#                     colour = "red",
-#                     title_lab = "Impact indicator",
-#                     y_lab = "impact score",
-#                     text_size = 14
-#
-#   ))
-#
-#   expect_error(plot(impact_value,
-#                        linewidth = 2,
-#                        colour = "invalid_colour",
-#                        title_lab = "Impact indicator",
-#                        y_lab = "impact score",
-#                        text_size = 15
-#
-#   ))
-#
-#   expect_error(plot(impact_value,
-#                     linewidth = 2,
-#                     colour = "red",
-#                     title_lab = 3,
-#                     y_lab = "impact score",
-#                     text_size = 15
-#
-#   ))
-#
-#   expect_error(plot(impact_value,
-#                     linewidth = 2,
-#                     colour = "red",
-#                     title_lab = "Impact indicator",
-#                     y_lab =4,
-#                     text_size = 15
-#
-#   ))
-#
-#   expect_error(plot(impact_value,
-#                     linewidth = 2,
-#                     colour = "red",
-#                     title_lab = "Impact indicator",
-#                     y_lab = "impact score",
-#                     text_size = "a"
-#
-#   ))
 })
 
 

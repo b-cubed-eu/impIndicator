@@ -117,38 +117,6 @@ test_that("site impact throws errors", {
     "`impact_data` must be a <dataframe>"
   )
 
-
-  # expect_error(compute_impact_per_site(
-  #   cube = acacia_cube,
-  #   impact_data = eicat_acacia,
-  #   col_category = NULL,
-  #   col_species = "scientific_name",
-  #   col_mechanism = "impact_mechanism",
-  #   trans = 1,
-  #   method = "precautionary cumulative"
-  # ))
-  #
-  # expect_error(compute_impact_per_site(
-  #   cube = acacia_cube,
-  #   impact_data = eicat_acacia,
-  #   col_category = "impact_category",
-  #   col_species = NULL,
-  #   col_mechanism = "impact_mechanism",
-  #   trans = 1,
-  #   method = "precautionary cumulative"
-  # ))
-  #
-  #
-  # expect_error(compute_impact_per_site(
-  #   cube = acacia_cube,
-  #   impact_data = eicat_acacia,
-  #   col_category = "impact_category",
-  #   col_species = "scientific_name",
-  #   col_mechanism = NULL,
-  #   trans = 1,
-  #   method = "precautionary cumulative"
-  # ))
-
   expect_error(
     compute_impact_per_site(
       cube = acacia_cube,
