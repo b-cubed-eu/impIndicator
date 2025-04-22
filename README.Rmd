@@ -58,7 +58,7 @@ remotes::install_github("b-cubed-eu/impIndicator")
 
 ## Demonstration
 
-We demonstrate the computation and visualisation of impact indicator of biological invasions using the **impIndicator** package: the `impact_indicator()` function to compute impact indicators of alien taxa, the `species_impact()` function to compute impact indicators per species, and the `site_impact()` function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the `b3gbi::process_cube()` function within `taxa_cube()`, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to `vignette("Background", package = "impIndicator")` to read more about these functions.
+We demonstrate the computation and visualisation of impact indicator of biological invasions using the **impIndicator** package: the `compute_impact_indicator()` function to compute impact indicators of alien taxa, the `compute_impact_per_species()` function to compute impact indicators per species, and the `compute_impact_per_site()` function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the `b3gbi::process_cube()` function within `taxa_cube()`, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to `vignette("Background", package = "impIndicator")` to read more about these functions.
 
 ```{r load packages, message=FALSE}
 # Load packages
