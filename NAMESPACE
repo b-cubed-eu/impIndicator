@@ -3,7 +3,6 @@
 S3method(plot,impact_indicator)
 S3method(plot,site_impact)
 S3method(plot,species_impact)
-export("%>%")
 export(compute_impact_indicator)
 export(compute_impact_per_site)
 export(compute_impact_per_species)
