@@ -64,7 +64,7 @@ stated below:
 Install **impIndicator** in R:
 
 ``` r
-install.packages("impIndicator", repos = "https://b-cubed-eu.r-universe.dev")
+install.packages("impIndicator", repos = c("https://b-cubed-eu.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 You can install the development version from
@@ -92,8 +92,10 @@ these functions.
 ``` r
 # Load packages
 library(impIndicator)
+#> Warning: package 'impIndicator' was built under R version 4.4.3
 
 library(b3gbi)     # General biodiversity indicators for data cubes
+#> Warning: package 'b3gbi' was built under R version 4.4.3
 library(ggplot2)   # Visualisation
 library(tidyr)     # Data wrangling
 ```
