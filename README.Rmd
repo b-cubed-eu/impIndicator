@@ -46,7 +46,7 @@ The species impact produces the trends of individual alien species, enabling a s
 Install **impIndicator** in R:
 
 ```r
-install.packages("impIndicator", repos = "https://b-cubed-eu.r-universe.dev")
+install.packages("impIndicator", repos = c("https://b-cubed-eu.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
 You can install the development version from [GitHub](https://github.com/) with:
