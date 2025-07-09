@@ -46,7 +46,7 @@ Install **impIndicator** in R:
 install.packages("impIndicator", repos = c("https://b-cubed-eu.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
-You can install the development version from [GitHub](https://github.com/) with:
+You can install the development version from [GitHub](https://github.com/b-cubed-eu/impIndicator) with:
 
 ``` r
 # install.packages("remotes")
@@ -55,7 +55,7 @@ remotes::install_github("b-cubed-eu/impIndicator")
 
 ## Demonstration
 
-We demonstrate the computation and visualisation of impact indicator of biological invasions using the **impIndicator** package: the `compute_impact_indicator()` function to compute impact indicators of alien taxa, the `compute_impact_per_species()` function to compute impact indicators per species, and the `compute_impact_per_site()` function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the `b3gbi::process_cube()` function within `taxa_cube()`, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to `vignette("Background", package = "impIndicator")` to read more about these functions.
+We demonstrate the computation and visualisation of impact indicator of biological invasions using the **impIndicator** package: `compute_impact_indicator()` to compute impact indicators of alien taxa, `compute_impact_per_species()` to compute impact indicators per species, and `compute_impact_per_site()` to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the `b3gbi::process_cube()` function within `taxa_cube()`, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to `vignette("Background", package = "impIndicator")` to read more about these functions.
 
 ```{r load packages, message=FALSE}
 # Load packages
@@ -93,8 +93,7 @@ head(eicat_acacia, 10)
 
 ### Compute impact map
 
-The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The `site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary** (precaut), 
-**precautionary cumulative** (precaut_cum), **mean**, **mean cumulative** (mean_cum) and **cumulative** (cum).\
+The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The `site_impact()` uses *max*, *sum* and *mean* metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, **precautionary** (precaut), **precautionary cumulative** (precaut_cum), **mean**, **mean cumulative** (mean_cum) and **cumulative** (cum).
 
 ```{r}
 siteImpact <- compute_impact_per_site(
