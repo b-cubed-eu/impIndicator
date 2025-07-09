@@ -24,7 +24,7 @@ library(knitr) # Nice tables
 
 ## Process GBIF data from the R environment
 
-1. Import GBIF data using `read.csv()`, `readr::read_csv()`, or `readxl::read_excel()` based on the data set format.
+Import GBIF data using `read.csv()`, `readr::read_csv()`, or `readxl::read_excel()` based on the data set format.
 
 Here is an example a GBIF occurrences data with the minimum required columns.`decimalLatitude`, `decimalLongitude`, `species`, `speciesKey`, `coordinateUncertaintyInMeters` and `year`
 

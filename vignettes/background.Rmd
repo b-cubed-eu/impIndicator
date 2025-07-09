@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-*Extracted from the report of Indicators on Impact of Alien Taxa, B3 project deliverable. 5.3*. To read full report visit (https://b-cubed.eu/library)
+*Extracted from the report of Indicators on Impact of Alien Taxa, B3 project deliverable. 5.3*. To read full report visit <https://b-cubed.eu/library>.
 
 The negative impact of alien species is one of the leading causes of biodiversity loss  [1]. A challenge to the appropriate management of such impact is the lack of sufficient evidence-based indicators for the impact caused by alien species that satisfy Findable, Accessible, Interoperable, and Reusable (FAIR) principles of data [2]. As there is growing information on distributions (GBIF, 2025), and standard assessments of the impact caused by alien species across different native ecosystems become available [e.g., 3–6] ,there is room for a standard method to infer the impact of alien species as indicators from the combination of their occurrences and impact assessment. In terms of policy, the indicator will allow for the prioritisation of key species and sites, tracking the response of controls, and forecasting the impact under possible future scenarios [7].
 
