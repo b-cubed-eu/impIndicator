@@ -14,7 +14,8 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction
+## Introduction
+
 *Extracted from the report of Indicators on Impact of Alien Taxa, B3 project deliverable. 5.3*. To read full report visit (https://b-cubed.eu/library)
 
 The negative impact of alien species is one of the leading causes of biodiversity loss  [1]. A challenge to the appropriate management of such impact is the lack of sufficient evidence-based indicators for the impact caused by alien species that satisfy Findable, Accessible, Interoperable, and Reusable (FAIR) principles of data [2]. As there is growing information on distributions (GBIF, 2025), and standard assessments of the impact caused by alien species across different native ecosystems become available [e.g., 3–6] ,there is room for a standard method to infer the impact of alien species as indicators from the combination of their occurrences and impact assessment. In terms of policy, the indicator will allow for the prioritisation of key species and sites, tracking the response of controls, and forecasting the impact under possible future scenarios [7].
@@ -25,13 +26,13 @@ The Red List Index (RLI) of alien species is an impact indicator that uses the c
 
 The Environmental Impact Classification for Alien Taxa (EICAT), recently adopted by the IUCN, offers information about the impact of alien species and mechanisms thereof [13]. Alien species are categorised from Minimal to Massive levels of concern, depending on the magnitude of impact reported on native species [14,15]. Combining the impact of alien species and their occurrence can give the representation of the alien species in a particular region [16]. The combination of data on impacts and occurrences has been proposed as an indicator of the impact of invasions [9], but there has been no standardised methodology to achieve this in practice.  Recent research has seen significant practical developments to address this shortcoming. For example, [7] used EICAT and species distribution to map the impact of Acacia species in South Africa. The authors transformed the EICAT categories into numerical values and computed the impact score for each site. Building on their approach, we now derive species-specific impact values over time to produce more refined impact indicators. In doing so, we expand the methods of [7] and [17] by integrating open-source EICAT assessments and species occurrence data, making the impact indicators taxonomically, spatially, and temporally explicit. As part of the B3 project (https://b-cubed.eu/), we developed a workflow to calculate the impact indicator which visualises the impact of alien species over time and across space. The workflow is embedded in an R package following a standard software development guide [18]. The workflow produces three main products which include (i) a species impact indicator, (ii) a site impact indicator and (iii) an overall impact indicator.
 
-# Method
+## Method
 
-## Ocurrences data
+### Ocurrences data
 
 The workflow uses the Global Biodiversity Information Facility (GBIF) occurrence data (https://www.gbif.org/). GBIF is the largest database for biodiversity information that adheres to FAIR Data Principles and is the most widely used for scientific purposes, demonstrating its reliability. The workflow uses an occurrence cube - a data format which aggregates occurrences along spatial, taxonomical and temporal scale - suitable for modelling and computational analysis. The GBIF provides options for spatial resolution for aggregating occurrences, such as the European Environmental Agency (EEA) or the Extended Quarter Degree Grid Cells (QDGC) commonly employed in South African atlas projects. The downloaded GBIF occurrence cube is then processed using the b3gbi R package. This ensures standardised input data for further analysis and verifies that the data format is correct. Alternatively, an occurrence cube with customised site resolution and code can be built from GBIF occurrence data within the workflow. To correct for sampling bias, all computations convert multiple species occurrences at each site per year into binary presence (1) or absence (0) values. 
 
-## Impact data
+### Impact data
 
 The workflow uses EICAT impact assessments which categorise the impact of an alien species into minimal concern (MC), minor (MN), moderate (MO), major (MR), or massive (MV) based on the severity of the species’ negative impact caused on the native species of the recipient community. Specifically, a species is assigned:
 
@@ -45,7 +46,7 @@ The impacts are also classified based on the 12 mechanisms described by the IUCN
 
 The data collection process for EICAT assessments involves several key steps. First, raw impact records for the alien species are gathered through an established search protocol using scientific literature, databases, and other relevant sources. These impacts are then categorised according to EICAT criteria. Each assessment undergoes a rigorous review by the EICAT Authority, comprising experts from diverse taxonomic groups and geographic regions, to ensure accuracy and consistency. Once validated, assessments are published on the IUCN Global Invasive Species Database (GISD), making them accessible to scientists, conservation practitioners, and policymakers for prioritising management actions and developing preventive or mitigation measures (IUCN, 2020b). Currently, EICAT assessments in the GISD are not fully open or FAIR, although efforts to address this are underway (personal communication, P Genovesi). Available EICAT data can presently be downloaded from https://www.iucngisd.org/gisd/. For species lacking published assessments, users can independently conduct assessments within the workflow.
 
-## Transforming EICAT impact categories to numerical values
+### Transforming EICAT impact categories to numerical values
 
 The EICAT categories are semi-quantitative (ordinal) data which need to be transformed into numerical values to enable computation. The transformation depends on the assumptions of the relationship between the impact categories (e.g., linear) and the interpretation of the minimal concern (e.g., zero impact). The transformation:
 
@@ -53,7 +54,8 @@ The EICAT categories are semi-quantitative (ordinal) data which need to be trans
 -	**MC = 1, MN = 2, MO = 3, MR = 4 and MV = 5** assumes a linear relationship with minimal concern implying some concern even if no impact was found on the native species’ individual (e.g., Jansen & Kumschick 2022).
 -	**MC = 0, MN = 10, MO = 100, MR = 1000 and MV = 10000** assumes impact categories have an exponential relationship and minimal concern is equal to zero impact (e.g., Rumlerová et al., 2016).
 
-# Species impact indicator
+## Species impact indicator
+
 Species are often reported to have multiple impact categories specific to different study locations and mechanisms through which they exert the impact. For example, Acacia dealbata has been categorised as MR in Drakensberg, South Africa through structural impact but MN in Biobio region, Chile (see dataset of Jansen & Kumschick 2022). To get an estimate of a likely impact category which could apply more broadly, we aggregate the multiple impact scores per species into one impact score per species. Aggregation methods include, overall maximum, sum across maximum mechanism and overall mean. Additional statistics will be included in future updates.
 
 -	maximum: The maximum method assigns a species the maximum impact across all records of the species (Blackburn et al., 2014; IUCN, 2020a; Kumschick et al., 2024). It is best for precautionary approaches. Also, the assumption is that the management of the highest impact can cover for the lower impact caused by a species and can be the best when there is low confidence in the multiple impacts of species of interest. However, the maximum method can overestimate the impact of a species especially when the highest impact requires specific or rare conditions and many lower impacts were recorded.
@@ -61,7 +63,7 @@ Species are often reported to have multiple impact categories specific to differ
 -	mean: Assigns a species the mean impact of all the species impact. This method computes the expected impact of the species considering all species impact without differentiating between impacts (D’hondt et al., 2015). This method is adequate when there are many impact records per species.
 Finally, to compensate for regions (spatial areas or ranges of occurrence data) with many sites (grid cells covering a region) having higher overall impact value, we divide the impact value of each by the number of sites occupied in the region.
 
-# Site impact indicator 
+## Site impact indicator 
 
 Multiple alien species can co-occur in a site. To get information on how sites are affected by alien species (i.e. site impact), we aggregate the different impacts per species in each site using one of five methods proposed by Boulesnane-Genguant et al. (submitted). These methods are precautionary, precautionary cumulative, mean, mean cumulative, and cumulative which depend on the combinations of aggregation within species and across species.
 
@@ -71,7 +73,7 @@ Multiple alien species can co-occur in a site. To get information on how sites a
 -	mean cumulative: Uses the mean method to aggregate each species’ impact and then computes the summation of all impact scores in each site. The mean cumulative provides the expected impact score within individual species but adds co-occurring species’ impact scores in each site.
 -	cumulative: Uses the sum across maximum mechanism method to aggregate each species’ impact and then computes the summation of all species’ impacts per site. The cumulative method provides a comprehensive view of the overall impact while considering the impact and mechanisms of multiple species. 
 
-# Overall impact indicator
+## Overall impact indicator
 
 Furthermore, to estimate the impacts of all the species in a study area, we sum the impact values of all the sites for each year. Also, to compensate for regions with many sites having higher overall impact value, we divide the impact value of each by the number of sites occupied in the region. 
 
