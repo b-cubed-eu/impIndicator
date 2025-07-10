@@ -49,8 +49,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/Background.html">Background</a></li>
-    <li><a class="dropdown-item" href="articles/Prepare_data.html">Prepare data</a></li>
+<li><a class="dropdown-item" href="articles/background.html">Background</a></li>
+    <li><a class="dropdown-item" href="articles/prepare_data.html">Prepare data</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -77,19 +77,14 @@
 
 <!-- badges: end -->
 <p>The goal of <strong>impIndicator</strong> is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises potential impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods of calculating impact indicators based on different assumptions.</p>
-<p>The impIndicator produces three main products and can be useful as stated below:</p>
+<p>The impIndicator produces three main products:</p>
 <ul>
 <li>
-<strong>overall impact indicator</strong> &lt;<code><a href="reference/compute_impact_indicator.html">compute_impact_indicator()</a></code>&gt;<br>
-The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.<br>
-</li>
+<strong>overall impact indicator</strong> with <code><a href="reference/compute_impact_indicator.html">compute_impact_indicator()</a></code>: The impact indicator offers a nuanced representation of the trends of biological invasions of an area (local, regional, or global scales). By tracking the increase and decrease of ecological threats over time, this product provides insights into the dynamics of alien species impacts, helping assess whether current management practices are effective or need adjustment. The temporal analysis of impact indicator enables targeted resource allocation, fostering proactive interventions to mitigate biodiversity loss and ecosystem degradation.</li>
 <li>
-<strong>site impact indicator</strong> &lt;<code><a href="reference/compute_impact_per_site.html">compute_impact_per_site()</a></code>&gt;<br>
-The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—, it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address alien species impacts effectively.<br>
-</li>
+<strong>site impact indicator</strong> with <code><a href="reference/compute_impact_per_site.html">compute_impact_per_site()</a></code>: The site impact as a map serves as a visual and analytical tool to represent the intensity of biological invasions across different parts of an area. By enabling spatial comparisons—such as between provinces, states, or conservation areas—, it highlights hotspots and areas at risk of invasion impact. This spatial data is useful for prioritising management actions, coordinating restoration projects, and fostering cross-regional collaboration to address alien species impacts effectively.</li>
 <li>
-<strong>species impact indicator</strong> &lt;<code><a href="reference/compute_impact_per_species.html">compute_impact_per_species()</a></code>&gt;<br>
-The species impact produces the trends of individual alien species, enabling a species-specific impact attributed to invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing control and eradication strategies, and advancing research on alien species’ ecological roles and adaptation patterns.</li>
+<strong>species impact indicator</strong> with <code><a href="reference/compute_impact_per_species.html">compute_impact_per_species()</a></code>: The species impact produces the trends of individual alien species, enabling a species-specific impact attributed to invasions. This data supports comparisons of individual species’ impacts, revealing their roles and interactions within invaded area. The species impact is invaluable for prioritising species-specific management efforts, informing control and eradication strategies, and advancing research on alien species’ ecological roles and adaptation patterns.</li>
 </ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -97,7 +92,7 @@ The species impact produces the trends of individual alien species, enabling a s
 <p>Install <strong>impIndicator</strong> in R:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"impIndicator"</span>, repos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://b-cubed-eu.r-universe.dev"</span>, <span class="st">"https://cloud.r-project.org"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>You can install the development version from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version from <a href="https://github.com/b-cubed-eu/impIndicator" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"b-cubed-eu/impIndicator"</span><span class="op">)</span></span></code></pre></div>
@@ -105,14 +100,12 @@ The species impact produces the trends of individual alien species, enabling a s
 <div class="section level2">
 <h2 id="demonstration">Demonstration<a class="anchor" aria-label="anchor" href="#demonstration"></a>
 </h2>
-<p>We demonstrate the computation and visualisation of impact indicator of biological invasions using the <strong>impIndicator</strong> package: the <code><a href="reference/compute_impact_indicator.html">compute_impact_indicator()</a></code> function to compute impact indicators of alien taxa, the <code><a href="reference/compute_impact_per_species.html">compute_impact_per_species()</a></code> function to compute impact indicators per species, and the <code><a href="reference/compute_impact_per_site.html">compute_impact_per_site()</a></code> function to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code> function within <code><a href="reference/taxa_cube.html">taxa_cube()</a></code>, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to <code><a href="articles/Background.html">vignette("Background", package = "impIndicator")</a></code> to read more about these functions.</p>
+<p>We demonstrate the computation and visualisation of impact indicator of biological invasions using the <strong>impIndicator</strong> package: <code><a href="reference/compute_impact_indicator.html">compute_impact_indicator()</a></code> to compute impact indicators of alien taxa, <code><a href="reference/compute_impact_per_species.html">compute_impact_per_species()</a></code> to compute impact indicators per species, and <code><a href="reference/compute_impact_per_site.html">compute_impact_per_site()</a></code> to compute impact indicators per site. The functions require (1) a species occurrence cube processed by the <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code> function within <code><a href="reference/taxa_cube.html">taxa_cube()</a></code>, and (2) Environmental Impact Classification for Alien Taxa (EICAT) impact score of species. Go to <code><a href="https://b-cubed-eu.github.io/impIndicator/articles/Background.html">vignette("Background", package = "impIndicator")</a></code> to read more about these functions.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/impIndicator" class="external-link">impIndicator</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: package 'impIndicator' was built under R version 4.4.3</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/b3gbi" class="external-link">b3gbi</a></span><span class="op">)</span>     <span class="co"># General biodiversity indicators for data cubes</span></span>
-<span><span class="co">#&gt; Warning: package 'b3gbi' was built under R version 4.4.3</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>   <span class="co"># Visualisation</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span>     <span class="co"># Data wrangling</span></span></code></pre></div>
 <div class="section level3">
@@ -301,7 +294,7 @@ The species impact produces the trends of individual alien species, enabling a s
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
