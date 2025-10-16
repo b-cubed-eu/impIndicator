@@ -126,7 +126,8 @@ compute_impact_indicator <- function(
       "See the function desciption or double check the spelling"
     ))
   }
+  structure(list(method = method,
+                 impact = impact_values),
+            class = "impact_indicator")
 
-  class(impact_values) <- c("impact_indicator", class(impact_values))
-  return(impact_values)
 }

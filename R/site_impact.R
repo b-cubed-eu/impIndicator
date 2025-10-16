@@ -127,7 +127,8 @@ compute_impact_per_site <- function(
     ))
   }
 
+  structure(list(method = method,
+                 site_impact = site_values),
+            class = "site_impact")
 
-  class(site_values) <- c("site_impact", class(site_values))
-  return(site_values)
 }

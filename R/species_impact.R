@@ -110,6 +110,8 @@ compute_impact_per_species <- function(
     ))
   }
   species_values <- tibble::as_tibble(species_values)
-  class(species_values) <- c("species_impact", class(species_values))
-  return(species_values)
+
+  structure(list(method = method,
+                 species_impact = species_values),
+            class = "species_impact")
 }
