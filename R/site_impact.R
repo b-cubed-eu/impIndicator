@@ -108,6 +108,8 @@ compute_impact_per_site <- function(
                                        by = "scientificName"
   ) %>%
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
+  # collect number of species
+  num_of_species <- length(unique(impact_cube_data$scientificName))
 
   if (method == "precaut") {
     site_values <- compute_site_impact(impact_cube_data,"max",max)
@@ -127,7 +129,12 @@ compute_impact_per_site <- function(
     ))
   }
 
+  # collect number of cells
+  num_of_cells <- length(site_values$cellCode)
+
   structure(list(method = method,
+                 num_cells = num_of_cells,
+                 num_species = num_of_species,
                  site_impact = site_values),
             class = "site_impact")
 

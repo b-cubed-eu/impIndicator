@@ -98,6 +98,10 @@ compute_impact_per_species <- function(
   ) %>%
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
+  # collect the number and names of species in the impact indicator
+  num_of_species <- length(unique(impact_cube_data$scientificName))
+  names_of_species <- sort(unique(impact_cube_data$scientificName))
+
   if (method == "max") {
     species_values<-compute_species_impact(impact_cube_data,"max")
   } else if (method == "mean") {
@@ -112,6 +116,8 @@ compute_impact_per_species <- function(
   species_values <- tibble::as_tibble(species_values)
 
   structure(list(method = method,
+                 num_species = num_of_species,
+                 names_species = names_of_species,
                  species_impact = species_values),
             class = "species_impact")
 }

@@ -145,17 +145,5 @@ i see the function documentation for details"
 x `method` must be from the options provided
 See the function desciption or double check the spelling"
   )
-#
-#   expect_error(
-#     compute_impact_per_site(
-#       cube = acacia_cube,
-#       impact_data = eicat_acacia,
-#       col_category = "impact_category",
-#       col_species = "scientific_name",
-#       col_mechanism = "impact_mechanism",
-#       trans = 1,
-#       method = "precautionary cumulative"
-#     ),
-#     "coords` must be a <dataframe> with columns `siteID`,`X` and `Y`"
-#   )
+
 })

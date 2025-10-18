@@ -108,6 +108,11 @@ compute_impact_indicator <- function(
     # remove occurrences with no impact score
     tidyr::drop_na(max, mean, max_mech)
 
+  # collect the number and names of species in the impact indicator
+  num_of_species <- length(unique(impact_cube_data$scientificName))
+  names_of_species <- sort(unique(impact_cube_data$scientificName))
+  # collect number of cells
+  num_of_cells <- length(unique(impact_cube_data$cellCode))
 
   if (method == "precaut") {
     impact_values <- compute_impact_indicators(impact_cube_data,"max",max)
@@ -127,6 +132,9 @@ compute_impact_indicator <- function(
     ))
   }
   structure(list(method = method,
+                 num_cells = num_of_cells,
+                 num_species = num_of_species,
+                 names_species = names_of_species,
                  impact = impact_values),
             class = "impact_indicator")
 
