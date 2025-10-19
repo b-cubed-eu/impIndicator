@@ -69,7 +69,13 @@ The first two letters each categories must be an EICAT short names
 \item{col_mechanism}{The name of the column containing mechanisms of impact.}
 }
 \value{
-The dataframe of impact indicator per sites (class \code{site_impact})
+A list of class \code{site_impact}, with the following components:
+\itemize{
+\item \code{method}: method used in computing the indicator
+\item \code{num_cells}: number of cells (sites) in the indicator
+\item \code{num_species}:  number of species in the indicator
+\item \code{site_impact}: a dataframe containing impact per sites
+}
 }
 \description{
 Combines occurrences cube and impact data using the given method

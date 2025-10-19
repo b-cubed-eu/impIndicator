@@ -47,7 +47,11 @@
 #' @param col_species The name of the column containing species names.
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 
-#' @return The dataframe of impact indicator per sites (class `site_impact`)
+#' @return A list of class `site_impact`, with the following components:
+#'    - `method`: method used in computing the indicator
+#'    - `num_cells`: number of cells (sites) in the indicator
+#'    - `num_species`:  number of species in the indicator
+#'    - `site_impact`: a dataframe containing impact per sites
 #'
 #' @export
 #'

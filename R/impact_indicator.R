@@ -48,8 +48,12 @@
 #' @param col_species The name of the column containing species names.
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 #'
-#' @return A dataframe of the invasive alien impact trend
-#' (class `impact_indicator`)
+#' @return A list of class `impact_indicator`, with the following components:
+#'    - `method`: method used in computing the indicator
+#'    - `num_cells`: number of cells (sites) in the indicator
+#'    - `num_species`:  number of species in the indicator
+#'    - `names_species`: names of species in the indicator
+#'    - `site_impact`: a dataframe containing total species impact per year
 #'
 #' @export
 #'

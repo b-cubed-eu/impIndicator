@@ -39,7 +39,11 @@
 #' @param col_species The name of the column containing species names.
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 #'
-#' @return A dataframe of impact indicator per species (class `species_impact`).
+#' @return A list of class `species_impact`, with the following components:
+#'    - `method`: method used in computing the indicator
+#'    - `num_species`: number of species in the indicator
+#'    - `names_species`: names of species in the indicator
+#'    - `species_impact`: a dataframe containing impact per species
 #'
 #' @export
 #'
