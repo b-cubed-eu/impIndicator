@@ -136,9 +136,12 @@ The first two letters each categories must be an EICAT short names
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A dataframe of the invasive alien impact trend
-(class <code>impact_indicator</code>)</p>
-    </div>
+    <p>A list of class <code>impact_indicator</code>, with the following components:</p><ul><li><p><code>method</code>: method used in computing the indicator</p></li>
+<li><p><code>num_cells</code>: number of cells (sites) in the indicator</p></li>
+<li><p><code>num_species</code>:  number of species in the indicator</p></li>
+<li><p><code>names_species</code>: names of species in the indicator</p></li>
+<li><p><code>site_impact</code>: a dataframe containing total species impact per year</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Other Indicator function:
