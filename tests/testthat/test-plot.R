@@ -87,7 +87,7 @@ test_that("plot.impact_indicator works", {
 test_that("plot.impact indicator throws error", {
 
   # wrong class of impact indicator
-  wrong_class_impact_indicator <- as.data.frame(impact_value)
+  wrong_class_impact_indicator <- structure(impact_value, class="wrong_class")
   expect_error(plot.impact_indicator(wrong_class_impact_indicator,
                        linewidth = 2,
                        colour = "red",
@@ -124,7 +124,7 @@ test_that("plot.species_impact works", {
                            y_lab = "impact score",
                            text_size = 14))
 
-  some_alien <- names(speciesImpact)[2:5]
+  some_alien <- names(speciesImpact$species_impact)[2:5]
 
   expect_no_error(plot(speciesImpact,
                        alien_species = some_alien,
@@ -167,7 +167,7 @@ test_that("plot.species_impact throws error", {
 
 
   # class is not species_impact
-  wrong_class <- as.data.frame(speciesImpact)
+  wrong_class <- structure(speciesImpact, class = "wrong_class")
   expect_error(plot.species_impact(wrong_class,
                        alien_species = some_alien,
                        linewidth = 2.0,

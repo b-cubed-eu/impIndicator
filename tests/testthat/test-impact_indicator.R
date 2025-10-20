@@ -18,9 +18,9 @@ test_that("impact indicator function return correct result", {
   )
 
   expect_equal(class(result),
-               c("impact_indicator", "tbl_df", "tbl", "data.frame"))
+               "impact_indicator")
 
-  expect_equal(unique(acacia_cube$data$year), result[[1]])
+  expect_equal(unique(acacia_cube$data$year), result$impact[[1]])
 
   expect_no_error(result)
 

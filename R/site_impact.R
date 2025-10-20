@@ -47,7 +47,11 @@
 #' @param col_species The name of the column containing species names.
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 
-#' @return The dataframe of impact indicator per sites (class `site_impact`)
+#' @return A list of class `site_impact`, with the following components:
+#'    - `method`: method used in computing the indicator
+#'    - `num_cells`: number of cells (sites) in the indicator
+#'    - `num_species`:  number of species in the indicator
+#'    - `site_impact`: a dataframe containing impact per sites
 #'
 #' @export
 #'
@@ -108,6 +112,8 @@ compute_impact_per_site <- function(
                                        by = "scientificName"
   ) %>%
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
+  # collect number of species
+  num_of_species <- length(unique(impact_cube_data$scientificName))
 
   if (method == "precaut") {
     site_values <- compute_site_impact(impact_cube_data,"max",max)
@@ -127,7 +133,13 @@ compute_impact_per_site <- function(
     ))
   }
 
+  # collect number of cells
+  num_of_cells <- length(site_values$cellCode)
 
-  class(site_values) <- c("site_impact", class(site_values))
-  return(site_values)
+  structure(list(method = method,
+                 num_cells = num_of_cells,
+                 num_species = num_of_species,
+                 site_impact = site_values),
+            class = "site_impact")
+
 }

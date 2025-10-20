@@ -39,7 +39,11 @@
 #' @param col_species The name of the column containing species names.
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 #'
-#' @return A dataframe of impact indicator per species (class `species_impact`).
+#' @return A list of class `species_impact`, with the following components:
+#'    - `method`: method used in computing the indicator
+#'    - `num_species`: number of species in the indicator
+#'    - `names_species`: names of species in the indicator
+#'    - `species_impact`: a dataframe containing impact per species
 #'
 #' @export
 #'
@@ -98,6 +102,10 @@ compute_impact_per_species <- function(
   ) %>%
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
 
+  # collect the number and names of species in the impact indicator
+  num_of_species <- length(unique(impact_cube_data$scientificName))
+  names_of_species <- sort(unique(impact_cube_data$scientificName))
+
   if (method == "max") {
     species_values<-compute_species_impact(impact_cube_data,"max")
   } else if (method == "mean") {
@@ -110,6 +118,10 @@ compute_impact_per_species <- function(
     ))
   }
   species_values <- tibble::as_tibble(species_values)
-  class(species_values) <- c("species_impact", class(species_values))
-  return(species_values)
+
+  structure(list(method = method,
+                 num_species = num_of_species,
+                 names_species = names_of_species,
+                 species_impact = species_values),
+            class = "species_impact")
 }

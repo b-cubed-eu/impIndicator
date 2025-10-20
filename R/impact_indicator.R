@@ -48,8 +48,12 @@
 #' @param col_species The name of the column containing species names.
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 #'
-#' @return A dataframe of the invasive alien impact trend
-#' (class `impact_indicator`)
+#' @return A list of class `impact_indicator`, with the following components:
+#'    - `method`: method used in computing the indicator
+#'    - `num_cells`: number of cells (sites) in the indicator
+#'    - `num_species`:  number of species in the indicator
+#'    - `names_species`: names of species in the indicator
+#'    - `site_impact`: a dataframe containing total species impact per year
 #'
 #' @export
 #'
@@ -108,6 +112,11 @@ compute_impact_indicator <- function(
     # remove occurrences with no impact score
     tidyr::drop_na(max, mean, max_mech)
 
+  # collect the number and names of species in the impact indicator
+  num_of_species <- length(unique(impact_cube_data$scientificName))
+  names_of_species <- sort(unique(impact_cube_data$scientificName))
+  # collect number of cells
+  num_of_cells <- length(unique(impact_cube_data$cellCode))
 
   if (method == "precaut") {
     impact_values <- compute_impact_indicators(impact_cube_data,"max",max)
@@ -126,7 +135,11 @@ compute_impact_indicator <- function(
       "See the function desciption or double check the spelling"
     ))
   }
+  structure(list(method = method,
+                 num_cells = num_of_cells,
+                 num_species = num_of_species,
+                 names_species = names_of_species,
+                 impact = impact_values),
+            class = "impact_indicator")
 
-  class(impact_values) <- c("impact_indicator", class(impact_values))
-  return(impact_values)
 }

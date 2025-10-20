@@ -14,7 +14,7 @@ test_that("species impact function works", {
                  method  =  "mean")
 
   expect_equal(class(result),
-               c("species_impact", "tbl_df", "tbl", "data.frame"))
+               "species_impact")
 
   expect_no_error(result)
 

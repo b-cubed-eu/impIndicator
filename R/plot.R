@@ -55,7 +55,7 @@ plot.impact_indicator <- function(
   if (!inherits(x, "impact_indicator")) {
     cli::cli_abort("'x' is not a class 'impact_indicator'")
   }
-  ggplot2::ggplot(data = x) +
+  ggplot2::ggplot(data = x$impact) +
     ggplot2::geom_line(ggplot2::aes(y = diversity_val, x = year),
       colour = colour,
       stat = "identity",
@@ -132,7 +132,7 @@ plot.species_impact <- function(
   }
 
   if (length(alien_species) == 1 && alien_species == "all") {
-    x %>%
+    x$species_impact %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
       tidyr::drop_na("impact_score") %>%
@@ -150,7 +150,7 @@ plot.species_impact <- function(
       ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
       ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
   } else if (is.character(alien_species)) {
-    x %>%
+    x$species_impact %>%
       dplyr::select(dplyr::all_of(c("year", alien_species))) %>%
       dplyr::mutate(year = as.numeric(year)) %>%
       tidyr::gather(-year, key = `Alien species`, value = "impact_score") %>%
@@ -236,7 +236,7 @@ plot.site_impact <- function(
     cli::cli_abort("'x' is not a class 'site_impact'")
   }
 
-  x <- x %>%
+  x <- x$site_impact %>%
     tidyr::gather(-c(cellCode, xcoord, ycoord),
                   key = "year", value = "impact") %>%
     stats::na.omit()

@@ -69,8 +69,14 @@ The first two letters each categories must be an EICAT short names
 \item{col_mechanism}{The name of the column containing mechanisms of impact.}
 }
 \value{
-A dataframe of the invasive alien impact trend
-(class \code{impact_indicator})
+A list of class \code{impact_indicator}, with the following components:
+\itemize{
+\item \code{method}: method used in computing the indicator
+\item \code{num_cells}: number of cells (sites) in the indicator
+\item \code{num_species}:  number of species in the indicator
+\item \code{names_species}: names of species in the indicator
+\item \code{site_impact}: a dataframe containing total species impact per year
+}
 }
 \description{
 Combines occurrences cube and impact data using the given method
