@@ -1,3 +1,17 @@
+# impIndicator 0.3.1
+
+* Correct versioning in codemeta file
+
+# impIndicator 0.3.0
+
+* Improve logo
+
+* Improve Readme and vignettes for b-cuded website
+
+* Styling of README and vignettes for b-cuded website
+
+* Return indicators' information
+* 
 # impIndicator 0.2.0
 
 * Improve function names according to B-cubed guidelines
