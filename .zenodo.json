@@ -1,6 +1,6 @@
 {
   "title": "impIndicator: Impact Indicators of Alien Taxa",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "license": "MIT",
   "upload_type": "software",
   "description": "<p>Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species.<\/p>",
