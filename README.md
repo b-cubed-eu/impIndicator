@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# impIndicator <img src="man/figures/logo.png" align="right" height="139" alt="" />
+# impIndicator <img src="man/figures/logo.png" align="right" height="139"/>
 
 <!-- badges: start -->
 
@@ -24,9 +24,9 @@ badge](https://b-cubed-eu.r-universe.dev/badges/:name?color=6CDDB4)](https://b-c
 The goal of **impIndicator** is to allow users to seamlessly calculate
 and visualise the impact of alien taxa and individual species in a given
 area. It calculates and visualises potential impact per site as a map.
-It takes in GBIF occurrence data and EICAT assessment data. It enables
-users to choose from various methods of calculating impact indicators
-based on different assumptions.
+It takes in Global Biodiversity Information Facility (GBIF) occurrence
+cube and EICAT assessment data. It enables users to choose from various
+methods of calculating impact indicators based on different assumptions.
 
 The impIndicator produces three main products:
 
@@ -97,53 +97,54 @@ library(tidyr)     # Data wrangling
 
 ### Process occurrence cube
 
-The Global Biodiversity Information Facility (GBIF) occurrence data is a
-standardised species dataset that documents the presence or absence of
-species at particular locations and time points.
+The `cube_acacia_SA` is a GBIF occurrence cube of Acacia species in
+South Africa, processed with the `process_cube()` function in `b3gbi`
+package. The `cube_acacia_SA` is of extended quarter degree cell. The
+`first_year` and `last_year` arguments process the cube of the year
+ranging from `first_year` to `last_year`.
 
 ``` r
-# Process cube from GBIF occurrence data in the R studio environment
-acacia_cube <- taxa_cube(
-  taxa = taxa_Acacia,
-  region = southAfrica_sf,
-  first_year = 2010
-)
-
+# Process GBIF Acacia occurrence cube
+acacia_cube <- process_cube(cube_name = cube_acacia_SA,
+                            grid_type = "eqdgc",
+                            first_year = 2010,
+                            last_year = 2024)
 acacia_cube
 #> 
-#> Simulated data cube for calculating biodiversity indicators
+#> Processed data cube for calculating biodiversity indicators
 #> 
 #> Date Range: 2010 - 2024 
-#> Number of cells: 415 
-#> Grid reference system: custom 
+#> Single-resolution cube with cell size 0.25degrees 
+#> Number of cells: 461 
+#> Grid reference system: eqdgc 
 #> Coordinate range:
-#>      xmin      xmax      ymin      ymax 
-#>  16.60833  31.60833 -34.69700 -22.94701 
+#>   xmin   xmax   ymin   ymax 
+#>   8.00  31.75 -35.00 -22.75 
 #> 
-#> Total number of observations: 6728 
-#> Number of species represented: 29 
-#> Number of families represented: Data not present 
+#> Total number of observations: 19431 
+#> Number of species represented: 36 
+#> Number of families represented: 1 
 #> 
-#> Kingdoms represented: Data not present 
+#> Kingdoms represented: Plantae 
 #> 
 #> First 10 rows of data (use n = to show more):
 #> 
-#> # A tibble: 6,728 × 8
-#>    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord
-#>    <chr>               <dbl>                  <dbl> <dbl> <chr>     <dbl>  <dbl>
-#>  1 Acacia mearnsii   2979775                      8  2010 1376       30.4  -29.7
-#>  2 Acacia saligna    2978552                      1  2010 206        18.4  -33.9
-#>  3 Acacia implexa    2979232                      1  2010 206        18.4  -33.9
-#>  4 Acacia pycnantha  2978604                      1  2010 206        18.4  -33.9
-#>  5 Acacia cyclops    2980425                    122  2010 668        18.4  -32.2
-#>  6 Acacia mearnsii   2979775                   1100  2010 1110       29.9  -30.7
-#>  7 Acacia mearnsii   2979775                      1  2010 215        20.6  -33.9
-#>  8 Acacia mearnsii   2979775                    110  2010 215        20.6  -33.9
-#>  9 Acacia pycnantha  2978604                   1100  2010 143        19.1  -34.2
-#> 10 Acacia saligna    2978552                      1  2011 206        18.4  -33.9
-#> # ℹ 6,718 more rows
-#> # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters
-#> # ℹ 1 more variable: obs <dbl>
+#> # A tibble: 3,604 × 11
+#>     year cellCode  taxonKey scientificName      obs kingdom family  
+#>    <dbl> <chr>        <dbl> <chr>             <dbl> <chr>   <chr>   
+#>  1  2010 E018S32AD  2980425 Acacia cyclops        1 Plantae Fabaceae
+#>  2  2010 E018S33CD  2979793 Acacia viscidula      1 Plantae Fabaceae
+#>  3  2010 E018S33CD  2980425 Acacia cyclops        1 Plantae Fabaceae
+#>  4  2010 E018S34AB  2978369 Acacia ulicifolia     1 Plantae Fabaceae
+#>  5  2010 E018S34AB  2978604 Acacia pycnantha      1 Plantae Fabaceae
+#>  6  2010 E018S34AB  2978552 Acacia saligna        6 Plantae Fabaceae
+#>  7  2010 E018S34AB  2979232 Acacia implexa        4 Plantae Fabaceae
+#>  8  2010 E019S34AA  2978604 Acacia pycnantha      1 Plantae Fabaceae
+#>  9  2010 E020S33DC  2979775 Acacia mearnsii       3 Plantae Fabaceae
+#> 10  2010 E029S30DD  2979775 Acacia mearnsii       2 Plantae Fabaceae
+#> # ℹ 3,594 more rows
+#> # ℹ 4 more variables: minCoordinateUncertaintyInMeters <dbl>, xcoord <dbl>,
+#> #   ycoord <dbl>, resolution <chr>
 ```
 
 ### EICAT assessment data
@@ -181,7 +182,7 @@ The impact risk map shows the impact score for each site, where multiple
 species can be present. To compute the impact risk per site, aggregated
 scores across species at each site are needed. The `site_impact()` uses
 *max*, *sum* and *mean* metrics to aggregate impact scores across
-species as proposed by Boulesnane-Guengant et al., (in preparation). The
+species as proposed by Boulesnane-Guengant et al. (2025). The
 combinations of within species aggregation metrics for each species and
 across species for each site leads to five methods of calculating an
 impact indicator, namely, **precautionary** (precaut), **precautionary
