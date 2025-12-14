@@ -1,6 +1,6 @@
 Package: impIndicator
 Title: Impact Indicators of Alien Taxa
-Version: 0.2.0
+Version: 0.3.2
 Authors@R: c(
     person("Mukhtar Muhammed", "Yahaya", , "yahayamukhtar.m@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0008-9200-0863", affiliation = "Stellenbosch University (SU)")),

@@ -42,4 +42,4 @@ abstract: "Compute impact indicators of alien taxa using GBIF occurrence cube an
 identifiers:
 - type: url
   value: https://b-cubed-eu.github.io/impIndicator/
-version: 0.1.0
+version: 0.3.2
