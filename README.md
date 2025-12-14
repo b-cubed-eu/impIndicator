@@ -97,11 +97,12 @@ library(tidyr)     # Data wrangling
 
 ### Process occurrence cube
 
-The `cube_acacia_SA` is a GBIF occurrence cube of Acacia species in
+The `cube_acacia_SA` is a GBIF occurrence cube of *Acacia* species in
 South Africa, processed with the `process_cube()` function in `b3gbi`
-package. The `cube_acacia_SA` is of extended quarter degree cell. The
-`first_year` and `last_year` arguments process the cube of the year
-ranging from `first_year` to `last_year`.
+package. The `cube_acacia_SA` grid is an extended quarter degree cell,
+thus specified for the `process_cube.` The `first_year` and `last_year`
+arguments define the temporal range of the cube, restricting the
+processed occurrences to records between `first_year` and `last_year`.
 
 ``` r
 # Process GBIF Acacia occurrence cube
@@ -176,18 +177,23 @@ head(eicat_acacia, 10)
 #> 10 Acacia dealbata   MC              (12) Indirect impacts through interaction …
 ```
 
-### Compute impact map
+### Impact per site
 
-The impact risk map shows the impact score for each site, where multiple
-species can be present. To compute the impact risk per site, aggregated
-scores across species at each site are needed. The `site_impact()` uses
-*max*, *sum* and *mean* metrics to aggregate impact scores across
-species as proposed by Boulesnane-Guengant et al. (2025). The
-combinations of within species aggregation metrics for each species and
-across species for each site leads to five methods of calculating an
-impact indicator, namely, **precautionary** (precaut), **precautionary
-cumulative** (precaut_cum), **mean**, **mean cumulative** (mean_cum) and
-**cumulative** (cum).
+The impact per site is a risk map that shows the impact score for each
+site, where multiple species can be present. To compute the impact map
+per site, aggregated scores across species at each site are needed. The
+`compute_impact_per_site()` uses *max*, *sum* and *mean* metrics to
+aggregate impact scores within species and across species in a site as
+proposed by Boulesnane-Guengant et al. (2025). The combinations of
+within species aggregation metrics for each species and across species
+for each site leads to five methods of calculating an impact indicator,
+namely,
+
+- **precaut** (precautionary),
+- **precaut_cum** (precautionary cumulative),
+- **mean**,
+- **mean_cum** (mean cumulative) and
+- **cum** (cumulative).
 
 ``` r
 siteImpact <- compute_impact_per_site(
@@ -203,13 +209,14 @@ plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
-### Compute impact indicators
+### Compute overall impact indicators
 
 To compute the impact indicator of alien taxa, we sum all the yearly
 impact scores of each site of the study region. To correct for sampling
 effort we divide the yearly impact scores by number of sites in the
 study region with at least a single occurrence throughout the whole
-year.
+year. The impact indicator use one of the methods named above in the
+impact per site.
 
 ``` r
 # Impact indicator
@@ -228,7 +235,10 @@ plot(impactIndicator)
 ### Impact indicator per species
 
 We compute the impact indicator per species by summing the impact risk
-map per species and correct for sampling effort by dividing by $N$.
+map per species and correct for sampling effort by dividing by $N$. The
+`compute_impact_per_species` use *max* (maximum), *mean* or *max_mech*
+(sum of maximum score per mechanism) method to compute the impact per
+species
 
 ``` r
 # Impact indicator per species
