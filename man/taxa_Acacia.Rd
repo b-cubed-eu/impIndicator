@@ -35,6 +35,7 @@ head(taxa_Acacia, 10)
 }
 \seealso{
 Other Data: 
+\code{\link{cube_acacia_SA}},
 \code{\link{eicat_acacia}},
 \code{\link{southAfrica_sf}}
 }
