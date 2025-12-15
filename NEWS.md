@@ -1,3 +1,7 @@
+# impIndicator 0.3.2
+
+* Use GBIF occurrence cube as example
+
 # impIndicator 0.3.1
 
 * Correct versioning in codemeta file

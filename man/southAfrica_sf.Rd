@@ -23,6 +23,7 @@ sf::plot_sf(southAfrica_sf)
 }
 \seealso{
 Other Data: 
+\code{\link{cube_acacia_SA}},
 \code{\link{eicat_acacia}},
 \code{\link{taxa_Acacia}}
 }

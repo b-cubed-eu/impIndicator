@@ -23,6 +23,32 @@
 
 "taxa_Acacia"
 
+#' GBIF Occurrence Cube of acacia in South Africa
+#' An example of occurrence cube of GBIF containing required column for impact
+#' indicator.
+#'
+#' @format A dataframe object containing 4,700 rows and 8 variables
+#' \describe{
+#'   \item{year}{The year the occurrence was recorded}
+#'   \item{eqdcellcode}{The extended quarter degree cell code}
+#'   \item{speciesKey}{The GBIF species identification number}
+#'   \item{species}{The scientific name of species}
+#'   \item{occurrences}{The number of observation in the cell}
+#'   \item{kingdom}{The kingdom name of which the species belong}
+#'   \item{family}{The family name of which the species belong}
+#'   \item{mincoordinateuncertaintyinmeters}{ minimum radius of the uncertainty
+#'   circle around the geographic point}
+#' }
+#'
+#' @family Data
+#'
+#' @examples
+#' head(cube_acacia_SA, 10)
+#'
+#' @source
+#' GBIF.org (16 October 2025) GBIF Occurrence Download \doi{10.15468/dl.zm3keb}
+
+"cube_acacia_SA"
 
 #' South African sf
 #' An example of region sf for impact indicator.
