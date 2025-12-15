@@ -36,7 +36,7 @@
 
     <a class="navbar-brand me-2" href="index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,7 +76,7 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p>The goal of <strong>impIndicator</strong> is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises potential impact per site as a map. It takes in GBIF occurrence data and EICAT assessment data. It enables users to choose from various methods of calculating impact indicators based on different assumptions.</p>
+<p>The goal of <strong>impIndicator</strong> is to allow users to seamlessly calculate and visualise the impact of alien taxa and individual species in a given area. It calculates and visualises potential impact per site as a map. It takes in Global Biodiversity Information Facility (GBIF) occurrence cube and EICAT assessment data. It enables users to choose from various methods of calculating impact indicators based on different assumptions.</p>
 <p>The impIndicator produces three main products:</p>
 <ul>
 <li>
@@ -111,50 +111,49 @@
 <div class="section level3">
 <h3 id="process-occurrence-cube">Process occurrence cube<a class="anchor" aria-label="anchor" href="#process-occurrence-cube"></a>
 </h3>
-<p>The Global Biodiversity Information Facility (GBIF) occurrence data is a standardised species dataset that documents the presence or absence of species at particular locations and time points.</p>
+<p>The <code>cube_acacia_SA</code> is a GBIF occurrence cube of <em>Acacia</em> species in South Africa, processed with the <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">process_cube()</a></code> function in <code>b3gbi</code> package. The <code>cube_acacia_SA</code> grid is an extended quarter degree cell, thus specified for the <code>process_cube.</code> The <code>first_year</code> and <code>last_year</code> arguments define the temporal range of the cube, restricting the processed occurrences to records between <code>first_year</code> and <code>last_year</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Process cube from GBIF occurrence data in the R studio environment</span></span>
-<span><span class="va">acacia_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/taxa_cube.html">taxa_cube</a></span><span class="op">(</span></span>
-<span>  taxa <span class="op">=</span> <span class="va">taxa_Acacia</span>,</span>
-<span>  region <span class="op">=</span> <span class="va">southAfrica_sf</span>,</span>
-<span>  first_year <span class="op">=</span> <span class="fl">2010</span></span>
-<span><span class="op">)</span></span>
-<span></span>
+<code class="sourceCode R"><span><span class="co"># Process GBIF Acacia occurrence cube</span></span>
+<span><span class="va">acacia_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">process_cube</a></span><span class="op">(</span>cube_name <span class="op">=</span> <span class="va">cube_acacia_SA</span>,</span>
+<span>                            grid_type <span class="op">=</span> <span class="st">"eqdgc"</span>,</span>
+<span>                            first_year <span class="op">=</span> <span class="fl">2010</span>,</span>
+<span>                            last_year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span>
 <span><span class="va">acacia_cube</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Simulated data cube for calculating biodiversity indicators</span></span>
+<span><span class="co">#&gt; Processed data cube for calculating biodiversity indicators</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Date Range: 2010 - 2024 </span></span>
-<span><span class="co">#&gt; Number of cells: 415 </span></span>
-<span><span class="co">#&gt; Grid reference system: custom </span></span>
+<span><span class="co">#&gt; Single-resolution cube with cell size 0.25degrees </span></span>
+<span><span class="co">#&gt; Number of cells: 461 </span></span>
+<span><span class="co">#&gt; Grid reference system: eqdgc </span></span>
 <span><span class="co">#&gt; Coordinate range:</span></span>
-<span><span class="co">#&gt;      xmin      xmax      ymin      ymax </span></span>
-<span><span class="co">#&gt;  16.60833  31.60833 -34.69700 -22.94701 </span></span>
+<span><span class="co">#&gt;   xmin   xmax   ymin   ymax </span></span>
+<span><span class="co">#&gt;   8.00  31.75 -35.00 -22.75 </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Total number of observations: 6728 </span></span>
-<span><span class="co">#&gt; Number of species represented: 29 </span></span>
-<span><span class="co">#&gt; Number of families represented: Data not present </span></span>
+<span><span class="co">#&gt; Total number of observations: 19431 </span></span>
+<span><span class="co">#&gt; Number of species represented: 36 </span></span>
+<span><span class="co">#&gt; Number of families represented: 1 </span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Kingdoms represented: Data not present </span></span>
+<span><span class="co">#&gt; Kingdoms represented: Plantae </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; First 10 rows of data (use n = to show more):</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; # A tibble: 6,728 × 8</span></span>
-<span><span class="co">#&gt;    scientificName   taxonKey minCoordinateUncerta…¹  year cellCode xcoord ycoord</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;               &lt;dbl&gt;                  &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 Acacia mearnsii   2979775                      8  2010 1376       30.4  -29.7</span></span>
-<span><span class="co">#&gt;  2 Acacia saligna    2978552                      1  2010 206        18.4  -33.9</span></span>
-<span><span class="co">#&gt;  3 Acacia implexa    2979232                      1  2010 206        18.4  -33.9</span></span>
-<span><span class="co">#&gt;  4 Acacia pycnantha  2978604                      1  2010 206        18.4  -33.9</span></span>
-<span><span class="co">#&gt;  5 Acacia cyclops    2980425                    122  2010 668        18.4  -32.2</span></span>
-<span><span class="co">#&gt;  6 Acacia mearnsii   2979775                   1100  2010 1110       29.9  -30.7</span></span>
-<span><span class="co">#&gt;  7 Acacia mearnsii   2979775                      1  2010 215        20.6  -33.9</span></span>
-<span><span class="co">#&gt;  8 Acacia mearnsii   2979775                    110  2010 215        20.6  -33.9</span></span>
-<span><span class="co">#&gt;  9 Acacia pycnantha  2978604                   1100  2010 143        19.1  -34.2</span></span>
-<span><span class="co">#&gt; 10 Acacia saligna    2978552                      1  2011 206        18.4  -33.9</span></span>
-<span><span class="co">#&gt; # ℹ 6,718 more rows</span></span>
-<span><span class="co">#&gt; # ℹ abbreviated name: ¹​minCoordinateUncertaintyInMeters</span></span>
-<span><span class="co">#&gt; # ℹ 1 more variable: obs &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; # A tibble: 3,604 × 11</span></span>
+<span><span class="co">#&gt;     year cellCode  taxonKey scientificName      obs kingdom family  </span></span>
+<span><span class="co">#&gt;    &lt;dbl&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt;  1  2010 E018S32AD  2980425 Acacia cyclops        1 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  2  2010 E018S33CD  2979793 Acacia viscidula      1 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  3  2010 E018S33CD  2980425 Acacia cyclops        1 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  4  2010 E018S34AB  2978369 Acacia ulicifolia     1 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  5  2010 E018S34AB  2978604 Acacia pycnantha      1 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  6  2010 E018S34AB  2978552 Acacia saligna        6 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  7  2010 E018S34AB  2979232 Acacia implexa        4 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  8  2010 E019S34AA  2978604 Acacia pycnantha      1 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt;  9  2010 E020S33DC  2979775 Acacia mearnsii       3 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt; 10  2010 E029S30DD  2979775 Acacia mearnsii       2 Plantae Fabaceae</span></span>
+<span><span class="co">#&gt; # ℹ 3,594 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 4 more variables: minCoordinateUncertaintyInMeters &lt;dbl&gt;, xcoord &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   ycoord &lt;dbl&gt;, resolution &lt;chr&gt;</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="eicat-assessment-data">EICAT assessment data<a class="anchor" aria-label="anchor" href="#eicat-assessment-data"></a>
@@ -178,9 +177,21 @@
 <span><span class="co">#&gt; 10 Acacia dealbata   MC              (12) Indirect impacts through interaction …</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="compute-impact-map">Compute impact map<a class="anchor" aria-label="anchor" href="#compute-impact-map"></a>
+<h3 id="impact-per-site">Impact per site<a class="anchor" aria-label="anchor" href="#impact-per-site"></a>
 </h3>
-<p>The impact risk map shows the impact score for each site, where multiple species can be present. To compute the impact risk per site, aggregated scores across species at each site are needed. The <code>site_impact()</code> uses <em>max</em>, <em>sum</em> and <em>mean</em> metrics to aggregate impact scores across species as proposed by Boulesnane-Guengant et al., (in preparation). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely, <strong>precautionary</strong> (precaut), <strong>precautionary cumulative</strong> (precaut_cum), <strong>mean</strong>, <strong>mean cumulative</strong> (mean_cum) and <strong>cumulative</strong> (cum).</p>
+<p>The impact per site is a risk map that shows the impact score for each site, where multiple species can be present. To compute the impact map per site, aggregated scores across species at each site are needed. The <code><a href="reference/compute_impact_per_site.html">compute_impact_per_site()</a></code> uses <em>max</em>, <em>sum</em> and <em>mean</em> metrics to aggregate impact scores within species and across species in a site as proposed by Boulesnane-Guengant et al. (2025). The combinations of within species aggregation metrics for each species and across species for each site leads to five methods of calculating an impact indicator, namely,</p>
+<ul>
+<li>
+<strong>precaut</strong> (precautionary),</li>
+<li>
+<strong>precaut_cum</strong> (precautionary cumulative),</li>
+<li>
+<strong>mean</strong>,</li>
+<li>
+<strong>mean_cum</strong> (mean cumulative) and</li>
+<li>
+<strong>cum</strong> (cumulative).</li>
+</ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">siteImpact</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_per_site.html">compute_impact_per_site</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
@@ -194,9 +205,9 @@
 <p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
 </div>
 <div class="section level3">
-<h3 id="compute-impact-indicators">Compute impact indicators<a class="anchor" aria-label="anchor" href="#compute-impact-indicators"></a>
+<h3 id="compute-overall-impact-indicators">Compute overall impact indicators<a class="anchor" aria-label="anchor" href="#compute-overall-impact-indicators"></a>
 </h3>
-<p>To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year.</p>
+<p>To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year. The impact indicator use one of the methods named above in the impact per site.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Impact indicator</span></span>
 <span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_indicator.html">compute_impact_indicator</a></span><span class="op">(</span></span>
@@ -212,7 +223,7 @@
 <div class="section level3">
 <h3 id="impact-indicator-per-species">Impact indicator per species<a class="anchor" aria-label="anchor" href="#impact-indicator-per-species"></a>
 </h3>
-<p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <span class="math inline">\(N\)</span>.</p>
+<p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <span class="math inline">\(N\)</span>. The <code>compute_impact_per_species</code> use <em>max</em> (maximum), <em>mean</em> or <em>max_mech</em> (sum of maximum score per mechanism) method to compute the impact per species</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Impact indicator per species</span></span>
 <span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_per_species.html">compute_impact_per_species</a></span><span class="op">(</span></span>
@@ -294,7 +305,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
