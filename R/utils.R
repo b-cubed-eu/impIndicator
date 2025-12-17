@@ -62,3 +62,31 @@ cat_num <- function(cat, trans) {
 
   return(x[cat])
 }
+
+
+
+#' Intersect cellCode and region
+#'
+#' @param data The cube containing cellCode
+#' @param region The `sf` object of the region of interest
+#'
+#' @returns Vector of the cellCode in the cube that falls in the region
+#' @noRd
+#'
+
+intersect_cell_and_region <- function(data, region) {
+
+  region <- region %>%
+    sf::st_make_valid()
+
+  cell_in_region <- data %>%
+    sf::st_as_sf(
+      coords = c("xcoord", "ycoord"),
+      crs = sf::st_crs(region)
+    ) %>%
+    sf::st_join(region, join = sf::st_within, left = FALSE) %>%
+    sf::st_drop_geometry() %>%
+    dplyr::select("cellCode")
+
+  cell_in_region$cellCode
+}

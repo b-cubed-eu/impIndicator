@@ -11,7 +11,8 @@ compute_impact_per_site(
   trans = 1,
   col_category = NULL,
   col_species = NULL,
-  col_mechanism = NULL
+  col_mechanism = NULL,
+  region = NULL
 )
 }
 \arguments{
@@ -67,6 +68,9 @@ The first two letters each categories must be an EICAT short names
 \item{col_species}{The name of the column containing species names.}
 
 \item{col_mechanism}{The name of the column containing mechanisms of impact.}
+
+\item{region}{The shape file of the specific region to calculate the indicator on.
+If NULL (default), the indicator is calculated for all cells in the cube.}
 }
 \value{
 A list of class \code{site_impact}, with the following components:
