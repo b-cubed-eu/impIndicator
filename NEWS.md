@@ -1,3 +1,8 @@
+# impIndicator 0.4.0
+
+* Allow users to specify region for the indicator to be calculated on.
+The occurrence is intersected with the region provided as shapefile in the
+indicator functions.
 # impIndicator 0.3.2
 
 * Use GBIF occurrence cube as example
