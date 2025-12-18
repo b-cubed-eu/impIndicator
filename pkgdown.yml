@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   background: background.html
   prepare_data: prepare_data.html
-last_built: 2025-12-15T09:14Z
+last_built: 2025-12-18T11:07Z
 urls:
   reference: https://b-cubed-eu.github.io/impIndicator/reference
   article: https://b-cubed-eu.github.io/impIndicator/articles

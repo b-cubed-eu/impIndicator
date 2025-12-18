@@ -14,7 +14,8 @@ compute_impact_indicator(
   trans = 1,
   col_category = NULL,
   col_species = NULL,
-  col_mechanism = NULL
+  col_mechanism = NULL,
+  region = NULL
 )
 ```
 
@@ -89,6 +90,12 @@ compute_impact_indicator(
 - col_mechanism:
 
   The name of the column containing mechanisms of impact.
+
+- region:
+
+  The shape file of the specific region to calculate the indicator on.
+  If NULL (default), the indicator is calculated for all cells in the
+  cube.
 
 ## Value
 

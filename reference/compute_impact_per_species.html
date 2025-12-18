@@ -15,7 +15,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,7 +42,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Compute species impact indicator</h1>
-      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/v0.3.2/R/species_impact.R" class="external-link"><code>R/species_impact.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/main/R/species_impact.R" class="external-link"><code>R/species_impact.R</code></a></small>
       <div class="d-none name"><code>compute_impact_per_species.Rd</code></div>
     </div>
 
@@ -60,7 +60,8 @@
 <span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  col_category <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  col_mechanism <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  col_mechanism <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  region <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -121,6 +122,11 @@ The first two letters each categories must be an EICAT short names
 
 <dt id="arg-col-mechanism">col_mechanism<a class="anchor" aria-label="anchor" href="#arg-col-mechanism"></a></dt>
 <dd><p>The name of the column containing mechanisms of impact.</p></dd>
+
+
+<dt id="arg-region">region<a class="anchor" aria-label="anchor" href="#arg-region"></a></dt>
+<dd><p>The shape file of the specific region to calculate the indicator on.
+If NULL (default), the indicator is calculated for all cells in the cube.</p></dd>
 
 </dl></div>
     <div class="section level2">
