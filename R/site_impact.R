@@ -46,6 +46,8 @@
 #' (e.g "MC - Minimal concern").
 #' @param col_species The name of the column containing species names.
 #' @param col_mechanism The name of the column containing mechanisms of impact.
+#' @param region The shape file of the specific region to calculate the indicator on.
+#' If NULL (default), the indicator is calculated for all cells in the cube.
 
 #' @return A list of class `site_impact`, with the following components:
 #'    - `method`: method used in computing the indicator
@@ -80,7 +82,8 @@ compute_impact_per_site <- function(
     trans = 1,
     col_category = NULL,
     col_species = NULL,
-    col_mechanism = NULL) {
+    col_mechanism = NULL,
+    region = NULL) {
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech <- NULL
 
@@ -93,6 +96,13 @@ compute_impact_per_site <- function(
       )
   }
 
+  # region is NULL or an sf
+  if(!(is.null(region) || "sf" %in% class(region))){
+    cli::cli_abort(
+      c("{.var region} is not a class {.cls sf}",
+        "i" = "{.var region} must be a class {.cls sf} if provided")
+    )
+  }
   # get species list
   full_species_list <- sort(unique(cube$data$scientificName))
 
@@ -112,6 +122,16 @@ compute_impact_per_site <- function(
                                        by = "scientificName"
   ) %>%
     tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
+
+  if(!is.null(region)){
+    # Extract cellCode that falls in the region
+    cell_in_region <- intersect_cell_and_region(cube$data,region)
+
+    # Select cells that falls in the given region
+    impact_cube_data <- impact_cube_data %>%
+      dplyr::filter(cellCode %in% cell_in_region)
+  }
+
   # collect number of species
   num_of_species <- length(unique(impact_cube_data$scientificName))
 
