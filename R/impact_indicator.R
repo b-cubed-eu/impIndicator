@@ -96,6 +96,14 @@ compute_impact_indicator <- function(
       )
   }
 
+  # region is NULL or an sf
+  if(!(is.null(region) || "sf" %in% class(region))){
+    cli::cli_abort(
+      c("{.var region} is not a class {.cls sf}",
+        "i" = "{.var region} must be a class {.cls sf} if provided")
+    )
+  }
+
   # get species list
   full_species_list <- sort(unique(cube$data$scientificName))
 
