@@ -2,13 +2,13 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "impIndicator",
-  "description": "Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species.",
+  "description": "The negative impact of alien species is recognised as a major threat to biodiversity. However, in the absence of evidence-based impact indicators that follow the Findable, Accessible, Interoperable, and Reusable (FAIR) Data Principles with standardised workflows, the impacts of alien species are not systematically estimated over time, a major gap for policy. We develop the impIndicator R package, using an open-source workflow for computing impact indicators of alien species, by combining occurrence data from the Global Biodiversity Information Facility (GBIF) with Environmental Impact Classification for Alien Taxa (EICAT) assessments.",
   "name": "impIndicator: Impact Indicators of Alien Taxa",
   "relatedLink": "https://b-cubed-eu.github.io/impIndicator/",
   "codeRepository": "https://github.com/b-cubed-eu/impIndicator",
   "issueTracker": "https://github.com/b-cubed-eu/impIndicator/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
@@ -328,7 +328,7 @@
           "familyName": "Hui"
         }
       },
-      "name": "impIndicator: Impact Indicators of Alien Taxa. Version 0.4.0",
+      "name": "impIndicator: Impact Indicators of Alien Taxa. Version 0.5.0",
       "url": "https://b-cubed-eu.github.io/impIndicator/"
     }
   ],
