@@ -89,12 +89,20 @@ compute_impact_indicator <- function(
 
   # check arguments
   # cube
-  if (!("sim_cube" %in% class(cube) || "processed_cube" %in% class(cube))) {
+
+  if ("sim_cube" %in% class(cube) || "processed_cube" %in% class(cube)){
+    cube<-cube$data
+  } else if ( "data.frame" %in% class(cube)){
+    cube<-cube
+  } else {
+
     cli::cli_abort(
-      c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
-      "i" = "cube must be processed from `b3gbi`")
-      )
+      c("{.var cube} must be a class {.cls data.frame}, {.cls sim_cube} or {.cls processed_cube}",
+        "i" = "cube must be processed from `b3gbi`")
+    )
+
   }
+
 
   # region is NULL or an sf
   if(!(is.null(region) || "sf" %in% class(region))){
@@ -104,34 +112,16 @@ compute_impact_indicator <- function(
     )
   }
 
-  # get species list
-  full_species_list <- sort(unique(cube$data$scientificName))
 
-  # get impact score list
-  impact_score_list <- impact_cat(
-    impact_data = impact_data,
-    species_list = full_species_list,
-    trans = trans,
-    col_category = col_category,
-    col_species = col_species,
-    col_mechanism = col_mechanism
-  )
+  # merge occurrence cube and impact data
+  impact_cube_data <- create_impact_cube_data(cube_data = cube,
+                                              impact_data = impact_data,
+                                              trans = trans,
+                                              col_category = col_category,
+                                              col_species = col_species,
+                                              col_mechanism = col_mechanism,
+                                              region = region)
 
-  # create cube with impact score
-  impact_cube_data <- dplyr::left_join(
-    cube$data, impact_score_list, by = "scientificName") %>%
-    # remove occurrences with no impact score
-    tidyr::drop_na(max, mean, max_mech)
-
-
-  # Extract cellCode that falls in the region if the region is provided
-  if(!is.null(region)){
-    cell_in_region <- intersect_cell_and_region(cube$data,region)
-
-    # Select cells that falls in the given region
-    impact_cube_data <- impact_cube_data %>%
-      dplyr::filter(cellCode %in% cell_in_region)
-  }
 
   # collect the number and names of species in the impact indicator
   num_of_species <- length(unique(impact_cube_data$scientificName))
@@ -162,5 +152,4 @@ compute_impact_indicator <- function(
                  names_species = names_of_species,
                  impact = impact_values),
             class = "impact_indicator")
-
 }

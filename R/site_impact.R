@@ -84,18 +84,22 @@ compute_impact_per_site <- function(
     col_species = NULL,
     col_mechanism = NULL,
     region = NULL) {
-  # avoid "no visible binding for global variable" NOTE for the following names
-  cellCode <- xcoord <- ycoord <-  taxonKey <- year <- max_mech <- NULL
+
 
   # check arguments
   # cube
-  if (!("sim_cube" %in% class(cube) || "processed_cube" %in% class(cube))) {
-    cli::cli_abort(
-      c("{.var cube} must be a class {.cls sim_cube} or {.cls processed_cube}",
-                     "i" = "cube must be processed from `b3gbi`")
-      )
-  }
+  if ("sim_cube" %in% class(cube) || "processed_cube" %in% class(cube)){
+    cube<-cube$data
+  } else if ( "data.frame" %in% class(cube)){
+    cube<-cube
+  } else {
 
+    cli::cli_abort(
+      c("{.var cube} must be a class {.cls data.frame}, {.cls sim_cube} or {.cls processed_cube}",
+        "i" = "cube must be processed from `b3gbi`")
+    )
+
+  }
   # region is NULL or an sf
   if(!(is.null(region) || "sf" %in% class(region))){
     cli::cli_abort(
@@ -103,34 +107,16 @@ compute_impact_per_site <- function(
         "i" = "{.var region} must be a class {.cls sf} if provided")
     )
   }
-  # get species list
-  full_species_list <- sort(unique(cube$data$scientificName))
 
-  # get impact score list
-  impact_score_list <- impact_cat(
-    impact_data = impact_data,
-    species_list = full_species_list,
-    trans = trans,
-    col_category = col_category,
-    col_species = col_species,
-    col_mechanism = col_mechanism
+  # merge occurrence cube and impact data
+  impact_cube_data <- create_impact_cube_data(cube_data = cube,
+                          impact_data = impact_data,
+                          trans = trans,
+                          col_category = col_category,
+                          col_species = col_species,
+                          col_mechanism = col_mechanism,
+                          region = region)
 
-  )
-
-  # create cube with impact score
-  impact_cube_data <- dplyr::left_join(cube$data, impact_score_list,
-                                       by = "scientificName"
-  ) %>%
-    tidyr::drop_na(max, mean, max_mech) #remove occurrences with no impact score
-
-  if(!is.null(region)){
-    # Extract cellCode that falls in the region
-    cell_in_region <- intersect_cell_and_region(cube$data,region)
-
-    # Select cells that falls in the given region
-    impact_cube_data <- impact_cube_data %>%
-      dplyr::filter(cellCode %in% cell_in_region)
-  }
 
   # collect number of species
   num_of_species <- length(unique(impact_cube_data$scientificName))
