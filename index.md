@@ -79,8 +79,8 @@ these functions.
 library(impIndicator)
 
 library(b3gbi)     # General biodiversity indicators for data cubes
-library(ggplot2)   # Visualisation
-library(tidyr)     # Data wrangling
+library(tidyverse)   # Visualisation
+library(dubicube)  # Data sensitivity and uncertainty estimation
 ```
 
 ### Process occurrence cube
@@ -167,7 +167,7 @@ head(eicat_acacia, 10)
 #> 10 Acacia dealbata   MC              (12) Indirect impacts through interaction …
 ```
 
-### Impact per site
+### Site impact indicator
 
 The impact per site is a risk map that shows the impact score for each
 site, where multiple species can be present. To compute the impact map
@@ -199,7 +199,7 @@ plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 
 ![](reference/figures/README-unnamed-chunk-4-1.png)
 
-### Compute overall impact indicators
+### Overall impact indicators
 
 To compute the impact indicator of alien taxa, we sum all the yearly
 impact scores of each site of the study region. To correct for sampling
@@ -222,7 +222,7 @@ plot(impactIndicator)
 
 ![](reference/figures/README-unnamed-chunk-5-1.png)
 
-### Impact indicator per species
+### Species impact indicator
 
 We compute the impact indicator per species by summing the impact risk
 map per species and correct for sampling effort by dividing by \\N\\.
@@ -243,3 +243,37 @@ plot(species_value)
 ```
 
 ![](reference/figures/README-unnamed-chunk-6-1.png)
+
+### Sensitivity analysis
+
+To estimate how the impact indicator is sensitive to a taxon and
+indicating how the taxon e.g., species can disproportionately influence
+the impact indicator. We can use a leave-one-species-out
+cross-validation (LOSO-CV) technique. This technique evaluates the
+extent to which the overall indicator is driven by individual species by
+systematically recalculating the indicator after excluding one species
+at a time and comparing the resulting values to those obtained from the
+full occurrence cube. The deviation between the left out species
+indicator and the full-data indicator provides a measure of error
+attributable to species omission and can be summarised using the root
+mean square error (RMSE) for each year. RMSE values indicate whether
+observed trends are robust or disproportionately influenced by
+particular species. We use the `cross_validation()` from **dubicube**
+package to perform the LOSO-CV. Details and tutorial about the LOSO-CV
+calculation can be found here
+<https://b-cubed-eu.github.io/dubicube/articles/group-level-sensitivity.html>
+
+![](reference/figures/README-unnamed-chunk-8-1.png)
+
+The above plot shows the RMSE of the impact indicator of Acacia species
+is South Africa. The figure indicates the values from the year 2019 are
+sensitive or dominated by some individual species in the indicator.
+
+![](reference/figures/README-unnamed-chunk-9-1.png)
+
+The above figure shows the impact indicator value and LOSO-CV Error of
+each species from the year 2017. The LOSO-CV indicates that the impact
+indicator value will increase (if positive) or decrease(if negative) by
+the corresponding value of where the species lies in the y-axis. The
+impact indicator is majorly influenced by *Acacia saligna* and *Acacia
+mearnsii* from the year 2019.

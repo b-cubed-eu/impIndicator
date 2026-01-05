@@ -30,17 +30,17 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/b-cubed-eu/impIndicator/blob/v0.4.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/b-cubed-eu/impIndicator/blob/main/inst/CITATION)
 
 Yahaya, Mukhtar Muhammed; Kumschick, Sabrina; MacFadyen, Sandra; Landi,
 Pietro; Hui, Cang (2025) impIndicator: Impact Indicators of Alien Taxa.
 Version 0.1.0. https://b-cubed-eu.github.io/impIndicator/
 
     @Manual{,
-      title = {impIndicator: Impact Indicators of Alien Taxa. Version 0.1.0},
+      title = {impIndicator: Impact Indicators of Alien Taxa. Version 0.5.0},
       author = {Mukhtar Muhammed Yahaya and Sabrina Kumschick and Sandra MacFadyen and Pietro Landi and Cang Hui},
       year = {2025},
       url = {https://b-cubed-eu.github.io/impIndicator/},
-      abstract = {Compute impact indicators of alien taxa using GBIF occurrence cube and EICAT assessment of alien species. Aggregates species impact of various scores due to mecahnism. Aggregates site impact of various scores due to species.},
+      abstract = {The negative impact of alien species is recognised as a major threat to biodiversity. However, in the absence of evidence-based impact indicators that follow the Findable, Accessible, Interoperable, and Reusable (FAIR) Data Principles with standardised workflows, the impacts of alien species are not systematically estimated over time, a major gap for policy. We develop the impIndicator R package, using an open-source workflow for computing impact indicators of alien species, by combining occurrence data from the Global Biodiversity Information Facility (GBIF) with Environmental Impact Classification for Alien Taxa (EICAT) assessments.},
       keywords = {impact; alien species; biodiversity indicators; data cubes},
     }
