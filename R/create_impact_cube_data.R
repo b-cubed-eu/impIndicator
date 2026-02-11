@@ -1,4 +1,8 @@
-#' Title
+#' Create impact cube data
+#'
+#' @description
+#' This function combines the occurrence cube data and impact data,
+#' named impact_cube_data.
 #'
 #' @param cube_data A dataframe of a cube ( $data slot) of class `sim_cube` or `processed_cube` from
 #' `b3gbi::process_cube()`.
@@ -18,7 +22,8 @@
 #' @param region The shape file of the specific region to calculate the indicator on.
 #' If NULL (default), the indicator is calculated for all cells in the cube.
 #'
-#' @returns A dataframe of cube of impact and occurrence cube.
+#' @returns A dataframe of containing impact data and occurrence cube. The class
+#' is `impact_cube`
 #' @export
 #'
 #' @examples
@@ -42,6 +47,19 @@ create_impact_cube_data<-function(cube_data,
                                   region = NULL){
   # avoid "no visible binding for global variable" NOTE for the following names
   cellCode <-  max_mech <- NULL
+
+  if ("sim_cube" %in% class(cube_data) || "processed_cube" %in% class(cube_data)){
+    cube_data<-cube_data$data
+  } else if ( "data.frame" %in% class(cube_data)){
+    cube_data<-cube_data
+  } else {
+
+    cli::cli_abort(
+      c("{.var cube_data} must be a class {.cls data.frame}, {.cls sim_cube} or {.cls processed_cube}",
+        "i" = "cube must be processed from `b3gbi`")
+    )
+
+  }
 
   # get species list
   full_species_list <- sort(unique(cube_data$scientificName))
@@ -71,5 +89,6 @@ create_impact_cube_data<-function(cube_data,
       dplyr::filter(cellCode %in% cell_in_region)
   }
 
+  class(impact_cube_data)<-c("impact_cube",class(impact_cube_data))
   return(impact_cube_data)
 }
