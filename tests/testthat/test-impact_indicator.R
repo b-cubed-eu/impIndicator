@@ -1,10 +1,9 @@
 # Define cube
-acacia_cube <- taxa_cube(
-  taxa = taxa_Acacia,
-  region = southAfrica_sf,
-  res = 0.25,
-  first_year = 2010
-)
+library(b3gbi) # for processing cube
+acacia_cube <- process_cube(cube_name = cube_acacia_SA,
+                            grid_type = "eqdgc",
+                            first_year = 2010,
+                            last_year = 2024)
 
 test_that("impact indicator function return correct result", {
   result <- compute_impact_indicator(
@@ -34,6 +33,15 @@ test_that("impact indicator function return correct result", {
     method = "mean_cum"
   ))
 
+  expect_no_error(compute_impact_indicator(
+    cube = acacia_cube$data,
+    impact_data = eicat_acacia,
+    col_category = "impact_category",
+    col_species = "scientific_name",
+    col_mechanism = "impact_mechanism",
+    trans = 1,
+    method = "mean_cum"
+  ))
   expect_no_error(compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
@@ -74,6 +82,28 @@ test_that("impact indicator function return correct result", {
     trans = 1,
     method = "precaut"
   ))
+
+  expect_no_error(compute_impact_indicator(
+    cube = acacia_cube,
+    impact_data = eicat_acacia,
+    col_category = "impact_category",
+    col_species = "scientific_name",
+    col_mechanism = "impact_mechanism",
+    trans = 1,
+    method = "precaut",
+    region = southAfrica_sf
+  ))
+
+  impact_cube<-create_impact_cube_data(
+    cube_data = acacia_cube,
+    impact_data = eicat_acacia
+  )
+
+  expect_no_error(compute_impact_indicator(
+    cube = impact_cube,
+    method = "precaut"
+  ))
+
 })
 
 test_that("impact indicator function returns errors", {

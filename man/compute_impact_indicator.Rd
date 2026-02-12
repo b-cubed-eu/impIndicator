@@ -16,13 +16,15 @@ compute_impact_indicator(
 )
 }
 \arguments{
-\item{cube}{The data cube of class \code{sim_cube} or \code{processed_cube} from
-\code{b3gbi::process_cube()}.}
+\item{cube}{A data cube object (class 'processed_cube' or 'sim_cube', processed
+from \code{b3gbi::process_cube()}) or a dataframe (cf. \verb{$data} slot of
+'processed_cube' or 'sim_cube') or an impact cube (class 'impact_cube' from
+\code{create_impact_cube_data})}
 
-\item{impact_data}{The dataframe of species impact which contains columns of
+\item{impact_data}{A dataframe of species impact which contains columns of
 \code{impact_category}, \code{scientific_name} and \code{impact_mechanism}.}
 
-\item{method}{The method of computing the indicator. The method used in
+\item{method}{A method of computing the indicator. The method used in
 the aggregation of within and across species in a site proposed
 by Boulesnane-Genguant et al. (submitted).
 The method can be one of
