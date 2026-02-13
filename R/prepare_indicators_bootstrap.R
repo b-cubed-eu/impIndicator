@@ -63,8 +63,16 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
                                          no_bias = TRUE,
                                          out_var = "taxonKey",
                                          conf = 0.95) {
+
+  # Check impact_cube_data
+  if(!("impact_cube" %in% class(impact_cube_data))){
+    cli::cli_abort(c("{.var impact_cube_data} must be an impact cube object",
+                     "x"="{.var impact_cube_data} is not a {.cls impact_cube}"))
+  }
+
   # Check type of indicator
   indicator <- match.arg(indicator)
+
 
   if (indicator %in% c("site", "species")) {
     cli::cli_abort("There is no method for indicator {indicator} currently")

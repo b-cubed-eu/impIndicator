@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_indicators_bootstrap.R
 \name{prepare_indicators_bootstrap}
 \alias{prepare_indicators_bootstrap}
-\title{Prepare indicators for bootstrap and cross validation}
+\title{Prepare indicators for bootstrap}
 \usage{
 prepare_indicators_bootstrap(
   impact_cube_data,
@@ -62,22 +62,25 @@ A named list with three items:
 }
 }
 \description{
-Prepare indicators for bootstrap and cross validation
+Prepare indicators for bootstrap
 }
 \examples{
 library(b3gbi) # for processing cube
-acacia_cube <- process_cube(cube_name = cube_acacia_SA,
-                          grid_type = "eqdgc",
-                          first_year = 2010,
-                           last_year = 2024)
+acacia_cube <- process_cube(
+  cube_name = cube_acacia_SA,
+  grid_type = "eqdgc",
+  first_year = 2010,
+  last_year = 2024
+)
 
 impact_cube <- create_impact_cube_data(
   cube_data = acacia_cube$data,
   impact_data = eicat_acacia,
 )
 
-prepare_indicators_bootstrap(impact_cube_data = impact_cube,
-indicator = "overall",
-indicator_method = "mean_cum"
+prepare_indicators_bootstrap(
+  impact_cube_data = impact_cube,
+  indicator = "overall",
+  indicator_method = "mean_cum"
 )
 }
