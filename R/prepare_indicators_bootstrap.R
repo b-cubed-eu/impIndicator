@@ -1,4 +1,4 @@
-#' Prepare indicators for bootstrap and cross validation
+#' Prepare indicators for bootstrap
 #'
 #' @param impact_cube_data An impact cube object (class 'impact_cube' from `create_impact_cube_data`)
 #' @param indicator An impact indicator to be computed. Options are 'overall',
@@ -37,51 +37,53 @@
 #'
 #' @examples
 #' library(b3gbi) # for processing cube
-#'acacia_cube <- process_cube(cube_name = cube_acacia_SA,
-#'                           grid_type = "eqdgc",
-#'                           first_year = 2010,
-#'                            last_year = 2024)
+#' acacia_cube <- process_cube(
+#'   cube_name = cube_acacia_SA,
+#'   grid_type = "eqdgc",
+#'   first_year = 2010,
+#'   last_year = 2024
+#' )
 #'
 #' impact_cube <- create_impact_cube_data(
 #'   cube_data = acacia_cube$data,
 #'   impact_data = eicat_acacia,
 #' )
 #'
-#' prepare_indicators_bootstrap(impact_cube_data = impact_cube,
-#' indicator = "overall",
-#' indicator_method = "mean_cum"
+#' prepare_indicators_bootstrap(
+#'   impact_cube_data = impact_cube,
+#'   indicator = "overall",
+#'   indicator_method = "mean_cum"
 #' )
-prepare_indicators_bootstrap<-function(impact_cube_data,
-                                       indicator=c("overall","site","species"),
-                                       indicator_method,
-                                       num_bootstrap=1000,
-                                       grouping_var = "year",
-                                       ci_type="perc",
-                                       no_bias = TRUE,
-                                       out_var = "taxonKey",
-                                       conf = 0.95
-                                       ){
+prepare_indicators_bootstrap <- function(impact_cube_data,
+                                         indicator = c("overall", "site", "species"),
+                                         indicator_method,
+                                         num_bootstrap = 1000,
+                                         grouping_var = "year",
+                                         ci_type = "perc",
+                                         no_bias = TRUE,
+                                         out_var = "taxonKey",
+                                         conf = 0.95) {
   # Check type of indicator
   indicator <- match.arg(indicator)
 
-  if (indicator %in% c("site","species")){
+  if (indicator %in% c("site", "species")) {
     cli::cli_abort("There is no method for indicator {indicator} currently")
   }
 
 
   # Boot function for overall impact indicator
-  boot_function<-function(impact_cube_data,
-                          indicator_method){
-    impact_values<-impIndicator::compute_impact_indicator(
+  boot_function <- function(impact_cube_data,
+                            indicator_method) {
+    impact_values <- impIndicator::compute_impact_indicator(
       cube = impact_cube_data,
       method = indicator_method
     )
-    impact_values<-impact_values$impact
+    impact_values <- impact_values$impact
     impact_values
   }
 
   # Bootstrap parameter
-  bootstrap_params<- list(
+  bootstrap_params <- list(
     data_cube = impact_cube_data,
     fun = boot_function,
     indicator_method = indicator_method,
@@ -97,21 +99,10 @@ prepare_indicators_bootstrap<-function(impact_cube_data,
     no_bias = no_bias
   )
 
-  # Cross-validation parameter
-  cv_params<- list(
-    data_cube = impact_cube_data,
-    fun = boot_function,
-    indicator_method = indicator_method,
-    grouping_var = grouping_var,
-    out_var = out_var,
-    processed_cube = FALSE
-  )
-
   return(
-    list(bootstrap_params = bootstrap_params,
-         ci_params = ci_params,
-         cv_params = cv_params)
+    list(
+      bootstrap_params = bootstrap_params,
+      ci_params = ci_params
+    )
   )
 }
-
-
