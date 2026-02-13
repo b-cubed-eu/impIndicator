@@ -33,7 +33,7 @@
 #'                           first_year = 2010,
 #'                            last_year = 2024)
 #'
-#' impact_value <- create_impact_cube_data(
+#' impact_cube <- create_impact_cube_data(
 #'   cube_data = acacia_cube$data,
 #'   impact_data = eicat_acacia,
 #' )
