@@ -2,7 +2,7 @@ citHeader("To cite `impIndicator` in publications please use:")
 # begin checklist entry
 bibentry(
   bibtype = "Manual",
-  title = "impIndicator: Impact Indicators of Alien Taxa. Version 0.5.0",
+  title = "impIndicator: Impact Indicators of Alien Taxa. Version 0.6.0",
   author = c( author = c(person(given = "Mukhtar Muhammed", family = "Yahaya"), person(given = "Sabrina", family = "Kumschick"), person(given = "Sandra", family = "MacFadyen"), person(given = "Pietro", family = "Landi"), person(given = "Cang", family = "Hui"))),
   year = 2025,
   url = "https://b-cubed-eu.github.io/impIndicator/",
