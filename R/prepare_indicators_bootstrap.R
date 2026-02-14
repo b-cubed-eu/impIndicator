@@ -20,17 +20,22 @@
 #'   - `"bca"`: Bias-corrected and accelerated interval
 #'   - `"norm"`: Normal interval
 #'   - `"basic"`: Basic interval
-#' @param no_bias Logical. If TRUE intervals are centered around the original estimates (bias is ignored). Default is TRUE
+#' @param no_bias Logical. If TRUE intervals are centered around the original
+#' estimates (bias is ignored). Default is TRUE
 #' @param out_var A string specifying the column by which the data should be
 #' left out iteratively. Default is `"taxonKey"` which can be used for
 #' leave-one-species-out CV.
-#' @param conf A numeric value specifying the confidence level of the intervals. Default is 0.95 (95 % confidence level).
+#' @param conf A numeric value specifying the confidence level of the intervals.
+#'  Default is 0.95 (95 % confidence level).
+#' @param seed A positive numeric value setting the seed for random number
+#' generation to ensure reproducibility. If `NA` (default), then `set.seed()`
+#' is not called at all. If not `NA`, then the random number generator state is
+#' reset (to the state before calling this function) upon exiting this function.
 #'
-#' @return A named list with three items:
+#' @return A named list with two items:
 #' \describe{
 #'   \item{bootstrap_params}{List of parameters for \code{bootstrap_cube()}}
 #'   \item{ci_params}{List of parameters for \code{calculate_bootstrap_ci()}}
-#'   \item{cv_params}{List of parameters for \code{cross_validate_cube()}}
 #' }
 #'
 #' @export
@@ -62,7 +67,8 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
                                          ci_type = "perc",
                                          no_bias = TRUE,
                                          out_var = "taxonKey",
-                                         conf = 0.95) {
+                                         conf = 0.95,
+                                         seed = NA) {
 
   # Check impact_cube_data
   if(!("impact_cube" %in% class(impact_cube_data))){
@@ -97,7 +103,8 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
     indicator_method = indicator_method,
     samples = num_bootstrap,
     grouping_var = grouping_var,
-    processed_cube = FALSE
+    processed_cube = FALSE,
+    seed = seed
   )
 
   # Confidence interval parameter

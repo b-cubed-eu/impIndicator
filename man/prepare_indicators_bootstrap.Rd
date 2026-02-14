@@ -13,7 +13,8 @@ prepare_indicators_bootstrap(
   ci_type = "perc",
   no_bias = TRUE,
   out_var = "taxonKey",
-  conf = 0.95
+  conf = 0.95,
+  seed = NA
 )
 }
 \arguments{
@@ -45,20 +46,26 @@ to compute. Options include:
 \item \code{"basic"}: Basic interval
 }}
 
-\item{no_bias}{Logical. If TRUE intervals are centered around the original estimates (bias is ignored). Default is TRUE}
+\item{no_bias}{Logical. If TRUE intervals are centered around the original
+estimates (bias is ignored). Default is TRUE}
 
 \item{out_var}{A string specifying the column by which the data should be
 left out iteratively. Default is \code{"taxonKey"} which can be used for
 leave-one-species-out CV.}
 
-\item{conf}{A numeric value specifying the confidence level of the intervals. Default is 0.95 (95 \% confidence level).}
+\item{conf}{A numeric value specifying the confidence level of the intervals.
+Default is 0.95 (95 \% confidence level).}
+
+\item{seed}{A positive numeric value setting the seed for random number
+generation to ensure reproducibility. If \code{NA} (default), then \code{set.seed()}
+is not called at all. If not \code{NA}, then the random number generator state is
+reset (to the state before calling this function) upon exiting this function.}
 }
 \value{
-A named list with three items:
+A named list with two items:
 \describe{
 \item{bootstrap_params}{List of parameters for \code{bootstrap_cube()}}
 \item{ci_params}{List of parameters for \code{calculate_bootstrap_ci()}}
-\item{cv_params}{List of parameters for \code{cross_validate_cube()}}
 }
 }
 \description{

@@ -26,6 +26,19 @@ test_that("prepare_indicators_bootstrap works", {
     out_var = "taxonKey",
     conf = 0.95
   ))
+
+  expect_no_error(prepare_indicators_bootstrap(
+    impact_cube_data = impact_cube,
+    indicator = "overall",
+    indicator_method = "mean_cum",
+    num_bootstrap = 1000,
+    grouping_var = "year",
+    ci_type = "perc",
+    no_bias = TRUE,
+    out_var = "taxonKey",
+    conf = 0.95,
+    seed = 123
+  ))
 })
 
 
