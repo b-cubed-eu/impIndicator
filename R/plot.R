@@ -11,6 +11,8 @@
 #' @param y_lab Label of the y-axis. Default is "Impact score"
 #' @param x_lab Label of the x-axis. Default is "Year"
 #' @param text_size The size of the text of the plot. Default is "14"
+#' @param ribbon_colour The colour of the ribbon if data includes "ul" and "ll".
+#' The default is "lightsteelblue1"
 #' @param ... Additional arguments passed to geom_line
 #'
 #' @return The ggplot object of the impact indicator, with the y- and x-axes
@@ -48,18 +50,22 @@ plot.impact_indicator <- function(
     y_lab = "Impact value",
     x_lab = "Year",
     text_size = 14,
+    ribbon_colour = "lightsteelblue1",
     ...) {
   # avoid R CMD warnings
-  value <- year <- diversity_val <- NULL
+  value <- year <- diversity_val <- ul <- ll <- NULL
 
   if (!inherits(x, "impact_indicator")) {
     cli::cli_abort("'x' is not a class 'impact_indicator'")
   }
-  ggplot2::ggplot(data = x$impact) +
-    ggplot2::geom_line(ggplot2::aes(y = diversity_val, x = year),
+
+
+  p <- ggplot2::ggplot(data = x$impact) +
+    ggplot2::geom_line(
+      ggplot2::aes(x = year, y = diversity_val),
       colour = colour,
-      stat = "identity",
-      linewidth = linewidth, ...
+      linewidth = linewidth,
+      ...
     ) +
     ggplot2::labs(
       title = title_lab,
@@ -67,9 +73,24 @@ plot.impact_indicator <- function(
       x = x_lab
     ) +
     ggplot2::theme_minimal() +
-    ggplot2::theme(text = ggplot2::element_text(size = text_size)) +
+    ggplot2::theme(
+      text = ggplot2::element_text(size = text_size)
+    ) +
     ggplot2::scale_x_continuous(breaks = breaks_pretty_int(n = 10)) +
     ggplot2::scale_y_continuous(breaks = breaks_pretty_int(n = 6))
+
+  # plot interval if x contains lower limit and upper limit
+  if (all(c("ll", "ul") %in% names(x$impact))) {
+    p <- p +
+      ggplot2::geom_ribbon(
+        ggplot2::aes(x = year, ymin = ll, ymax = ul),
+        alpha = 0.5,
+        fill = ribbon_colour
+      )
+  }
+
+  p
+
 }
 
 #' Plot species impact

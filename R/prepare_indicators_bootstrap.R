@@ -1,4 +1,4 @@
-#' Prepare indicators for bootstrap
+#' Prepare indicators for bootstrap  and cross validation
 #'
 #' @param impact_cube_data An impact cube object (class 'impact_cube' from `create_impact_cube_data`)
 #' @param indicator An impact indicator to be computed. Options are 'overall',
@@ -88,11 +88,23 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
   # Boot function for overall impact indicator
   boot_function <- function(impact_cube_data,
                             indicator_method) {
-    impact_values <- impIndicator::compute_impact_indicator(
-      cube = impact_cube_data,
-      method = indicator_method
-    )
-    impact_values <- impact_values$impact
+    if (indicator_method == "precaut") {
+      impact_values <- compute_impact_indicators(impact_cube_data,"max",max)
+    } else if (indicator_method == "precaut_cum") {
+      impact_values <- compute_impact_indicators(impact_cube_data,"max",sum)
+    } else if (indicator_method == "mean") {
+      impact_values <- compute_impact_indicators(impact_cube_data,"mean",mean)
+    } else if (indicator_method == "mean_cum") {
+      impact_values <- compute_impact_indicators(impact_cube_data,"mean",sum)
+    } else if (indicator_method == "cum") {
+      impact_values <- compute_impact_indicators(impact_cube_data,"max_mech",sum)
+    } else {
+      cli::cli_abort(c(
+        "{.var indicator_method} is not valid",
+        "x" = "{.var indicator_method} must be from the options provided",
+        "See the function desciption or double check the spelling"
+      ))
+    }
     impact_values
   }
 
@@ -104,7 +116,8 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
     samples = num_bootstrap,
     grouping_var = grouping_var,
     processed_cube = FALSE,
-    seed = seed
+    seed = seed,
+    method = "whole_cube"
   )
 
   # Confidence interval parameter
@@ -114,10 +127,19 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
     no_bias = no_bias
   )
 
+  # Cross-validation parameter
+  cv_params<- list(
+    data_cube = impact_cube_data,
+    fun = boot_function,
+    indicator_method = indicator_method,
+    grouping_var = grouping_var,
+    out_var = out_var,
+    processed_cube = FALSE
+  )
+
   return(
-    list(
-      bootstrap_params = bootstrap_params,
-      ci_params = ci_params
-    )
+    list(bootstrap_params = bootstrap_params,
+         ci_params = ci_params,
+         cv_params = cv_params)
   )
 }

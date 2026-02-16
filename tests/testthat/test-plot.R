@@ -1,20 +1,25 @@
-acacia_cube <- taxa_cube(
-  taxa = taxa_Acacia,
-  region = southAfrica_sf,
-  res = 0.25,
-  first_year = 2010
-)
+library(b3gbi) # for processing cube
+acacia_cube <- process_cube(cube_name = cube_acacia_SA,
+                            grid_type = "eqdgc",
+                            first_year = 2010,
+                            last_year = 2024)
 
 # compute impact indicator
 impact_value <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  col_category = "impact_category",
-  col_species = "scientific_name",
-  col_mechanism = "impact_mechanism",
-  trans = 1,
   method = "mean_cum"
 )
+
+# impact indicator with confidence interval
+impact_value_ci <- compute_impact_indicator(
+  cube = acacia_cube,
+  impact_data = eicat_acacia,
+  method = "mean_cum",
+  ci = TRUE,
+  num_bootstrap = 100
+)
+
 
 test_that("plot.impact_indicator works", {
 
@@ -80,6 +85,25 @@ test_that("plot.impact_indicator works", {
                        y_lab = "impact score",
                        text_size = 14,
                        linejoin = "round"
+
+  ))
+
+  expect_no_error(plot(impact_value_ci,
+                       linewidth = 2,
+                       colour = "red",
+                       title_lab = "Impact indicator",
+                       y_lab = "impact score",
+                       text_size = 14
+
+  ))
+
+  expect_no_error(plot(impact_value_ci,
+                       linewidth = 2,
+                       colour = "red",
+                       title_lab = "Impact indicator",
+                       y_lab = "impact score",
+                       text_size = 14,
+                       ribbon_colour = "black"
 
   ))
 })

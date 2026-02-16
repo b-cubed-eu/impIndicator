@@ -13,7 +13,9 @@ test_that("impact indicator function return correct result", {
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
     trans = 1,
-    method = "mean_cum"
+    method = "mean_cum",
+    ci = TRUE,
+    num_bootstrap = 100
   )
 
   expect_equal(class(result),
@@ -91,7 +93,8 @@ test_that("impact indicator function return correct result", {
     col_mechanism = "impact_mechanism",
     trans = 1,
     method = "precaut",
-    region = southAfrica_sf
+    region = southAfrica_sf,
+    ci = FALSE
   ))
 
   impact_cube<-create_impact_cube_data(
@@ -150,5 +153,16 @@ i see the function documentation for details"
     col_mechanism = "impact_mechanism",
     trans = 1,
     method = "mean_cum"
+  ))
+
+  expect_error(compute_impact_indicator(
+    cube = acacia_cube,
+    impact_data = eicat_acacia,
+    col_category = "impact_category",
+    col_species = "scientific_name",
+    col_mechanism = "impact_mechanism",
+    trans = 1,
+    method = "mean_cum",
+    ci = "a"
   ))
 })

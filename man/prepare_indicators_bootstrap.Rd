@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_indicators_bootstrap.R
 \name{prepare_indicators_bootstrap}
 \alias{prepare_indicators_bootstrap}
-\title{Prepare indicators for bootstrap}
+\title{Prepare indicators for bootstrap  and cross validation}
 \usage{
 prepare_indicators_bootstrap(
   impact_cube_data,
@@ -69,7 +69,7 @@ A named list with two items:
 }
 }
 \description{
-Prepare indicators for bootstrap
+Prepare indicators for bootstrap  and cross validation
 }
 \examples{
 library(b3gbi) # for processing cube

@@ -12,6 +12,7 @@
   y_lab = "Impact value",
   x_lab = "Year",
   text_size = 14,
+  ribbon_colour = "lightsteelblue1",
   ...
 )
 }
@@ -30,6 +31,9 @@
 \item{x_lab}{Label of the x-axis. Default is "Year"}
 
 \item{text_size}{The size of the text of the plot. Default is "14"}
+
+\item{ribbon_colour}{The colour of the ribbon if data includes "ul" and "ll".
+The default is "lightsteelblue1"}
 
 \item{...}{Additional arguments passed to geom_line}
 }
