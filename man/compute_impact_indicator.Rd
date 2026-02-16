@@ -12,7 +12,15 @@ compute_impact_indicator(
   col_category = NULL,
   col_species = NULL,
   col_mechanism = NULL,
-  region = NULL
+  region = NULL,
+  ci = FALSE,
+  ci_type = "perc",
+  num_bootstrap = 1000,
+  grouping_var = "year",
+  no_bias = TRUE,
+  out_var = "taxonKey",
+  conf = 0.95,
+  seed = NA
 )
 }
 \arguments{
@@ -73,6 +81,44 @@ The first two letters each categories must be an EICAT short names
 
 \item{region}{The shape file of the specific region to calculate the indicator on.
 If NULL (default), the indicator is calculated for all cells in the cube.}
+
+\item{ci}{A logical value. TRUE or FALSE (Default)}
+
+\item{ci_type}{A character vector specifying the type of confidence intervals
+to compute. Options include:
+\itemize{
+\item \code{"perc"}: Percentile interval (Default)
+\item \code{"bca"}: Bias-corrected and accelerated interval
+\item \code{"norm"}: Normal interval
+\item \code{"basic"}: Basic interval
+}}
+
+\item{num_bootstrap}{The number of bootstrap replicates. A single positive integer.
+Default is 1000.}
+
+\item{grouping_var}{A character vector specifying the grouping variable(s)
+for the bootstrap analysis. The function \code{fun()} should
+return a row per group. The specified variables must not be redundant,
+meaning they should not contain the same information (e.g., \code{"time_point"}
+(1, 2, 3) and \code{"year"} (2000, 2001, 2002) should not be used together if
+\code{"time_point"} is just an alternative encoding of \code{"year"}).
+This variable is used to split the dataset into groups for separate
+confidence interval calculations.}
+
+\item{no_bias}{If TRUE intervals are centered around the original
+estimates (bias is ignored). Default is TRUE}
+
+\item{out_var}{A string specifying the column by which the data should be
+left out iteratively. Default is \code{"taxonKey"} which can be used for
+leave-one-species-out CV.}
+
+\item{conf}{A numeric value specifying the confidence level of the intervals.
+Default is 0.95 (95 \% confidence level).}
+
+\item{seed}{A positive numeric value setting the seed for random number
+generation to ensure reproducibility. If \code{NA} (default), then \code{set.seed()}
+is not called at all. If not \code{NA}, then the random number generator state is
+reset (to the state before calling this function) upon exiting this function.}
 }
 \value{
 A list of class \code{impact_indicator}, with the following components:
