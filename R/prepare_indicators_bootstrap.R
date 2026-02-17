@@ -1,4 +1,11 @@
-#' Prepare indicators for bootstrap  and cross validation
+#' Prepare indicators for bootstrap and cross validation
+#'
+#' @description
+#' Create the parameters required to perform bootstrapping (`bootstrap_cube()`),
+#' calculate confidence interval (`calculate_bootstrap_ci()`), and
+#' cross-validation (`cross_validate_cube()`). The bootstrap and confidence interval
+#' can be perform directly from indicator functions.
+#'
 #'
 #' @param impact_cube_data An impact cube object (class 'impact_cube' from `create_impact_cube_data`)
 #' @param indicator An impact indicator to be computed. Options are 'overall',
@@ -32,10 +39,11 @@
 #' is not called at all. If not `NA`, then the random number generator state is
 #' reset (to the state before calling this function) upon exiting this function.
 #'
-#' @return A named list with two items:
+#' @return A named list with three items:
 #' \describe{
 #'   \item{bootstrap_params}{List of parameters for \code{bootstrap_cube()}}
 #'   \item{ci_params}{List of parameters for \code{calculate_bootstrap_ci()}}
+#'    \item{cv_params}{List of parameters for \code{cross_validate_cube()}}
 #' }
 #'
 #' @export
@@ -50,15 +58,28 @@
 #' )
 #'
 #' impact_cube <- create_impact_cube_data(
-#'   cube_data = acacia_cube$data,
+#'   cube_data = acacia_cube,
 #'   impact_data = eicat_acacia,
 #' )
 #'
-#' prepare_indicators_bootstrap(
+#' params <- prepare_indicators_bootstrap(
 #'   impact_cube_data = impact_cube,
 #'   indicator = "overall",
 #'   indicator_method = "mean_cum"
 #' )
+#'
+#' ## it can be used to:
+#' # call bootstrap function from dubicube
+#' bootstrap_results <- do.call(dubicube::bootstrap_cube, params$bootstrap_params)
+#'
+#' # confidence interval function
+#' ci_result <- do.call(
+#'   dubicube::calculate_bootstrap_ci,
+#'   c(bootstrap_results = list(bootstrap_results), params$ci_params)
+#' )
+#'
+#' # cross-validate overall impact indicator
+#' cv_results <- do.call(dubicube::cross_validate_cube, params$cv_params)
 prepare_indicators_bootstrap <- function(impact_cube_data,
                                          indicator = c("overall", "site", "species"),
                                          indicator_method,
@@ -69,11 +90,11 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
                                          out_var = "taxonKey",
                                          conf = 0.95,
                                          seed = NA) {
-
   # Check impact_cube_data
-  if(!("impact_cube" %in% class(impact_cube_data))){
+  if (!("impact_cube" %in% class(impact_cube_data))) {
     cli::cli_abort(c("{.var impact_cube_data} must be an impact cube object",
-                     "x"="{.var impact_cube_data} is not a {.cls impact_cube}"))
+      "x" = "{.var impact_cube_data} is not a {.cls impact_cube}"
+    ))
   }
 
   # Check type of indicator
@@ -89,15 +110,15 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
   boot_function <- function(impact_cube_data,
                             indicator_method) {
     if (indicator_method == "precaut") {
-      impact_values <- compute_impact_indicators(impact_cube_data,"max",max)
+      impact_values <- compute_impact_indicators(impact_cube_data, "max", max)
     } else if (indicator_method == "precaut_cum") {
-      impact_values <- compute_impact_indicators(impact_cube_data,"max",sum)
+      impact_values <- compute_impact_indicators(impact_cube_data, "max", sum)
     } else if (indicator_method == "mean") {
-      impact_values <- compute_impact_indicators(impact_cube_data,"mean",mean)
+      impact_values <- compute_impact_indicators(impact_cube_data, "mean", mean)
     } else if (indicator_method == "mean_cum") {
-      impact_values <- compute_impact_indicators(impact_cube_data,"mean",sum)
+      impact_values <- compute_impact_indicators(impact_cube_data, "mean", sum)
     } else if (indicator_method == "cum") {
-      impact_values <- compute_impact_indicators(impact_cube_data,"max_mech",sum)
+      impact_values <- compute_impact_indicators(impact_cube_data, "max_mech", sum)
     } else {
       cli::cli_abort(c(
         "{.var indicator_method} is not valid",
@@ -128,7 +149,7 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
   )
 
   # Cross-validation parameter
-  cv_params<- list(
+  cv_params <- list(
     data_cube = impact_cube_data,
     fun = boot_function,
     indicator_method = indicator_method,
@@ -138,8 +159,10 @@ prepare_indicators_bootstrap <- function(impact_cube_data,
   )
 
   return(
-    list(bootstrap_params = bootstrap_params,
-         ci_params = ci_params,
-         cv_params = cv_params)
+    list(
+      bootstrap_params = bootstrap_params,
+      ci_params = ci_params,
+      cv_params = cv_params
+    )
   )
 }

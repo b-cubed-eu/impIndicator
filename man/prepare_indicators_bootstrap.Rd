@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_indicators_bootstrap.R
 \name{prepare_indicators_bootstrap}
 \alias{prepare_indicators_bootstrap}
-\title{Prepare indicators for bootstrap  and cross validation}
+\title{Prepare indicators for bootstrap and cross validation}
 \usage{
 prepare_indicators_bootstrap(
   impact_cube_data,
@@ -62,14 +62,18 @@ is not called at all. If not \code{NA}, then the random number generator state i
 reset (to the state before calling this function) upon exiting this function.}
 }
 \value{
-A named list with two items:
+A named list with three items:
 \describe{
 \item{bootstrap_params}{List of parameters for \code{bootstrap_cube()}}
 \item{ci_params}{List of parameters for \code{calculate_bootstrap_ci()}}
+\item{cv_params}{List of parameters for \code{cross_validate_cube()}}
 }
 }
 \description{
-Prepare indicators for bootstrap  and cross validation
+Create the parameters required to perform bootstrapping (\code{bootstrap_cube()}),
+calculate confidence interval (\code{calculate_bootstrap_ci()}), and
+cross-validation (\code{cross_validate_cube()}). The bootstrap and confidence interval
+can be perform directly from indicator functions.
 }
 \examples{
 library(b3gbi) # for processing cube
@@ -81,13 +85,26 @@ acacia_cube <- process_cube(
 )
 
 impact_cube <- create_impact_cube_data(
-  cube_data = acacia_cube$data,
+  cube_data = acacia_cube,
   impact_data = eicat_acacia,
 )
 
-prepare_indicators_bootstrap(
+params <- prepare_indicators_bootstrap(
   impact_cube_data = impact_cube,
   indicator = "overall",
   indicator_method = "mean_cum"
 )
+
+## it can be used to:
+# call bootstrap function from dubicube
+bootstrap_results <- do.call(dubicube::bootstrap_cube, params$bootstrap_params)
+
+# confidence interval function
+ci_result <- do.call(
+  dubicube::calculate_bootstrap_ci,
+  c(bootstrap_results = list(bootstrap_results), params$ci_params)
+)
+
+# cross-validate overall impact indicator
+cv_results <- do.call(dubicube::cross_validate_cube, params$cv_params)
 }
