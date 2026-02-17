@@ -13,8 +13,7 @@ compute_impact_indicator(
   col_species = NULL,
   col_mechanism = NULL,
   region = NULL,
-  ci = FALSE,
-  ci_type = "perc",
+  ci_type = c("perc", "bca", "norm", "basic", "none"),
   num_bootstrap = 1000,
   grouping_var = "year",
   no_bias = TRUE,
@@ -82,8 +81,6 @@ The first two letters each categories must be an EICAT short names
 \item{region}{The shape file of the specific region to calculate the indicator on.
 If NULL (default), the indicator is calculated for all cells in the cube.}
 
-\item{ci}{A logical value. TRUE or FALSE (Default)}
-
 \item{ci_type}{A character vector specifying the type of confidence intervals
 to compute. Options include:
 \itemize{
@@ -91,6 +88,7 @@ to compute. Options include:
 \item \code{"bca"}: Bias-corrected and accelerated interval
 \item \code{"norm"}: Normal interval
 \item \code{"basic"}: Basic interval
+\item \code{"none"}: No intervals are calculated
 }}
 
 \item{num_bootstrap}{The number of bootstrap replicates. A single positive integer.
@@ -146,7 +144,8 @@ impact_value <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
-  trans = 1
+  trans = 1,
+  ci_type = "none"
 )
 }
 \seealso{

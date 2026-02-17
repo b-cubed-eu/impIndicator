@@ -224,7 +224,7 @@ impact scores of each site of the study region. To correct for sampling
 effort, we divide the yearly impact scores by the number of sites in the
 study region with at least a single occurrence throughout the whole
 year. The impact indicator use one of the methods named above in the
-impact per site. The `ci = TRUE` allows the function
+impact per site. The `ci_type` arguemnt allows the function
 `compute_impact_indicator()` to calculate the confidence interval of the
 overall impact indicator using a bootstrapping method via the
 **dubicube** package. The `seed = 123` makes the bootstrap to generate
@@ -236,10 +236,9 @@ impactIndicator <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
-  ci = TRUE,
+  ci_type = "perc",
   seed = 123
 )
-#> [1] "Performing whole-cube bootstrap."
 
 # Visualise impact indicator
 plot(impactIndicator, trend = "smooth")

@@ -14,7 +14,7 @@ test_that("impact indicator function return correct result", {
     col_mechanism = "impact_mechanism",
     trans = 1,
     method = "mean_cum",
-    ci = TRUE,
+    ci_type = "perc",
     num_bootstrap = 100
   )
 
@@ -94,7 +94,7 @@ test_that("impact indicator function return correct result", {
     trans = 1,
     method = "precaut",
     region = southAfrica_sf,
-    ci = FALSE
+    ci_type = "none"
   ))
 
   impact_cube<-create_impact_cube_data(
@@ -163,6 +163,6 @@ i see the function documentation for details"
     col_mechanism = "impact_mechanism",
     trans = 1,
     method = "mean_cum",
-    ci = "a"
+    ci_type = "a"
   ))
 })

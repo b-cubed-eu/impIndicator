@@ -51,13 +51,13 @@
 #' @param col_mechanism The name of the column containing mechanisms of impact.
 #' @param region The shape file of the specific region to calculate the indicator on.
 #' If NULL (default), the indicator is calculated for all cells in the cube.
-#' @param ci A logical value. TRUE or FALSE (Default)
 #' @param ci_type A character vector specifying the type of confidence intervals
 #' to compute. Options include:
 #'   - `"perc"`: Percentile interval (Default)
 #'   - `"bca"`: Bias-corrected and accelerated interval
 #'   - `"norm"`: Normal interval
 #'   - `"basic"`: Basic interval
+#'   - `"none"`: No intervals are calculated
 #' @param num_bootstrap The number of bootstrap replicates. A single positive integer.
 #' Default is 1000.
 #' @param grouping_var A character vector specifying the grouping variable(s)
@@ -102,7 +102,8 @@
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",
-#'   trans = 1
+#'   trans = 1,
+#'   ci_type = "none"
 #' )
 
 compute_impact_indicator <- function(
@@ -114,8 +115,7 @@ compute_impact_indicator <- function(
     col_species = NULL,
     col_mechanism = NULL,
     region = NULL,
-    ci = FALSE,
-    ci_type = "perc",
+    ci_type = c("perc", "bca", "norm", "basic", "none"),
     num_bootstrap = 1000,
     grouping_var = "year",
     no_bias = TRUE,
@@ -150,9 +150,7 @@ compute_impact_indicator <- function(
     )
   }
 
-  if (!(ci %in% c(TRUE,FALSE))){
-    cli::cli_abort("'ci' must either be TRUE or FALSE")
-  }
+  ci_type <- match.arg(ci_type, c("perc", "bca", "norm", "basic", "none"))
 
   # Create impact cube data if the cube is not have impact data
   if (!("impact_cube" %in% class(cube))){
@@ -178,7 +176,7 @@ compute_impact_indicator <- function(
   # collect number of cells
   num_of_cells <- length(unique(impact_cube_data$cellCode))
 
-  if(ci == TRUE){
+  if(ci_type != "none"){
     # prepare indicator for bootstrap
     params <- prepare_indicators_bootstrap(impact_cube_data = impact_cube_data,
                                            indicator = "overall",
