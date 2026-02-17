@@ -46,7 +46,7 @@ VignetteBuilder:
     knitr
 Remotes:  
     github::b-cubed-eu/b3gbi,
-    https://b-cubed-eu.r-universe.dev
+    github::b-cubed-eu/dubicube
 Additional_repositories: https://b-cubed-eu.r-universe.dev/
 Config/testthat/edition: 3
 Encoding: UTF-8
