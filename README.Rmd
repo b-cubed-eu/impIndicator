@@ -200,7 +200,7 @@ impactIndicator <- compute_impact_indicator(
 )
 
 # Visualise impact indicator
-plot(impactIndicator)
+plot(impactIndicator, trend = "smooth")
 ```
 
 ### Species impact indicator

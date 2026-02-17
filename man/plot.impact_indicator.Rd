@@ -6,43 +6,50 @@
 \usage{
 \method{plot}{impact_indicator}(
   x,
-  linewidth = 2,
-  colour = "red",
-  title_lab = "Overall impact indicator",
-  y_lab = "Impact value",
-  x_lab = "Year",
-  text_size = 14,
-  ribbon_colour = "lightsteelblue1",
-  ...
+  trend = c("none", "line", "smooth"),
+  point_args = list(),
+  errorbar_args = list(),
+  trend_args = list(),
+  ribbon_args = list()
 )
 }
 \arguments{
-\item{x}{A dataframe of impact indicator. Must be a class of
-"impact_indicator"}
+\item{x}{An object of class \code{"impact_indicator"} as returned by
+\code{compute_impact_indicator()}.}
 
-\item{linewidth}{The width size of the line. Default is 2}
+\item{trend}{Character string indicating how the central trend should be
+displayed. One of:
+\describe{
+\item{"none"}{No trend line is added.}
+\item{"line"}{A straight line connecting yearly values.}
+\item{"smooth"}{A loess-smoothed trend.}
+}}
 
-\item{colour}{The colour of the line Default is "red"}
+\item{point_args}{A named list of arguments passed to
+\code{ggplot2::geom_point()} to customise the appearance of the yearly
+impact estimates (e.g. \code{size}, \code{colour}, \code{shape}).}
 
-\item{title_lab}{Title of the plot. Default is "Impact indicator"}
+\item{errorbar_args}{A named list of arguments passed to
+\code{ggplot2::geom_errorbar()} to customise the uncertainty intervals,
+if lower (\code{ll}) and upper (\code{ul}) limits are available in
+\code{x$impact}.}
 
-\item{y_lab}{Label of the y-axis. Default is "Impact score"}
+\item{trend_args}{A named list of arguments passed to the trend layer
+(\code{ggplot2::geom_line()} or \code{ggplot2::geom_smooth()},
+depending on \code{trend}) to customise its appearance (e.g.
+\code{colour}, \code{linewidth}, \code{linetype}, \code{alpha}).}
 
-\item{x_lab}{Label of the x-axis. Default is "Year"}
-
-\item{text_size}{The size of the text of the plot. Default is "14"}
-
-\item{ribbon_colour}{The colour of the ribbon if data includes "ul" and "ll".
-The default is "lightsteelblue1"}
-
-\item{...}{Additional arguments passed to geom_line}
+\item{ribbon_args}{A named list of arguments passed to
+\code{ggplot2::geom_ribbon()} to customise the uncertainty ribbon,
+if lower (\code{ll}) and upper (\code{ul}) limits are available.}
 }
 \value{
-The ggplot object of the impact indicator, with the y- and x-axes
-representing the impact score and time respectively.
+A \code{ggplot} object representing the overall impact indicator
+over time, with years on the x-axis and impact values on the y-axis.
 }
 \description{
-Produces a ggplot object to show the trend of the overall impact indicator.
+Produces a \code{ggplot2} object showing the temporal trend of the
+overall impact indicator.
 }
 \examples{
 # create data_cube
@@ -61,8 +68,17 @@ impact_value <- compute_impact_indicator(
   trans = 1
 )
 
-# plot impact indicator
+# default plot
 plot(impact_value)
+
+# customised plot
+plot(
+  impact_value,
+  trend = "smooth",
+  point_args = list(size = 3, colour = "darkred"),
+  trend_args = list(colour = "black", linewidth = 1),
+  ribbon_args = list(fill = "grey80", alpha = 0.3)
+)
 }
 \seealso{
 Other Plot: 

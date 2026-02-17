@@ -33,10 +33,12 @@ Imports:
     rgbif,
     rlang,
     rnaturalearth,
+    scales,
     sf,
     stats,
     tibble,
-    tidyr
+    tidyr,
+    utils
 Suggests: 
     knitr,
     rmarkdown,
