@@ -8,75 +8,93 @@ prepare_indicators_bootstrap(
   impact_cube_data,
   indicator = c("overall", "site", "species"),
   indicator_method,
-  num_bootstrap = 1000,
   grouping_var = "year",
   ci_type = "perc",
-  no_bias = TRUE,
-  out_var = "taxonKey",
-  conf = 0.95,
-  seed = NA
+  confidence_level = 0.95,
+  boot_args = list(samples = 1000, seed = NA),
+  ci_args = list(no_bias = TRUE),
+  out_var = "taxonKey"
 )
 }
 \arguments{
-\item{impact_cube_data}{An impact cube object (class 'impact_cube' from \code{create_impact_cube_data})}
+\item{impact_cube_data}{An impact cube object (class \code{"impact_cube"})
+created with \code{create_impact_cube_data()}.}
 
-\item{indicator}{An impact indicator to be computed. Options are 'overall',
-'site', and 'species'.}
+\item{indicator}{Character string specifying the impact indicator to be
+computed. Options are \code{"overall"}, \code{"site"}, and \code{"species"}.}
 
-\item{indicator_method}{A method to compute impact indicator (see methods in \code{impact_indicator})}
-
-\item{num_bootstrap}{The number of bootstrap replicates. A single positive integer.
-Default is 1000.}
+\item{indicator_method}{Character string specifying the method used to
+compute the impact indicator (see methods in \code{compute_impact_indicator()}).}
 
 \item{grouping_var}{A character vector specifying the grouping variable(s)
-for the bootstrap analysis. The function \code{fun()} should
-return a row per group. The specified variables must not be redundant,
-meaning they should not contain the same information (e.g., \code{"time_point"}
-(1, 2, 3) and \code{"year"} (2000, 2001, 2002) should not be used together if
-\code{"time_point"} is just an alternative encoding of \code{"year"}).
-This variable is used to split the dataset into groups for separate
-confidence interval calculations.}
+for the bootstrap and confidence interval calculations. The function
+supplied to \code{bootstrap_cube()} must return one row per group. The specified
+variables must not be redundant (e.g., \code{"time_point"} and \code{"year"} should
+not both be used if one is simply an alternative encoding of the other).}
 
-\item{ci_type}{A character vector specifying the type of confidence intervals
+\item{ci_type}{Character string specifying the type of confidence interval
 to compute. Options include:
 \itemize{
-\item \code{"perc"}: Percentile interval (Default)
+\item \code{"perc"}: Percentile interval (default)
 \item \code{"bca"}: Bias-corrected and accelerated interval
-\item \code{"norm"}: Normal interval
-\item \code{"basic"}: Basic interval
+\item \code{"norm"}: Normal approximation interval
+\item \code{"basic"}: Basic bootstrap interval
 }}
 
-\item{no_bias}{Logical. If TRUE intervals are centered around the original
-estimates (bias is ignored). Default is TRUE}
+\item{confidence_level}{Numeric value specifying the confidence level for
+the intervals. Default is \code{0.95} (95\% confidence level). This value is
+passed internally as \code{conf} to \code{calculate_bootstrap_ci()}.}
 
-\item{out_var}{A string specifying the column by which the data should be
-left out iteratively. Default is \code{"taxonKey"} which can be used for
-leave-one-species-out CV.}
+\item{boot_args}{Named list of additional arguments passed to
+\code{dubicube::bootstrap_cube()}. Defaults are:
+\describe{
+\item{samples}{Number of bootstrap replicates (default \code{1000}).}
+\item{seed}{Seed for reproducibility (default \code{NA}, meaning no call to \code{set.seed()}).}
+}
+User-supplied values override these defaults. Arguments that are
+internally defined in this function (e.g., \code{data_cube}, \code{fun},
+\code{indicator_method}, \code{grouping_var}, \code{processed_cube}, \code{method})
+must not be supplied via \code{boot_args}.}
 
-\item{conf}{A numeric value specifying the confidence level of the intervals.
-Default is 0.95 (95 \% confidence level).}
+\item{ci_args}{Named list of additional arguments passed to
+\code{dubicube::calculate_bootstrap_ci()}. Default is:
+\describe{
+\item{no_bias}{Logical; if \code{TRUE}, intervals are centered around the
+original estimates (bias is ignored).}
+}
+User-supplied values override defaults. The arguments \code{grouping_var},
+\code{type}, and \code{conf} are controlled via \code{grouping_var}, \code{ci_type}, and
+\code{confidence_level}, respectively, and must not be supplied via \code{ci_args}.}
 
-\item{seed}{A positive numeric value setting the seed for random number
-generation to ensure reproducibility. If \code{NA} (default), then \code{set.seed()}
-is not called at all. If not \code{NA}, then the random number generator state is
-reset (to the state before calling this function) upon exiting this function.}
+\item{out_var}{Character string specifying the column used for
+leave-one-out cross-validation. Default is \code{"taxonKey"}, which enables
+leave-one-species-out cross-validation.}
 }
 \value{
-A named list with three items:
+A named list with three components:
 \describe{
-\item{bootstrap_params}{List of parameters for \code{bootstrap_cube()}}
-\item{ci_params}{List of parameters for \code{calculate_bootstrap_ci()}}
-\item{cv_params}{List of parameters for \code{cross_validate_cube()}}
+\item{bootstrap_params}{List of parameters for \code{dubicube::bootstrap_cube()}.}
+\item{ci_params}{List of parameters for \code{dubicube::calculate_bootstrap_ci()}.}
+\item{cv_params}{List of parameters for \code{dubicube::cross_validate_cube()}.}
 }
 }
 \description{
-Create the parameters required to perform bootstrapping (\code{bootstrap_cube()}),
-calculate confidence interval (\code{calculate_bootstrap_ci()}), and
-cross-validation (\code{cross_validate_cube()}). The bootstrap and confidence interval
-can be perform directly from indicator functions.
+Create the parameter lists required to perform bootstrapping
+(\code{dubicube::bootstrap_cube()}), calculate confidence intervals
+(\code{dubicube::calculate_bootstrap_ci()}), and perform cross-validation
+(\code{dubicube::cross_validate_cube()}).
+
+This function is primarily intended for internal use by indicator
+functions, but can also be used directly to construct parameter lists
+for manual calls to the underlying \code{dubicube} functions.
+
+Default bootstrap and confidence interval arguments are internally
+defined and can be modified via \code{boot_args} and \code{ci_args}. User-supplied
+values override defaults.
 }
 \examples{
-library(b3gbi) # for processing cube
+library(b3gbi)
+
 acacia_cube <- process_cube(
   cube_name = cube_acacia_SA,
   grid_type = "eqdgc",
@@ -86,25 +104,32 @@ acacia_cube <- process_cube(
 
 impact_cube <- create_impact_cube_data(
   cube_data = acacia_cube,
-  impact_data = eicat_acacia,
+  impact_data = eicat_acacia
 )
 
 params <- prepare_indicators_bootstrap(
   impact_cube_data = impact_cube,
   indicator = "overall",
-  indicator_method = "mean_cum"
+  indicator_method = "mean_cum",
+  boot_args = list(samples = 2000),
+  ci_args = list(no_bias = FALSE)
 )
 
-## it can be used to:
-# call bootstrap function from dubicube
-bootstrap_results <- do.call(dubicube::bootstrap_cube, params$bootstrap_params)
+# Bootstrap
+bootstrap_results <- do.call(
+  dubicube::bootstrap_cube,
+  params$bootstrap_params
+)
 
-# confidence interval function
+# Confidence intervals
 ci_result <- do.call(
   dubicube::calculate_bootstrap_ci,
   c(bootstrap_results = list(bootstrap_results), params$ci_params)
 )
 
-# cross-validate overall impact indicator
-cv_results <- do.call(dubicube::cross_validate_cube, params$cv_params)
+# Cross-validation
+cv_results <- do.call(
+  dubicube::cross_validate_cube,
+  params$cv_params
+)
 }

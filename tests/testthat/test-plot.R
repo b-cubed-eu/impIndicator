@@ -17,7 +17,7 @@ impact_value_ci <- compute_impact_indicator(
   impact_data = eicat_acacia,
   method = "mean_cum",
   ci_type = "perc",
-  num_bootstrap = 100
+  boot_args = list(samples = 100)
 )
 
 
