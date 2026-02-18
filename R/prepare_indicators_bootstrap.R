@@ -126,10 +126,6 @@ prepare_indicators_bootstrap <- function(
   # Check type of indicator
   indicator <- match.arg(indicator)
 
-  if (indicator %in% c("site", "species")) {
-    cli::cli_abort("There is no method for indicator {indicator} currently")
-  }
-
   # Defaults
   boot_defaults <- list(
     samples = 1000,
@@ -143,28 +139,49 @@ prepare_indicators_bootstrap <- function(
   boot_args <- utils::modifyList(boot_defaults, boot_args)
   ci_args   <- utils::modifyList(ci_defaults, ci_args)
 
-  # Boot function for overall impact indicator
-  boot_function <- function(impact_cube_data,
-                            indicator_method) {
-    if (indicator_method == "precaut") {
-      impact_values <- compute_impact_indicators(impact_cube_data, "max", max)
-    } else if (indicator_method == "precaut_cum") {
-      impact_values <- compute_impact_indicators(impact_cube_data, "max", sum)
-    } else if (indicator_method == "mean") {
-      impact_values <- compute_impact_indicators(impact_cube_data, "mean", mean)
-    } else if (indicator_method == "mean_cum") {
-      impact_values <- compute_impact_indicators(impact_cube_data, "mean", sum)
-    } else if (indicator_method == "cum") {
-      impact_values <- compute_impact_indicators(impact_cube_data, "max_mech", sum)
-    } else {
-      cli::cli_abort(c(
-        "{.var indicator_method} is not valid",
-        "x" = "{.var indicator_method} must be from the options provided",
-        "See the function desciption or double check the spelling"
-      ))
+  # Prepare boot function
+  if (indicator == "overall") {
+    boot_function <- function(impact_cube_data, indicator_method) {
+      if (indicator_method == "precaut") {
+        impact_values <- compute_impact_indicators(impact_cube_data, "max", max)
+      } else if (indicator_method == "precaut_cum") {
+        impact_values <- compute_impact_indicators(impact_cube_data, "max", sum)
+      } else if (indicator_method == "mean") {
+        impact_values <- compute_impact_indicators(impact_cube_data, "mean", mean)
+      } else if (indicator_method == "mean_cum") {
+        impact_values <- compute_impact_indicators(impact_cube_data, "mean", sum)
+      } else if (indicator_method == "cum") {
+        impact_values <- compute_impact_indicators(impact_cube_data, "max_mech", sum)
+      } else {
+        cli::cli_abort(c(
+          "{.var indicator_method} is not valid",
+          "x" = "{.var indicator_method} must be from the options provided",
+          "See the function desciption or double check the spelling"
+        ))
+      }
+
+      return(impact_values)
     }
-    impact_values
+  } else if (indicator == "species") {
+    stop("species indicator not implemented yet.")
+
+    boot_function <- function(impact_cube_data, indicator_method) {
+      species_values <- compute_species_impact(
+        impact_cube_data,
+        indicator_method
+      )
+      species_values <- species_values %>%
+        tidyr::pivot_longer(cols = -"year", names_to = "scientificName") %>%
+        dplyr::rename("diversity_val" = "value")
+
+      return(species_values)
+    }
+  } else if (indicator == "site") {
+    stop("Site indicator not implemented yet.")
+  } else {
+    stop("`indicator` must be one of 'overall', 'site' or 'species'.")
   }
+
 
   # Bootstrap parameter
   bootstrap_params <- c(

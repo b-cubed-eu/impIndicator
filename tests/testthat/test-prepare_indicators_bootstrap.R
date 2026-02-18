@@ -16,7 +16,7 @@ impact_cube <- create_impact_cube_data(
 # Basic functionality
 # --------------------------------------------------
 
-test_that("prepare_indicators_bootstrap returns structured parameter lists", {
+test_that("prepare_indicators_bootstrap returns structured parameter lists overall", {
 
   params <- prepare_indicators_bootstrap(
     impact_cube_data = impact_cube,
@@ -128,7 +128,7 @@ test_that("prepare_indicators_bootstrap throws error for unsupported indicators"
       indicator = "site",
       indicator_method = "mean_cum"
     ),
-    "There is no method for indicator"
+    "indicator not implemented yet"
   )
 
   expect_error(
@@ -137,7 +137,7 @@ test_that("prepare_indicators_bootstrap throws error for unsupported indicators"
       indicator = "species",
       indicator_method = "mean_cum"
     ),
-    "There is no method for indicator"
+    "indicator not implemented yet"
   )
 
 })
