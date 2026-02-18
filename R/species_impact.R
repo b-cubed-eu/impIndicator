@@ -6,6 +6,8 @@
 #' Optionally computes bootstrap confidence intervals for the indicator
 #' grouped by year and species.
 #'
+#' Interval calculation is currently not implemented!
+#'
 #' @param cube A data cube object (class `'processed_cube'` or `'sim_cube'`,
 #' processed from `b3gbi::process_cube()`) or a dataframe (cf. `$data` slot of
 #' `'processed_cube'` or `'sim_cube'`) or an impact cube (class `'impact_cube'`
@@ -61,8 +63,6 @@
 #'   - `num_species`: Number of species in the indicator.
 #'   - `names_species`: Names of species in the indicator.
 #'   - `species_impact`: A dataframe containing impact per species and year.
-#'     If `ci_type != "none"`, this dataframe additionally contains
-#'     confidence interval columns.
 #'
 #' @export
 #'
@@ -81,18 +81,7 @@
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean",
-#'   trans = 1,
-#'   ci_type = "none"
-#' )
-#'
-#' # With bootstrap confidence intervals
-#' speciesImpactCI <- compute_impact_per_species(
-#'   cube = acacia_cube,
-#'   impact_data = eicat_acacia,
-#'   method = "mean",
-#'   trans = 1,
-#'   ci_type = "perc",
-#'   confidence_level = 0.95
+#'   trans = 1
 #' )
 
 compute_impact_per_species <- function(
@@ -100,7 +89,7 @@ compute_impact_per_species <- function(
     impact_data = NULL,
     method = NULL,
     trans = 1,
-    ci_type = c("perc", "bca", "norm", "basic", "none"),
+    ci_type = "none",
     confidence_level = 0.95,
     boot_args = list(samples = 1000, seed = NA),
     ci_args = list(no_bias = TRUE),

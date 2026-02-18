@@ -9,7 +9,7 @@ compute_impact_per_species(
   impact_data = NULL,
   method = NULL,
   trans = 1,
-  ci_type = c("perc", "bca", "norm", "basic", "none"),
+  ci_type = "none",
   confidence_level = 0.95,
   boot_args = list(samples = 1000, seed = NA),
   ci_args = list(no_bias = TRUE),
@@ -94,8 +94,6 @@ A list of class \code{'species_impact'}, with the following components:
 \item \code{num_species}: Number of species in the indicator.
 \item \code{names_species}: Names of species in the indicator.
 \item \code{species_impact}: A dataframe containing impact per species and year.
-If \code{ci_type != "none"}, this dataframe additionally contains
-confidence interval columns.
 }
 }
 \description{
@@ -103,6 +101,8 @@ Combines occurrences cube and impact data using the given method
 (e.g., mean, max) to compute the impact indicator per species.
 Optionally computes bootstrap confidence intervals for the indicator
 grouped by year and species.
+
+Interval calculation is currently not implemented!
 }
 \examples{
 acacia_cube <- taxa_cube(
@@ -117,18 +117,7 @@ speciesImpact <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean",
-  trans = 1,
-  ci_type = "none"
-)
-
-# With bootstrap confidence intervals
-speciesImpactCI <- compute_impact_per_species(
-  cube = acacia_cube,
-  impact_data = eicat_acacia,
-  method = "mean",
-  trans = 1,
-  ci_type = "perc",
-  confidence_level = 0.95
+  trans = 1
 )
 }
 \seealso{
