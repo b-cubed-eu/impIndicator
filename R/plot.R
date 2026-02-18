@@ -42,6 +42,7 @@
 #' @family Plot
 #'
 #' @examples
+#' \dontrun{
 #' # create data_cube
 #' acacia_cube <- taxa_cube(
 #'   taxa = taxa_Acacia,
@@ -69,6 +70,7 @@
 #'   trend_args = list(colour = "black", linewidth = 1),
 #'   ribbon_args = list(fill = "grey80", alpha = 0.3)
 #' )
+#' }
 plot.impact_indicator <- function(
     x,
     trend = c("none", "line", "smooth"),

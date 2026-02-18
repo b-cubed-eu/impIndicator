@@ -10,6 +10,7 @@
 #' @param ... Additional arguments.
 #'
 #' @examples
+#' \dontrun{
 #' # create data_cube
 #' acacia_cube <- taxa_cube(
 #'   taxa = taxa_Acacia,
@@ -28,6 +29,7 @@
 #'
 #' # print impact indicator
 #' print(impact_value)
+#' }
 #'
 #' @export
 

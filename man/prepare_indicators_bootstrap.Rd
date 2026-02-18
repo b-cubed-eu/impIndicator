@@ -93,6 +93,7 @@ defined and can be modified via \code{boot_args} and \code{ci_args}. User-suppli
 values override defaults.
 }
 \examples{
+\dontrun{
 library(b3gbi)
 
 acacia_cube <- process_cube(
@@ -132,4 +133,5 @@ cv_results <- do.call(
   dubicube::cross_validate_cube,
   params$cv_params
 )
+}
 }

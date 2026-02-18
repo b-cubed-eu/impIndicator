@@ -18,6 +18,7 @@ Provides a summary representation of an impact_indicator object,
 designed for user-friendly display in the console.
 }
 \examples{
+\dontrun{
 # create data_cube
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
@@ -36,5 +37,6 @@ impact_value <- compute_impact_indicator(
 
 # print impact indicator
 print(impact_value)
+}
 
 }

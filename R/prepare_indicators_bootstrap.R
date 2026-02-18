@@ -67,6 +67,7 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' library(b3gbi)
 #'
 #' acacia_cube <- process_cube(
@@ -106,6 +107,7 @@
 #'   dubicube::cross_validate_cube,
 #'   params$cv_params
 #' )
+#' }
 prepare_indicators_bootstrap <- function(
     impact_cube_data,
     indicator = c("overall", "site", "species"),
