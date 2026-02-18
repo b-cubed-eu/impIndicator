@@ -12,6 +12,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-6373-2992", affiliation = "Stellenbosch University (SU)")),
     person("Cang", "Hui", , "chui@sun.ac.za", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0002-3660-8160", affiliation = "Stellenbosch University (SU)")),
+    person("Ward", "Langeraert", , "ward.langeraert@inbo.be", role = "ctb",
+           comment = c(ORCID = "0000-0002-5900-8109", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Stellenbosch University (SU)", , , "info@sun.ac.za", role = "cph"),
     person("European Union's Horizon Europe Research and Innovation Programme (ID No 101059592)", role = "fnd")
   )

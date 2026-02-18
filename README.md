@@ -253,14 +253,15 @@ We compute the impact indicator per species by summing the impact risk
 map per species and correct for sampling effort by dividing by $N$. The
 `compute_impact_per_species` use *max* (maximum), *mean* or *max_mech*
 (sum of maximum score per mechanism) method to compute the impact per
-species
+species. Interval calculation is not implemented yet.
 
 ``` r
 # Impact indicator per species
 species_value <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean"
+  method = "mean",
+  ci_type = "none"
 )
 
 # Visualise species impact
