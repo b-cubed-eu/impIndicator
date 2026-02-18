@@ -32,6 +32,8 @@
 #'   \code{ggplot2::geom_ribbon()} to customise the uncertainty ribbon,
 #'   if lower (\code{ll}) and upper (\code{ul}) limits are available.
 #'
+#' @param ... Currently not used.
+#'
 #' @return A \code{ggplot} object representing the overall impact indicator
 #'   over time, with years on the x-axis and impact values on the y-axis.
 #'
@@ -73,7 +75,8 @@ plot.impact_indicator <- function(
     point_args = list(),
     errorbar_args = list(),
     trend_args = list(),
-    ribbon_args = list()) {
+    ribbon_args = list(),
+    ...) {
   # Validation
   trend <- match.arg(trend, c("none", "line", "smooth"))
 

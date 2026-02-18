@@ -10,7 +10,8 @@
   point_args = list(),
   errorbar_args = list(),
   trend_args = list(),
-  ribbon_args = list()
+  ribbon_args = list(),
+  ...
 )
 }
 \arguments{
@@ -42,6 +43,8 @@ depending on \code{trend}) to customise its appearance (e.g.
 \item{ribbon_args}{A named list of arguments passed to
 \code{ggplot2::geom_ribbon()} to customise the uncertainty ribbon,
 if lower (\code{ll}) and upper (\code{ul}) limits are available.}
+
+\item{...}{Currently not used.}
 }
 \value{
 A \code{ggplot} object representing the overall impact indicator
