@@ -16,113 +16,99 @@ impact_value_ci <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
-  ci = TRUE,
-  num_bootstrap = 100
+  ci_type = "perc",
+  boot_args = list(samples = 100)
 )
 
 
-test_that("plot.impact_indicator works", {
+test_that("plot.impact_indicator works with defaults", {
 
-  expect_no_error(plot(impact_value,
-                                linewidth = 2,
-                                colour = "red",
-                                title_lab = "Impact indicator",
-                                y_lab = "impact score",
-                                text_size = 14
+  expect_no_error(
+    plot(impact_value)
+  )
 
-  ))
-
-  expect_no_error(plot(impact_value,
-                       linewidth = 1,
-                       colour = "red",
-                       title_lab = "Impact indicator",
-                       y_lab = "impact score",
-                       text_size = 14
-
-  ))
-
-  expect_no_error(plot(impact_value,
-                       linewidth = 2,
-                       colour = "blue",
-                       title_lab = "Impact indicator",
-                       y_lab = "Impact score",
-                       text_size = 14
-
-  ))
-
-  expect_no_error(plot(impact_value,
-                       linewidth = 2,
-                       colour = "red",
-                       title_lab = "Title name",
-                       y_lab = "impact score",
-                       text_size = 14
-
-  ))
-
-  expect_no_error(plot(impact_value,
-                       linewidth = 2,
-                       colour = "red",
-                       title_lab = "Impact indicator",
-                       y_lab = "y axis",
-                       text_size = 14
-
-  ))
-
-  expect_no_error(plot(impact_value,
-                       linewidth = 2,
-                       colour = "red",
-                       title_lab = "Impact indicator",
-                       y_lab = "impact score",
-                       text_size = 15
-
-  ))
-
-  # additional argument to geom_line
-  expect_no_error(plot(impact_value,
-                       linewidth = 2,
-                       colour = "red",
-                       title_lab = "Impact indicator",
-                       y_lab = "impact score",
-                       text_size = 14,
-                       linejoin = "round"
-
-  ))
-
-  expect_no_error(plot(impact_value_ci,
-                       linewidth = 2,
-                       colour = "red",
-                       title_lab = "Impact indicator",
-                       y_lab = "impact score",
-                       text_size = 14
-
-  ))
-
-  expect_no_error(plot(impact_value_ci,
-                       linewidth = 2,
-                       colour = "red",
-                       title_lab = "Impact indicator",
-                       y_lab = "impact score",
-                       text_size = 14,
-                       ribbon_colour = "black"
-
-  ))
+  expect_s3_class(
+    plot(impact_value),
+    "ggplot"
+  )
 })
 
-test_that("plot.impact indicator throws error", {
 
-  # wrong class of impact indicator
-  wrong_class_impact_indicator <- structure(impact_value, class="wrong_class")
-  expect_error(plot.impact_indicator(wrong_class_impact_indicator,
-                       linewidth = 2,
-                       colour = "red",
-                       title_lab = "Impact indicator",
-                       y_lab = "impact score",
-                       text_size = 14
+test_that("plot.impact_indicator works with trend options", {
 
-  ),
-  "'x' is not a class 'impact_indicator'")
+  expect_no_error(
+    plot(impact_value, trend = "none")
+  )
+
+  expect_no_error(
+    plot(impact_value, trend = "line")
+  )
+
+  expect_no_error(
+    plot(impact_value, trend = "smooth")
+  )
 })
 
+
+test_that("plot.impact_indicator works with custom point, trend and ribbon args", {
+
+  expect_no_error(
+    plot(
+      impact_value,
+      point_args = list(size = 3, colour = "red")
+    )
+  )
+
+  expect_no_error(
+    plot(
+      impact_value,
+      trend = "line",
+      trend_args = list(colour = "blue", linewidth = 1)
+    )
+  )
+
+  expect_no_error(
+    plot(
+      impact_value_ci,
+      trend = "line",
+      ribbon_args = list(fill = "black", alpha = 0.2)
+    )
+  )
+
+  expect_no_error(
+    plot(
+      impact_value_ci,
+      errorbar_args = list(width = 0.2, linewidth = 0.5)
+    )
+  )
+})
+
+
+test_that("plot.impact_indicator works with combined custom arguments", {
+
+  expect_no_error(
+    plot(
+      impact_value_ci,
+      trend = "smooth",
+      point_args = list(size = 4),
+      trend_args = list(colour = "darkgreen", linewidth = 1),
+      ribbon_args = list(fill = "grey80"),
+      errorbar_args = list(width = 0.1)
+    )
+  )
+})
+
+
+test_that("plot.impact_indicator throws error for wrong class", {
+
+  wrong_class_impact_indicator <-
+    structure(impact_value, class = "wrong_class")
+
+  expect_error(
+    plot.impact_indicator(wrong_class_impact_indicator),
+    "'x' is not a class 'impact_indicator'"
+  )
+})
 
 ##### Plot method for specie impact ####
 

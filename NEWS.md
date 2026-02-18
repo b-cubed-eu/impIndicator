@@ -7,9 +7,6 @@ bootstrapping and confidence interval via the dubicube
 an object that contain occurrence cube and impact data. It can save the computational time
 due to recombining during a multiple computation from a set of data such as bootstrapping.
 
-
-
-
 # impIndicator 0.5.0
 
 -   Add cross_validation result to README using the Acacia example

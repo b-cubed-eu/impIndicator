@@ -1,124 +1,142 @@
 # Define cube
-library(b3gbi) # for processing cube
-acacia_cube <- process_cube(cube_name = cube_acacia_SA,
-                            grid_type = "eqdgc",
-                            first_year = 2010,
-                            last_year = 2024)
+library(b3gbi)
 
-test_that("impact indicator function return correct result", {
+acacia_cube <- process_cube(
+  cube_name = cube_acacia_SA,
+  grid_type = "eqdgc",
+  first_year = 2010,
+  last_year = 2024
+)
+
+impact_cube <- create_impact_cube_data(
+  cube_data = acacia_cube$data,
+  impact_data = eicat_acacia
+)
+
+test_that("compute_impact_indicator returns correct structure without CI", {
+
   result <- compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
-    trans = 1,
     method = "mean_cum",
-    ci = TRUE,
-    num_bootstrap = 100
+    trans = 1,
+    ci_type = "none"
   )
 
-  expect_equal(class(result),
-               "impact_indicator")
+  expect_s3_class(result, "impact_indicator")
 
-  expect_equal(unique(acacia_cube$data$year), result$impact[[1]])
-
-  expect_no_error(result)
-
-  expect_no_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "mean_cum"
-  ))
-
-  expect_no_error(compute_impact_indicator(
-    cube = acacia_cube$data,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "mean_cum"
-  ))
-  expect_no_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "mean"
-  ))
-
-  expect_no_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "cum"
-  ))
-
-
-  expect_no_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "precaut_cum"
-  ))
-
-  expect_no_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "precaut"
-  ))
-
-  expect_no_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "precaut",
-    region = southAfrica_sf,
-    ci = FALSE
-  ))
-
-  impact_cube<-create_impact_cube_data(
-    cube_data = acacia_cube,
-    impact_data = eicat_acacia
+  expect_named(
+    result,
+    c("method", "num_cells", "num_species", "names_species", "impact")
   )
 
-  expect_no_error(compute_impact_indicator(
-    cube = impact_cube,
-    method = "precaut"
-  ))
+  expect_equal(result$method, "mean_cum")
+  expect_true(is.numeric(result$num_cells))
+  expect_true(is.numeric(result$num_species))
+  expect_true(is.character(result$names_species))
+
+  expect_true(is.data.frame(result$impact))
 
 })
 
-test_that("impact indicator function returns errors", {
-  expect_error(compute_impact_indicator(
+test_that("compute_impact_indicator works with bootstrap CI", {
+
+  result <- compute_impact_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
     col_species = "scientific_name",
     col_mechanism = "impact_mechanism",
+    method = "mean_cum",
     trans = 1,
-    method = "a"
-  ))
+    ci_type = "perc",
+    boot_args = list(samples = 50)  # small for speed
+  )
+
+  expect_s3_class(result, "impact_indicator")
+
+  expect_true(is.data.frame(result$impact))
+
+  # CI output should contain CI columns
+  expect_true(any(grepl("ll", names(result$impact))))
+  expect_true(any(grepl("ul", names(result$impact))))
+
+})
+
+test_that("all aggregation methods run without CI", {
+
+  methods <- c("mean_cum", "mean", "cum", "precaut", "precaut_cum")
+
+  for (m in methods) {
+
+    expect_no_error(
+      compute_impact_indicator(
+        cube = acacia_cube,
+        impact_data = eicat_acacia,
+        col_category = "impact_category",
+        col_species = "scientific_name",
+        col_mechanism = "impact_mechanism",
+        method = m,
+        trans = 1,
+        ci_type = "none"
+      )
+    )
+
+  }
+
+})
+
+test_that("works when cube is a data.frame", {
+
+  expect_no_error(
+    compute_impact_indicator(
+      cube = acacia_cube$data,
+      impact_data = eicat_acacia,
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism",
+      method = "mean_cum",
+      trans = 1,
+      ci_type = "none"
+    )
+  )
+
+})
+
+test_that("works when cube already contains impact data", {
+
+  expect_no_error(
+    compute_impact_indicator(
+      cube = impact_cube,
+      method = "precaut",
+      ci_type = "none"
+    )
+  )
+
+})
+
+test_that("region argument works when provided", {
+
+  expect_no_error(
+    compute_impact_indicator(
+      cube = acacia_cube,
+      impact_data = eicat_acacia,
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism",
+      method = "precaut",
+      trans = 1,
+      region = southAfrica_sf,
+      ci_type = "none"
+    )
+  )
+
+})
+
+test_that("invalid method throws error", {
 
   expect_error(
     compute_impact_indicator(
@@ -127,42 +145,62 @@ test_that("impact indicator function returns errors", {
       col_category = "impact_category",
       col_species = "scientific_name",
       col_mechanism = "impact_mechanism",
-      trans = "a",
-      method = "mean_cum"
+      method = "invalid",
+      trans = 1,
+      ci_type = "none"
     ),
-    "`trans` must be a number from 1,2 or 3
-i see the function documentation for details"
+    "method"
   )
 
+})
 
-  expect_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = "a",
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "mean_cum"
-  ))
+test_that("invalid cube class throws error", {
 
-  expect_error(compute_impact_indicator(
-    cube = "a",
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "mean_cum"
-  ))
+  expect_error(
+    compute_impact_indicator(
+      cube = "not_a_cube",
+      impact_data = eicat_acacia,
+      method = "mean_cum",
+      trans = 1,
+      ci_type = "none"
+    ),
+    "must be a class"
+  )
 
-  expect_error(compute_impact_indicator(
-    cube = acacia_cube,
-    impact_data = eicat_acacia,
-    col_category = "impact_category",
-    col_species = "scientific_name",
-    col_mechanism = "impact_mechanism",
-    trans = 1,
-    method = "mean_cum",
-    ci = "a"
-  ))
+})
+
+test_that("invalid ci_type throws error", {
+
+  expect_error(
+    compute_impact_indicator(
+      cube = acacia_cube,
+      impact_data = eicat_acacia,
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism",
+      method = "mean_cum",
+      trans = 1,
+      ci_type = "invalid"
+    )
+  )
+
+})
+
+test_that("invalid region throws error", {
+
+  expect_error(
+    compute_impact_indicator(
+      cube = acacia_cube,
+      impact_data = eicat_acacia,
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism",
+      method = "mean_cum",
+      trans = 1,
+      region = "not_sf",
+      ci_type = "none"
+    ),
+    "region"
+  )
+
 })

@@ -183,7 +183,7 @@ impact scores of each site of the study region. To correct for sampling
 effort, we divide the yearly impact scores by the number of sites in the
 study region with at least a single occurrence throughout the whole
 year. The impact indicator use one of the methods named above in the
-impact per site. The `ci = TRUE` allows the function
+impact per site. The `ci_type` argument allows the function
 `compute_impact_indicator()` to calculate the confidence interval of the
 overall impact indicator using a bootstrapping method via the
 **dubicube** package. The `seed = 123` makes the bootstrap to generate
@@ -195,12 +195,12 @@ impactIndicator <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
-  ci = TRUE,
-  seed = 123
+  ci_type = "perc",
+  boot_args = list(seed = 123)
 )
 
 # Visualise impact indicator
-plot(impactIndicator)
+plot(impactIndicator, trend = "smooth")
 ```
 
 ### Species impact indicator
@@ -209,14 +209,15 @@ We compute the impact indicator per species by summing the impact risk
 map per species and correct for sampling effort by dividing by $N$. The
 `compute_impact_per_species` use *max* (maximum), *mean* or *max_mech*
 (sum of maximum score per mechanism) method to compute the impact per
-species
+species. Interval calculation is not implemented yet.
 
 ```{r}
 # Impact indicator per species
 species_value <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean"
+  method = "mean",
+  ci_type = "none"
 )
 
 # Visualise species impact
@@ -244,27 +245,23 @@ calculation can be found here
 
 ```{r echo=FALSE}
 # define the wrapper function for the impact indicator
-
-boot_fun<-function(data){
-  
-  impact_values<-compute_impact_indicator(
+boot_fun <- function(data){
+  impact_values <- compute_impact_indicator(
     cube = data,
     impact_data = eicat_acacia,
-    method = "mean_cum"
+    method = "mean_cum",
+    ci_type = "none"
   )
-  
-  impact_values<-impact_values$impact
-  
-  impact_values
-  
+  impact_values <- impact_values$impact
+
+  return(impact_values)
 }
 
 ```
 
 ```{r echo=FALSE}
-
 # perform leave-one-species-out cross-validation
-cv_results <- cross_validate_cube(
+cv_results <- dubicube::cross_validate_cube(
   data_cube = acacia_cube,
   fun = boot_fun,
   grouping_var = "year",
@@ -272,7 +269,7 @@ cv_results <- cross_validate_cube(
 )
 
 # get species name and abbrevation in cv_results
-name_n_key<-acacia_cube$data %>% 
+name_n_key <- acacia_cube$data %>% 
   select(all_of(c("taxonKey","scientificName"))) %>% 
   distinct(taxonKey, .keep_all = TRUE) %>%
   mutate(scientificName = str_replace(scientificName, "^Acacia", "A."))
@@ -296,8 +293,6 @@ is South Africa. The figure indicates the values from the year 2019 are
 sensitive or dominated by some individual species in the indicator.
 
 ```{r echo=FALSE}
-
-
 # Get original estimates (based on full data cube)
 original_estimates <- boot_fun(acacia_cube$data) %>% filter(year>2016)
 original_estimates$label <- paste(
@@ -321,7 +316,6 @@ cv_results %>%
   labs(x = "", y = "LOSO-CV Error") +
   theme_minimal() +
   theme(legend.position = "")
-
 ```
 
 The above figure shows the impact indicator value and LOSO-CV Error of
