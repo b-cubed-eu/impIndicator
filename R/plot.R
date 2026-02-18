@@ -143,8 +143,10 @@ plot.impact_indicator <- function(
         do.call(
           ggplot2::geom_ribbon,
           utils::modifyList(
-            list(mapping = ggplot2::aes(ymin = predict(loess(ll ~ year)),
-                                        ymax = predict(loess(ul ~ year)))),
+            list(mapping = ggplot2::aes(
+              ymin = stats::predict(stats::loess(ll ~ year)),
+              ymax = stats::predict(stats::loess(ul ~ year)))
+            ),
             ribbon_args
           )
         ) +
