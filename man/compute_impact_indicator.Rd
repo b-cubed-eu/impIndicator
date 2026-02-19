@@ -9,6 +9,10 @@ compute_impact_indicator(
   impact_data = NULL,
   method = NULL,
   trans = 1,
+  ci_type = c("perc", "bca", "norm", "basic", "none"),
+  confidence_level = 0.95,
+  boot_args = list(samples = 1000, seed = NA),
+  ci_args = list(no_bias = TRUE),
   col_category = NULL,
   col_species = NULL,
   col_mechanism = NULL,
@@ -16,13 +20,15 @@ compute_impact_indicator(
 )
 }
 \arguments{
-\item{cube}{The data cube of class \code{sim_cube} or \code{processed_cube} from
-\code{b3gbi::process_cube()}.}
+\item{cube}{A data cube object (class 'processed_cube' or 'sim_cube', processed
+from \code{b3gbi::process_cube()}) or a dataframe (cf. \verb{$data} slot of
+'processed_cube' or 'sim_cube') or an impact cube (class 'impact_cube' from
+\code{create_impact_cube_data})}
 
-\item{impact_data}{The dataframe of species impact which contains columns of
+\item{impact_data}{A dataframe of species impact which contains columns of
 \code{impact_category}, \code{scientific_name} and \code{impact_mechanism}.}
 
-\item{method}{The method of computing the indicator. The method used in
+\item{method}{A method of computing the indicator. The method used in
 the aggregation of within and across species in a site proposed
 by Boulesnane-Genguant et al. (submitted).
 The method can be one of
@@ -61,6 +67,26 @@ numerical values:
 \item \code{3}: converts the categories to to \code{c(1, 10, 100, 1000, 10000)}
 }}
 
+\item{ci_type}{A character vector specifying the type of confidence intervals
+to compute. Options include:
+\itemize{
+\item \code{perc}: Percentile intervals (default).
+\item \code{bca}: Bias-corrected and accelerated intervals.
+\item \code{norm}: Normal approximation intervals.
+\item \code{basic}: Basic bootstrap intervals.
+\item \code{none}: No confidence intervals calculated.
+}}
+
+\item{confidence_level}{The confidence level for the calculated
+intervals. Default is 0.95 (95 \% confidence level).}
+
+\item{boot_args}{(Optional) Named list of additional arguments passed to
+\code{dubicube::bootstrap_cube()}.
+Default: \code{list(samples = 1000, seed = NA)}.}
+
+\item{ci_args}{(Optional) Named list of additional arguments passed to
+\code{dubicube::calculate_bootstrap_ci()}. Default: \code{list(no_bias = TRUE)}.}
+
 \item{col_category}{The name of the column containing the impact categories.
 The first two letters each categories must be an EICAT short names
 (e.g "MC - Minimal concern").}
@@ -98,7 +124,8 @@ impact_value <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
-  trans = 1
+  trans = 1,
+  ci_type = "none"
 )
 }
 \seealso{

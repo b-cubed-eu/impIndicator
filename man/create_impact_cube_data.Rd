@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_impact_cube_data.R
 \name{create_impact_cube_data}
 \alias{create_impact_cube_data}
-\title{Title}
+\title{Create impact cube data}
 \usage{
 create_impact_cube_data(
   cube_data,
@@ -42,10 +42,12 @@ The first two letters each categories must be an EICAT short names
 If NULL (default), the indicator is calculated for all cells in the cube.}
 }
 \value{
-A dataframe of cube of impact and occurrence cube.
+A dataframe of containing impact data and occurrence cube. The class
+is \code{impact_cube}
 }
 \description{
-Title
+This function combines the occurrence cube data and impact data,
+named impact_cube_data.
 }
 \examples{
 library(b3gbi) # for processing cube
@@ -54,7 +56,7 @@ acacia_cube <- process_cube(cube_name = cube_acacia_SA,
                           first_year = 2010,
                            last_year = 2024)
 
-impact_value <- create_impact_cube_data(
+impact_cube <- create_impact_cube_data(
   cube_data = acacia_cube$data,
   impact_data = eicat_acacia,
 )

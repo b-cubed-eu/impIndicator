@@ -1,6 +1,6 @@
 Package: impIndicator
 Title: Impact Indicators of Alien Taxa
-Version: 0.5.0
+Version: 0.6.0
 Authors@R: c(
     person("Mukhtar Muhammed", "Yahaya", , "yahayamukhtar.m@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0008-9200-0863", affiliation = "Stellenbosch University (SU)")),
@@ -12,6 +12,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-6373-2992", affiliation = "Stellenbosch University (SU)")),
     person("Cang", "Hui", , "chui@sun.ac.za", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0002-3660-8160", affiliation = "Stellenbosch University (SU)")),
+    person("Ward", "Langeraert", , "ward.langeraert@inbo.be", role = "ctb",
+           comment = c(ORCID = "0000-0002-5900-8109", affiliation = "Research Institute for Nature and Forest (INBO)")),
     person("Stellenbosch University (SU)", , , "info@sun.ac.za", role = "cph"),
     person("European Union's Horizon Europe Research and Innovation Programme (ID No 101059592)", role = "fnd")
   )
@@ -27,15 +29,18 @@ Imports:
     b3gbi (>= 0.2.2),
     cli,
     dplyr,
+    dubicube (>= 0.11.0),
     ggplot2,
     magrittr,
     rgbif,
     rlang,
     rnaturalearth,
+    scales,
     sf,
     stats,
     tibble,
-    tidyr
+    tidyr,
+    utils
 Suggests: 
     knitr,
     rmarkdown,
@@ -43,8 +48,9 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
-Remotes: 
-    github::b-cubed-eu/b3gbi
+Remotes:  
+    github::b-cubed-eu/b3gbi,
+    github::b-cubed-eu/dubicube
 Additional_repositories: https://b-cubed-eu.r-universe.dev/
 Config/testthat/edition: 3
 Encoding: UTF-8

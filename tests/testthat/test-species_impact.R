@@ -1,116 +1,117 @@
-acacia_cube <- taxa_cube(taxa = taxa_Acacia,
-                       region = southAfrica_sf,
-                       res = 0.25,
-                       first_year = 2010)
+library(b3gbi)
 
-test_that("species impact function works", {
+# Example test cube
+acacia_cube <- taxa_cube(
+  taxa = taxa_Acacia,
+  region = southAfrica_sf,
+  res = 0.25,
+  first_year = 2010
+)
 
-  result <- compute_impact_per_species(cube = acacia_cube,
-                 impact_data  =  eicat_acacia,
-                 col_category = "impact_category",
-                 col_species = "scientific_name",
-                 col_mechanism = "impact_mechanism",
-                 trans = 1,
-                 method  =  "mean")
+test_that("compute_impact_per_species works without CI", {
 
-  expect_equal(class(result),
-               "species_impact")
+  res <- compute_impact_per_species(
+    cube = acacia_cube,
+    impact_data = eicat_acacia,
+    method = "mean",
+    trans = 1,
+    ci_type = "none",
+    col_category = "impact_category",
+    col_species = "scientific_name",
+    col_mechanism = "impact_mechanism"
+  )
 
-  expect_no_error(result)
-
-  expect_no_error(compute_impact_per_species(cube = acacia_cube,
-                                 impact_data  =  eicat_acacia,
-                                 col_category = "impact_category",
-                                 col_species = "scientific_name",
-                                 col_mechanism = "impact_mechanism",
-                                 trans = 2,
-                                 method  =  "mean"))
-
-  expect_no_error(compute_impact_per_species(cube = acacia_cube,
-                                 impact_data  =  eicat_acacia,
-                                 col_category = "impact_category",
-                                 col_species = "scientific_name",
-                                 col_mechanism = "impact_mechanism",
-                                 trans = 3,
-                                 method  =  "mean"))
-
-  expect_no_error(compute_impact_per_species(cube = acacia_cube,
-                                 impact_data  =  eicat_acacia,
-                                 col_category = "impact_category",
-                                 col_species = "scientific_name",
-                                 col_mechanism = "impact_mechanism",
-                                 trans = 1,
-                                 method  =  "max"))
-
-  expect_no_error(compute_impact_per_species(cube = acacia_cube,
-                                 impact_data  =  eicat_acacia,
-                                 col_category = "impact_category",
-                                 col_species = "scientific_name",
-                                 col_mechanism = "impact_mechanism",
-                                 trans = 1,
-                                 method  =  "max_mech"))
-
-
+  expect_s3_class(res, "species_impact")
+  expect_true(all(c("method","num_species","names_species","species_impact") %in% names(res)))
+  expect_true(is.data.frame(res$species_impact))
+  expect_equal(unique(res$method), "mean")
 })
 
-test_that("species impact function throws error", {
-  expect_error(compute_impact_per_species(cube = "a",
-                                 impact_data  =  eicat_acacia,
-                                 col_category = "impact_category",
-                                 col_species = "scientific_name",
-                                 col_mechanism = "impact_mechanism",
-                                 trans = 1,
-                                 method  =  "mean"))
+test_that("compute_impact_per_species works for all methods and trans", {
 
+  for (m in c("mean","max","max_mech")) {
+    for (t in 1:3) {
+      expect_silent(
+        compute_impact_per_species(
+          cube = acacia_cube,
+          impact_data = eicat_acacia,
+          method = m,
+          trans = t,
+          ci_type = "none",
+          col_category = "impact_category",
+          col_species = "scientific_name",
+          col_mechanism = "impact_mechanism"
+        )
+      )
+    }
+  }
+})
 
-  expect_error(compute_impact_per_species(cube = acacia_cube,
-                              impact_data  =  "a",
-                              col_category = "impact_category",
-                              col_species = "scientific_name",
-                              col_mechanism = "impact_mechanism",
-                              trans = 1,
-                              method  =  "mean"))
+test_that("compute_impact_per_species throws error for invalid inputs", {
 
-  expect_error(compute_impact_per_species(cube = acacia_cube,
-                              impact_data  =  unmatched_eicat,
-                              col_category = NULL,
-                              col_species = "scientific_name",
-                              col_mechanism = "impact_mechanism",
-                              trans = 1,
-                              method  =  "mean"))
+  # invalid cube
+  expect_error(
+    compute_impact_per_species(
+      cube = "invalid_cube",
+      impact_data = eicat_acacia,
+      method = "mean",
+      ci_type = "none",
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism"
+    )
+  )
 
+  # invalid impact_data
+  expect_error(
+    compute_impact_per_species(
+      cube = acacia_cube,
+      impact_data = "invalid_data",
+      method = "mean",
+      ci_type = "none",
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism"
+    )
+  )
 
-  expect_error(compute_impact_per_species(cube = acacia_cube,
-                                 impact_data  =  unmatched_eicat,
-                                 col_category = "impact_category",
-                                 col_species = NULL,
-                                 col_mechanism = "impact_mechanism",
-                                 trans = 1,
-                                 method  =  "mean"))
+  # invalid method
+  expect_error(
+    compute_impact_per_species(
+      cube = acacia_cube,
+      impact_data = eicat_acacia,
+      method = "invalid_method",
+      ci_type = "none",
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism"
+    )
+  )
 
-  expect_error(compute_impact_per_species(cube = acacia_cube,
-                              impact_data  =  unmatched_eicat,
-                              col_category = "impact_category",
-                              col_species = "scientific_name",
-                              col_mechanism = NULL,
-                              trans = 1,
-                              method  =  "mean"))
+  # invalid trans
+  expect_error(
+    compute_impact_per_species(
+      cube = acacia_cube,
+      impact_data = eicat_acacia,
+      method = "mean",
+      trans = "a",
+      ci_type = "none",
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism"
+    )
+  )
 
-
-  expect_error(compute_impact_per_species(cube = acacia_cube,
-                              impact_data  =  eicat_acacia,
-                              col_category = "impact_category",
-                              col_species = "scientific_name",
-                              col_mechanism = "impact_mechanism",
-                              trans = "a",
-                              method  =  "mean"))
-
-
-  expect_error(compute_impact_per_species(cube = acacia_cube,
-                              impact_data  =  eicat_acacia,
-                              col_category = "impact_category",
-                              col_species = "scientific_name",
-                              col_mechanism = "impact_mechanism",
-                              trans = 1,
-                              method  =  "a"))
+  # bootstrapping
+  expect_error(
+    compute_impact_per_species(
+      cube = acacia_cube,
+      impact_data = eicat_acacia,
+      method = "mean",
+      ci_type = "perc",
+      col_category = "impact_category",
+      col_species = "scientific_name",
+      col_mechanism = "impact_mechanism"
+    )
+  )
 })

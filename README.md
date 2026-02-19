@@ -92,7 +92,15 @@ library(impIndicator)
 
 library(b3gbi)     # General biodiversity indicators for data cubes
 library(tidyverse)   # Visualisation
+#> Warning: package 'ggplot2' was built under R version 4.5.2
+#> Warning: package 'tibble' was built under R version 4.5.2
+#> Warning: package 'tidyr' was built under R version 4.5.2
+#> Warning: package 'purrr' was built under R version 4.5.2
+#> Warning: package 'dplyr' was built under R version 4.5.2
+#> Warning: package 'stringr' was built under R version 4.5.2
+#> Warning: package 'forcats' was built under R version 4.5.2
 library(dubicube)  # Data sensitivity and uncertainty estimation
+#> Warning: package 'dubicube' was built under R version 4.5.2
 ```
 
 ### Process occurrence cube
@@ -207,30 +215,37 @@ siteImpact <- compute_impact_per_site(
 plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" alt="" width="100%" />
 
 ### Overall impact indicators
 
 To compute the impact indicator of alien taxa, we sum all the yearly
 impact scores of each site of the study region. To correct for sampling
-effort we divide the yearly impact scores by number of sites in the
+effort, we divide the yearly impact scores by the number of sites in the
 study region with at least a single occurrence throughout the whole
 year. The impact indicator use one of the methods named above in the
-impact per site.
+impact per site. The `ci_type` argument allows the function
+`compute_impact_indicator()` to calculate the confidence interval of the
+overall impact indicator using a bootstrapping method via the
+**dubicube** package. The `seed = 123` makes the bootstrap to generate
+same random sample for reproducibility.
 
 ``` r
 # Impact indicator
 impactIndicator <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean_cum"
+  method = "mean_cum",
+  ci_type = "perc",
+  boot_args = list(seed = 123)
 )
+#> [1] "Performing whole-cube bootstrap."
 
 # Visualise impact indicator
-plot(impactIndicator)
+plot(impactIndicator, trend = "smooth")
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" alt="" width="100%" />
 
 ### Species impact indicator
 
@@ -238,21 +253,22 @@ We compute the impact indicator per species by summing the impact risk
 map per species and correct for sampling effort by dividing by $N$. The
 `compute_impact_per_species` use *max* (maximum), *mean* or *max_mech*
 (sum of maximum score per mechanism) method to compute the impact per
-species
+species. Interval calculation is not implemented yet.
 
 ``` r
 # Impact indicator per species
 species_value <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean"
+  method = "mean",
+  ci_type = "none"
 )
 
 # Visualise species impact
 plot(species_value)
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" alt="" width="100%" />
 
 ### Sensitivity analysis
 
@@ -273,13 +289,13 @@ package to perform the LOSO-CV. Details and tutorial about the LOSO-CV
 calculation can be found here
 <https://b-cubed-eu.github.io/dubicube/articles/group-level-sensitivity.html>
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" alt="" width="100%" />
 
 The above plot shows the RMSE of the impact indicator of Acacia species
 is South Africa. The figure indicates the values from the year 2019 are
 sensitive or dominated by some individual species in the indicator.
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" alt="" width="100%" />
 
 The above figure shows the impact indicator value and LOSO-CV Error of
 each species from the year 2017. The LOSO-CV indicates that the impact

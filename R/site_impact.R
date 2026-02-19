@@ -4,11 +4,13 @@
 #' Combines occurrences cube and impact data using the given method
 #' (e.g., mean cumulative) to compute the impact indicator per site.
 #'
-#' @param cube The data cube of class `sim_cube` or `processed_cube` from
-#' `b3gbi::process_cube()`.
-#' @param impact_data The dataframe of species impact which contains columns of
+#' @param cube A data cube object (class 'processed_cube' or 'sim_cube', processed
+#' from `b3gbi::process_cube()`) or a dataframe (cf. `$data` slot of
+#' 'processed_cube' or 'sim_cube') or an impact cube (class 'impact_cube' from
+#' `create_impact_cube_data`)
+#' @param impact_data A dataframe of species impact which contains columns of
 #' `impact_category`, `scientific_name` and `impact_mechanism`.
-#' @param method The method of computing the indicator. The method used in
+#' @param method A method of computing the indicator. The method used in
 #' the aggregation of within and across species in a site proposed
 #' by Boulesnane-Genguant et al. (submitted).
 #' The method can be one of
@@ -108,14 +110,22 @@ compute_impact_per_site <- function(
     )
   }
 
-  # merge occurrence cube and impact data
-  impact_cube_data <- create_impact_cube_data(cube_data = cube,
-                          impact_data = impact_data,
-                          trans = trans,
-                          col_category = col_category,
-                          col_species = col_species,
-                          col_mechanism = col_mechanism,
-                          region = region)
+  # Create impact cube data if the cube is not have impact data
+  if (!("impact_cube" %in% class(cube))){
+    # merge occurrence cube and impact data
+    impact_cube_data <- create_impact_cube_data(cube_data = cube,
+                                                impact_data = impact_data,
+                                                trans = trans,
+                                                col_category = col_category,
+                                                col_species = col_species,
+                                                col_mechanism = col_mechanism,
+                                                region = region)
+  } else {
+    impact_cube_data <- cube
+    if(!(is.null(impact_data))){
+      cli::cli_alert_warning("{.var cube} contains impact data. The {.var impact_data} was not used")
+    }
+  }
 
 
   # collect number of species

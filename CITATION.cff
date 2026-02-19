@@ -40,4 +40,4 @@ abstract: "The negative impact of alien species is recognised as a major threat 
 identifiers:
 - type: url
   value: https://b-cubed-eu.github.io/impIndicator/
-version: 0.5.0
+version: 0.6.0

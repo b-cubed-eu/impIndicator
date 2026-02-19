@@ -5,11 +5,13 @@
 #' (e.g., mean cumulative) to compute the impact indicator of all
 #' species over a given region
 #'
-#' @param cube The data cube of class `sim_cube` or `processed_cube` from
-#' `b3gbi::process_cube()`.
-#' @param impact_data The dataframe of species impact which contains columns of
+#' @param cube A data cube object (class 'processed_cube' or 'sim_cube', processed
+#' from `b3gbi::process_cube()`) or a dataframe (cf. `$data` slot of
+#' 'processed_cube' or 'sim_cube') or an impact cube (class 'impact_cube' from
+#' `create_impact_cube_data`)
+#' @param impact_data A dataframe of species impact which contains columns of
 #' `impact_category`, `scientific_name` and `impact_mechanism`.
-#' @param method The method of computing the indicator. The method used in
+#' @param method A method of computing the indicator. The method used in
 #' the aggregation of within and across species in a site proposed
 #' by Boulesnane-Genguant et al. (submitted).
 #' The method can be one of
@@ -42,6 +44,20 @@
 #'   - `1`: converts the categories to `c(0, 1, 2, 3, 4)`
 #'   - `2`: converts the categories to to `c(1, 2, 3, 4, 5)`
 #'   - `3`: converts the categories to to `c(1, 10, 100, 1000, 10000)`
+#' @param ci_type A character vector specifying the type of confidence intervals
+#' to compute. Options include:
+#'   * `perc`: Percentile intervals (default).
+#'   * `bca`: Bias-corrected and accelerated intervals.
+#'   * `norm`: Normal approximation intervals.
+#'   * `basic`: Basic bootstrap intervals.
+#'   * `none`: No confidence intervals calculated.
+#' @param confidence_level The confidence level for the calculated
+#' intervals. Default is 0.95 (95 % confidence level).
+#' @param boot_args (Optional) Named list of additional arguments passed to
+#' `dubicube::bootstrap_cube()`.
+#' Default: `list(samples = 1000, seed = NA)`.
+#' @param ci_args (Optional) Named list of additional arguments passed to
+#' `dubicube::calculate_bootstrap_ci()`. Default: `list(no_bias = TRUE)`.
 #' @param col_category The name of the column containing the impact categories.
 #' The first two letters each categories must be an EICAT short names
 #' (e.g "MC - Minimal concern").
@@ -72,7 +88,8 @@
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",
-#'   trans = 1
+#'   trans = 1,
+#'   ci_type = "none"
 #' )
 
 compute_impact_indicator <- function(
@@ -80,6 +97,10 @@ compute_impact_indicator <- function(
     impact_data = NULL,
     method = NULL,
     trans = 1,
+    ci_type = c("perc", "bca", "norm", "basic", "none"),
+    confidence_level = 0.95,
+    boot_args = list(samples = 1000, seed = NA),
+    ci_args = list(no_bias = TRUE),
     col_category = NULL,
     col_species = NULL,
     col_mechanism = NULL,
@@ -91,18 +112,16 @@ compute_impact_indicator <- function(
   # cube
 
   if ("sim_cube" %in% class(cube) || "processed_cube" %in% class(cube)){
-    cube<-cube$data
+    cube <- cube$data
   } else if ( "data.frame" %in% class(cube)){
-    cube<-cube
+    cube <- cube
   } else {
-
     cli::cli_abort(
       c("{.var cube} must be a class {.cls data.frame}, {.cls sim_cube} or {.cls processed_cube}",
         "i" = "cube must be processed from `b3gbi`")
     )
 
   }
-
 
   # region is NULL or an sf
   if(!(is.null(region) || "sf" %in% class(region))){
@@ -112,16 +131,28 @@ compute_impact_indicator <- function(
     )
   }
 
+  ci_type <- match.arg(ci_type, c("perc", "bca", "norm", "basic", "none"))
 
-  # merge occurrence cube and impact data
-  impact_cube_data <- create_impact_cube_data(cube_data = cube,
-                                              impact_data = impact_data,
-                                              trans = trans,
-                                              col_category = col_category,
-                                              col_species = col_species,
-                                              col_mechanism = col_mechanism,
-                                              region = region)
-
+  # Create impact cube data if the cube is not have impact data
+  if (!("impact_cube" %in% class(cube))){
+    # merge occurrence cube and impact data
+    impact_cube_data <- create_impact_cube_data(
+      cube_data = cube,
+      impact_data = impact_data,
+      trans = trans,
+      col_category = col_category,
+      col_species = col_species,
+      col_mechanism = col_mechanism,
+      region = region
+    )
+  } else {
+    impact_cube_data <- cube
+    if (!(is.null(impact_data))) {
+      cli::cli_alert_warning(
+        "{.var cube} contains impact data. The {.var impact_data} was not used"
+      )
+    }
+  }
 
   # collect the number and names of species in the impact indicator
   num_of_species <- length(unique(impact_cube_data$scientificName))
@@ -129,23 +160,56 @@ compute_impact_indicator <- function(
   # collect number of cells
   num_of_cells <- length(unique(impact_cube_data$cellCode))
 
-  if (method == "precaut") {
-    impact_values <- compute_impact_indicators(impact_cube_data,"max",max)
-  } else if (method == "precaut_cum") {
-    impact_values <- compute_impact_indicators(impact_cube_data,"max",sum)
-  } else if (method == "mean") {
-    impact_values <- compute_impact_indicators(impact_cube_data,"mean",mean)
-  } else if (method == "mean_cum") {
-    impact_values <- compute_impact_indicators(impact_cube_data,"mean",sum)
-  } else if (method == "cum") {
-    impact_values <- compute_impact_indicators(impact_cube_data,"max_mech",sum)
+  if (ci_type != "none") {
+    # prepare indicator for bootstrap
+    params <- prepare_indicators_bootstrap(
+      impact_cube_data = impact_cube_data,
+      indicator = "overall",
+      indicator_method = method,
+      ci_type = ci_type,
+      confidence_level = confidence_level,
+      boot_args = boot_args,
+      ci_args = ci_args,
+      grouping_var = "year"
+    )
+
+    # call bootstrap function from dubicube
+    bootstrap_results <- do.call(dubicube::bootstrap_cube,
+                                 params$bootstrap_params)
+
+    # confidence interval function
+    ci_result <- do.call(dubicube::calculate_bootstrap_ci,
+                         c(bootstrap_results = list(bootstrap_results),
+                           params$ci_params))
+
+    # clean confidence interval result
+
+    impact_values <- ci_result %>%
+      tibble::as_tibble() %>%
+      dplyr::select(!dplyr::all_of(c("int_type","conf"))) %>%
+      dplyr::rename("diversity_val" = "est_original")
+
+
   } else {
-    cli::cli_abort(c(
-      "{.var method} is not valid",
-      "x" = "{.var method} must be from the options provided",
-      "See the function desciption or double check the spelling"
-    ))
+    if (method == "precaut") {
+      impact_values <- compute_impact_indicators(impact_cube_data, "max", max)
+    } else if (method == "precaut_cum") {
+      impact_values <- compute_impact_indicators(impact_cube_data, "max", sum)
+    } else if (method == "mean") {
+      impact_values <- compute_impact_indicators(impact_cube_data, "mean", mean)
+    } else if (method == "mean_cum") {
+      impact_values <- compute_impact_indicators(impact_cube_data, "mean", sum)
+    } else if (method == "cum") {
+      impact_values <- compute_impact_indicators(impact_cube_data, "max_mech", sum)
+    } else {
+      cli::cli_abort(c(
+        "{.var method} is not valid",
+        "x" = "{.var method} must be from the options provided",
+        "See the function desciption or double check the spelling"
+      ))
+    }
   }
+
   structure(list(method = method,
                  num_cells = num_of_cells,
                  num_species = num_of_species,
