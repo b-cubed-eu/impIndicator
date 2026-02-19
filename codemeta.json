@@ -14,7 +14,7 @@
     "name": "R",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 4.4.2 (2024-10-31 ucrt)",
+  "runtimePlatform": "R version 4.5.1 (2025-06-13 ucrt)",
   "author": [
     {
       "@type": "Person",
@@ -80,6 +80,13 @@
       "familyName": "Hui",
       "email": "chui@sun.ac.za",
       "@id": "https://orcid.org/0000-0002-3660-8160"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Ward",
+      "familyName": "Langeraert",
+      "email": "ward.langeraert@inbo.be",
+      "@id": "https://orcid.org/0000-0002-5900-8109"
     }
   ],
   "copyrightHolder": [
@@ -160,7 +167,7 @@
       "@type": "SoftwareApplication",
       "identifier": "R",
       "name": "R",
-      "version": ">= 2.10"
+      "version": ">= 3.5"
     },
     "2": {
       "@type": "SoftwareApplication",
@@ -207,6 +214,13 @@
     },
     "6": {
       "@type": "SoftwareApplication",
+      "identifier": "dubicube",
+      "name": "dubicube",
+      "version": ">= 0.11.0",
+      "sameAs": "https://github.com/b-cubed-eu/dubicube"
+    },
+    "7": {
+      "@type": "SoftwareApplication",
       "identifier": "ggplot2",
       "name": "ggplot2",
       "provider": {
@@ -217,7 +231,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=ggplot2"
     },
-    "7": {
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
@@ -229,7 +243,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    "8": {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "rgbif",
       "name": "rgbif",
@@ -241,7 +255,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rgbif"
     },
-    "9": {
+    "10": {
+      "@type": "SoftwareApplication",
+      "identifier": "rlang",
+      "name": "rlang",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rlang"
+    },
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "rnaturalearth",
       "name": "rnaturalearth",
@@ -253,7 +279,19 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=rnaturalearth"
     },
-    "10": {
+    "12": {
+      "@type": "SoftwareApplication",
+      "identifier": "scales",
+      "name": "scales",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=scales"
+    },
+    "13": {
       "@type": "SoftwareApplication",
       "identifier": "sf",
       "name": "sf",
@@ -265,12 +303,12 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=sf"
     },
-    "11": {
+    "14": {
       "@type": "SoftwareApplication",
       "identifier": "stats",
       "name": "stats"
     },
-    "12": {
+    "15": {
       "@type": "SoftwareApplication",
       "identifier": "tibble",
       "name": "tibble",
@@ -282,7 +320,7 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tibble"
     },
-    "13": {
+    "16": {
       "@type": "SoftwareApplication",
       "identifier": "tidyr",
       "name": "tidyr",
@@ -294,13 +332,18 @@
       },
       "sameAs": "https://CRAN.R-project.org/package=tidyr"
     },
+    "17": {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    },
     "SystemRequirements": null
   },
-  "fileSize": "721.694KB",
+  "fileSize": "1129.148KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
-      "datePublished": "2025",
+      "datePublished": "2026",
       "author": {
         "author1": {
           "@type": "Person",
@@ -329,10 +372,13 @@
         }
       },
       "name": "impIndicator: Impact Indicators of Alien Taxa. Version 0.6.0",
-      "url": "https://b-cubed-eu.github.io/impIndicator/"
+      "identifier": "10.5281/zenodo.15052675",
+      "url": "https://b-cubed-eu.github.io/impIndicator/",
+      "@id": "https://doi.org/10.5281/zenodo.15052675",
+      "sameAs": "https://doi.org/10.5281/zenodo.15052675"
     }
   ],
-  "releaseNotes": "https://github.com/b-cubed-eu/impIndicator/blob/master/NEWS.md",
+  "releaseNotes": "https://github.com/b-cubed-eu/impIndicator/blob/main/NEWS.md",
   "readme": "https://github.com/b-cubed-eu/impIndicator/blob/main/README.md",
   "contIntegration": ["https://github.com/b-cubed-eu/impIndicator/actions/workflows/R-CMD-check.yaml", "https://app.codecov.io/gh/b-cubed-eu/impIndicator"],
   "developmentStatus": "https://www.repostatus.org/#wip",

@@ -18,6 +18,7 @@ status](https://www.r-pkg.org/badges/version/impIndicator)](https://CRAN.R-proje
 coverage](https://codecov.io/gh/b-cubed-eu/impIndicator/graph/badge.svg)](https://app.codecov.io/gh/b-cubed-eu/impIndicator)
 [![name status
 badge](https://b-cubed-eu.r-universe.dev/badges/:name?color=6CDDB4)](https://b-cubed-eu.r-universe.dev/)
+[![funder](https://badgen.net/static/funder/European%20Union/f2a)](https://doi.org/10.3030/101059592)
 
 <!-- badges: end -->
 
@@ -100,7 +101,6 @@ library(tidyverse)   # Visualisation
 #> Warning: package 'stringr' was built under R version 4.5.2
 #> Warning: package 'forcats' was built under R version 4.5.2
 library(dubicube)  # Data sensitivity and uncertainty estimation
-#> Warning: package 'dubicube' was built under R version 4.5.2
 ```
 
 ### Process occurrence cube
