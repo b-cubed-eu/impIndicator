@@ -1,7 +1,7 @@
 # Plot overall impact indicator
 
-Produces a ggplot object to show the trend of the overall impact
-indicator.
+Produces a `ggplot2` object showing the temporal trend of the overall
+impact indicator.
 
 ## Usage
 
@@ -9,12 +9,11 @@ indicator.
 # S3 method for class 'impact_indicator'
 plot(
   x,
-  linewidth = 2,
-  colour = "red",
-  title_lab = "Overall impact indicator",
-  y_lab = "Impact value",
-  x_lab = "Year",
-  text_size = 14,
+  trend = c("none", "line", "smooth"),
+  point_args = list(),
+  errorbar_args = list(),
+  trend_args = list(),
+  ribbon_args = list(),
   ...
 )
 ```
@@ -23,40 +22,64 @@ plot(
 
 - x:
 
-  A dataframe of impact indicator. Must be a class of "impact_indicator"
+  An object of class `"impact_indicator"` as returned by
+  [`compute_impact_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_indicator.md).
 
-- linewidth:
+- trend:
 
-  The width size of the line. Default is 2
+  Character string indicating how the central trend should be displayed.
+  One of:
 
-- colour:
+  "none"
 
-  The colour of the line Default is "red"
+  :   No trend line is added.
 
-- title_lab:
+  "line"
 
-  Title of the plot. Default is "Impact indicator"
+  :   A straight line connecting yearly values.
 
-- y_lab:
+  "smooth"
 
-  Label of the y-axis. Default is "Impact score"
+  :   A loess-smoothed trend.
 
-- x_lab:
+- point_args:
 
-  Label of the x-axis. Default is "Year"
+  A named list of arguments passed to
+  [`ggplot2::geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html)
+  to customise the appearance of the yearly impact estimates (e.g.
+  `size`, `colour`, `shape`).
 
-- text_size:
+- errorbar_args:
 
-  The size of the text of the plot. Default is "14"
+  A named list of arguments passed to
+  [`ggplot2::geom_errorbar()`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+  to customise the uncertainty intervals, if lower (`ll`) and upper
+  (`ul`) limits are available in `x$impact`.
+
+- trend_args:
+
+  A named list of arguments passed to the trend layer
+  ([`ggplot2::geom_line()`](https://ggplot2.tidyverse.org/reference/geom_path.html)
+  or
+  [`ggplot2::geom_smooth()`](https://ggplot2.tidyverse.org/reference/geom_smooth.html),
+  depending on `trend`) to customise its appearance (e.g. `colour`,
+  `linewidth`, `linetype`, `alpha`).
+
+- ribbon_args:
+
+  A named list of arguments passed to
+  [`ggplot2::geom_ribbon()`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)
+  to customise the uncertainty ribbon, if lower (`ll`) and upper (`ul`)
+  limits are available.
 
 - ...:
 
-  Additional arguments passed to geom_line
+  Currently not used.
 
 ## Value
 
-The ggplot object of the impact indicator, with the y- and x-axes
-representing the impact score and time respectively.
+A `ggplot` object representing the overall impact indicator over time,
+with years on the x-axis and impact values on the y-axis.
 
 ## See also
 
@@ -67,6 +90,7 @@ Other Plot:
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
 # create data_cube
 acacia_cube <- taxa_cube(
   taxa = taxa_Acacia,
@@ -83,6 +107,16 @@ impact_value <- compute_impact_indicator(
   trans = 1
 )
 
-# plot impact indicator
+# default plot
 plot(impact_value)
+
+# customised plot
+plot(
+  impact_value,
+  trend = "smooth",
+  point_args = list(size = 3, colour = "darkred"),
+  trend_args = list(colour = "black", linewidth = 1),
+  ribbon_args = list(fill = "grey80", alpha = 0.3)
+)
+} # }
 ```

@@ -80,7 +80,15 @@ library(impIndicator)
 
 library(b3gbi)     # General biodiversity indicators for data cubes
 library(tidyverse)   # Visualisation
+#> Warning: package 'ggplot2' was built under R version 4.5.2
+#> Warning: package 'tibble' was built under R version 4.5.2
+#> Warning: package 'tidyr' was built under R version 4.5.2
+#> Warning: package 'purrr' was built under R version 4.5.2
+#> Warning: package 'dplyr' was built under R version 4.5.2
+#> Warning: package 'stringr' was built under R version 4.5.2
+#> Warning: package 'forcats' was built under R version 4.5.2
 library(dubicube)  # Data sensitivity and uncertainty estimation
+#> Warning: package 'dubicube' was built under R version 4.5.2
 ```
 
 ### Process occurrence cube
@@ -203,21 +211,29 @@ plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 
 To compute the impact indicator of alien taxa, we sum all the yearly
 impact scores of each site of the study region. To correct for sampling
-effort we divide the yearly impact scores by number of sites in the
+effort, we divide the yearly impact scores by the number of sites in the
 study region with at least a single occurrence throughout the whole
 year. The impact indicator use one of the methods named above in the
-impact per site.
+impact per site. The `ci_type` argument allows the function
+[`compute_impact_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_indicator.md)
+to calculate the confidence interval of the overall impact indicator
+using a bootstrapping method via the **dubicube** package. The
+`seed = 123` makes the bootstrap to generate same random sample for
+reproducibility.
 
 ``` r
 # Impact indicator
 impactIndicator <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean_cum"
+  method = "mean_cum",
+  ci_type = "perc",
+  boot_args = list(seed = 123)
 )
+#> [1] "Performing whole-cube bootstrap."
 
 # Visualise impact indicator
-plot(impactIndicator)
+plot(impactIndicator, trend = "smooth")
 ```
 
 ![](reference/figures/README-unnamed-chunk-5-1.png)
@@ -228,14 +244,15 @@ We compute the impact indicator per species by summing the impact risk
 map per species and correct for sampling effort by dividing by \\N\\.
 The `compute_impact_per_species` use *max* (maximum), *mean* or
 *max_mech* (sum of maximum score per mechanism) method to compute the
-impact per species
+impact per species. Interval calculation is not implemented yet.
 
 ``` r
 # Impact indicator per species
 species_value <- compute_impact_per_species(
   cube = acacia_cube,
   impact_data = eicat_acacia,
-  method = "mean"
+  method = "mean",
+  ci_type = "none"
 )
 
 # Visualise species impact

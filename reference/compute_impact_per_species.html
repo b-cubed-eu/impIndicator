@@ -6,8 +6,14 @@
     }
   };
 </script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/PT_Sans-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Compute species impact indicator — compute_impact_per_species"><meta name="description" content="Combines occurrences cube and impact data using the given method
-(e.g., mean) to compute the impact indicator per species."><meta property="og:description" content="Combines occurrences cube and impact data using the given method
-(e.g., mean) to compute the impact indicator per species."><meta property="og:image" content="https://b-cubed-eu.github.io/impIndicator/logo.png"></head><body>
+(e.g., mean, max) to compute the impact indicator per species.
+Optionally computes bootstrap confidence intervals for the indicator
+grouped by year and species.
+Interval calculation is currently not implemented!"><meta property="og:description" content="Combines occurrences cube and impact data using the given method
+(e.g., mean, max) to compute the impact indicator per species.
+Optionally computes bootstrap confidence intervals for the indicator
+grouped by year and species.
+Interval calculation is currently not implemented!"><meta property="og:image" content="https://b-cubed-eu.github.io/impIndicator/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +21,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,13 +48,16 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Compute species impact indicator</h1>
-      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/v0.5.0/R/species_impact.R" class="external-link"><code>R/species_impact.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/main/R/species_impact.R" class="external-link"><code>R/species_impact.R</code></a></small>
       <div class="d-none name"><code>compute_impact_per_species.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
     <p>Combines occurrences cube and impact data using the given method
-(e.g., mean) to compute the impact indicator per species.</p>
+(e.g., mean, max) to compute the impact indicator per species.
+Optionally computes bootstrap confidence intervals for the indicator
+grouped by year and species.</p>
+<p>Interval calculation is currently not implemented!</p>
     </div>
 
     <div class="section level2">
@@ -58,6 +67,10 @@
 <span>  impact_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  method <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  trans <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  ci_type <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  confidence_level <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  boot_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="fl">1000</span>, seed <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>  ci_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>no_bias <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>  col_category <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col_species <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  col_mechanism <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -70,50 +83,74 @@
 
 
 <dl><dt id="arg-cube">cube<a class="anchor" aria-label="anchor" href="#arg-cube"></a></dt>
-<dd><p>The data cube of class <code>sim_cube</code> or
-<code>processed_cube</code> from <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code>.</p></dd>
+<dd><p>A data cube object (class <code>'processed_cube'</code> or <code>'sim_cube'</code>,
+processed from <code><a href="https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html" class="external-link">b3gbi::process_cube()</a></code>) or a dataframe (cf. <code>$data</code> slot of
+<code>'processed_cube'</code> or <code>'sim_cube'</code>) or an impact cube (class <code>'impact_cube'</code>
+from <code><a href="create_impact_cube_data.html">create_impact_cube_data()</a></code>).</p></dd>
 
 
 <dt id="arg-impact-data">impact_data<a class="anchor" aria-label="anchor" href="#arg-impact-data"></a></dt>
-<dd><p>The dataframe of species impact which contains columns of
-<code>impact_category</code>, <code>scientific_name</code> and <code>impact_mechanism</code>.</p></dd>
+<dd><p>A dataframe of species impact which contains columns of
+<code>impact_category</code>, <code>scientific_name</code> and <code>impact_mechanism</code>.
+Ignored if <code>cube</code> is already an <code>'impact_cube'</code>.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
-<dd><p>The method of computing the indicator.
-The method used in the aggregation of within impact of species.
-The method can be</p><ul><li><p><code>"max"</code>:The maximum method assigns a species the maximum impact across all
-records of the species. It is best for precautionary approaches.
-Also, the assumption is that the management of the highest impact can
-cover for the lower impact caused by a species and can be the best
-when there is low confidence in the multiple impacts of species of interest.
-However, the maximum method can overestimate the impact of a species
-especially when the highest impact requires specific or rare conditions and
-many lower impacts were recorded.</p></li>
-<li><p><code>"mean"</code>: assigns a species the mean impact of all the species impact.
-This method computes the expected impact of the species considering
-all species impact without differentiating between
-impacts. This method is adequate when there are many
-impact records per species.</p></li>
-<li><p><code>"max_mech"</code>: Assigns a species the summation of the maximum impact
-per mechanism. The assumption is that species with
-many mechanisms of impact have a higher potential to cause impact.</p></li>
+<dd><p>A method of computing the indicator.
+The method used in the aggregation of within-species impact.
+The method can be:</p><ul><li><p><code>"max"</code>: The maximum method assigns a species the maximum impact
+across all records of the species. It is best for precautionary
+approaches. However, it can overestimate the impact of a species
+if the highest impact requires rare or specific conditions.</p></li>
+<li><p><code>"mean"</code>: Assigns a species the mean impact across all its
+impact records. This method computes the expected impact of
+the species and is adequate when many impact records are available.</p></li>
+<li><p><code>"max_mech"</code>: Assigns a species the summation of the maximum
+impact per mechanism. This assumes species with multiple mechanisms
+of impact have higher potential to cause impact.</p></li>
 </ul></dd>
 
 
 <dt id="arg-trans">trans<a class="anchor" aria-label="anchor" href="#arg-trans"></a></dt>
 <dd><p>Numeric: <code>1</code> (default), <code>2</code> or <code>3</code>. The method of transformation
-to convert the EICAT categories <code>c("MC", "MN", "MO", "MR", "MV")</code> to
-numerical values:</p><ul><li><p><code>1</code>: converts the categories to <code>c(0, 1, 2, 3, 4)</code></p></li>
-<li><p><code>2</code>: converts the categories to to <code>c(1, 2, 3, 4, 5)</code></p></li>
-<li><p><code>3</code>: converts the categories to to <code>c(1, 10, 100, 1000, 10000)</code></p></li>
+to convert the EICAT categories <code>c("MC", "MN", "MO", "MR", "MV")</code>
+to numerical values:</p><ul><li><p><code>1</code>: converts the categories to <code>c(0, 1, 2, 3, 4)</code></p></li>
+<li><p><code>2</code>: converts the categories to <code>c(1, 2, 3, 4, 5)</code></p></li>
+<li><p><code>3</code>: converts the categories to <code>c(1, 10, 100, 1000, 10000)</code></p></li>
 </ul></dd>
+
+
+<dt id="arg-ci-type">ci_type<a class="anchor" aria-label="anchor" href="#arg-ci-type"></a></dt>
+<dd><p>A character string specifying the type of confidence
+intervals to compute. Options include:</p><ul><li><p><code>"perc"</code>: Percentile intervals (default).</p></li>
+<li><p><code>"bca"</code>: Bias-corrected and accelerated intervals.</p></li>
+<li><p><code>"norm"</code>: Normal approximation intervals.</p></li>
+<li><p><code>"basic"</code>: Basic bootstrap intervals.</p></li>
+<li><p><code>"none"</code>: No confidence intervals calculated.</p></li>
+</ul></dd>
+
+
+<dt id="arg-confidence-level">confidence_level<a class="anchor" aria-label="anchor" href="#arg-confidence-level"></a></dt>
+<dd><p>The confidence level for the calculated
+intervals. Default is <code>0.95</code> (95% confidence level).</p></dd>
+
+
+<dt id="arg-boot-args">boot_args<a class="anchor" aria-label="anchor" href="#arg-boot-args"></a></dt>
+<dd><p>(Optional) Named list of additional arguments passed to
+<code><a href="https://b-cubed-eu.github.io/dubicube/reference/bootstrap_cube.html" class="external-link">dubicube::bootstrap_cube()</a></code>.
+Default: <code>list(samples = 1000, seed = NA)</code>.</p></dd>
+
+
+<dt id="arg-ci-args">ci_args<a class="anchor" aria-label="anchor" href="#arg-ci-args"></a></dt>
+<dd><p>(Optional) Named list of additional arguments passed to
+<code><a href="https://b-cubed-eu.github.io/dubicube/reference/calculate_bootstrap_ci.html" class="external-link">dubicube::calculate_bootstrap_ci()</a></code>.
+Default: <code>list(no_bias = TRUE)</code>.</p></dd>
 
 
 <dt id="arg-col-category">col_category<a class="anchor" aria-label="anchor" href="#arg-col-category"></a></dt>
 <dd><p>The name of the column containing the impact categories.
-The first two letters each categories must be an EICAT short names
-(e.g "MC - Minimal concern").</p></dd>
+The first two letters of each category must be an EICAT short name
+(e.g., <code>"MC - Minimal concern"</code>).</p></dd>
 
 
 <dt id="arg-col-species">col_species<a class="anchor" aria-label="anchor" href="#arg-col-species"></a></dt>
@@ -125,16 +162,17 @@ The first two letters each categories must be an EICAT short names
 
 
 <dt id="arg-region">region<a class="anchor" aria-label="anchor" href="#arg-region"></a></dt>
-<dd><p>The shape file of the specific region to calculate the indicator on.
-If NULL (default), the indicator is calculated for all cells in the cube.</p></dd>
+<dd><p>The shape file of the specific region to calculate
+the indicator on. If <code>NULL</code> (default), the indicator is calculated
+for all cells in the cube.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A list of class <code>species_impact</code>, with the following components:</p><ul><li><p><code>method</code>: method used in computing the indicator</p></li>
-<li><p><code>num_species</code>: number of species in the indicator</p></li>
-<li><p><code>names_species</code>: names of species in the indicator</p></li>
-<li><p><code>species_impact</code>: a dataframe containing impact per species</p></li>
+    <p>A list of class <code>'species_impact'</code>, with the following components:</p><ul><li><p><code>method</code>: Method used in computing the indicator.</p></li>
+<li><p><code>num_species</code>: Number of species in the indicator.</p></li>
+<li><p><code>names_species</code>: Names of species in the indicator.</p></li>
+<li><p><code>species_impact</code>: A dataframe containing impact per species and year.</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -152,6 +190,7 @@ If NULL (default), the indicator is calculated for all cells in the cube.</p></d
 <span class="r-in"><span>  first_year <span class="op">=</span> <span class="fl">2010</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Without confidence intervals</span></span></span>
 <span class="r-in"><span><span class="va">speciesImpact</span> <span class="op">&lt;-</span> <span class="fu">compute_impact_per_species</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span></span>
 <span class="r-in"><span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span></span>

@@ -9,7 +9,7 @@
 - [`compute_impact_per_species()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_per_species.md)
   : Compute species impact indicator
 - [`create_impact_cube_data()`](https://b-cubed-eu.github.io/impIndicator/reference/create_impact_cube_data.md)
-  : Title
+  : Create impact cube data
 - [`cube_acacia_SA`](https://b-cubed-eu.github.io/impIndicator/reference/cube_acacia_SA.md)
   : GBIF Occurrence Cube of acacia in South Africa An example of
   occurrence cube of GBIF containing required column for impact
@@ -25,6 +25,8 @@
   : Plot site impact
 - [`plot(`*`<species_impact>`*`)`](https://b-cubed-eu.github.io/impIndicator/reference/plot.species_impact.md)
   : Plot species impact
+- [`prepare_indicators_bootstrap()`](https://b-cubed-eu.github.io/impIndicator/reference/prepare_indicators_bootstrap.md)
+  : Prepare indicators for bootstrap and cross validation
 - [`print(`*`<impact_indicator>`*`)`](https://b-cubed-eu.github.io/impIndicator/reference/print.impact_indicator.md)
   : Print an impact_indicator object
 - [`print(`*`<site_impact>`*`)`](https://b-cubed-eu.github.io/impIndicator/reference/print.site_impact.md)

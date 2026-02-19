@@ -5,7 +5,9 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/PT_Sans-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Plot overall impact indicator — plot.impact_indicator"><meta name="description" content="Produces a ggplot object to show the trend of the overall impact indicator."><meta property="og:description" content="Produces a ggplot object to show the trend of the overall impact indicator."><meta property="og:image" content="https://b-cubed-eu.github.io/impIndicator/logo.png"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/PT_Sans-0.4.10/font.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Plot overall impact indicator — plot.impact_indicator"><meta name="description" content="Produces a ggplot2 object showing the temporal trend of the
+overall impact indicator."><meta property="og:description" content="Produces a ggplot2 object showing the temporal trend of the
+overall impact indicator."><meta property="og:image" content="https://b-cubed-eu.github.io/impIndicator/logo.png"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -13,7 +15,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,12 +42,13 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Plot overall impact indicator</h1>
-      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/v0.5.0/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/main/R/plot.R" class="external-link"><code>R/plot.R</code></a></small>
       <div class="d-none name"><code>plot.impact_indicator.Rd</code></div>
     </div>
 
     <div class="ref-description section level2">
-    <p>Produces a ggplot object to show the trend of the overall impact indicator.</p>
+    <p>Produces a <code>ggplot2</code> object showing the temporal trend of the
+overall impact indicator.</p>
     </div>
 
     <div class="section level2">
@@ -53,12 +56,11 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'impact_indicator'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  linewidth <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  colour <span class="op">=</span> <span class="st">"red"</span>,</span>
-<span>  title_lab <span class="op">=</span> <span class="st">"Overall impact indicator"</span>,</span>
-<span>  y_lab <span class="op">=</span> <span class="st">"Impact value"</span>,</span>
-<span>  x_lab <span class="op">=</span> <span class="st">"Year"</span>,</span>
-<span>  text_size <span class="op">=</span> <span class="fl">14</span>,</span>
+<span>  trend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"line"</span>, <span class="st">"smooth"</span><span class="op">)</span>,</span>
+<span>  point_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  errorbar_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  trend_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  ribbon_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -68,42 +70,59 @@
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A dataframe of impact indicator. Must be a class of
-"impact_indicator"</p></dd>
+<dd><p>An object of class <code>"impact_indicator"</code> as returned by
+<code><a href="compute_impact_indicator.html">compute_impact_indicator()</a></code>.</p></dd>
 
 
-<dt id="arg-linewidth">linewidth<a class="anchor" aria-label="anchor" href="#arg-linewidth"></a></dt>
-<dd><p>The width size of the line. Default is 2</p></dd>
+<dt id="arg-trend">trend<a class="anchor" aria-label="anchor" href="#arg-trend"></a></dt>
+<dd><p>Character string indicating how the central trend should be
+displayed. One of:</p><dl><dt>"none"</dt>
+<dd><p>No trend line is added.</p></dd>
+
+<dt>"line"</dt>
+<dd><p>A straight line connecting yearly values.</p></dd>
+
+<dt>"smooth"</dt>
+<dd><p>A loess-smoothed trend.</p></dd>
 
 
-<dt id="arg-colour">colour<a class="anchor" aria-label="anchor" href="#arg-colour"></a></dt>
-<dd><p>The colour of the line Default is "red"</p></dd>
+</dl></dd>
 
 
-<dt id="arg-title-lab">title_lab<a class="anchor" aria-label="anchor" href="#arg-title-lab"></a></dt>
-<dd><p>Title of the plot. Default is "Impact indicator"</p></dd>
+<dt id="arg-point-args">point_args<a class="anchor" aria-label="anchor" href="#arg-point-args"></a></dt>
+<dd><p>A named list of arguments passed to
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point()</a></code> to customise the appearance of the yearly
+impact estimates (e.g. <code>size</code>, <code>colour</code>, <code>shape</code>).</p></dd>
 
 
-<dt id="arg-y-lab">y_lab<a class="anchor" aria-label="anchor" href="#arg-y-lab"></a></dt>
-<dd><p>Label of the y-axis. Default is "Impact score"</p></dd>
+<dt id="arg-errorbar-args">errorbar_args<a class="anchor" aria-label="anchor" href="#arg-errorbar-args"></a></dt>
+<dd><p>A named list of arguments passed to
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html" class="external-link">ggplot2::geom_errorbar()</a></code> to customise the uncertainty intervals,
+if lower (<code>ll</code>) and upper (<code>ul</code>) limits are available in
+<code>x$impact</code>.</p></dd>
 
 
-<dt id="arg-x-lab">x_lab<a class="anchor" aria-label="anchor" href="#arg-x-lab"></a></dt>
-<dd><p>Label of the x-axis. Default is "Year"</p></dd>
+<dt id="arg-trend-args">trend_args<a class="anchor" aria-label="anchor" href="#arg-trend-args"></a></dt>
+<dd><p>A named list of arguments passed to the trend layer
+(<code><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">ggplot2::geom_line()</a></code> or <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">ggplot2::geom_smooth()</a></code>,
+depending on <code>trend</code>) to customise its appearance (e.g.
+<code>colour</code>, <code>linewidth</code>, <code>linetype</code>, <code>alpha</code>).</p></dd>
 
 
-<dt id="arg-text-size">text_size<a class="anchor" aria-label="anchor" href="#arg-text-size"></a></dt>
-<dd><p>The size of the text of the plot. Default is "14"</p></dd>
+<dt id="arg-ribbon-args">ribbon_args<a class="anchor" aria-label="anchor" href="#arg-ribbon-args"></a></dt>
+<dd><p>A named list of arguments passed to
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">ggplot2::geom_ribbon()</a></code> to customise the uncertainty ribbon,
+if lower (<code>ll</code>) and upper (<code>ul</code>) limits are available.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Additional arguments passed to geom_line</p></dd>
+<dd><p>Currently not used.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The ggplot object of the impact indicator, with the y- and x-axes
-representing the impact score and time respectively.</p>
+    <p>A <code>ggplot</code> object representing the overall impact indicator
+over time, with years on the x-axis and impact values on the y-axis.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -114,7 +133,8 @@ representing the impact score and time respectively.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># create data_cube</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
+<span class="r-in"><span><span class="co"># create data_cube</span></span></span>
 <span class="r-in"><span><span class="va">acacia_cube</span> <span class="op">&lt;-</span> <span class="fu"><a href="taxa_cube.html">taxa_cube</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  taxa <span class="op">=</span> <span class="va">taxa_Acacia</span>,</span></span>
 <span class="r-in"><span>  region <span class="op">=</span> <span class="va">southAfrica_sf</span>,</span></span>
@@ -130,9 +150,18 @@ representing the impact score and time respectively.</p>
 <span class="r-in"><span>  trans <span class="op">=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># plot impact indicator</span></span></span>
+<span class="r-in"><span><span class="co"># default plot</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">impact_value</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plot.impact_indicator-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># customised plot</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">impact_value</span>,</span></span>
+<span class="r-in"><span>  trend <span class="op">=</span> <span class="st">"smooth"</span>,</span></span>
+<span class="r-in"><span>  point_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">3</span>, colour <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  trend_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  ribbon_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"grey80"</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

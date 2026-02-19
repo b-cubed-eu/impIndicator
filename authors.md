@@ -22,6 +22,10 @@
   [](https://orcid.org/0000-0002-3660-8160)  
   Stellenbosch University (SU)
 
+- **Ward Langeraert**. Contributor.
+  [](https://orcid.org/0000-0002-5900-8109)  
+  Research Institute for Nature and Forest (INBO)
+
 - **Stellenbosch University (SU)**. Copyright holder.
 
 - **European Union's Horizon Europe Research and Innovation Programme
@@ -30,14 +34,14 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/b-cubed-eu/impIndicator/blob/v0.5.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/b-cubed-eu/impIndicator/blob/main/inst/CITATION)
 
 Yahaya, Mukhtar Muhammed; Kumschick, Sabrina; MacFadyen, Sandra; Landi,
 Pietro; Hui, Cang (2025) impIndicator: Impact Indicators of Alien Taxa.
 Version 0.1.0. https://b-cubed-eu.github.io/impIndicator/
 
     @Manual{,
-      title = {impIndicator: Impact Indicators of Alien Taxa. Version 0.5.0},
+      title = {impIndicator: Impact Indicators of Alien Taxa. Version 0.6.0},
       author = {Mukhtar Muhammed Yahaya and Sabrina Kumschick and Sandra MacFadyen and Pietro Landi and Cang Hui},
       year = {2025},
       url = {https://b-cubed-eu.github.io/impIndicator/},

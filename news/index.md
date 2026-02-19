@@ -1,5 +1,16 @@
 # Changelog
 
+## impIndicator 0.6.0
+
+- Create the prepare_indicators_bootstrap function which returns
+  parameters need for bootstrapping and confidence interval via the
+  dubicube
+
+- Make the prepare_indicators_bootstrap to use only impact cube object.
+  An impact cube is an object that contain occurrence cube and impact
+  data. It can save the computational time due to recombining during a
+  multiple computation from a set of data such as bootstrapping.
+
 ## impIndicator 0.5.0
 
 - Add cross_validation result to README using the Acacia example
@@ -30,7 +41,9 @@
 
 - Return indicators’ information
 
-- ## impIndicator 0.2.0
+- 
+
+## impIndicator 0.2.0
 
 - Improve function names according to B-cubed guidelines
 

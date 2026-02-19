@@ -12,6 +12,10 @@ compute_impact_indicator(
   impact_data = NULL,
   method = NULL,
   trans = 1,
+  ci_type = c("perc", "bca", "norm", "basic", "none"),
+  confidence_level = 0.95,
+  boot_args = list(samples = 1000, seed = NA),
+  ci_args = list(no_bias = TRUE),
   col_category = NULL,
   col_species = NULL,
   col_mechanism = NULL,
@@ -23,17 +27,20 @@ compute_impact_indicator(
 
 - cube:
 
-  The data cube of class `sim_cube` or `processed_cube` from
-  [`b3gbi::process_cube()`](https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html).
+  A data cube object (class 'processed_cube' or 'sim_cube', processed
+  from
+  [`b3gbi::process_cube()`](https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html))
+  or a dataframe (cf. `$data` slot of 'processed_cube' or 'sim_cube') or
+  an impact cube (class 'impact_cube' from `create_impact_cube_data`)
 
 - impact_data:
 
-  The dataframe of species impact which contains columns of
+  A dataframe of species impact which contains columns of
   `impact_category`, `scientific_name` and `impact_mechanism`.
 
 - method:
 
-  The method of computing the indicator. The method used in the
+  A method of computing the indicator. The method used in the
   aggregation of within and across species in a site proposed by
   Boulesnane-Genguant et al. (submitted). The method can be one of
 
@@ -76,6 +83,38 @@ compute_impact_indicator(
   - `2`: converts the categories to to `c(1, 2, 3, 4, 5)`
 
   - `3`: converts the categories to to `c(1, 10, 100, 1000, 10000)`
+
+- ci_type:
+
+  A character vector specifying the type of confidence intervals to
+  compute. Options include:
+
+  - `perc`: Percentile intervals (default).
+
+  - `bca`: Bias-corrected and accelerated intervals.
+
+  - `norm`: Normal approximation intervals.
+
+  - `basic`: Basic bootstrap intervals.
+
+  - `none`: No confidence intervals calculated.
+
+- confidence_level:
+
+  The confidence level for the calculated intervals. Default is 0.95 (95
+  % confidence level).
+
+- boot_args:
+
+  (Optional) Named list of additional arguments passed to
+  [`dubicube::bootstrap_cube()`](https://b-cubed-eu.github.io/dubicube/reference/bootstrap_cube.html).
+  Default: `list(samples = 1000, seed = NA)`.
+
+- ci_args:
+
+  (Optional) Named list of additional arguments passed to
+  [`dubicube::calculate_bootstrap_ci()`](https://b-cubed-eu.github.io/dubicube/reference/calculate_bootstrap_ci.html).
+  Default: `list(no_bias = TRUE)`.
 
 - col_category:
 
@@ -130,6 +169,7 @@ impact_value <- compute_impact_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
-  trans = 1
+  trans = 1,
+  ci_type = "none"
 )
 ```

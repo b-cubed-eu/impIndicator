@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,9 +40,14 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/v0.5.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.6.0" id="impindicator-060">impIndicator 0.6.0<a class="anchor" aria-label="anchor" href="#impindicator-060"></a></h2>
+<ul><li><p>Create the prepare_indicators_bootstrap function which returns parameters need for bootstrapping and confidence interval via the dubicube</p></li>
+<li><p>Make the prepare_indicators_bootstrap to use only impact cube object. An impact cube is an object that contain occurrence cube and impact data. It can save the computational time due to recombining during a multiple computation from a set of data such as bootstrapping.</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.5.0" id="impindicator-050">impIndicator 0.5.0<a class="anchor" aria-label="anchor" href="#impindicator-050"></a></h2>
 <ul><li>Add cross_validation result to README using the Acacia example</li>
@@ -66,8 +71,11 @@
 <li><p>Improve Readme and vignettes for b-cuded website</p></li>
 <li><p>Styling of README and vignettes for b-cuded website</p></li>
 <li><p>Return indicators’ information</p></li>
-<li><h2 id="impindicator-020" class="pkg-version" data-toc-text="0.3.0">impIndicator 0.2.0</h2></li>
-<li><p>Improve function names according to B-cubed guidelines</p></li>
+<li>
+</li></ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.0" id="impindicator-020">impIndicator 0.2.0<a class="anchor" aria-label="anchor" href="#impindicator-020"></a></h2>
+<ul><li><p>Improve function names according to B-cubed guidelines</p></li>
 <li><p>Add descriptions to exported functions</p></li>
 <li><p>Move helper functions to R/utils.R</p></li>
 </ul></div>

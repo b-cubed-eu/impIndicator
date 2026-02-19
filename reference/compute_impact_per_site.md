@@ -22,17 +22,20 @@ compute_impact_per_site(
 
 - cube:
 
-  The data cube of class `sim_cube` or `processed_cube` from
-  [`b3gbi::process_cube()`](https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html).
+  A data cube object (class 'processed_cube' or 'sim_cube', processed
+  from
+  [`b3gbi::process_cube()`](https://b-cubed-eu.github.io/b3gbi/reference/process_cube.html))
+  or a dataframe (cf. `$data` slot of 'processed_cube' or 'sim_cube') or
+  an impact cube (class 'impact_cube' from `create_impact_cube_data`)
 
 - impact_data:
 
-  The dataframe of species impact which contains columns of
+  A dataframe of species impact which contains columns of
   `impact_category`, `scientific_name` and `impact_mechanism`.
 
 - method:
 
-  The method of computing the indicator. The method used in the
+  A method of computing the indicator. The method used in the
   aggregation of within and across species in a site proposed by
   Boulesnane-Genguant et al. (submitted). The method can be one of
 

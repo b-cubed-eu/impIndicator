@@ -36,7 +36,7 @@
 
     <a class="navbar-brand me-2" href="index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -107,7 +107,15 @@
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/b3gbi" class="external-link">b3gbi</a></span><span class="op">)</span>     <span class="co"># General biodiversity indicators for data cubes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>   <span class="co"># Visualisation</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">dubicube</span><span class="op">)</span>  <span class="co"># Data sensitivity and uncertainty estimation</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.5.2</span></span>
+<span><span class="co">#&gt; Warning: package 'tibble' was built under R version 4.5.2</span></span>
+<span><span class="co">#&gt; Warning: package 'tidyr' was built under R version 4.5.2</span></span>
+<span><span class="co">#&gt; Warning: package 'purrr' was built under R version 4.5.2</span></span>
+<span><span class="co">#&gt; Warning: package 'dplyr' was built under R version 4.5.2</span></span>
+<span><span class="co">#&gt; Warning: package 'stringr' was built under R version 4.5.2</span></span>
+<span><span class="co">#&gt; Warning: package 'forcats' was built under R version 4.5.2</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/b-cubed-eu/dubicube" class="external-link">dubicube</a></span><span class="op">)</span>  <span class="co"># Data sensitivity and uncertainty estimation</span></span>
+<span><span class="co">#&gt; Warning: package 'dubicube' was built under R version 4.5.2</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="process-occurrence-cube">Process occurrence cube<a class="anchor" aria-label="anchor" href="#process-occurrence-cube"></a>
 </h3>
@@ -202,47 +210,51 @@
 <span><span class="co"># Impact map</span></span>
 <span><span class="co"># Visualise last four years for readability</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">siteImpact</span>, region <span class="op">=</span> <span class="va">southAfrica_sf</span>, first_year <span class="op">=</span> <span class="fl">2021</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-4-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-4-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="overall-impact-indicators">Overall impact indicators<a class="anchor" aria-label="anchor" href="#overall-impact-indicators"></a>
 </h3>
-<p>To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort we divide the yearly impact scores by number of sites in the study region with at least a single occurrence throughout the whole year. The impact indicator use one of the methods named above in the impact per site.</p>
+<p>To compute the impact indicator of alien taxa, we sum all the yearly impact scores of each site of the study region. To correct for sampling effort, we divide the yearly impact scores by the number of sites in the study region with at least a single occurrence throughout the whole year. The impact indicator use one of the methods named above in the impact per site. The <code>ci_type</code> argument allows the function <code><a href="reference/compute_impact_indicator.html">compute_impact_indicator()</a></code> to calculate the confidence interval of the overall impact indicator using a bootstrapping method via the <strong>dubicube</strong> package. The <code>seed = 123</code> makes the bootstrap to generate same random sample for reproducibility.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Impact indicator</span></span>
 <span><span class="va">impactIndicator</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_indicator.html">compute_impact_indicator</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"mean_cum"</span></span>
+<span>  method <span class="op">=</span> <span class="st">"mean_cum"</span>,</span>
+<span>  ci_type <span class="op">=</span> <span class="st">"perc"</span>,</span>
+<span>  boot_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>seed <span class="op">=</span> <span class="fl">123</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Performing whole-cube bootstrap."</span></span>
 <span></span>
 <span><span class="co"># Visualise impact indicator</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">impactIndicator</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-5-1.png" width="100%"></p>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">impactIndicator</span>, trend <span class="op">=</span> <span class="st">"smooth"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-5-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="species-impact-indicator">Species impact indicator<a class="anchor" aria-label="anchor" href="#species-impact-indicator"></a>
 </h3>
-<p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <span class="math inline">\(N\)</span>. The <code>compute_impact_per_species</code> use <em>max</em> (maximum), <em>mean</em> or <em>max_mech</em> (sum of maximum score per mechanism) method to compute the impact per species</p>
+<p>We compute the impact indicator per species by summing the impact risk map per species and correct for sampling effort by dividing by <span class="math inline">\(N\)</span>. The <code>compute_impact_per_species</code> use <em>max</em> (maximum), <em>mean</em> or <em>max_mech</em> (sum of maximum score per mechanism) method to compute the impact per species. Interval calculation is not implemented yet.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Impact indicator per species</span></span>
 <span><span class="va">species_value</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/compute_impact_per_species.html">compute_impact_per_species</a></span><span class="op">(</span></span>
 <span>  cube <span class="op">=</span> <span class="va">acacia_cube</span>,</span>
 <span>  impact_data <span class="op">=</span> <span class="va">eicat_acacia</span>,</span>
-<span>  method <span class="op">=</span> <span class="st">"mean"</span></span>
+<span>  method <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span>  ci_type <span class="op">=</span> <span class="st">"none"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Visualise species impact</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">species_value</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level3">
 <h3 id="sensitivity-analysis">Sensitivity analysis<a class="anchor" aria-label="anchor" href="#sensitivity-analysis"></a>
 </h3>
 <p>To estimate how the impact indicator is sensitive to a taxon and indicating how the taxon e.g., species can disproportionately influence the impact indicator. We can use a leave-one-species-out cross-validation (LOSO-CV) technique. This technique evaluates the extent to which the overall indicator is driven by individual species by systematically recalculating the indicator after excluding one species at a time and comparing the resulting values to those obtained from the full occurrence cube. The deviation between the left out species indicator and the full-data indicator provides a measure of error attributable to species omission and can be summarised using the root mean square error (RMSE) for each year. RMSE values indicate whether observed trends are robust or disproportionately influenced by particular species. We use the <code>cross_validation()</code> from <strong>dubicube</strong> package to perform the LOSO-CV. Details and tutorial about the LOSO-CV calculation can be found here <a href="https://b-cubed-eu.github.io/dubicube/articles/group-level-sensitivity.html" class="external-link uri">https://b-cubed-eu.github.io/dubicube/articles/group-level-sensitivity.html</a></p>
-<p><img src="reference/figures/README-unnamed-chunk-8-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-8-1.png" alt="" width="100%"></p>
 <p>The above plot shows the RMSE of the impact indicator of Acacia species is South Africa. The figure indicates the values from the year 2019 are sensitive or dominated by some individual species in the indicator.</p>
-<p><img src="reference/figures/README-unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-9-1.png" alt="" width="100%"></p>
 <p>The above figure shows the impact indicator value and LOSO-CV Error of each species from the year 2017. The LOSO-CV indicates that the impact indicator value will increase (if positive) or decrease(if negative) by the corresponding value of where the species lies in the y-axis. The impact indicator is majorly influenced by <em>Acacia saligna</em> and <em>Acacia mearnsii</em> from the year 2019.</p>
 </div>
 </div>
