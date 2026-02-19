@@ -88,7 +88,6 @@ library(tidyverse)   # Visualisation
 #> Warning: package 'stringr' was built under R version 4.5.2
 #> Warning: package 'forcats' was built under R version 4.5.2
 library(dubicube)  # Data sensitivity and uncertainty estimation
-#> Warning: package 'dubicube' was built under R version 4.5.2
 ```
 
 ### Process occurrence cube
