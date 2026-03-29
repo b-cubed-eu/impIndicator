@@ -8,9 +8,9 @@ acacia_cube <- taxa_cube(
   first_year = 2010
 )
 
-test_that("compute_impact_per_species works without CI", {
+test_that("compute_species_indicator works without CI", {
 
-  res <- compute_impact_per_species(
+  res <- compute_species_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     method = "mean",
@@ -27,12 +27,12 @@ test_that("compute_impact_per_species works without CI", {
   expect_equal(unique(res$method), "mean")
 })
 
-test_that("compute_impact_per_species works for all methods and trans", {
+test_that("compute_species_indicator works for all methods and trans", {
 
   for (m in c("mean","max","max_mech")) {
     for (t in 1:3) {
       expect_silent(
-        compute_impact_per_species(
+        compute_species_indicator(
           cube = acacia_cube,
           impact_data = eicat_acacia,
           method = m,
@@ -47,11 +47,11 @@ test_that("compute_impact_per_species works for all methods and trans", {
   }
 })
 
-test_that("compute_impact_per_species throws error for invalid inputs", {
+test_that("compute_species_indicator throws error for invalid inputs", {
 
   # invalid cube
   expect_error(
-    compute_impact_per_species(
+    compute_species_indicator(
       cube = "invalid_cube",
       impact_data = eicat_acacia,
       method = "mean",
@@ -64,7 +64,7 @@ test_that("compute_impact_per_species throws error for invalid inputs", {
 
   # invalid impact_data
   expect_error(
-    compute_impact_per_species(
+    compute_species_indicator(
       cube = acacia_cube,
       impact_data = "invalid_data",
       method = "mean",
@@ -77,7 +77,7 @@ test_that("compute_impact_per_species throws error for invalid inputs", {
 
   # invalid method
   expect_error(
-    compute_impact_per_species(
+    compute_species_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       method = "invalid_method",
@@ -90,7 +90,7 @@ test_that("compute_impact_per_species throws error for invalid inputs", {
 
   # invalid trans
   expect_error(
-    compute_impact_per_species(
+    compute_species_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       method = "mean",
@@ -104,7 +104,7 @@ test_that("compute_impact_per_species throws error for invalid inputs", {
 
   # bootstrapping
   expect_error(
-    compute_impact_per_species(
+    compute_species_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       method = "mean",

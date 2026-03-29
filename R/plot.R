@@ -250,7 +250,7 @@ plot.impact_indicator <- function(
 #' )
 #'
 #' # compute species impact
-#' speciesImpact <- compute_impact_per_species(
+#' speciesImpact <- compute_species_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean",

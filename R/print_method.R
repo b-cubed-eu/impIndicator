@@ -107,7 +107,7 @@ print.site_impact <- function(x,n=10,...) {
 #' )
 #'
 #' # compute species impact
-#' speciesImpact <- compute_impact_per_species(
+#' speciesImpact <- compute_species_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean",

@@ -106,6 +106,6 @@ siteImpact <- compute_impact_per_site(
 \seealso{
 Other Indicator function: 
 \code{\link{compute_impact_indicator}()},
-\code{\link{compute_impact_per_species}()}
+\code{\link{compute_species_indicator}()}
 }
 \concept{Indicator function}

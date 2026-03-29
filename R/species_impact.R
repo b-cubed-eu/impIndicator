@@ -77,14 +77,14 @@
 #' )
 #'
 #' # Without confidence intervals
-#' speciesImpact <- compute_impact_per_species(
+#' speciesImpact <- compute_species_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean",
 #'   trans = 1
 #' )
 
-compute_impact_per_species <- function(
+compute_species_indicator <- function(
     cube,
     impact_data = NULL,
     method = NULL,

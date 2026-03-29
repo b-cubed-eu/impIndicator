@@ -113,7 +113,7 @@ test_that("plot.impact_indicator throws error for wrong class", {
 ##### Plot method for specie impact ####
 
 # compute species impact
-speciesImpact <- compute_impact_per_species(
+speciesImpact <- compute_species_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   col_category = "impact_category",

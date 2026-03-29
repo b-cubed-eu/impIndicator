@@ -49,7 +49,7 @@ The impIndicator produces three main products:
   management actions, coordinating restoration projects, and fostering
   cross-regional collaboration to address alien species impacts
   effectively.
-- **species impact indicator** with `compute_impact_per_species()`: The
+- **species impact indicator** with `compute_species_indicator()`: The
   species impact produces the trends of individual alien species,
   enabling a species-specific impact attributed to invasions. This data
   supports comparisons of individual species’ impacts, revealing their
@@ -79,7 +79,7 @@ remotes::install_github("b-cubed-eu/impIndicator")
 We demonstrate the computation and visualisation of impact indicator of
 biological invasions using the **impIndicator** package:
 `compute_impact_indicator()` to compute impact indicators of alien taxa,
-`compute_impact_per_species()` to compute impact indicators per species,
+`compute_species_indicator()` to compute impact indicators per species,
 and `compute_impact_per_site()` to compute impact indicators per site.
 The functions require (1) a species occurrence cube processed by the
 `b3gbi::process_cube()` function within `taxa_cube()`, and (2)
@@ -240,14 +240,14 @@ plot(impactIndicator, trend = "smooth")
 ### Species impact indicator
 
 We compute the impact indicator per species by combining the impact
-score and occurrence of individual species. `compute_impact_per_species`
+score and occurrence of individual species. `compute_species_indicator`
 use *max* (maximum), *mean* or *max_mech* (sum of maximum score per
 mechanism) method to compute the impact per species. Interval
 calculation is not implemented yet.
 
 ``` r
 # Impact indicator per species
-species_value <- compute_impact_per_species(
+species_value <- compute_species_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean",
