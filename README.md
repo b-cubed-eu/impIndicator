@@ -199,7 +199,7 @@ species_value <- compute_species_indicator(
 plot(species_value)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-species_indicator-1.png" width="100%" />
 
 ### Site impact indicator
 
@@ -231,7 +231,7 @@ siteImpact <- compute_site_indicator(
 plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-site_indicator-1.png" width="100%" />
 
 ### Regional impact indicator
 
@@ -244,7 +244,7 @@ bootstrapping method via the **dubicube** package. The `seed = 123`
 makes the bootstrap to generate same random sample for reproducibility.
 
 ``` r
-# Impact indicator
+# Regional impact indicator
 impactIndicator <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
@@ -258,7 +258,7 @@ impactIndicator <- compute_regional_indicator(
 plot(impactIndicator, trend = "smooth")
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
+<img src="man/figures/README-regional_indicator-1.png" width="100%" />
 
 ### Sensitivity analysis
 
@@ -279,13 +279,13 @@ particular species. We use the `cross_validation_cube()` from
 the LOSO-CV calculation can be found here
 <https://b-cubed-eu.github.io/dubicube/articles/group-level-sensitivity.html>
 
-<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
+<img src="man/figures/README-RMSE_sensitivity-1.png" width="100%" />
 
 The above plot shows the RMSE of the impact indicator of Acacia species
 is South Africa. The figure indicates the values from the year 2019 are
 sensitive or dominated by some individual species in the indicator.
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-Error_sensitivity-1.png" width="100%" />
 
 The above figure shows the impact indicator value and LOSO-CV Error of
 each species from the year 2017. The LOSO-CV indicates that the impact

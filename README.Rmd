@@ -156,7 +156,7 @@ We compute the impact indicator per species by combining the impact score and oc
 (sum of maximum score per mechanism) method to compute the impact per
 species. Interval calculation is not implemented yet.
 
-```{r}
+```{r species_indicator}
 # Impact indicator per species
 species_value <- compute_species_indicator(
   cube = acacia_cube,
@@ -188,7 +188,7 @@ namely,
 -   **mean_cum** (mean cumulative) and
 -   **cum** (cumulative).
 
-```{r}
+```{r site_indicator}
 siteImpact <- compute_site_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
@@ -210,8 +210,8 @@ regional impact indicator using a bootstrapping method via the
 **dubicube** package. The `seed = 123` makes the bootstrap to generate
 same random sample for reproducibility.
 
-```{r}
-# Impact indicator
+```{r regional_indicator}
+# Regional impact indicator
 impactIndicator <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
@@ -259,7 +259,7 @@ boot_fun <- function(data){
 
 ```
 
-```{r echo=FALSE}
+```{r RMSE_sensitivity, echo=FALSE}
 # perform leave-one-species-out cross-validation
 cv_results <- dubicube::cross_validate_cube(
   data_cube = acacia_cube,
@@ -292,7 +292,7 @@ The above plot shows the RMSE of the impact indicator of Acacia species
 is South Africa. The figure indicates the values from the year 2019 are
 sensitive or dominated by some individual species in the indicator.
 
-```{r echo=FALSE}
+```{r Error_sensitivity, echo=FALSE}
 # Get original estimates (based on full data cube)
 original_estimates <- boot_fun(acacia_cube$data) %>% filter(year>2016)
 original_estimates$label <- paste(
