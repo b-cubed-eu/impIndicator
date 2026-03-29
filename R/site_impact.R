@@ -70,14 +70,14 @@
 #'   first_year = 2010
 #' )
 #'
-#' siteImpact <- compute_impact_per_site(
+#' siteImpact <- compute_site_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",
 #'   trans = 1
 #' )
 
-compute_impact_per_site <- function(
+compute_site_indicator <- function(
     cube,
     impact_data = NULL,
     method = NULL,

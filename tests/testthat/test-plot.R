@@ -5,14 +5,14 @@ acacia_cube <- process_cube(cube_name = cube_acacia_SA,
                             last_year = 2024)
 
 # compute impact indicator
-impact_value <- compute_impact_indicator(
+impact_value <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum"
 )
 
 # impact indicator with confidence interval
-impact_value_ci <- compute_impact_indicator(
+impact_value_ci <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
@@ -113,7 +113,7 @@ test_that("plot.impact_indicator throws error for wrong class", {
 ##### Plot method for specie impact ####
 
 # compute species impact
-speciesImpact <- compute_impact_per_species(
+speciesImpact <- compute_species_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   col_category = "impact_category",
@@ -198,7 +198,7 @@ test_that("plot.species_impact throws error", {
 #### Plot method for site impact ####
 
 # compute site impact
-siteImpact <- compute_impact_per_site(
+siteImpact <- compute_site_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   col_category = "impact_category",

@@ -28,7 +28,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute impact indicator
-impact_value <- compute_impact_indicator(
+impact_value <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",

@@ -1,11 +1,22 @@
+# impIndicator 0.6.1
+
+-   Improve the indicator names for clearity and consistency
+
+    -   `compute_impact_per_species()`changed to `compute_species_indicator()`
+    -   `compute_impact_per_site()`changed to `compute_site_indicator()`
+    -   `compute_impact_indicator()`changed to `compute_regional_indicator()`
+
+-   The name *overall* impact indicator has been changed to *regional* impact indicator
+
+-   The species and regional impact indicators are no longer divided by the total number of sites occupied in the analysis
+
+-   Fix the bug in the exponential transformation of impact categories to impact scores
+
 # impIndicator 0.6.0
 
-- Create the prepare_indicators_bootstrap function which returns parameters need for
-bootstrapping and confidence interval via the dubicube
+-   Create the prepare_indicators_bootstrap function which returns parameters need for bootstrapping and confidence interval via the dubicube
 
-- Make the prepare_indicators_bootstrap to use only impact cube object. An impact cube is 
-an object that contain occurrence cube and impact data. It can save the computational time
-due to recombining during a multiple computation from a set of data such as bootstrapping.
+-   Make the prepare_indicators_bootstrap to use only impact cube object. An impact cube is an object that contain occurrence cube and impact data. It can save the computational time due to recombining during a multiple computation from a set of data such as bootstrapping.
 
 # impIndicator 0.5.0
 

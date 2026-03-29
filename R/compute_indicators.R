@@ -23,7 +23,7 @@ compute_impact_indicators <- function(data,col,fun) {
     dplyr::summarise(dplyr::across(dplyr::all_of(col), fun), .groups = "drop") %>%
     dplyr::group_by(year) %>%
     dplyr::summarise(dplyr::across(dplyr::all_of(col), sum), .groups = "drop") %>%
-    dplyr::mutate(diversity_val = .data[[col]] / length(unique(data$cellCode)),
+    dplyr::mutate(diversity_val = .data[[col]],
                   .keep = "unused")
 }
 
@@ -69,7 +69,7 @@ compute_species_impact<-function(data, col){
     dplyr::distinct(taxonKey,year,cellCode,.keep_all = TRUE) %>%
     dplyr::group_by(year,scientificName) %>%
     dplyr::summarise(dplyr::across(dplyr::all_of(col),sum),.groups = "drop") %>%
-    dplyr::mutate(col = .data[[col]]/length(unique(data$cellCode)),
+    dplyr::mutate(col = .data[[col]],
                   .keep="unused") %>%
     dplyr::arrange(scientificName) %>%
     tidyr::pivot_wider(names_from = scientificName, values_from = col) %>%

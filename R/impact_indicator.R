@@ -84,7 +84,7 @@
 #'   res = 0.25,
 #'   first_year = 2010
 #' )
-#' impact_value <- compute_impact_indicator(
+#' impact_value <- compute_regional_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",
@@ -92,7 +92,7 @@
 #'   ci_type = "none"
 #' )
 
-compute_impact_indicator <- function(
+compute_regional_indicator <- function(
     cube,
     impact_data = NULL,
     method = NULL,
