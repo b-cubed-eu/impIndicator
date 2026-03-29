@@ -13,9 +13,9 @@ impact_cube <- create_impact_cube_data(
   impact_data = eicat_acacia
 )
 
-test_that("compute_impact_indicator returns correct structure without CI", {
+test_that("compute_regional_indicator returns correct structure without CI", {
 
-  result <- compute_impact_indicator(
+  result <- compute_regional_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -42,9 +42,9 @@ test_that("compute_impact_indicator returns correct structure without CI", {
 
 })
 
-test_that("compute_impact_indicator works with bootstrap CI", {
+test_that("compute_regional_indicator works with bootstrap CI", {
 
-  result <- compute_impact_indicator(
+  result <- compute_regional_indicator(
     cube = acacia_cube,
     impact_data = eicat_acacia,
     col_category = "impact_category",
@@ -73,7 +73,7 @@ test_that("all aggregation methods run without CI", {
   for (m in methods) {
 
     expect_no_error(
-      compute_impact_indicator(
+      compute_regional_indicator(
         cube = acacia_cube,
         impact_data = eicat_acacia,
         col_category = "impact_category",
@@ -92,7 +92,7 @@ test_that("all aggregation methods run without CI", {
 test_that("works when cube is a data.frame", {
 
   expect_no_error(
-    compute_impact_indicator(
+    compute_regional_indicator(
       cube = acacia_cube$data,
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -109,7 +109,7 @@ test_that("works when cube is a data.frame", {
 test_that("works when cube already contains impact data", {
 
   expect_no_error(
-    compute_impact_indicator(
+    compute_regional_indicator(
       cube = impact_cube,
       method = "precaut",
       ci_type = "none"
@@ -121,7 +121,7 @@ test_that("works when cube already contains impact data", {
 test_that("region argument works when provided", {
 
   expect_no_error(
-    compute_impact_indicator(
+    compute_regional_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -139,7 +139,7 @@ test_that("region argument works when provided", {
 test_that("invalid method throws error", {
 
   expect_error(
-    compute_impact_indicator(
+    compute_regional_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -157,7 +157,7 @@ test_that("invalid method throws error", {
 test_that("invalid cube class throws error", {
 
   expect_error(
-    compute_impact_indicator(
+    compute_regional_indicator(
       cube = "not_a_cube",
       impact_data = eicat_acacia,
       method = "mean_cum",
@@ -172,7 +172,7 @@ test_that("invalid cube class throws error", {
 test_that("invalid ci_type throws error", {
 
   expect_error(
-    compute_impact_indicator(
+    compute_regional_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       col_category = "impact_category",
@@ -189,7 +189,7 @@ test_that("invalid ci_type throws error", {
 test_that("invalid region throws error", {
 
   expect_error(
-    compute_impact_indicator(
+    compute_regional_indicator(
       cube = acacia_cube,
       impact_data = eicat_acacia,
       col_category = "impact_category",

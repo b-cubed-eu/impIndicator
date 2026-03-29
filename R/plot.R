@@ -5,7 +5,7 @@
 #' overall impact indicator.
 #'
 #' @param x An object of class \code{"impact_indicator"} as returned by
-#'   \code{compute_impact_indicator()}.
+#'   \code{compute_regional_indicator()}.
 #' @param trend Character string indicating how the central trend should be
 #'   displayed. One of:
 #'   \describe{
@@ -52,7 +52,7 @@
 #' )
 #'
 #' # compute impact indicator
-#' impact_value <- compute_impact_indicator(
+#' impact_value <- compute_regional_indicator(
 #'   cube = acacia_cube,
 #'   impact_data = eicat_acacia,
 #'   method = "mean_cum",

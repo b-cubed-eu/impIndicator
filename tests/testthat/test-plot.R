@@ -5,14 +5,14 @@ acacia_cube <- process_cube(cube_name = cube_acacia_SA,
                             last_year = 2024)
 
 # compute impact indicator
-impact_value <- compute_impact_indicator(
+impact_value <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum"
 )
 
 # impact indicator with confidence interval
-impact_value_ci <- compute_impact_indicator(
+impact_value_ci <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
