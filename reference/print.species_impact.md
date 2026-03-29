@@ -36,7 +36,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute species impact
-speciesImpact <- compute_impact_per_species(
+speciesImpact <- compute_species_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean",
@@ -45,7 +45,7 @@ speciesImpact <- compute_impact_per_species(
 
 # print species impact
 print(speciesImpact)
-#> Site impact indicator
+#> Species impact indicator
 #> 
 #> Method: mean 
 #> 
@@ -57,16 +57,16 @@ print(speciesImpact)
 #> # A tibble: 15 × 11
 #>     year `Acacia baileyana` `Acacia cyclops` `Acacia dealbata`
 #>    <dbl>              <dbl>            <dbl>             <dbl>
-#>  1  2010           NA                0.00326          NA      
-#>  2  2011           NA               NA                NA      
-#>  3  2012            0.0147           0.0359           NA      
-#>  4  2013            0.0220           0.0391            0.00850
-#>  5  2014            0.0220           0.0359           NA      
-#>  6  2015           NA                0.0261            0.0213 
-#>  7  2016            0.00733          0.0391            0.0383 
-#>  8  2017            0.00733          0.0489            0.0213 
-#>  9  2018            0.00733          0.0652            0.0170 
-#> 10  2019            0.0733           0.153             0.0680 
+#>  1  2010                 NA             1.33             NA   
+#>  2  2011                 NA            NA                NA   
+#>  3  2012                  6            14.7              NA   
+#>  4  2013                  9            16                 3.48
+#>  5  2014                  9            14.7              NA   
+#>  6  2015                 NA            10.7               8.70
+#>  7  2016                  3            16                15.7 
+#>  8  2017                  3            20                 8.70
+#>  9  2018                  3            26.7               6.96
+#> 10  2019                 30            62.7              27.8 
 #> # ℹ 5 more rows
 #> # ℹ 7 more variables: `Acacia decurrens` <dbl>, `Acacia elata` <dbl>,
 #> #   `Acacia longifolia` <dbl>, `Acacia mearnsii` <dbl>,

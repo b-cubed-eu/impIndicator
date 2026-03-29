@@ -11,13 +11,15 @@ biodiversity loss[¹](#fn1). A challenge to the appropriate management of
 such impact is the lack of sufficient evidence-based indicators for the
 impact caused by alien species that satisfy Findable, Accessible,
 Interoperable, and Reusable (FAIR) principles of data[²](#fn2). As there
-is growing information on distributions (GBIF, 2025), and standard
-assessments of the impact caused by alien species across different
-native ecosystems become available (e.g. [³](#fn3) [⁴](#fn4) [⁵](#fn5)
-[⁶](#fn6)), there is room for a standard method to infer the impact of
-alien species as indicators from the combination of their occurrences
-and impact assessment. In terms of policy, the indicator will allow for
-the prioritisation of key species and sites, tracking the response of
+is growing information on distributions (e.g.,
+[GBIF](https://www.gbif.org/) and
+[iNaturalist](https://www.inaturalist.org/)), and standard assessments
+of the impact caused by alien species across different native ecosystems
+become available (e.g. [³](#fn3) [⁴](#fn4) [⁵](#fn5) [⁶](#fn6)), there
+is room for a standard method to infer the impact of alien species as
+indicators from the combination of their occurrences and impact
+assessment. In terms of policy, the indicator will allow for the
+prioritisation of key species and sites, tracking the response of
 controls, and forecasting the impact under possible future
 scenarios[⁷](#fn7).
 
@@ -62,22 +64,21 @@ of data on impacts and occurrences has been proposed as an indicator of
 the impact of invasions[²⁰](#fn20), but there has been no standardised
 methodology to achieve this in practice. Recent research has seen
 significant practical developments to address this shortcoming. For
-example, Kumschick et al., 2025[²¹](#fn21) used EICAT and species
-distribution to map the impact of Acacia species in South Africa. The
-authors transformed the EICAT categories into numerical values and
-computed the impact score for each site. Building on their approach, we
-now derive species-specific impact values over time to produce more
-refined impact indicators. In doing so, we expand the methods of
-Kumschick et al., 2025[²²](#fn22) and Boulesnane-Guengant[²³](#fn23) by
+example, [²¹](#fn21) used EICAT and species distribution to map the
+impact of Acacia species in South Africa. The authors transformed the
+EICAT categories into numerical values and computed the impact score for
+each site. Building on their approach, we now derive species-specific
+impact values over time to produce more refined impact indicators. In
+doing so, we expand the methods of [²²](#fn22) and [²³](#fn23) by
 integrating open-source EICAT assessments and species occurrence data,
 making the impact indicators taxonomically, spatially, and temporally
 explicit. As part of the [B3 project](https://b-cubed.eu/), we developed
 a workflow to calculate the impact indicator which visualises the impact
 of alien species over time and across space. The workflow is embedded in
 an R package following a standard software development guide[²⁴](#fn24).
-The workflow produces three main products which include (i) a species
-impact indicator, (ii) a site impact indicator and (iii) an overall
-impact indicator.
+The workflow produces three main products which include (i) species
+impact indicator, (ii) site impact indicator and (iii) regional impact
+indicator.
 
 ## Method
 
@@ -126,7 +127,7 @@ other direct physical disturbance, grazing/herbivory/browsing, chemical
 impact on ecosystem, physical impact on ecosystem, structural impact on
 ecosystem, indirect impact through interactions with other species.
 Additional information such as the location of the impact is also
-reported.
+reported (see [²⁵](#fn25)).
 
 The data collection process for EICAT assessments involves several key
 steps. First, raw impact records for the alien species are gathered
@@ -162,9 +163,9 @@ minimal concern (e.g., zero impact). The transformation:
   relationship with minimal concern implying some concern even if no
   impact was found on the native species’ individual (e.g., Jansen &
   Kumschick 2022).
-- **MC = 0, MN = 10, MO = 100, MR = 1000 and MV = 10000** assumes impact
+- **MC = 1, MN = 10, MO = 100, MR = 1000 and MV = 10000** assumes impact
   categories have an exponential relationship and minimal concern is
-  equal to zero impact (e.g., Rumlerová et al., 2016).
+  equal to zero impact.
 
 ## Species impact indicator
 
@@ -172,12 +173,12 @@ Species are often reported to have multiple impact categories specific
 to different study locations and mechanisms through which they exert the
 impact. For example, Acacia dealbata has been categorised as MR in
 Drakensberg, South Africa through structural impact but MN in Biobio
-region, Chile (see dataset of Jansen & Kumschick 2022). To get an
-estimate of a likely impact category which could apply more broadly, we
-aggregate the multiple impact scores per species into one impact score
-per species. Aggregation methods include, overall maximum, sum across
-maximum mechanism and overall mean. Additional statistics will be
-included in future updates.
+region, Chile (see dataset of [²⁶](#fn26)). To get an estimate of a
+likely impact category which could apply more broadly, we aggregate the
+multiple impact scores per species into one impact score per species.
+Aggregation methods include, overall maximum, sum of maximum across
+mechanisms and mean. Additional statistics will be included in future
+updates.
 
 - maximum: The maximum method assigns a species the maximum impact
   across all records of the species (Blackburn et al., 2014; IUCN,
@@ -188,28 +189,24 @@ included in future updates.
   species of interest. However, the maximum method can overestimate the
   impact of a species especially when the highest impact requires
   specific or rare conditions and many lower impacts were recorded.
-- sum across maximum mechanism: Assigns a species the summation of the
-  maximum impact per mechanism (Nentwig et al., 2010). The assumption is
-  that species with many mechanisms of impact have a higher potential to
-  cause impact.
+- sum of maximum across mechanisms: Assigns a species the summation of
+  the maximum impact per mechanism (Nentwig et al., 2010). The
+  assumption is that species with many mechanisms of impact have a
+  higher potential to cause impact.
 - mean: Assigns a species the mean impact of all the species impact.
   This method computes the expected impact of the species considering
   all species impact without differentiating between impacts (D’hondt et
   al., 2015). This method is adequate when there are many impact records
-  per species. Finally, to compensate for regions (spatial areas or
-  ranges of occurrence data) with many sites (grid cells covering a
-  region) having higher overall impact value, we divide the impact value
-  of each by the number of sites occupied in the region.
+  per species.
 
 ## Site impact indicator
 
 Multiple alien species can co-occur in a site. To get information on how
 sites are affected by alien species (i.e. site impact), we aggregate the
 different impacts per species in each site using one of five methods
-proposed by Boulesnane-Genguant et al. (submitted). These methods are
-precautionary, precautionary cumulative, mean, mean cumulative, and
-cumulative which depend on the combinations of aggregation within
-species and across species.
+proposed by. These methods are precautionary, precautionary cumulative,
+mean, mean cumulative, and cumulative which depend on the combinations
+of aggregation within species and across species.
 
 - precautionary: This method uses the maximum method to aggregate each
   species’ impact and then compute the maximum impact across species in
@@ -234,19 +231,17 @@ species and across species.
   of the overall impact while considering the impact and mechanisms of
   multiple species.
 
-## Overall impact indicator
+## Regional impact indicator
 
 Furthermore, to estimate the impacts of all the species in a study area,
-we sum the impact values of all the sites for each year. Also, to
-compensate for regions with many sites having higher overall impact
-value, we divide the impact value of each by the number of sites
-occupied in the region.
+we sum the impact values of all the sites for each year. Thus, the
+underlying method of computing regional impact indicator is the same as
+site impact indicator.
 
-\\I_i = \frac{\sum{S_i}}{N}\\  
+\\I_i = {\sum{S_i}}\\  
 - \\I_i\\ is impact score at year \\i\\. - \\S_i\\ is the sum of risk
 map value, where \\S=\\s_1,s_2,\dots,s_n\\\\ and \\s_n\\ is the site
-score for site \\n\\ - \\N\\ is number of sites occupied through out the
-study years of the region.
+score for site \\n\\.
 
 ------------------------------------------------------------------------
 
@@ -350,9 +345,16 @@ study years of the region.
 
 23. Boulesnane-Guengant O, Rouget M, Becker-Scarpitta A, Botella C,
     Kumschick S. Spatialising the ecological impacts of alien species
-    into risk maps. Submitted;
+    into risk maps. Global Ecology and Conservation. 2025 Sep;61:e03660
 
 24. Huybrechts P, Trekels M, Abraham L, Desmet P. B-Cubed software
     development guide \[Internet\]. B-Cubed documentation. 2024 \[cited
     2025 Mar 18\]. Available from:
     <https://docs.b-cubed.eu/guides/software-development/>
+
+25. IUCN. IUCN EICAT Categories and Criteria: The Environmental Impact
+    Classification for Alien Taxa. IUCN Gland, Switzerland; 2020a.
+
+26. Jansen, C., & Kumschick, S. (2022). A global impact assessment of
+    Acacia species introduced to South Africa. Biological Invasions,
+    24(1), 175–187. <https://doi.org/10.1007/s10530-021-02642-0>

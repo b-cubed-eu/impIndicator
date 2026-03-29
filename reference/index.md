@@ -2,11 +2,11 @@
 
 ## All functions
 
-- [`compute_impact_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_indicator.md)
+- [`compute_regional_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_regional_indicator.md)
   : Overall impact indicator
-- [`compute_impact_per_site()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_per_site.md)
+- [`compute_site_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_site_indicator.md)
   : Site impact indicator
-- [`compute_impact_per_species()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_per_species.md)
+- [`compute_species_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_species_indicator.md)
   : Compute species impact indicator
 - [`create_impact_cube_data()`](https://b-cubed-eu.github.io/impIndicator/reference/create_impact_cube_data.md)
   : Create impact cube data

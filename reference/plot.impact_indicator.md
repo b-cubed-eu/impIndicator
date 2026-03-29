@@ -23,7 +23,7 @@ plot(
 - x:
 
   An object of class `"impact_indicator"` as returned by
-  [`compute_impact_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_indicator.md).
+  [`compute_regional_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_regional_indicator.md).
 
 - trend:
 
@@ -100,7 +100,7 @@ acacia_cube <- taxa_cube(
 )
 
 # compute impact indicator
-impact_value <- compute_impact_indicator(
+impact_value <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",

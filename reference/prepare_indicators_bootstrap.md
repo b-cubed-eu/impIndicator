@@ -46,8 +46,7 @@ prepare_indicators_bootstrap(
 - indicator_method:
 
   Character string specifying the method used to compute the impact
-  indicator (see methods in
-  [`compute_impact_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_impact_indicator.md)).
+  indicator (see methods in `compute_impact_indicator()`).
 
 - grouping_var:
 

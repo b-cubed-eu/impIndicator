@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">impIndicator</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +25,6 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/background.html">Background</a></li>
-    <li><a class="dropdown-item" href="../articles/prepare_data.html">Prepare data</a></li>
   </ul></li>
 <li class="active nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -43,6 +42,24 @@
       <small>Source: <a href="https://github.com/b-cubed-eu/impIndicator/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.6.1" id="impindicator-061">impIndicator 0.6.1<a class="anchor" aria-label="anchor" href="#impindicator-061"></a></h2>
+<ul><li>
+<p>Improve the indicator names for clearity and consistency</p>
+<ul><li>
+<code>compute_impact_per_species()</code>changed to <code><a href="../reference/compute_species_indicator.html">compute_species_indicator()</a></code>
+</li>
+<li>
+<code>compute_impact_per_site()</code>changed to <code><a href="../reference/compute_site_indicator.html">compute_site_indicator()</a></code>
+</li>
+<li>
+<code>compute_impact_indicator()</code>changed to <code><a href="../reference/compute_regional_indicator.html">compute_regional_indicator()</a></code>
+</li>
+</ul></li>
+<li><p>The name <em>overall</em> impact indicator has been changed to <em>regional</em> impact indicator</p></li>
+<li><p>The species and regional impact indicators are no longer divided by the total number of sites occupied in the analysis</p></li>
+<li><p>Fix the bug in the exponential transformation of impact categories to impact scores</p></li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.6.0" id="impindicator-060">impIndicator 0.6.0<a class="anchor" aria-label="anchor" href="#impindicator-060"></a></h2>
 <ul><li><p>Create the prepare_indicators_bootstrap function which returns parameters need for bootstrapping and confidence interval via the dubicube</p></li>

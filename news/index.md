@@ -1,5 +1,25 @@
 # Changelog
 
+## impIndicator 0.6.1
+
+- Improve the indicator names for clearity and consistency
+
+  - `compute_impact_per_species()`changed to
+    [`compute_species_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_species_indicator.md)
+  - `compute_impact_per_site()`changed to
+    [`compute_site_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_site_indicator.md)
+  - `compute_impact_indicator()`changed to
+    [`compute_regional_indicator()`](https://b-cubed-eu.github.io/impIndicator/reference/compute_regional_indicator.md)
+
+- The name *overall* impact indicator has been changed to *regional*
+  impact indicator
+
+- The species and regional impact indicators are no longer divided by
+  the total number of sites occupied in the analysis
+
+- Fix the bug in the exponential transformation of impact categories to
+  impact scores
+
 ## impIndicator 0.6.0
 
 - Create the prepare_indicators_bootstrap function which returns
