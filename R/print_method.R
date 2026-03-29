@@ -34,7 +34,7 @@
 #' @export
 
 print.impact_indicator <- function(x,n=10,...) {
-  cat("Overall impact indicator\n\n")
+  cat("Regional impact indicator\n\n")
   cat("Method:",x$method,"\n\n")
   cat("Number of cells:",x$num_cells,"\n\n")
   cat("Number of species:",x$num_species,"\n\n")
@@ -120,7 +120,7 @@ print.site_impact <- function(x,n=10,...) {
 #' @export
 
 print.species_impact <- function(x,n=10,...) {
-  cat("Site impact indicator\n\n")
+  cat("Species impact indicator\n\n")
   cat("Method:",x$method,"\n\n")
   cat("Number of species:",x$num_species,"\n\n")
   cat("\nFirst", n, "rows of data (use n = to show more):\n\n")
