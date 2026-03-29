@@ -31,16 +31,15 @@ methods of calculating impact indicators based on different assumptions.
 
 The impIndicator produces three main products:
 
-- **overall impact indicator** with `compute_impact_indicator()`: The
-  impact indicator offers a nuanced representation of the trends of
-  biological invasions of an area (local, regional, or global scales).
-  By tracking the increase and decrease of ecological threats over time,
-  this product provides insights into the dynamics of alien species
-  impacts, helping assess whether current management practices are
-  effective or need adjustment. The temporal analysis of impact
-  indicator enables targeted resource allocation, fostering proactive
-  interventions to mitigate biodiversity loss and ecosystem degradation.
-- **site impact indicator** with `compute_site_indicator()`: The site
+- **Species impact indicator** with `compute_species_indicator()`: The
+  species impact produces the trends of individual alien species,
+  enabling a species-specific impact attributed to invasions. This data
+  supports comparisons of individual species’ impacts, revealing their
+  roles and interactions within invaded area. The species impact is
+  invaluable for prioritising species-specific management efforts,
+  informing control and eradication strategies, and advancing research
+  on alien species’ ecological roles and adaptation patterns.
+- **Site impact indicator** with `compute_site_indicator()`: The site
   impact as a map serves as a visual and analytical tool to represent
   the intensity of biological invasions across different parts of an
   area. By enabling spatial comparisons—such as between provinces,
@@ -49,14 +48,15 @@ The impIndicator produces three main products:
   management actions, coordinating restoration projects, and fostering
   cross-regional collaboration to address alien species impacts
   effectively.
-- **species impact indicator** with `compute_species_indicator()`: The
-  species impact produces the trends of individual alien species,
-  enabling a species-specific impact attributed to invasions. This data
-  supports comparisons of individual species’ impacts, revealing their
-  roles and interactions within invaded area. The species impact is
-  invaluable for prioritising species-specific management efforts,
-  informing control and eradication strategies, and advancing research
-  on alien species’ ecological roles and adaptation patterns.
+- **Regional impact indicator** with `compute_regional_indicator()`: The
+  impact indicator offers a nuanced representation of the trends of
+  biological invasions of an area (local, regional, or global scales).
+  By tracking the increase and decrease of ecological threats over time,
+  this product provides insights into the dynamics of alien species
+  impacts, helping assess whether current management practices are
+  effective or need adjustment. The temporal analysis of impact
+  indicator enables targeted resource allocation, fostering proactive
+  interventions to mitigate biodiversity loss and ecosystem degradation.
 
 ## Installation
 
@@ -78,12 +78,12 @@ remotes::install_github("b-cubed-eu/impIndicator")
 
 We demonstrate the computation and visualisation of impact indicator of
 biological invasions using the **impIndicator** package:
-`compute_impact_indicator()` to compute impact indicators of alien taxa,
-`compute_species_indicator()` to compute impact indicators per species,
-and `compute_site_indicator()` to compute impact indicators per site.
-The functions require (1) a species occurrence cube processed by the
-`b3gbi::process_cube()` and (2) Environmental Impact Classification for
-Alien Taxa (EICAT) data of species. Go to
+`compute_regional_indicator()` to compute impact indicators of alien
+taxa, `compute_species_indicator()` to compute impact indicators per
+species, and `compute_site_indicator()` to compute impact indicators per
+site. The functions require (1) a species occurrence cube processed by
+the `b3gbi::process_cube()` and (2) Environmental Impact Classification
+for Alien Taxa (EICAT) data of species. Go to
 `vignette("Background", package = "impIndicator")` to read more about
 these functions.
 
@@ -178,6 +178,29 @@ head(eicat_acacia, 10)
 #> 10 Acacia dealbata   MC              (12) Indirect impacts through interaction …
 ```
 
+### Species impact indicator
+
+We compute the impact indicator per species by combining the impact
+score and occurrence of individual species.
+`compute_species_indicator()` use *max* (maximum), *mean* or *max_mech*
+(sum of maximum score per mechanism) method to compute the impact per
+species. Interval calculation is not implemented yet.
+
+``` r
+# Impact indicator per species
+species_value <- compute_species_indicator(
+  cube = acacia_cube,
+  impact_data = eicat_acacia,
+  method = "mean",
+  ci_type = "none"
+)
+
+# Visualise species impact
+plot(species_value)
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
 ### Site impact indicator
 
 The impact per site is a risk map that shows the impact score for each
@@ -208,21 +231,21 @@ siteImpact <- compute_site_indicator(
 plot(x = siteImpact, region = southAfrica_sf, first_year = 2021)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
-### Overall impact indicators
+### Regional impact indicator
 
 To compute the impact indicator of alien taxa, we sum all the yearly
 impact scores of each site of the study region. The impact indicator use
 one of the methods named above in the impact per site. The `ci_type`
-argument allows the function `compute_impact_indicator()` to calculate
-the confidence interval of the overall impact indicator using a
+argument allows the function `compute_regional_indicator()` to calculate
+the confidence interval of the regional impact indicator using a
 bootstrapping method via the **dubicube** package. The `seed = 123`
 makes the bootstrap to generate same random sample for reproducibility.
 
 ``` r
 # Impact indicator
-impactIndicator <- compute_impact_indicator(
+impactIndicator <- compute_regional_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum",
@@ -235,29 +258,6 @@ impactIndicator <- compute_impact_indicator(
 plot(impactIndicator, trend = "smooth")
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
-
-### Species impact indicator
-
-We compute the impact indicator per species by combining the impact
-score and occurrence of individual species. `compute_species_indicator`
-use *max* (maximum), *mean* or *max_mech* (sum of maximum score per
-mechanism) method to compute the impact per species. Interval
-calculation is not implemented yet.
-
-``` r
-# Impact indicator per species
-species_value <- compute_species_indicator(
-  cube = acacia_cube,
-  impact_data = eicat_acacia,
-  method = "mean",
-  ci_type = "none"
-)
-
-# Visualise species impact
-plot(species_value)
-```
-
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 ### Sensitivity analysis
@@ -266,17 +266,17 @@ To estimate how the impact indicator is sensitive to a taxon and
 indicating how the taxon e.g., species can disproportionately influence
 the impact indicator. We can use a leave-one-species-out
 cross-validation (LOSO-CV) technique. This technique evaluates the
-extent to which the overall indicator is driven by individual species by
-systematically recalculating the indicator after excluding one species
-at a time and comparing the resulting values to those obtained from the
-full occurrence cube. The deviation between the left out species
-indicator and the full-data indicator provides a measure of error
-attributable to species omission and can be summarised using the root
-mean square error (RMSE) for each year. RMSE values indicate whether
-observed trends are robust or disproportionately influenced by
-particular species. We use the `cross_validation()` from **dubicube**
-package to perform the LOSO-CV. Details and tutorial about the LOSO-CV
-calculation can be found here
+extent to which the regional indicator is driven by individual species
+by systematically recalculating the indicator after excluding one
+species at a time and comparing the resulting values to those obtained
+from the full occurrence cube. The deviation between the left out
+species indicator and the full-data indicator provides a measure of
+error attributable to species omission and can be summarised using the
+root mean square error (RMSE) for each year. RMSE values indicate
+whether observed trends are robust or disproportionately influenced by
+particular species. We use the `cross_validation_cube()` from
+**dubicube** package to perform the LOSO-CV. Details and tutorial about
+the LOSO-CV calculation can be found here
 <https://b-cubed-eu.github.io/dubicube/articles/group-level-sensitivity.html>
 
 <img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
