@@ -130,7 +130,7 @@ impact_value <- compute_impact_indicator(
 }
 \seealso{
 Other Indicator function: 
-\code{\link{compute_impact_per_site}()},
+\code{\link{compute_site_indicator}()},
 \code{\link{compute_species_indicator}()}
 }
 \concept{Indicator function}

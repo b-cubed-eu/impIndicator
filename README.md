@@ -40,7 +40,7 @@ The impIndicator produces three main products:
   effective or need adjustment. The temporal analysis of impact
   indicator enables targeted resource allocation, fostering proactive
   interventions to mitigate biodiversity loss and ecosystem degradation.
-- **site impact indicator** with `compute_impact_per_site()`: The site
+- **site impact indicator** with `compute_site_indicator()`: The site
   impact as a map serves as a visual and analytical tool to represent
   the intensity of biological invasions across different parts of an
   area. By enabling spatial comparisons—such as between provinces,
@@ -80,12 +80,12 @@ We demonstrate the computation and visualisation of impact indicator of
 biological invasions using the **impIndicator** package:
 `compute_impact_indicator()` to compute impact indicators of alien taxa,
 `compute_species_indicator()` to compute impact indicators per species,
-and `compute_impact_per_site()` to compute impact indicators per site.
+and `compute_site_indicator()` to compute impact indicators per site.
 The functions require (1) a species occurrence cube processed by the
-`b3gbi::process_cube()` function within `taxa_cube()`, and (2)
-Environmental Impact Classification for Alien Taxa (EICAT) impact score
-of species. Go to `vignette("Background", package = "impIndicator")` to
-read more about these functions.
+`b3gbi::process_cube()` and (2) Environmental Impact Classification for
+Alien Taxa (EICAT) data of species. Go to
+`vignette("Background", package = "impIndicator")` to read more about
+these functions.
 
 ``` r
 # Load packages
@@ -183,7 +183,7 @@ head(eicat_acacia, 10)
 The impact per site is a risk map that shows the impact score for each
 site, where multiple species can be present. To compute the impact map
 per site, aggregated scores across species at each site are needed. The
-`compute_impact_per_site()` uses *max*, *sum* and *mean* metrics to
+`compute_site_indicator()` uses *max*, *sum* and *mean* metrics to
 aggregate impact scores within species and across species in a site as
 proposed by Boulesnane-Guengant et al. (2025). The combinations of
 within species aggregation metrics for each species and across species
@@ -197,7 +197,7 @@ namely,
 - **cum** (cumulative).
 
 ``` r
-siteImpact <- compute_impact_per_site(
+siteImpact <- compute_site_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   method = "mean_cum"

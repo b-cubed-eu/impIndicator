@@ -198,7 +198,7 @@ test_that("plot.species_impact throws error", {
 #### Plot method for site impact ####
 
 # compute site impact
-siteImpact <- compute_impact_per_site(
+siteImpact <- compute_site_indicator(
   cube = acacia_cube,
   impact_data = eicat_acacia,
   col_category = "impact_category",
