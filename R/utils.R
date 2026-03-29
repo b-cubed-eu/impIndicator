@@ -56,7 +56,7 @@ cat_num <- function(cat, trans) {
   } else if (trans == 2) {
     x <- 1:5
   } else { # else if trans = 3
-    x <- c(0, 1, 10, 100, 1000, 10000)
+    x <- c(1, 10, 100, 1000, 10000)
   }
   names(x) <- name
 
