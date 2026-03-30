@@ -34,7 +34,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/b-cubed-eu/impIndicator/blob/main/inst/CITATION)
+[`inst/CITATION`](https://github.com/b-cubed-eu/impIndicator/blob/v0.6.1/inst/CITATION)
 
 Yahaya, Mukhtar Muhammed; Kumschick, Sabrina; MacFadyen, Sandra; Landi,
 Pietro; Hui, Cang (2026) impIndicator: Impact Indicators of Alien Taxa.
